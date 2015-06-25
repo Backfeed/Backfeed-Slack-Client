@@ -1,13 +1,46 @@
+
+.sensorHidden    {
+    position:fixed;
+    top:0px;
+    left:1px;
+    bottom:0px;
+    right:1px;
+     background-color:#9494B8; 
+    layer-background-color:#9494B8
+    opacity:0.5;
+    z-index:998;
+    visibility:hidden;
+}
+ 
+.sensorVisible {
+    position:fixed;
+    top:0px;
+    left:1px;
+    bottom:0px;
+    right:1px;
+    background-color:#9494B8;
+    layer-background-color:#9494B8
+    visibility:visible;
+    z-index:998;
+    opacity: 0.5;
+}
+
+
+
 #APP_PREFIX_CLASS_CONTAINER {
 	width: 400px;
 	height: 460px;
 	position: fixed;
-	bottom: -1px;
-	right: 20px;
+
 	display: none; /* hide compose*/
 	background: rgb(252, 252, 252);
 	border: 1px solid rgb(200, 200, 200);
-	z-index: 100;
+	z-index: 1000;
+
+	top: 50%;
+	left: 50%;
+	margin: -200px 0 0 -200px;
+
 }
 
 #APP_PREFIX_CLASS_CONTAINER iframe {
@@ -89,7 +122,9 @@
 	border-image-outset: initial;
 	border-image-repeat: initial;
 	min-width: 25px;
-	margin-left: 0px;
+	margin-left: 10px;
+	margin-top: 4px;
+	
 	display: inline-block;
 	float: right;
 	cursor: pointer;
@@ -104,7 +139,7 @@
 }
 
 #COMPOSE_ACTION_BUTTON:before{
-	content: "J";
+	content: "BF";
 	color: rgb(237, 237, 237);
 	font-size: 19px;
 }

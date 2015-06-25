@@ -13,7 +13,10 @@ var iframe = document.createElement("iframe")
 var openComposeButton = document.createElement("button")
 
 openComposeButton.setAttribute("id", "COMPOSE_ACTION_BUTTON")
+
 container.setAttribute("id", "APP_PREFIX_CLASS_CONTAINER")
+
+
 headerContainer.setAttribute("class", "header-container")
 close.setAttribute("class", "close")
 collapse.setAttribute("class", "collapse")
@@ -21,6 +24,9 @@ collapse.setAttribute("class", "collapse")
 iframe.setAttribute("src", chrome.extension.getURL("contentScript/app/index.html"))
 iframe.setAttribute("width", "100%")
 iframe.setAttribute("height", "100%")
+
+
+
 
 headerContainer.appendChild(title)
 if(Config.close) {
@@ -34,12 +40,26 @@ header.appendChild(headerContainer)
 container.appendChild(header)
 container.appendChild(iframe)
 
+// modal overlay:
+$("body").append('<div id="sensor"></div>');
+var element = $("#sensor");
+$("#sensor").addClass( 'sensorHidden'  );
+
 function closeCompose() {
+	$("#sensor").removeClass( 'sensorVisible'  );
+	$("#sensor").addClass( 'sensorHidden'  );
+    
 	container.style.display = "none"
+
 }
 
 function openCompose() {
+	
+	$("#sensor").removeClass( 'sensorHidden'  );
+	$("#sensor").addClass( 'sensorVisible'  );	
+		        
 	container.style.display = "block"
+	container.style.zIndex = 1000
 }
 
 function collapseCompose() {
