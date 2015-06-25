@@ -1,0 +1,43 @@
+{
+	// basic info --------------------------------------------------------------
+	"name"				: "...",
+	"version"			: "1.0",
+	"description"		: "...",
+	"manifest_version"	: 2,
+	"icons"				: {"128": "icon.png"},
+	"background"		: {
+		"page"			: "background/background.html"
+	},
+	// type --------------------------------------------------------------
+	"browser_action"	: {
+		"default_icon"	: "icon.png",
+		"default_popup" : "popup/popup.html"
+	},
+	// page injection --------------------------------------------------------------	
+	"content_scripts"	: [{
+		"matches"			: [ "http://*/*","https://*/*" ],
+		"exclude_globs"		: [ "*.jpg","*.jpeg","*.gif","*.png","*.bmp","*.webp",
+								"*.css","*.swf","*.js","*.zip","*.rar","*.tar","*.tar.gz","*.tgz","*.tar.bz2","*.tbz2",
+								"*.doc","*.docx","*.ppt","*.pptx","*.xls","*.xlsx","*.pdf","*.xml","*.txt",
+								"*.mpg","*.mpeg","*.qt","*.mp4","*.m4v","*.m4a","*.mp3","*.ogv","*.ogm","*.ogg","*.oga","*.webm","*.wav",
+								"*.","*." ],
+		"css"				: ["contentScript/inject.css"],
+		"js"				: [
+								"contentScript/vendor/jquery.min.js",
+								"contentScript/composeConfig.js" ,
+								"contentScript/contentScript.js"
+							],
+		"run_at" 			: "document_end"
+	}],
+	// imports & permissions --------------------------------------------------------------	
+	"web_accessible_resources" : [ 
+		"contentScript/app/*"
+	],	
+	"permissions"		: [ 
+		"tabs",
+		"webRequest",
+	    "http://*/*",
+    	"https://*/*",
+    	"notifications"
+	]
+}

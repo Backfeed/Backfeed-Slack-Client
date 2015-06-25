@@ -1,0 +1,110 @@
+#APP_PREFIX_CLASS_CONTAINER {
+	width: 400px;
+	height: 460px;
+	position: fixed;
+	bottom: -1px;
+	right: 20px;
+	display: none; /* hide compose*/
+	background: rgb(252, 252, 252);
+	border: 1px solid rgb(200, 200, 200);
+	z-index: 100;
+}
+
+#APP_PREFIX_CLASS_CONTAINER iframe {
+	border: 0;
+	overflow: hidden;
+}
+
+#APP_PREFIX_CLASS_CONTAINER header {
+	display: block;
+	height: 40px;
+	width: 100%;
+	position: absolute;
+	top: -40px;
+	left: -1px;
+	background: rgb(63, 63, 63);
+	border: 1px solid rgb(194, 192, 192);
+	cursor: move;
+}
+
+#APP_PREFIX_CLASS_CONTAINER header .header-container {
+	padding: 10px;
+}
+
+#APP_PREFIX_CLASS_CONTAINER header .header-container title {
+	display: block;
+	float: left;
+	color: rgb(232, 232, 232);
+	max-width: 314px;
+	height: 20px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	line-height: 19px;
+}
+
+#APP_PREFIX_CLASS_CONTAINER header span{
+	display: block;
+	float: right;
+	margin-left: 10px;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+}
+
+#APP_PREFIX_CLASS_CONTAINER header span:hover{
+	background: rgba(128, 128, 128, 0.67);
+}
+
+#APP_PREFIX_CLASS_CONTAINER header span.close:before{
+	content: "x";
+	text-align: center;
+	line-height: 19px;
+	font-weight: bold;
+	color: rgb(207, 207, 207);
+	font-family: sans-serif;
+	font-size: 17px;
+	margin-left: 5px;
+}
+
+#APP_PREFIX_CLASS_CONTAINER header span.collapse:before{
+	content: " ";
+	width: 12px;
+	height: 2px;
+	display: block;
+	background: rgb(207, 207, 207);
+	margin: 13px 0px;
+	margin-left: 4px;
+}
+
+#COMPOSE_ACTION_BUTTON {
+	position: relative;
+	width: 30px;
+	height: 30px;
+	padding: 5px 0px;
+	border: 0px;
+	border-image-source: initial;
+	border-image-slice: initial;
+	border-image-width: initial;
+	border-image-outset: initial;
+	border-image-repeat: initial;
+	min-width: 25px;
+	margin-left: 0px;
+	display: inline-block;
+	float: right;
+	cursor: pointer;
+	z-index: 6;
+
+	/* alternative no img*/
+	background: rgb(84, 84, 84);
+	/* // */
+
+	background-size: contain;
+	border-radius: 3px;
+}
+
+#COMPOSE_ACTION_BUTTON:before{
+	content: "J";
+	color: rgb(237, 237, 237);
+	font-size: 19px;
+}
