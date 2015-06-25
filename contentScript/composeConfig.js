@@ -1,6 +1,6 @@
 var Config = {
-    actionButtonSelector: "body", // action button querySelector to inject action button
-    draggable: true, // gadget draggable
-    collapse: true, // gadget collapsable
+    actionButtonSelector: "#footer", // action button querySelector to inject action button
+    draggable: false, // gadget draggable
+    collapse: false, // gadget collapsable
     close: true, // gadget closable
 }
