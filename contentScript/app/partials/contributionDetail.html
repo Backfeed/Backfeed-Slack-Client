@@ -1,0 +1,73 @@
+
+<div class="container profile">
+	<div class="row">
+		<div class="col-sm-10">
+			<form class="form-horizontal" ng-controller="ContributionsCtrl"
+				role="form">
+				<legend><i class="ion-clipboard"></i> {{ContributionModelForView.title}}</legend>
+		      
+		
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">Bids</h3>
+							</div>
+							<table class="table">
+
+								<th>Bid Tokens</th>
+								<th>Bid Reputations</th>
+								<th>Bid Stake</th>
+								<th>Bid Owner</th>
+
+
+								<tr ng-repeat="bid in ContributionModelForView.bids">
+									<div ng-if="bid.owner == userId">
+									<td>{{bid.tokens}}</td>
+									<td>{{bid.reputation}}</td>
+									<td>{{bid.stake}}</td>
+									<td>{{bid.bidderName}}</td>
+									</div>
+								</tr>
+							</table>
+							<div class="panel-body">
+								<div class="btn-toolbar text-center well">
+									<button class="btn btn-default"
+										ng-show="ContributionModelForView.status == 'Open'"
+										ng:click='addBid()'>Backfeed</button>
+										<!--
+									<button class="btn btn-default"
+										ng-show="ContributionModelForView.status == 'Open'"
+										ng:click='closeContribution()'>Close</button>
+										-->
+									<button class="btn btn-default"
+										ng-show="ContributionModelForView.bids.length > 0"
+										ng:click='showStatus()'>Status</button>
+								</div>
+
+							</div>
+						</div>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">Content</h3>
+							</div>
+							<div class="panel-body">{{ContributionModelForView.file}}</div>
+						</div>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">Collaborators</h3>
+							</div>
+							<table class="table">
+
+								<th>Collaborator Name</th>
+								<th>Collaborator Percentage</th>
+
+
+								<tr
+									ng-repeat="collaborator in ContributionModelForView.contributionContributers">
+									<td>{{collaborator.name}}</td>
+									<td>{{collaborator.contributer_percentage}}</td>
+								</tr>
+							</table>
+
+			</form>
+		</div>
+	</div>

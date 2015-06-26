@@ -1,0 +1,50 @@
+<div class="container profile">
+	<div class="row">
+		<div class="col-sm-10">
+			<div class="panel panel-default">
+			
+				<div class="panel-body">
+					 <legend>Hi {{userData.displayName}} , Are you ready?</legend>
+					<div class="well">
+		   				<label for="teamName">Who are you fellow evolutionaries?  </label>
+						<h1> {{userData.slackTeamName}}</h1>
+						<button type="submit"  class="btn btn-default" ng-click='changeTeam()'>Change Team</button>
+					
+					</div>
+					
+			
+			
+			
+								<form class="form-horizontal well" ng-controller="OrganizationCtrl"
+									role="form">
+								
+												 <div class="form-group">
+							      						<label for="tokenName">Creating a new value system ... how would you like to call it?</label>
+														<input type="text"
+															class="form-control" id="tokenName" ng-model="orgModel.token_name" ng-blur="checkTokenName()">
+												 <div class="invalid-message" ng-show="validationFailure">
+					    								<span class="invalid-mail" 
+														ng-show="validationFailure && orgModel.token_name != ''">
+														This name is already taken please use other</span> 
+
+					     						</div>
+													</div>
+							
+					
+						
+						
+						
+						
+				
+									<div align="center" ><button type="submit" class="btn btn-warning submit-button" ng-disabled="!orgModel.token_name  || validationFailure" ng-click="submit()">Begin a new era ...</button></div>
+						
+
+								</form>
+							
+							
+				</div>
+			</div>							
+											
+		</div>
+	</div>
+</div>

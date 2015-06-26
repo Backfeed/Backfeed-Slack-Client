@@ -1,4 +1,4 @@
-app.service('PostMessageService', function () {
+angular.module('MyApp').service('PostMessageService', function () {
 
 	var SID = "SID_PROG=",
 		EID = "EID_PROG=",

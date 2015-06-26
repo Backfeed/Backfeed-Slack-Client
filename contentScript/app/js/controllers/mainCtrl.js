@@ -1,4 +1,4 @@
-app.controller('MainCtrl',  ["$scope", "PostMessageService", function($scope, PostMessageService) {
+angular.module('MyApp').controller('MainCtrl',  ["$scope", "PostMessageService", function($scope, PostMessageService) {
 	$scope.testString = "Hello! by angular iframe extension";
 	$scope.testList = ["apple", "banana", "tomato", 1221321, 2321321321313, 1.231213];
 	$scope.index = 0;
