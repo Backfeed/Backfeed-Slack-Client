@@ -6,26 +6,26 @@ angular.module('MyApp', ['uiSlider','ngResource', 'ngMessages', 'ui.router', 'mg
 	  .state('splash', {
 		controller: 'SplashCtrl',
       url: '/splash',
-      templateUrl: 'app/partials/splash.html'
+      templateUrl: chrome.extension.getURL("contentScript/app/partials/splash.html"),
     })
     .state('contributionDetail', {
       url: '/contribution/:contributionId',
-      templateUrl: 'app/partials/contributionDetail.html',
+      templateUrl: chrome.extension.getURL("contentScript/app/partials/contributionDetail.html"),
       controller: 'ContributionsCtrl'
     })
     .state('createContribution', {
       url: '/contribution',
-      templateUrl: 'app/partials/createContribution.html',
+      templateUrl: chrome.extension.getURL("contentScript/app/partials/createContribution.html"),
       controller: 'ContributionsCtrl'
     })
     .state('createOrg', {
       url: '/organization',
-      templateUrl: 'app/partials/createOrganization.html',
+      templateUrl: chrome.extension.getURL("contentScript/app/partials/createOrganization.html"),
       controller: 'OrganizationCtrl'
     })
     .state('contributionStatus', {
   	  url: '/contributionStatus/:contributionId',
-      templateUrl: 'app/partials/contributionStatus.html',
+      templateUrl: chrome.extension.getURL("contentScript/app/partials/contributionStatus.html"),
       controller: 'ContributionStatusCtrl'
     })
 	  .state('contributions', {
