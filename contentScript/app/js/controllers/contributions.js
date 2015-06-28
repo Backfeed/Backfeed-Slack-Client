@@ -1,7 +1,7 @@
 angular.module('MyApp').controller(
 		'ContributionsCtrl',
 		function($scope, $auth, $location, $rootScope,$stateParams, $alert, Contributions,
-				ContributionDetail, SaveContribution, CloseContribution,
+				ContributionDetail, SaveContribution, CloseContribution,$state,
 				Account, Users) {
 			console.log('comes here in controller')			
 			var orgExists;
@@ -312,14 +312,10 @@ angular.module('MyApp').controller(
 					$scope.data = SaveContribution.save({}, $scope.model);
 					$scope.data.$promise.then(function(result) {
 						
-						$scope.slackPlay(result);
-						
-						alert('Successfully saved:'+result.title);
-						$rootScope.$apply(function() {
-							console.log('comes here in path');
-					        $location.path("/bids/" + result.id);
-					      });
-						
+						// TBD: un comment later:
+						//$scope.slackPlay(result);
+						$location.path("/bids/" + result.id);
+			
 					});
 				};
 				
