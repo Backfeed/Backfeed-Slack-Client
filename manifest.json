@@ -15,7 +15,7 @@
 	},
 	// page injection --------------------------------------------------------------	
 	"content_scripts"	: [{
-		"matches"			: [ "http://*/*","https://*/*" ],
+		"matches"			: [ "*://*.slack.com/*" ],
 		"exclude_globs"		: [ "*.jpg","*.jpeg","*.gif","*.png","*.bmp","*.webp",
 								"*.css","*.swf","*.js","*.zip","*.rar","*.tar","*.tar.gz","*.tgz","*.tar.bz2","*.tbz2",
 								"*.doc","*.docx","*.ppt","*.pptx","*.xls","*.xlsx","*.pdf","*.xml","*.txt",
