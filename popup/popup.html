@@ -1,28 +1,48 @@
-<head>
-	<title></title>
-	<style type="text/css">
-		body {
-			margin: 0
-		}
-		header {
-			padding: 5px;
-			background: whitesmoke;
-			border-bottom: 1px solid rgb(226, 226, 226);
-			color: rgb(94, 94, 94);
-		}
-		.container {
-			padding: 10px;
-			width: 200px;
-		}
-	</style>
-</head>
-<body>
-	<header>
-		<h3>Presentation popup</h3>
-	</header>
-	<div class="container">
-		<strong>Description:</strong><br>
-		Description of application
-	</div>
-</body>
+
+<!-- <!DOCTYPE html>-->
+<html>
+
+  <head>
+<!--    <link href="/css/scrollbar.css" rel="stylesheet" media="screen" type="text/css">  -->
+    <link href="/contentScript/app/css/bootstrap.min.css" rel="stylesheet" media="screen" type="text/css">
+    <link href="/popup/css/lato.css" rel="stylesheet" media="screen" type="text/css">
+    <link href="/popup/css/style.css" rel="stylesheet" media="screen" type="text/css">
+  </head>
+
+  <body tabindex="1">
+
+    <!-- API Token view -->
+    <div id="api-token-view">
+      <h3>Welcome to Backfeed!</h3>
+      <hr />
+      <h4>First thing's first...</h4>
+
+      <button class="btn btn-default" id="OAuth">Authorize with Slack</button>
+
+      <p>Once you've authorized Backfeed with Slack, you will be prompted to backfeedify your slack team!</p>
+
+      <hr />
+
+      <p>Don't worry - Backfeed will never send any messages without you asking it to.</p>
+
+      <p>For help signing in, email <a class="linkable" href="mailto:shahar@backfeed.cc">support@backfeed.cc</a>  .</p>
+
+      <hr />
+
+      <p id="me-promo"><a class="linkable" href="https://backfeed.cc">Backfeed</a> by <a class="linkable" href="https://www.twitter.com/backfeed"></a></p>
+
+    </div>
+    <!-- /API Token view -->
+
+ 
+  </body>
+<!--
+  <script type="text/javascript" src="/components/jquery/dist/jquery.js"></script>
+  <script type="text/javascript" src="/components/bootstrap/dist/js/bootstrap.js"></script>
+  <script type="text/javascript" src="/components/moment/moment.js"></script>
+  <script src="/js/app.js"></script> 
+-->
+ <script type="text/javascript" src="/contentScript/vendor/jquery.min.js"></script>
+ <script src="/popup/popup.js"></script> 
 </html>
+

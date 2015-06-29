@@ -79,6 +79,7 @@ function setTitle(title) {
 }
 
 var GESTURES = {
+	"openCompose":openCompose,
 	"setTitle": setTitle,
 	"collapseCompose": collapseCompose,
 	"closeCompose": closeCompose,

@@ -78,6 +78,9 @@ angular.module('MyApp').service('PostMessageService', function () {
    	}
    	var self = this;
    	this.gesture = {
+		openCompose: function() {
+			self.sendGesture("openCompose");
+		},
 		collapseCompose: function() {
 			self.sendGesture("collapseCompose");
 		},
