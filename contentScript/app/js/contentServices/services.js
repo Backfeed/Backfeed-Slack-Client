@@ -2,7 +2,7 @@
 var bfAPIServices = angular.module('BFAPIServices', [ 'ngResource' ]);
 
 bfAPIServices.factory('Contributions', [ '$resource', function($resource) {
-	return $resource('https://127.0.0.1:8100/contribution/all/:organizationId', {}, {
+	return $resource('https://stagingenviornment.elasticbeanstalk.com/contribution/all/:organizationId', {}, {
 		getAllContributions : {
 			method : 'GET',
 			params : {},
@@ -12,7 +12,7 @@ bfAPIServices.factory('Contributions', [ '$resource', function($resource) {
 } ]);
 
 bfAPIServices.factory('ContributionDetail', [ '$resource', function($resource) {
-	return $resource('https://127.0.0.1:8100/contribution/:contributionId', {}, {
+	return $resource('https://stagingenviornment.elasticbeanstalk.com/contribution/:contributionId', {}, {
 		getDetail : {
 			method : 'GET',
 			params : {},
@@ -22,7 +22,7 @@ bfAPIServices.factory('ContributionDetail', [ '$resource', function($resource) {
 } ]);
 
 bfAPIServices.factory('SaveContribution', [ '$resource', function($resource) {
-	return $resource('https://127.0.0.1:8100/contribution', {}, {
+	return $resource('https://stagingenviornment.elasticbeanstalk.com/contribution', {}, {
 		save : {
 			method : 'POST',
 			params : {},
@@ -31,7 +31,7 @@ bfAPIServices.factory('SaveContribution', [ '$resource', function($resource) {
 	});
 } ]);
 bfAPIServices.factory('CloseContribution', [ '$resource', function($resource) {
-	return $resource('https://127.0.0.1:8100/contribution/close', {}, {
+	return $resource('https://stagingenviornment.elasticbeanstalk.com/contribution/close', {}, {
 		save : {
 			method : 'POST',
 			params : {},
@@ -40,7 +40,7 @@ bfAPIServices.factory('CloseContribution', [ '$resource', function($resource) {
 	});
 } ]);
 bfAPIServices.factory('SaveBidTOContribution', [ '$resource',function($resource) {
-	return $resource('https://127.0.0.1:8100/bids', {}, {
+	return $resource('https://stagingenviornment.elasticbeanstalk.com/bids', {}, {
 		save : {
 			method : 'POST',
 			params : {},
@@ -50,7 +50,7 @@ bfAPIServices.factory('SaveBidTOContribution', [ '$resource',function($resource)
 } ]);
 bfAPIServices.factory('Users', [ '$resource', function($resource) {
 	var allOrgUsersData;		 
-			return {getOrg :$resource('https://127.0.0.1:8100/users/all/:organizationId', {}, {
+			return {getOrg :$resource('https://stagingenviornment.elasticbeanstalk.com/users/all/:organizationId', {}, {
 			getUsers: {
 				method : 'GET',
 				params : {},
@@ -63,7 +63,7 @@ bfAPIServices.factory('Users', [ '$resource', function($resource) {
 } ]);
 	
 bfAPIServices.factory('UserDetail', [ '$resource', function($resource) {
-	return $resource('https://127.0.0.1:8100/users/:userId/:organizationId', {}, {
+	return $resource('https://stagingenviornment.elasticbeanstalk.com/users/:userId/:organizationId', {}, {
 		getDetail : {
 			method : 'GET',
 			params : {},
@@ -73,7 +73,7 @@ bfAPIServices.factory('UserDetail', [ '$resource', function($resource) {
 } ]);
 
 bfAPIServices.factory('SaveUser', [ '$resource', function($resource) {
-	return $resource('https://127.0.0.1:8100/users', {}, {
+	return $resource('https://stagingenviornment.elasticbeanstalk.com/users', {}, {
 		save : {
 			method : 'POST',
 			params : {},
@@ -83,7 +83,7 @@ bfAPIServices.factory('SaveUser', [ '$resource', function($resource) {
 } ]);
 
 bfAPIServices.factory('ContributionStatus', [ '$resource', function($resource) {
-	return $resource('https://127.0.0.1:8100/contribution/status/:id/:userId', {}, {
+	return $resource('https://stagingenviornment.elasticbeanstalk.com/contribution/status/:id/:userId', {}, {
 		getDetail : {
 			method : 'GET',
 			params : {},
@@ -93,7 +93,7 @@ bfAPIServices.factory('ContributionStatus', [ '$resource', function($resource) {
 } ]);
 
 bfAPIServices.factory('SaveOrg', [ '$resource', function($resource) {
-	return $resource('https://127.0.0.1:8100/organization', {}, {
+	return $resource('https://stagingenviornment.elasticbeanstalk.com/organization', {}, {
 		save : {
 			method : 'POST',
 			params : {},
@@ -103,7 +103,7 @@ bfAPIServices.factory('SaveOrg', [ '$resource', function($resource) {
 } ]);
 
 bfAPIServices.factory('CheckOrgTokenName', [ '$resource', function($resource) {
-	return $resource('https://127.0.0.1:8100/organization/checkTokenName/:tokenName', {}, {
+	return $resource('https://stagingenviornment.elasticbeanstalk.com/organization/checkTokenName/:tokenName', {}, {
 		checkOrgTokenName : {
 			method : 'GET',
 			params : {},
@@ -113,7 +113,7 @@ bfAPIServices.factory('CheckOrgTokenName', [ '$resource', function($resource) {
 } ]);
 
 bfAPIServices.factory('AllSlackUsers', [ '$resource', function($resource) {
-	return $resource('https://127.0.0.1:8100/allSlackUsers', {}, {
+	return $resource('https://stagingenviornment.elasticbeanstalk.com/allSlackUsers', {}, {
 		allSlackUsers : {
 			method : 'GET',
 			params : {},
@@ -123,7 +123,7 @@ bfAPIServices.factory('AllSlackUsers', [ '$resource', function($resource) {
 } ]);
 
 bfAPIServices.factory('AllOrgs', [ '$resource', function($resource) {
-	return $resource('https://127.0.0.1:8100/organization/all', {}, {
+	return $resource('https://stagingenviornment.elasticbeanstalk.com/organization/all', {}, {
 		allOrgs : {
 			method : 'GET',
 			params : {},

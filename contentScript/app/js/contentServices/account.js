@@ -5,10 +5,10 @@ angular.module('MyApp')
 		
 	  return {
 	    getProfile: function() {
-	      return $http.get('https://127.0.0.1:8100/api/me');
+	      return $http.get('https://stagingenviornment.elasticbeanstalk.com/api/me');
 	    },
 	    updateProfile: function(profileData) {
-	      return $http.post('https://127.0.0.1:8100/api/updateMe', profileData);
+	      return $http.post('https://stagingenviornment.elasticbeanstalk.com/api/updateMe', profileData);
 	    },
 	
 		// TBD: hold all account info here to be access from all controllers not only Profile controller
