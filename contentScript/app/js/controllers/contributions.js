@@ -16,7 +16,7 @@ angular.module('MyApp').controller(
 				users_organizations_id : '',
 				contributers : [ {
 					contributer_id : '0',
-					contributer_percentage : '',
+					contributer_percentage : '100',
 					contribution1: '50',
 					img:'css/images/ui-bg_diagonals-thick_18_b81900_40x40.png',
 					usersList:[]
@@ -39,8 +39,15 @@ angular.module('MyApp').controller(
 					});
 					$scope.data.$promise.then(function(result) {
 						Users.setAllOrgUsersData(result)						
-						$scope.users = result;	
+						$scope.users = result;							
 						$scope.model.contributers[0].usersList = $scope.users;
+						for(i = 0 ; i<$scope.users.length ; i++){						
+							if($scope.users[i].id == $scope.model.owner ){
+								$scope.model.contributers[0].img =  $scope.users[i].url
+								break;
+							}
+						}
+						$scope.addCollaborator();
 						//$location.path("/contribution/" + result.id);
 					});
 				};
@@ -56,6 +63,7 @@ angular.module('MyApp').controller(
 							$scope.organizationId = data.orgId;
 							$scope.access_token = data.access_token;
 							$scope.model.owner = data.userId;
+							$scope.model.contributers[0].contributer_id = data.userId;
 							$scope.getOrgUsers();
 						}
 						Account.setUserData(data);
@@ -136,7 +144,7 @@ angular.module('MyApp').controller(
 				}
 
 				$scope.contributionId = $stateParams.contributionId;
-
+				
 				$scope.ContributionModelForView = {
 					title : '',
 					file : '',
@@ -377,6 +385,7 @@ angular.module('MyApp').controller(
 					}) ;
 					$scope.buttonDisabled = true;
 				};
+				
 				$scope.closeContribution = function() {
 					console.log("In closeContribution method");
 					console.log($scope.ContributionModelForView.id)
