@@ -3,7 +3,8 @@ angular.module('MyApp').controller(
 		function($scope, $auth, $location, $rootScope,$stateParams, $alert, Contributions,
 				ContributionDetail, SaveContribution, CloseContribution,$state,
 				Account, Users) {
-			console.log('comes here in controller')			
+			console.log('comes here in controller')	
+			
 			var orgExists;
 			$scope.currencyFormatting = function(value) { return value.toString() + " $"; };
 			$scope.organizationId = 'notintialized';
@@ -17,7 +18,6 @@ angular.module('MyApp').controller(
 				contributers : [ {
 					contributer_id : '0',
 					contributer_percentage : '100',
-					contribution1: '50',
 					img:'css/images/ui-bg_diagonals-thick_18_b81900_40x40.png',
 					usersList:[]
 				} ],
@@ -111,7 +111,7 @@ angular.module('MyApp').controller(
 					$scope.model.owner = userData.userId;
 				}
 				
-				$scope.updateContributer = function(selectedUserId,index) {
+				$scope.updateContributer = function(selectedUserId,contPercentage,index) {
 					console.log('comes here firt')
 					urlImage = ''
 					for(i = 0 ; i<$scope.users.length ; i++){						
@@ -120,8 +120,11 @@ angular.module('MyApp').controller(
 							break;
 						}
 					}					
-					
-					$scope.changeContribution();
+					if(contPercentage == ''){
+						allcontributers1 = $scope.model.contributers
+						contPercentage = 100/allcontributers1.length;
+					}
+					$scope.changeContribution(selectedUserId,contPercentage);
 					return urlImage;
 					
 					
@@ -174,27 +177,38 @@ angular.module('MyApp').controller(
 
 				};
 				
-				$scope.changeContribution = function() {
+				$scope.changeContribution = function(contributerId,contributerPercentage) {
 					totalContribution = 0;
 					allcontributers = $scope.model.contributers
 					valid = true;
 					if(allcontributers.length){
 						valid = false;	
 					}
+					console.log('contributerId is '+contributerId);
+					console.log('coming percentage is '+contributerPercentage);
+					remainingPercentage = 100 - +contributerPercentage;
+					console.log('remaining percentage is '+remainingPercentage);
+					totalEarlierRemaining = 0;
 					for(i=0;i<allcontributers.length;i++){
 						if(allcontributers[i].contributer_id != 0){
-							totalContribution = totalContribution + +allcontributers[i].contribution1;
+							if(allcontributers[i].contributer_id != contributerId){
+								totalEarlierRemaining = totalEarlierRemaining + +allcontributers[i].contributer_percentage
+							}
+							
+						}
+					}
+					for(i=0;i<allcontributers.length;i++){
+						if(allcontributers[i].contributer_id != 0){
+							if(allcontributers[i].contributer_id != contributerId){
+								console.log('old percentage is'+allcontributers[i].contributer_percentage);
+								allcontributers[i].contributer_percentage = (remainingPercentage * allcontributers[i].contributer_percentage)/totalEarlierRemaining;
+								console.log('new percentage is  is '+allcontributers[i].contributer_percentage);
+							}else{
+								allcontributers[i].contributer_percentage = contributerPercentage;
+							}
+							
 						}else{
 							valid = false;							
-						}
-						
-						
-						
-					}
-					
-					for(i=0;i<allcontributers.length;i++){
-						if(allcontributers[i].contributer_id != 0){
-							allcontributers[i].contributer_percentage = (allcontributers[i].contribution1/totalContribution)*100
 						}
 						
 						
@@ -327,9 +341,9 @@ angular.module('MyApp').controller(
 					});
 				};
 				
-				$scope.removeCollaboratorItem = function(index) {
+				$scope.removeCollaboratorItem = function(contributerId,contributerPecentage,index) {
 					$scope.model.contributers.splice(index, 1);						
-					$scope.changeContribution();
+					$scope.changeContribution(contributerId,0);
 			  };
 				$scope.createContribution = function() {
 					console.log("Create Contribution");
@@ -379,7 +393,6 @@ angular.module('MyApp').controller(
 					$scope.model.contributers.push({
 						contributer_id:'0',
 						contributer_percentage:'',
-						contribution1:'50',
 						img:'css/images/ui-bg_diagonals-thick_18_b81900_40x40.png',
 						usersList:newUserList
 					}) ;
