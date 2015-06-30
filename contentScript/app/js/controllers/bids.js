@@ -81,10 +81,12 @@ angular.module('MyApp')
 		$scope.data = SaveBidTOContribution.save({},$scope.bid);
 		$scope.data.$promise.then(function (result) {
 			alert('Bid Successfully created');
-			$location.path("/contribution/"+$scope.contributionId);
+			$location.path("/contributionStatus/"
+					+ $scope.contributionId);
 		},	function (result) {
 				alert('Evaluation was not processed since you have no reputation left to stake for this contribution.');
-				$location.path("/contribution/"+$scope.contributionId);
+				$location.path("/contributionStatus/"
+						+ $scope.contributionId);
 			});
 		
 	};

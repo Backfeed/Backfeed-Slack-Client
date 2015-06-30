@@ -26,7 +26,7 @@
 				  			</div>
 							
 							<div class = 'col-sm-3'>
-								<select ui-select2 ng-model = "contributer.contributer_id" 
+								<select ui-select2="select2Config" ng-model = "contributer.contributer_id" style="width: 200px;"
 										ng-change="contributer.img = updateContributer(contributer.contributer_id,contributer.contributer_percentage,$index)"  data-placeholder="Choose Contributer">
 										<option value=""></option>
     									<option ng-repeat="user in contributer.usersList" value="{{user.id}}">{{user.name}}</option>

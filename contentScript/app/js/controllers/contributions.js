@@ -18,7 +18,7 @@ angular.module('MyApp').controller(
 				contributers : [ {
 					contributer_id : '0',
 					contributer_percentage : '100',
-					img:'css/images/ui-bg_diagonals-thick_18_b81900_40x40.png',
+					img:'/contentScript/app/images/avatar.png',
 					usersList:[]
 				} ],
 				intialBid : [ {
@@ -33,7 +33,6 @@ angular.module('MyApp').controller(
 				$location.path('splash');
 			} else {
 				$scope.getOrgUsers = function() {
-					console.log('comes here in getting users'+$scope.organizationId)
 					$scope.data = Users.getOrg.getUsers({
 						organizationId : $scope.organizationId
 					});
@@ -393,7 +392,7 @@ angular.module('MyApp').controller(
 					$scope.model.contributers.push({
 						contributer_id:'0',
 						contributer_percentage:'',
-						img:'css/images/ui-bg_diagonals-thick_18_b81900_40x40.png',
+						img:'/contentScript/app/images/avatar.png',
 						usersList:newUserList
 					}) ;
 					$scope.buttonDisabled = true;
@@ -416,6 +415,23 @@ angular.module('MyApp').controller(
 						organizationId : $scope.organizationId
 					});
 				}
+				
+				$scope.format = function (data) {	
+				      var url = '';
+						for(i = 0 ; i<$scope.users.length ; i++){						
+							if($scope.users[i].id == data.id ){
+								url =  $scope.users[i].url
+								break;
+							}
+						}      				   
+				             
+				      return  "<img src='" + url +"' />&nbsp;&nbsp;" + data.text;
+				    };           
+				         
+				    $scope.select2Config = {
+				      formatResult: $scope.format,
+				      formatSelection: $scope.format
+				    };
 
 			}
 
