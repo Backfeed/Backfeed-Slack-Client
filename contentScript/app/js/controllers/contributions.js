@@ -460,10 +460,12 @@ angular.module('MyApp').controller(
 				
 				$scope.format = function (data) {	
 				      var url = '';
+				      var realName = ''
 				        if($scope.users != undefined){
 				        	for(i = 0 ; i<$scope.users.length ; i++){						
 								if($scope.users[i].id == data.id ){
 									url =  $scope.users[i].url
+									realName =  $scope.users[i].real_name
 									break;
 								}
 							}      				   
@@ -471,7 +473,7 @@ angular.module('MyApp').controller(
 				        
 						
 				             
-				      return  "<img src='" + url +"' />&nbsp;&nbsp;" + data.text;
+				      return  "<img src='" + url +"' /><span>"+ data.text + " </span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>"+ realName + " </span>";
 				    };           
 				         
 				    $scope.select2Config = {
