@@ -1,49 +1,49 @@
 <div class="container profile">
-	<div class="row">
-		<div class="col-sm-10">
-			<div class="panel panel-default">
-				<div class="panel-body">
+<div class="row">
+<div class="col-sm-10">
+<div class="panel panel-default">
+<div class="panel-body">
 
-					<p>Welcome {{userData.displayName}},</p>
-					<h2>Let's create a new holon</h2>
-					<!-- <button type="submit"  class="btn btn-default" ng-click='changeTeam()'>Change Team</button> -->
-					<p>A holon is something that is<br />simultaneously a part and a whole</p>
-					<br /><br />
-					<p>Your holon has its own value units.<br />How would you like to name them?</p>
-			
-					<form class="form-inline row" ng-controller="OrganizationCtrl" role="form">
-						<div class="col-xs-9">
-							<input type="text"
-								   class="form-control"
-								   id="tokenName"
-								   required
-								   placeholder="e.g. Pig Coins"
-								   ng-model="orgModel.token_name"
-								   ng-blur="checkTokenName()" />
-							<label>Name</label>
-							<div class="invalid-message" ng-show="validationFailure">
-								<span class="invalid-mail" ng-show="validationFailure && orgModel.token_name != ''">This name is already taken please use other</span>
-							</div>
-						</div>
+	<p>Welcome {{userData.displayName}},</p>
+	<h2>Let's create a new holon</h2>
+	<!-- <button type="submit"  class="btn btn-default" ng-click='changeTeam()'>Change Team</button> -->
+	<p>A holon is something that is<br />simultaneously a part and a whole</p>
+	<br /><br />
+	<p>Your holon has its own value units.<br />How would you like to name them?</p>
 
-						<div class="col-xs-3">
-						    <input type="text"
-								   class="form-control"
-								   id="tokenCode"
-								   required
-								   placeholder="PiC"
-								   ng-model="orgModel.token_code" />
-							<label>Code</label>
-						</div>
-
-						<button type="submit"
-								class="btn btn-backfeed submit-button center-block"
-								ng-disabled="!orgModel.token_name  || validationFailure"
-								ng-click="submit()">Create Backfeed Holon</button>
-					</form>
-
-				</div>
+	<form class="form-inline row" ng-controller="OrganizationCtrl" role="form">
+		<div class="col-xs-9">
+			<input type="text"
+				   class="form-control"
+				   id="tokenName"
+				   required
+				   placeholder="e.g. Pig Coins"
+				   ng-model="orgModel.token_name"
+				   ng-blur="checkTokenName()" />
+			<label>Name</label>
+			<div class="invalid-message" ng-show="validationFailure">
+				<span class="invalid-mail" ng-show="validationFailure && orgModel.token_name != ''">This name is already taken please use other</span>
 			</div>
 		</div>
-	</div>
+
+		<div class="col-xs-3">
+		    <input type="text"
+				   class="form-control"
+				   id="tokenCode"
+				   required
+				   placeholder="PiC"
+				   ng-model="orgModel.token_code" />
+			<label>Code</label>
+		</div>
+
+		<button type="submit"
+				class="btn btn-backfeed submit-button center-block"
+				ng-disabled="!orgModel.token_name  || validationFailure"
+				ng-click="submit()">Create Backfeed Holon</button>
+	</form>
+
+</div>
+</div>
+</div>
+</div>
 </div>

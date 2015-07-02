@@ -1,68 +1,115 @@
-
 <div class="container profile">
+<div class="row">
+<div class="col-sm-10">
+<div class="panel panel-default">
+<div class="panel-body">
+
+<form>
+
 	<div class="row">
-		<div class="col-sm-10">
-			<div class="panel panel-default">
+
+		<div class="col-sm-6">
+
+			<h2>New Value <img alt="help" src="chrome-extension://ofiocalejfcccpcdmfocfhnocmmgdgnk/contentScript/app/images/icon_help.png" tooltip-placement="right" tooltip="On the Right!"></h2>
+
+			<div class="form-group">
+				<input type="text"
+					   class="form-control"
+					   id="title"
+					   required
+					   placeholder="Name of the new value"
+					   ng-model="model.title" />
+				<label>Title</label>
+	        </div>
+
+			<div class="form-group">
+				<textarea class="form-control"
+						  id="content"
+						  required
+						  rows="5"
+						  placeholder="tell us more..."
+						  ng-model="model.file"></textarea>
+				<label>Content</label>
+	        </div>
+
+		</div>
+
+		<div class="col-sm-6">
 			
-				<div class="panel-body">
-					 <h1>Adding new Value is the best</h1>
-					<legend>Contribution:</legend>
-					
-					<div class="form-group">
-			          <label class="control-label"><i class="ion-clipboard"></i> title</label>
-			          <input type="text"  id="title" class="form-control" ng-model="model.title" required/>
-			        </div>
-					<div class="form-group">
-			          <label class="control-label"><i class="ion-clipboard"></i> content</label>
-					  <textarea class="form-control" id="title" ng-model="model.file" required rows="5"></textarea>
-			        </div>
-					<legend>Contributers:</legend>
-			
-					<div ng-repeat="contributer in model.contributers"  >
-					
-						<div class="row well-lg contributer-cell">
-							<div   class = 'col-sm-2' >
-							      <img class="img-rounded" ng-src="{{contributer.img}}" alt="" HEIGHT      = 50 WIDTH=50>
-				  			</div>
-							<div class ='col-sm-3'>
-								
-								<div>{{contributer.contributer_name}}</div>
-							</div>
-							
-							<div  class = 'col-sm-3' >
-								<input 	 style="width: 200px;" type="range" min="1" max="99" step="1"  
-										ng-disabled ="contributer.contributer_percentage == 100" ng-model="contributer.contributer_percentage" ng-change="changeContribution(contributer.contributer_id,contributer.contributer_percentage,'')">
-								</input>
-							</div>
-							
-							<div  class = 'col-sm-2' >			
-								<input size = "5" type="text" disabled = "disabled"  id="contributer_percentage" ng-model="contributer.contributer_percentage">
-								</input> %
-							</div>	
-							<div  class = 'col-sm-2' >			
-							
-								<button type="submit" class="btn btn-default" aria-label="Left Align" ng-click='removeCollaboratorItem(contributer.contributer_id,contributer.contributer_percentage,$index)'>
-								  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-								</button>
-							</div>
-						</div>
+			<h2>Contributors</h2>
+
+			<div ng-repeat="contributer in model.contributers">
+				<div class="row well-lg contributer-cell">
+
+					<div class='col-sm-2'>
+					    <img class="img-rounded" ng-src="{{contributer.img}}" alt="" HEIGHT=50 WIDTH=50>
+		  			</div>
+
+					<div class='col-sm-3'>
+						<div>{{contributer.contributer_name}}</div>
 					</div>
-					<select   ui-select2="select2Config" 
-										ng-model='selectedContributerId' ng-change="updateContributer(selectedContributerId)" style="width: 200px;" data-placeholder="Choose Contributer">
-										<option value=""></option>
-    									<option ng-repeat="user in updatedUsersList" value="{{user.id}}">{{user.name}}</option>
-								</select>					
-					
-					
-					<div align="center" ><button type="submit" class="btn btn-warning submit-button" 
-							ng-disabled="!model.title || !model.file || buttonDisabled" ng-click="onSubmit()">Submit</button>
+
+					<div class='col-sm-3'>
+						<input style="width: 200px;"
+							   type="range"
+							   min="1"
+							   max="99"
+							   step="1"
+							   ng-disabled="contributer.contributer_percentage == 100"
+							   ng-model="contributer.contributer_percentage"
+							   ng-change="changeContribution(contributer.contributer_id,contributer.contributer_percentage,'')" />
+						</input>
 					</div>
-				
+
+					<div class='col-sm-2'>			
+						<input size ="5"
+							   type="text"
+							   disabled ="disabled"
+							   id="contributer_percentage"
+							   ng-model="contributer.contributer_percentage" />%
+					</div>
+
+					<div class='col-sm-2'>
+						<button type="submit"
+								class="btn btn-default"
+								aria-label="Left Align"
+								ng-click='removeCollaboratorItem(contributer.contributer_id,contributer.contributer_percentage,$index)'>
+							<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+						</button>
+					</div>
+
 				</div>
 			</div>
 
+			<select ui-select2="select2Config" 
+					ng-model='selectedContributerId'
+					ng-change="updateContributer(selectedContributerId)"
+					style="width: 200px;"
+					data-placeholder="Choose Contributer">
+				<option value=""></option>
+				<option ng-repeat="user in updatedUsersList" value="{{user.id}}">{{user.name}}</option>
+			</select>					
 
-			
+		</div><!-- /.col-sm-6 -->
+
+	</div><!-- /.row -->
+
+	<div class="row">
+		<div class="col-sm-6">
+	        <p>Adding Value is the best...</p>
+		</div>
+		<div class="col-sm-6">
+			<button type="submit"
+					class="btn btn-warning submit-button center-block" 
+					ng-disabled="!model.title || !model.file || buttonDisabled"
+					ng-click="onSubmit()">Submit</button>
 		</div>
 	</div>
+
+</form>
+
+</div>
+</div>
+</div>
+</div>
 </div>

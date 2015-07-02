@@ -13,7 +13,7 @@ angular.module('MyApp').controller(
 			if (!$auth.isAuthenticated()) {
 				$location.path('splash');
 			} else {
-														
+												
 				$scope.contributionId = $stateParams.contributionId;
 				$scope.getProfile = function() {
 					Account.getProfile().success(function(data) {
