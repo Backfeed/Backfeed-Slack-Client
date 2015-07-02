@@ -21,29 +21,25 @@
 					<div ng-repeat="contributer in model.contributers"  >
 					
 						<div class="row well-lg contributer-cell">
-							<div id="imgButton{{$index}}"  class = 'col-sm-2' style="display:none">
+							<div id="imgButton{{$index}}"  class = 'col-sm-2' >
 							      <img class="img-rounded" ng-src="{{contributer.img}}" alt="" HEIGHT      = 50 WIDTH=50>
 				  			</div>
 							<div class ='col-sm-3'>
-								<select  id="selectButton{{$index}}" ui-select2="select2Config" ng-model = "contributer.contributer_id" style="width: 200px;{{contributer.disableTagButton}}"
-										ng-change="contributer.img = updateContributer(contributer.contributer_id,contributer.contributer_percentage,$index)"  data-placeholder="Choose Contributer">
-										<option value=""></option>
-    									<option ng-repeat="user in contributer.usersList" value="{{user.id}}">{{user.name}}</option>
-								</select>
+								
 								<div>{{contributer.contributer_name}}</div>
 							</div>
 							
-							<div id="rangeButton{{$index}}" class = 'col-sm-3' style="display:none">
-								<input 	 style="width: 200px;" type="range" min="0" max="100" step="1"  
-										ng-disabled ="contributer.contributer_id == '0'" ng-model="contributer.contributer_percentage" ng-change="changeContribution(contributer.contributer_id,contributer.contributer_percentage,'')">
+							<div id="rangeButton{{$index}}" class = 'col-sm-3' >
+								<input 	 style="width: 200px;" type="range" min="1" max="99" step="1"  
+										ng-disabled ="contributer.contributer_percentage == 100" ng-model="contributer.contributer_percentage" ng-change="changeContribution(contributer.contributer_id,contributer.contributer_percentage,'')">
 								</input>
 							</div>
 							
-							<div id="perButton{{$index}}" class = 'col-sm-2' style="display:none">			
+							<div id="perButton{{$index}}" class = 'col-sm-2' >			
 								<input size = "5" type="text" disabled = "disabled"  id="contributer_percentage" ng-model="contributer.contributer_percentage">
 								</input> %
 							</div>	
-							<div id="remButton{{$index}}" class = 'col-sm-2' style="display:none">			
+							<div id="remButton{{$index}}" class = 'col-sm-2' >			
 							
 								<button type="submit" class="btn btn-default" aria-label="Left Align" ng-click='removeCollaboratorItem(contributer.contributer_id,contributer.contributer_percentage,$index)'>
 								  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
@@ -51,10 +47,12 @@
 							</div>
 						</div>
 					</div>
-										
-					<button type="submit" class="btn btn-default" aria-label="Left Align" ng-click='addCollaborator()'>
-					  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Collaborator
-					</button>
+					<select   ui-select2="select2Config" 
+										ng-model='selectedContributerId' ng-change="updateContributer(selectedContributerId)"  data-placeholder="Choose Contributer">
+										<option value=""></option>
+    									<option ng-repeat="user in updatedUsersList" value="{{user.id}}">{{user.name}}</option>
+								</select>					
+					
 					
 					<div align="center" ><button type="submit" class="btn btn-warning submit-button" 
 							ng-disabled="!model.title || !model.file || buttonDisabled" ng-click="onSubmit()">Submit</button>

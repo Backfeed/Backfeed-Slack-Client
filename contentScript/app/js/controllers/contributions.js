@@ -18,10 +18,8 @@ angular.module('MyApp').controller(
 				contributers : [ {
 					contributer_id : '0',
 					contributer_percentage : '100',
-					contributer_name:'',
-					disableTagButton:'display:none',
-					img:'/contentScript/app/images/avatar.png',
-					usersList:[]
+					contributer_name:'',					
+					img:'/contentScript/app/images/avatar.png'					
 				} ],
 				intialBid : [ {
 					tokens : '',
@@ -41,24 +39,15 @@ angular.module('MyApp').controller(
 					$scope.data.$promise.then(function(result) {
 						Users.setAllOrgUsersData(result)						
 						$scope.users = result;							
-						$scope.model.contributers[0].usersList = $scope.users;
+						$scope.updatedUsersList = $scope.users;
 						for(i = 0 ; i<$scope.users.length ; i++){						
 							if($scope.users[i].id == $scope.model.owner ){
 								$scope.model.contributers[0].img =  $scope.users[i].url
-								$scope.model.contributers[0].contributer_name =  $scope.users[i].name
-								$scope.model.contributers[0].disableTagButton = "display:none";
-								fileName = 'imgButton'+0;
-								$("[id$='"+fileName+"']").css("display", "block");
-								fileName = 'rangeButton'+0;
-								$("[id$='"+fileName+"']").css("display", "block");
-								fileName = 'perButton'+0;
-								$("[id$='"+fileName+"']").css("display", "block");
-								fileName = 'remButton'+0;
-								$("[id$='"+fileName+"']").css("display", "block");
+								$scope.model.contributers[0].contributer_name =  $scope.users[i].name								
 								break;
 							}
 						}
-						$scope.addCollaborator();
+						//$scope.addCollaborator();
 						//$location.path("/contribution/" + result.id);
 					});
 				};
@@ -75,16 +64,7 @@ angular.module('MyApp').controller(
 							$scope.access_token = data.access_token;
 							$scope.model.owner = data.userId;
 							$scope.model.contributers[0].contributer_id = data.userId;
-							$scope.model.contributers[0].contributer_name = data.displayName;
-							$scope.model.contributers[0].disableTagButton = "display:none";
-							fileName = 'imgButton'+0;
-							$("[id$='"+fileName+"']").css("display", "block");
-							fileName = 'rangeButton'+0;
-							$("[id$='"+fileName+"']").css("display", "block");
-							fileName = 'perButton'+0;
-							$("[id$='"+fileName+"']").css("display", "block");
-							fileName = 'remButton'+0;
-							$("[id$='"+fileName+"']").css("display", "block");
+							$scope.model.contributers[0].contributer_name = data.displayName;							
 							$scope.getOrgUsers();
 						}
 						Account.setUserData(data);
@@ -132,8 +112,12 @@ angular.module('MyApp').controller(
 					$scope.model.owner = userData.userId;
 				}
 				
-				$scope.updateContributer = function(selectedUserId,contPercentage,index) {
+				$scope.updateContributer = function(selectedUserId) {
+					if(selectedUserId == ''){
+						return;
+					}
 					console.log('comes here firt')
+					$scope.addCollaborator(selectedUserId);
 					urlImage = ''
 				    userName = ''
 					for(i = 0 ; i<$scope.users.length ; i++){						
@@ -143,12 +127,20 @@ angular.module('MyApp').controller(
 							break;
 						}
 					}					
-					if(contPercentage == ''){
-						allcontributers1 = $scope.model.contributers
-						contPercentage = 100/allcontributers1.length;
+					
+					allcontributers = $scope.model.contributers
+					contPercentage = 100/allcontributers.length;
+					
+					for(i=0;i<allcontributers.length;i++){
+						if(allcontributers[i].contributer_id == 0 && allcontributers[i].contributer_percentage == ''){
+							allcontributers[i].contributer_id = selectedUserId;
+							allcontributers[i].contributer_percentage = contPercentage;
+							allcontributers[i].img = urlImage;
+							
+						}
 					}
 					$scope.changeContribution(selectedUserId,contPercentage,userName);
-					return urlImage;
+										
 					
 					
 				};
@@ -164,7 +156,7 @@ angular.module('MyApp').controller(
 					} else {
 
 						$scope.users = allOrgUsersData;
-						$scope.model.contributers[0].usersList = $scope.users;
+						$scope.updatedUsersList = $scope.users;
 					}
 					
 				}
@@ -219,17 +211,7 @@ angular.module('MyApp').controller(
 							}else{
 								if(userName != ''){
 									console.log('comes inside is '+userName);
-									allcontributers[i].contributer_name = userName;
-									fileName = 'selectButton'+i;
-									$("[id$='"+fileName+"']").css("display", "none");
-									fileName = 'imgButton'+i;
-									$("[id$='"+fileName+"']").css("display", "block");
-									fileName = 'rangeButton'+i;
-									$("[id$='"+fileName+"']").css("display", "block");
-									fileName = 'perButton'+i;
-									$("[id$='"+fileName+"']").css("display", "block");
-									fileName = 'remButton'+i;
-									$("[id$='"+fileName+"']").css("display", "block");
+									allcontributers[i].contributer_name = userName;									
 								}
 								
 								
@@ -384,6 +366,21 @@ angular.module('MyApp').controller(
 				$scope.removeCollaboratorItem = function(contributerId,contributerPecentage,index) {
 					$scope.model.contributers.splice(index, 1);						
 					$scope.changeContribution(contributerId,0,'');
+					allcontributers = $scope.model.contributers							
+					$scope.updatedUsersList = [];
+					$scope.selectedContributerId = '';
+					for(i = 0 ; i<$scope.users.length ; i++){
+						userExist = false;
+						for(j=0;j<allcontributers.length;j++){
+							if($scope.users[i].id == allcontributers[j].contributer_id ){
+								userExist = true;
+								break;
+							}
+						}
+						if(userExist == false){
+							$scope.updatedUsersList.push($scope.users[i]);
+						}
+					}	
 			  };
 				$scope.createContribution = function() {
 					console.log("Create Contribution");
@@ -414,29 +411,31 @@ angular.module('MyApp').controller(
 				}
 				//$scope.users = User.query();
 				$scope.orderProp = "time_created"; // set initial order criteria
-				$scope.addCollaborator = function() {
-					console.log('comes here in add')
+				$scope.addCollaborator = function(selectedUserId) {
+					console.log('comes here in add'+selectedUserId)
 					allcontributers = $scope.model.contributers							
-					newUserList = [];
+					$scope.updatedUsersList = [];
+					$scope.selectedContributerId = '';
 					for(i = 0 ; i<$scope.users.length ; i++){
+						if($scope.users[i].id == selectedUserId){
+							continue;
+						}
 						userExist = false;
 						for(j=0;j<allcontributers.length;j++){
-							if($scope.users[i].id == allcontributers[j].contributer_id ){
+							if($scope.users[i].id == allcontributers[j].contributer_id){
 								userExist = true;
 								break;
 							}
 						}
 						if(userExist == false){
-							newUserList.push($scope.users[i]);
+							$scope.updatedUsersList.push($scope.users[i]);
 						}
 					}																
 					$scope.model.contributers.push({
 						contributer_id:'0',
 						contributer_percentage:'',
 						contributer_name:'',
-						img:'/contentScript/app/images/avatar.png',
-						disableTagButton:'display:block',
-						usersList:newUserList
+						img:'/contentScript/app/images/avatar.png'								
 					}) ;
 					$scope.buttonDisabled = true;
 				};
@@ -461,12 +460,16 @@ angular.module('MyApp').controller(
 				
 				$scope.format = function (data) {	
 				      var url = '';
-						for(i = 0 ; i<$scope.users.length ; i++){						
-							if($scope.users[i].id == data.id ){
-								url =  $scope.users[i].url
-								break;
-							}
-						}      				   
+				        if($scope.users != undefined){
+				        	for(i = 0 ; i<$scope.users.length ; i++){						
+								if($scope.users[i].id == data.id ){
+									url =  $scope.users[i].url
+									break;
+								}
+							}      				   
+				        }
+				        
+						
 				             
 				      return  "<img src='" + url +"' />&nbsp;&nbsp;" + data.text;
 				    };           
