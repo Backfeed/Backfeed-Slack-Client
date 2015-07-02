@@ -5,7 +5,7 @@ var container = document.createElement("div")
 var header = document.createElement("header")
 var headerContainer = document.createElement("div")
 var title = document.createElement("title")
-var close = document.createElement("span")
+var close = document.createElement("img")
 var collapse = document.createElement("span")
 var iframe = document.createElement("iframe")
 
@@ -18,7 +18,7 @@ container.setAttribute("id", "APP_PREFIX_CLASS_CONTAINER")
 
 
 headerContainer.setAttribute("class", "header-container")
-close.setAttribute("class", "close")
+close.setAttribute("src", chrome.extension.getURL('contentScript/app/images/close_x.png'));
 collapse.setAttribute("class", "collapse")
 
 iframe.setAttribute("src", chrome.extension.getURL("contentScript/app/index.html"))
@@ -42,31 +42,30 @@ container.appendChild(iframe)
 
 // modal overlay:
 $("body").append('<div id="sensor"></div>');
-var element = $("#sensor");
-$("#sensor").addClass( 'sensorHidden'  );
+$("#sensor").addClass('sensorHidden');
 
 function closeCompose() {
-	$("#sensor").removeClass( 'sensorVisible'  );
-	$("#sensor").addClass( 'sensorHidden'  );
+	$("#sensor").removeClass('sensorVisible');
+	$("#sensor").addClass('sensorHidden');
     
-	container.style.display = "none"
+	container.style.display = "none";
 
 }
 
 function openCompose() {
 	
-	$("#sensor").removeClass( 'sensorHidden'  );
-	$("#sensor").addClass( 'sensorVisible'  );	
+	$("#sensor").removeClass('sensorHidden');
+	$("#sensor").addClass('sensorVisible');	
 		        
-	container.style.display = "block"
-	container.style.zIndex = 1000
+	container.style.display = "block";
+	container.style.zIndex = 1000;
 }
 
 function collapseCompose() {
 	if(container.style.height != "0px"){
-		container.style.height = "0px"
+		container.style.height = "0px";
 	}else {
-		container.style.height = "460px"
+		container.style.height = "460px";
 	}
 }
 
@@ -75,7 +74,7 @@ function setHeaderColor(color) {
 }
 
 function setTitle(title) {
-	document.querySelector("#APP_PREFIX_CLASS_CONTAINER title").innerHTML = title
+	document.querySelector("#APP_PREFIX_CLASS_CONTAINER title").innerHTML = title;
 }
 
 var GESTURES = {
@@ -89,15 +88,15 @@ var GESTURES = {
 function init() {
 	buttonReady = setInterval(function(){
 		if(document.querySelector(Config.actionButtonSelector).appendChild){
-			document.querySelector(Config.actionButtonSelector).appendChild(openComposeButton)
-			openComposeButton.onclick = openCompose
-			clearInterval(buttonReady)
+			document.querySelector(Config.actionButtonSelector).appendChild(openComposeButton);
+			openComposeButton.onclick = openCompose;
+			clearInterval(buttonReady);
 		}
 	}, 100)
 
-	collapse.onclick = collapseCompose
+	collapse.onclick = collapseCompose;
 
-	close.onclick = closeCompose
+	close.onclick = closeCompose;
 
 	if(Config.draggable) {
 		$(container).draggable({
@@ -114,10 +113,10 @@ function init() {
 	})
 }
 
-var ready = setInterval(function(){
+var ready = setInterval(function() {
 	if(document.getElementsByTagName("body").length > 0){
 		document.getElementsByTagName("body")[0].appendChild(container)
 		init();
 		clearInterval(ready)
 	}
-},500)
+} ,500)

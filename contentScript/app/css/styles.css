@@ -54,7 +54,7 @@ width:100px;
 	margin-top:30px;
 }
 .splash-text{
-	font: 13px/20px "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font: 13px/20px;
 	color:white;
 }
 
@@ -70,23 +70,22 @@ width: 100%
  	
 
 }
-.splash-background{
+/* .splash-background{
 
      background: url('../images/background_4.jpg');
      background-size: 1440px 800px;
      background-repeat:no-repeat;
      display: compact;
 
-	
-}
+  
+} */
 
 body {
-  font-family: 'Open Sans', sans-serif;
-  background: #FAEF9B;
+  font-family: 'Lato', sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Lato', sans-serif;
   font-weight: bold;
 }
 
@@ -149,7 +148,7 @@ a {
 }
 
 .panel {
-  border-color: #cfd9D7;
+  border: none;
   border-radius: 2px;
  
 }
@@ -162,6 +161,14 @@ a {
   background-color: #f6f6f6;
   border-color: #cfd9db;
 }
+
+form label {
+  text-transform: uppercase;
+  font-weight: normal;
+  font-size: smaller;
+  color: #e79fc5;
+}
+
 
 .form-control {
   border-radius: 0;
@@ -249,12 +256,17 @@ a {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
 }
 
-.btn-primary {
-  background-color: #4285f4;
+.btn-backfeed {
+  background-color: #fa2a91;
+  color: white;
+  font-weight: normal;
+  padding: 18px 45px;
+  text-transform: uppercase;
 }
 
-.btn-primary:hover {
-  background-color: #3367d6;
+.btn-backfeed:hover, .btn-backfeed:focus, .btn-backfeed.focus {
+    color: darkgrey;
+    background-color: #ff2a91;
 }
 
 .btn-success {
