@@ -1,3 +1,4 @@
+
 angularExtensionTemplate
 ========================
 Chrome extension template with angular inside,
@@ -49,6 +50,7 @@ A simple popup html plain scaffolding example
 
 
 <h3>Ajax example interaction</h3>
+
 <label>anuglar controller </label>
 ```js
 app.controller('MainCtrl',  ["$scope", "PostMessageService", function($scope, PostMessageService) {
@@ -64,26 +66,26 @@ app.controller('MainCtrl',  ["$scope", "PostMessageService", function($scope, Po
 	});
 
 }]);
-
 ```
 
 <h3>Gesture example interaction</h3>
+
 ```js
-	$scope.closeCompose = function() {
-		PostMessageService.gesture.closeCompose(); 
-	}
+$scope.closeCompose = function() {
+	PostMessageService.gesture.closeCompose(); 
+}
 
-	$scope.collapseCompose = function() {
-		PostMessageService.gesture.collapseCompose();
-	}
-	
-	$scope.setTitleCompose = function(title) {
-		PostMessageService.gesture.setTitle(title);
-	}
+$scope.collapseCompose = function() {
+	PostMessageService.gesture.collapseCompose();
+}
 
-	$scope.changeHeaderColor = function() {
-		PostMessageService.gesture.setHeaderColor("crimson");
-	}
+$scope.setTitleCompose = function(title) {
+	PostMessageService.gesture.setTitle(title);
+}
+
+$scope.changeHeaderColor = function() {
+	PostMessageService.gesture.setHeaderColor("crimson");
+}
 ```
 
 <h3>Create your services to make ajax! </h3>
@@ -128,9 +130,9 @@ SERVICE_MAP = {
 ```
 and it automatically called when angular app call it by name
 
-<h3>Compose config.js</h3>
+<h3>composeConfig.js</h3>
 
-your gadget have an action button to open it and some specific gui parameter that you can find in composeConfig.js
+Your gadget has an action button to open it and some specific GUI parameters that you can find in composeConfig.js
 
 ```js
 var Config = {

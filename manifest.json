@@ -1,15 +1,15 @@
 {
 	// basic info --------------------------------------------------------------
-	"name"				: "...",
+	"name"				: "Backfeed Monitor",
 	"version"			: "1.0",
-	"description"		: "...",
+	"description"		: "Still hard to describe, but we're working on it...",
 	"manifest_version"	: 2,
-	"icons": {
-    "16": "assets/icon16.png",
-    "32": "assets/icon32.png",
-    "48": "assets/icon48.png",
-    "128": "assets/icon128.png"
-  },
+	"icons"				: {
+		"16": "assets/icon16.png",
+		"32": "assets/icon32.png",
+		"48": "assets/icon48.png",
+		"128": "assets/icon128.png"
+	},
 	"background"		: {
 		"page"			: "background/background.html"
 	},
@@ -21,24 +21,26 @@
 	// page injection --------------------------------------------------------------	
 	"content_scripts"	: [{
 		"matches"			: [ "*://*.slack.com/*" ],
-		"exclude_globs"		: [ "*.jpg","*.jpeg","*.gif","*.png","*.bmp","*.webp",
-								"*.css","*.swf","*.js","*.zip","*.rar","*.tar","*.tar.gz","*.tgz","*.tar.bz2","*.tbz2",
-								"*.doc","*.docx","*.ppt","*.pptx","*.xls","*.xlsx","*.pdf","*.xml","*.txt",
-								"*.mpg","*.mpeg","*.qt","*.mp4","*.m4v","*.m4a","*.mp3","*.ogv","*.ogm","*.ogg","*.oga","*.webm","*.wav",
-								"*.","*." ],
+		"exclude_globs"		: [ 
+			"*.jpg","*.jpeg","*.gif","*.png","*.bmp","*.webp",
+			"*.css","*.swf","*.js","*.zip","*.rar","*.tar","*.tar.gz","*.tgz","*.tar.bz2","*.tbz2",
+			"*.doc","*.docx","*.ppt","*.pptx","*.xls","*.xlsx","*.pdf","*.xml","*.txt",
+			"*.mpg","*.mpeg","*.qt","*.mp4","*.m4v","*.m4a","*.mp3","*.ogv","*.ogm","*.ogg","*.oga","*.webm","*.wav",
+			"*.","*." 
+		],
 		"css"				: ["contentScript/inject.css"],
 		"js"				: [
-								"contentScript/vendor/jquery.min.js",
-								"contentScript/composeConfig.js" ,
-								"contentScript/contentScript.js"
-							],
+			"contentScript/vendor/jquery.min.js",
+			"contentScript/composeConfig.js" ,
+			"contentScript/contentScript.js"
+		],
 		"run_at" 			: "document_end"
 	}],
 	// imports & permissions --------------------------------------------------------------	
-	"web_accessible_resources" : [ 
+	"web_accessible_resources"  : [ 
 		"contentScript/app/*"
 	],	
-	"permissions"		: [ 
+	"permissions"				: [ 
 		"tabs",
 		"webRequest",
 	    "http://*/*",
