@@ -2,15 +2,15 @@
 <head>
 	<title>App name</title>
 	 <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
-	 <link href="css/bootstrap.css" rel="stylesheet">
   	 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
   	 <link href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet">
   	 <link href="https://cdn.jsdelivr.net/animatecss/3.2.0/animate.css" rel="stylesheet">
-	 <link href="css/angular-slider.css" rel="stylesheet">
-	 <link href="css/select2.css" rel="stylesheet">
-	 <link href="css/selectize.default.css" rel="stylesheet">
+	 <link href="vendor/styles/angular-slider.css" rel="stylesheet">
+	 <link href="vendor/styles/select2.css" rel="stylesheet">
+	 <link href="vendor/styles/selectize.default.css" rel="stylesheet">
+	 <link href="vendor/styles/rangeslider.css" rel="stylesheet">
 	 <link href="css/styles.css" rel="stylesheet">
-	 
+	 <link href="build/main.css" rel="stylesheet">
 </head>
 <body ng-app="MyApp" ng-csp>
 	
@@ -19,24 +19,25 @@
 <div ui-view></div>
 	
 	<!-- vendor -->
-	<script src="js/vendor/jquery.js"></script>
-	<script src="js/vendor/spin.min.js"></script>
+	<script src="vendor/scripts/jquery.js"></script>
+	<script src="vendor/scripts/spin.min.js"></script>
 	
 	
-	<script src="js/vendor/select2.js"></script>
-	<script src="js/vendor/angular.js"></script>
-	<script src="js/vendor/angular-sanitize.js"></script>
-	<script src="js/vendor/angular-messages.js"></script>
-	<script src="js/vendor/angular-resource.js"></script>
-	<script src="js/vendor/angular-animate.js"></script>
-	<script src="js/vendor/angular-ui-router.js"></script>
-	<script src="js/vendor/angular-ui/select2.js"></script>
-	<script src="js/vendor/angular-strap.js"></script>
-	<script src="js/vendor/angular-strap.tpl.js"></script>
-	<script src="js/vendor/satellizer.js"></script>
-	<script src="js/vendor/angular-slider.js"></script>
-	<script src="js/vendor/api-check.js"></script>
-	<script src="js/vendor/ui-bootstrap-0.13.0.js"></script>
+	<script src="vendor/scripts/select2.js"></script>
+	<script src="vendor/scripts/rangeslider.js"></script>
+	<script src="vendor/scripts/angular.js"></script>
+	<script src="vendor/scripts/angular-sanitize.js"></script>
+	<script src="vendor/scripts/angular-messages.js"></script>
+	<script src="vendor/scripts/angular-resource.js"></script>
+	<script src="vendor/scripts/angular-animate.js"></script>
+	<script src="vendor/scripts/angular-ui-router.js"></script>
+	<script src="vendor/scripts/angular-ui/select2.js"></script>
+	<script src="vendor/scripts/angular-strap.js"></script>
+	<script src="vendor/scripts/angular-strap.tpl.js"></script>
+	<script src="vendor/scripts/satellizer.js"></script>
+	<script src="vendor/scripts/angular-slider.js"></script>
+	<script src="vendor/scripts/api-check.js"></script>
+	<script src="vendor/scripts/ui-bootstrap-0.13.0.js"></script>
 	
 	
 	<script src="js/app.js"></script>
@@ -60,5 +61,8 @@
 	<script src="js/controllers/logout.js"></script>
 	<script src="js/controllers/profile.js"></script>
 	<script src="js/controllers/navbar.js"></script>
+
+	<!-- directives -->
+	<script src="js/helpers/rangeslider.js"></script>
 </body>
 </html>
