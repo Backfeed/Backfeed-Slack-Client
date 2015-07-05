@@ -7,13 +7,13 @@ gulp.task('clean', function(cb) {
     del('build/**/*', cb);
 });
 
-gulp.task('less', function() {
+gulp.task('compileLess', function() {
     return gulp.src('./less/main.less')
         .pipe(less())
         .pipe(gulp.dest('./build'));
 });
 
-gulp.task('autoprefix', ['less'], function () {
+gulp.task('autoprefix', ['compileLess'], function () {
     return gulp.src('./build/main.css')
         .pipe(autoprefixer({
             browsers: ['last 2 versions'],
@@ -22,4 +22,10 @@ gulp.task('autoprefix', ['less'], function () {
         .pipe(gulp.dest('build/'));
 });
 
-gulp.task('default', ['clean', 'less', 'autoprefix']);
+gulp.task('watch', function() {
+    gulp.watch('less/**/*.less', ['less']);
+});
+
+gulp.task('less', ['compileLess', 'autoprefix'])
+
+gulp.task('default', ['clean', 'less']);

@@ -10,7 +10,7 @@
 
 		<div class="col-sm-6">
 
-			<h2>New Value <img alt="help" src="chrome-extension://ofiocalejfcccpcdmfocfhnocmmgdgnk/contentScript/app/images/icon_help.png" tooltip-placement="right" tooltip="On the Right!"></h2>
+			<h2>New Value <img alt="help" src="/contentScript/app/images/icon_help.png"/></h2>
 
 			<div class="form-group">
 				<input type="text"
@@ -18,9 +18,9 @@
 					   id="title"
 					   required
 					   placeholder="Name of the new value"
-					   ng-model="model.title" />
+					   ng-model="model.title"/>
 				<label>Title</label>
-	        </div>
+			</div>
 
 			<div class="form-group">
 				<textarea class="form-control"
@@ -30,81 +30,61 @@
 						  placeholder="tell us more..."
 						  ng-model="model.file"></textarea>
 				<label>Content</label>
-	        </div>
-
-		</div>
-
-		<div class="col-sm-6">
-			
-			<h2>Contributors</h2>
-
-			<div ng-repeat="contributer in model.contributers">
-				<div class="row well-lg contributer-cell">
-
-					<div class='col-sm-2'>
-					    <img class="img-rounded" ng-src="{{contributer.img}}" alt="" HEIGHT=50 WIDTH=50>
-		  			</div>
-
-					<div class='col-sm-3'>
-						<div>{{contributer.contributer_name}}</div>
-					</div>
-
-					<div class='col-sm-3'>
-						<input style="width: 200px;"
-							   type="range"
-							   min="1"
-							   max="99"
-							   step="1"
-							   ng-disabled="contributer.contributer_percentage == 100"
-							   ng-model="contributer.contributer_percentage"
-							   ng-change="changeContribution(contributer.contributer_id,contributer.contributer_percentage,'')" />
-						</input>
-					</div>
-
-					<div class='col-sm-2'>			
-						<input size ="5"
-							   type="text"
-							   disabled ="disabled"
-							   id="contributer_percentage"
-							   ng-model="contributer.contributer_percentage" />%
-					</div>
-
-					<div class='col-sm-2'>
-						<button type="submit"
-								class="btn btn-default"
-								aria-label="Left Align"
-								ng-click='removeCollaboratorItem(contributer.contributer_id,contributer.contributer_percentage,$index)'>
-							<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-						</button>
-					</div>
-
-				</div>
 			</div>
 
-			<select ui-select2="select2Config" 
+		</div>
+
+		<div class="col-sm-6">
+
+			<h2>Contributors <img alt="help" src="/contentScript/app/images/icon_help.png"/></h2>
+
+			<ul ng-repeat="contributer in model.contributers" class="media-list">
+				<li class="media contributer-cell">
+					<div class="media-left media-middle">
+						<a href="#">
+							<img class="media-object" src="{{contributer.img}}" alt=""/>
+						</a>
+					</div>
+
+					<div class="media-body">
+						<h4 class="media-heading">{{contributer.contributer_name}}</h4>
+
+						<p>{{contributer.contributer_fullname}}</p>
+
+						<input class="contribution-slider" data-rangeslider type="range" min="1" max="99" step="1"
+							   ng-disabled="contributer.contributer_percentage == 100"
+							   ng-model="contributer.contributer_percentage"
+							   ng-change="changeContribution(contributer.contributer_id,contributer.contributer_percentage,'')"/>
+					</div>
+
+					<div class="media-right media-middle"><span contenteditable>{{contributer.contributer_percentage}}</span>%</div>
+				</li>
+			</ul>
+
+			<select ui-select2="select2Config"
+                    style="width:96%"
 					ng-model='selectedContributerId'
 					ng-change="updateContributer(selectedContributerId)"
-					style="width: 200px;"
-					data-placeholder="Choose Contributer">
+					data-placeholder="Add Contributor">
 				<option value=""></option>
 				<option ng-repeat="user in updatedUsersList" value="{{user.id}}">{{user.name}}</option>
-			</select>					
+			</select>
 
-		</div><!-- /.col-sm-6 -->
-
-	</div><!-- /.row -->
-
-	<div class="row">
-		<div class="col-sm-6">
-	        <p>Adding Value is the best...</p>
 		</div>
-		<div class="col-sm-6">
-			<button type="submit"
-					class="btn btn-warning submit-button center-block" 
-					ng-disabled="!model.title || !model.file || buttonDisabled"
-					ng-click="onSubmit()">Submit</button>
-		</div>
+
 	</div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <p class="lead">Adding Value is the best...</p>
+        </div>
+        <div class="col-sm-6">
+            <button type="submit"
+                    class="btn btn-backfeed submit-button center-block"
+                    ng-disabled="!model.title || !model.file || buttonDisabled"
+                    ng-click="onSubmit()">Add Value</button>
+        </div>
+    </div>
 
 </form>
 

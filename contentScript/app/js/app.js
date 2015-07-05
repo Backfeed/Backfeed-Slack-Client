@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('MyApp', ['uiSlider','ngResource', 'ngMessages', 'ui.router', 'ui.bootstrap', 'mgcrea.ngStrap', 'satellizer','BFAPIServices','ui.select2'])
+angular.module('MyApp', ['uiSlider','ngResource', 'ngMessages', 'ui.router', 'ui.bootstrap', 'mgcrea.ngStrap', 'satellizer','BFAPIServices','ngSanitize','ui.select2','helpers.rangeslider'])
 .config(function($stateProvider, $urlRouterProvider, $authProvider) {
   $stateProvider
 	  .state('splash', {

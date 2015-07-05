@@ -14,6 +14,8 @@ now you see at the bottom of the screen an action button with "J" to open your c
 
 <h3>Content script</h3>
 
+Run `gulp` command inside folder `contentScript/app/` to build the app's CSS file.
+
 <ul>
 <li>injected html box draggable
 <ul>

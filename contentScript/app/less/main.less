@@ -21,25 +21,59 @@
   top: -2px;
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAMAAAC6sdbXAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDE0IDc5LjE1Njc5NywgMjAxNC8wOC8yMC0wOTo1MzowMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkRFNjkxMTUzMjJFQzExRTVBNzcxRkFDNEEyMEYwRUIwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkRFNjkxMTU0MjJFQzExRTVBNzcxRkFDNEEyMEYwRUIwIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6REU2OTExNTEyMkVDMTFFNUE3NzFGQUM0QTIwRjBFQjAiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6REU2OTExNTIyMkVDMTFFNUE3NzFGQUM0QTIwRjBFQjAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4OVa+FAAAABlBMVEX6KpH///+fXRTGAAAAAnRSTlP/AOW3MEoAAAASSURBVHjaYmBgBEIGHCRAgAEAALQAC4isJ+IAAAAASUVORK5CYII=');
 }
-
 .rangeslider__handle:after {
   background-image: none;
 }
 
-.contributer-cell{
-  border-style: solid;
-  margin:10px;
-  border-color: grey;
+.contributer-cell {
+  margin: 10px;
+  background-color: #e2e9f7;
+  padding: 7px;
+
+  .media-right {
+    font-size: 18px;
+    background-color: white;
+    padding-right: 10px;
+  }
 }
 
+.select2 {
+  border: 2px dashed lightgrey;
+  margin: 10px;
+  padding: 5px;
+  height: 55px;
+
+  .select2-selection--single {
+    border: 0;
+
+    .select2-selection__arrow {
+      top: 15px;
+      right: 10px;
+      background: url('/contentScript/app/images/icon_plus.png') no-repeat;
+
+      b {
+        display: none;
+      }
+    }
+
+    .select2-selection__placeholder {
+      font-size: 16px;
+      color: #7092d6;
+    }
+  }
+}
+
+.lead {
+  color: #7092d6;
+}
 
 .node-tooltip-plus{
   opacity:0;
 }
 .node-tooltip-feedbak{
   opacity:0;
-
 }
+
 .filter-container {
   position: fixed;
   height:220px;
@@ -89,36 +123,6 @@ body, html {
   width: 100%;
 }
 
-
-.profile{
-
-
-
-
-}
-/* .splash-background{
-
-     background: url('../images/background_4.jpg');
-     background-size: 1440px 800px;
-     background-repeat:no-repeat;
-     display: compact;
-
-
-} */
-
-body {
-  font-family: 'Lato', sans-serif;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Lato', sans-serif;
-  font-weight: bold;
-}
-
-a {
-  color: #000;
-}
-
 .text-muted {
   color: #90939a;
 }
@@ -161,13 +165,6 @@ a {
   padding-right: 20px;
 }
 
-.navbar-default .navbar-brand:hover {
-  /*
- font-weight:bold;
-*/
-
-}
-
 .navbar-brand {
   margin-left: -15px;
   transition: 0.25s all;
@@ -193,11 +190,16 @@ form label {
   font-weight: normal;
   font-size: smaller;
   color: #e79fc5;
+  opacity: 0;
+  transition: opacity 1s;
 }
-
 
 .form-control {
   border-radius: 0;
+  
+  &:focus+label{
+    opacity: 1;
+  }
 }
 
 .center-form {
@@ -443,40 +445,22 @@ form label {
 *********************/
 
 .fadeZoom.ng-enter {
-  -webkit-animation-duration: 0.6s, 0.2s;
-  -moz-animation-duration: 0.2s, 0.2s;
-  -ms-animation-duration: 0.2s, 0.2s;
-  animation-duration: 0.2, 0.2s;
-  -webkit-animation-name: fadeIn, zoomIn;
-  -moz-animation-name: fadeIn, zoomIn;
-  -ms-animation-name: fadeIn, zoomIn;
+  animation-duration: 0.2s, 0.2s;
   animation-name: fadeIn, zoomIn;
 }
 
 .fadeZoomFadeDown.ng-enter {
-  -webkit-animation-duration: 0.2s, 0.2s;
-  -moz-animation-duration: 0.2s, 0.2s;
-  -ms-animation-duration: 0.2s, 0.2s;
   animation-duration: 0.2s, 0.2s;
-  -webkit-animation-name: fadeIn, zoomIn;
-  -moz-animation-name: fadeIn, zoomIn;
-  -ms-animation-name: fadeIn, zoomIn;
   animation-name: fadeIn, zoomIn;
 }
 
 .fadeZoomFadeDown.ng-leave {
-  -webkit-animation: fadeOutDown 0.2s;
-  -moz-animation: fadeOutDown 0.2s;
-  -ms-animation: fadeOutDown 0.2s;
   animation: fadeOutDown 0.2s;
 }
 
 @keyframes zoomIn {
   0% {
     opacity: 0;
-    -webkit-transform: scale3d(0.8, 0.8, 0.8);
-    -moz-transform: scale3d(0.8, 0.8, 0.8);
-    -ms-transform: scale3d(0.8, 0.8, 0.8);
     transform: scale3d(0.8, 0.8, 0.8);
   }
 

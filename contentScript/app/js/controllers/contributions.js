@@ -3,8 +3,8 @@ angular.module('MyApp').controller(
 		function($scope, $auth, $location, $rootScope,$stateParams, $alert, Contributions,
 				ContributionDetail, SaveContribution, CloseContribution,$state,
 				Account, Users) {
-			console.log('comes here in controller')	
-			
+
+
 			var orgExists;
 			$scope.currencyFormatting = function(value) { return value.toString() + " $"; };
 			$scope.organizationId = 'notintialized';
@@ -27,7 +27,9 @@ angular.module('MyApp').controller(
 				} ]
 
 			}
-			
+
+			console.log('comes here in controller')
+
 			// if not authenticated return to splash:
 			if (!$auth.isAuthenticated()) {
 				$location.path('splash');
@@ -460,25 +462,26 @@ angular.module('MyApp').controller(
 				
 				$scope.format = function (data) {	
 				      var url = '';
-				      var realName = ''
+				      var realName = '';
+
 				        if($scope.users != undefined){
 				        	for(i = 0 ; i<$scope.users.length ; i++){						
 								if($scope.users[i].id == data.id ){
-									url =  $scope.users[i].url
+									url = $scope.users[i].url
 									realName =  $scope.users[i].real_name
 									break;
 								}
 							}      				   
 				        }
-				        
-						
+
+					if (!url) url = "images/icon-dude.png";
 				             
-				      return  "<img src='" + url +"' /><span>"+ data.text + " </span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>"+ realName + " </span>";
+				      return  $("<img src='" + url +"' /><span>"+ data.text + " </span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>"+ realName + " </span>");
 				    };           
 				         
 				    $scope.select2Config = {
-				      formatResult: $scope.format,
-				      formatSelection: $scope.format
+						templateResult: $scope.format,
+						templateSelection: $scope.format
 				    };
 
 			}
