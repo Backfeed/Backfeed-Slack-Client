@@ -4,6 +4,7 @@ angular.module('MyApp').controller(
 				ContributionDetail, SaveContribution, CloseContribution,$state,
 				Account, Users) {
 
+			jQuery('#createContributionModal').modal();
 
 			var orgExists;
 			$scope.currencyFormatting = function(value) { return value.toString() + " $"; };
