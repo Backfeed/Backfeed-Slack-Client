@@ -4,7 +4,7 @@ angular.module('MyApp').controller('MainCtrl',  ["$scope", "$state","PostMessage
 	$scope.index = 0;
 	$scope.click = function() {
 		$scope.index += 1;
-	}
+	};
 	
 	//************    Listen to messages inorder to open modal and navigate the App       ************
 	function goTo(options) {
@@ -12,22 +12,22 @@ angular.module('MyApp').controller('MainCtrl',  ["$scope", "$state","PostMessage
 		//alert('GetMessageService: goTo: recieved param:'+options );
 		console.log('MainCtrl: goTo: recieved param:'+options );
 		PostMessageService.gesture.openCompose();
-		
+
 		$state.go('createOrg');
 	}
 
 	var GESTURES = {
 		"openCreateOrg": goTo
-	}
+	};
 
 	console.log('MainCtrl init');
 	//GetMessageService.init();
-	
+
 	var init = function() {
 		PostMessageService.init("myport");
-		
-		console.log('MainCtrl: init: listening to events. ')
-		
+
+		console.log('MainCtrl: init: listening to events. ');
+
 		chrome.runtime.onMessage.addListener(
 		    function(request, sender, sendResponse) {
 		        console.log(sender.tab ?
@@ -41,8 +41,7 @@ angular.module('MyApp').controller('MainCtrl',  ["$scope", "$state","PostMessage
 		        //if (request.greeting == "hello")
 		        //    sendResponse({farewell: "goodbye"});
 		});
-
-  	}
+  	};
 	init();
 	
 //************************	

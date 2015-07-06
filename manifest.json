@@ -30,7 +30,8 @@
 		],
 		"css"				: ["contentScript/inject.css"],
 		"js"				: [
-			"contentScript/vendor/jquery.min.js",
+			"contentScript/app/vendor/scripts/jquery.js",
+			"contentScript/app/vendor/scripts/angular.js",
 			"contentScript/composeConfig.js" ,
 			"contentScript/contentScript.js"
 		],
