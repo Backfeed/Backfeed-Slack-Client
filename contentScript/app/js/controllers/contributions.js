@@ -2,9 +2,14 @@ angular.module('MyApp').controller(
 		'ContributionsCtrl',
 		function($scope, $auth, $location, $rootScope,$stateParams, $alert, Contributions,
 				ContributionDetail, SaveContribution, CloseContribution,$state,
-				Account, Users) {
+				Account, Users, PostMessageService) {
 
-			jQuery('#createContributionModal').modal();
+			//TODO move to directive
+            var modal = jQuery('#createContributionModal');
+            modal.modal();
+            modal.on('hidden.bs.modal', function (e) {
+                PostMessageService.sendGesture('closeCompose');
+            });
 
 			var orgExists;
 			$scope.currencyFormatting = function(value) { return value.toString() + " $"; };
@@ -27,9 +32,9 @@ angular.module('MyApp').controller(
 					reputation : ''
 				} ]
 
-			}
+			};
 
-			console.log('comes here in controller')
+			console.log('comes here in controller');
 
 			// if not authenticated return to splash:
 			if (!$auth.isAuthenticated()) {
@@ -40,13 +45,13 @@ angular.module('MyApp').controller(
 						organizationId : $scope.organizationId
 					});
 					$scope.data.$promise.then(function(result) {
-						Users.setAllOrgUsersData(result)						
+						Users.setAllOrgUsersData(result);
 						$scope.users = result;							
 						$scope.updatedUsersList = $scope.users;
 						for(i = 0 ; i<$scope.users.length ; i++){						
 							if($scope.users[i].id == $scope.model.owner ){
-								$scope.model.contributers[0].img =  $scope.users[i].url
-								$scope.model.contributers[0].contributer_name =  $scope.users[i].name								
+								$scope.model.contributers[0].img =  $scope.users[i].url;
+								$scope.model.contributers[0].contributer_name =  $scope.users[i].name;
 								break;
 							}
 						}
@@ -99,14 +104,14 @@ angular.module('MyApp').controller(
 				userData = Account.getUserData();
 				
 				if (userData == undefined) {
-					console.log('userData is not defined'+userData)
+					console.log('userData is not defined'+userData);
 					$scope.getProfile();
 				} else {
-					console.log('userData is  defined'+userData)
+					console.log('userData is  defined'+userData);
 					$scope.userId = userData.userId;
-					console.log('userData is  defined userId'+$scope.userId)
+					console.log('userData is  defined userId'+$scope.userId);
 					orgExists = userData.orgexists;
-					console.log('userData is  defined orgexists'+$scope.orgexists)
+					console.log('userData is  defined orgexists'+$scope.orgexists);
 					if (orgExists == 'true') {
 						$scope.users_organizations_id = userData.userOrgId;
 						$scope.organizationId = userData.orgId;
@@ -119,19 +124,19 @@ angular.module('MyApp').controller(
 					if(selectedUserId == ''){
 						return;
 					}
-					console.log('comes here firt')
+					console.log('comes here firt');
 					$scope.addCollaborator(selectedUserId);
-					urlImage = ''
-				    userName = ''
+					urlImage = '';
+				    userName = '';
 					for(i = 0 ; i<$scope.users.length ; i++){						
 						if($scope.users[i].id == selectedUserId ){
-							urlImage =  $scope.users[i].url
+							urlImage =  $scope.users[i].url;
 							userName = $scope.users[i].name;
 							break;
 						}
 					}					
 					
-					allcontributers = $scope.model.contributers
+					allcontributers = $scope.model.contributers;
 					contPercentage = 100/allcontributers.length;
 					
 					for(i=0;i<allcontributers.length;i++){
@@ -152,7 +157,7 @@ angular.module('MyApp').controller(
 				
 
 				allOrgUsersData = Users.getAllOrgUsersData();
-				console.log('here orgExists is'+orgExists)
+				console.log('here orgExists is'+orgExists);
 				if (orgExists == 'true') {
 					if (allOrgUsersData == undefined) {
 						$scope.getOrgUsers();
@@ -197,7 +202,7 @@ angular.module('MyApp').controller(
 				
 				$scope.changeContribution = function(contributerId,contributerPercentage,userName) {
 					totalContribution = 0;
-					allcontributers = $scope.model.contributers
+					allcontributers = $scope.model.contributers;
 					valid = true;
 					if(allcontributers.length){
 						valid = false;	
@@ -250,14 +255,14 @@ angular.module('MyApp').controller(
                     var str =   contributionData.title +
                                 '\ncontent: \n'+contributionData.file;
                     return str;
-                }
+                };
 			  
 				$scope.sendTestMessage = function(channelId,message) {
 							console.log('sending test message to slack :'+message);
 
 							// 'https://slack.com/api/users.list'
 
-							var url = 'https://slack.com/api/chat.postMessage'
+							var url = 'https://slack.com/api/chat.postMessage';
 							console.log('url:'+url);
 
 							var token = "xoxp-3655944058-3674335518-3694970236-83726d";
@@ -268,7 +273,7 @@ angular.module('MyApp').controller(
 								token:token,
 								channel:channelId,
 								text:message
-							}
+							};
 
 							// TBD: move to use angularJS instead of Jquery and get rid of need to change  Host when we deploy...
 							// TBD: which API ? do we get 'my borads or boards of orgenziation'
@@ -292,11 +297,11 @@ angular.module('MyApp').controller(
 					var chnls = data.channels;
 					for (chnIndx in chnls){
 						var chnl = chnls[chnIndx];
-						console.log('chnl.name:'+chnl.name)	
+						console.log('chnl.name:'+chnl.name);
 						if(chnl.name == 'contributions_test'){
 							console.log('is random sending ...:')	;
 							
-							channelId = chnl.id
+							channelId = chnl.id;
 							$scope.sendTestMessage(channelId,'new contribution was created:\n'+$scope.formatContributionData($scope.currentSavedContribution))
 						}			
 					}
@@ -308,7 +313,7 @@ angular.module('MyApp').controller(
 
 						// 'https://slack.com/api/users.list'
 
-						var url = 'https://slack.com/api/channels.list'
+						var url = 'https://slack.com/api/channels.list';
 						console.log('url:'+url);
 
 						var token = "xoxp-3655944058-3674335518-3694970236-83726d";
@@ -316,7 +321,7 @@ angular.module('MyApp').controller(
 						var data = {
 							token:token
 							//,key:key
-						}
+						};
 
 						// TBD: move to use angularJS instead of Jquery and get rid of need to change  Host when we deploy...
 						// TBD: which API ? do we get 'my borads or boards of orgenziation'
@@ -333,7 +338,7 @@ angular.module('MyApp').controller(
 
 					$scope.slackPlay = function(contribution) {
 						console.dir(contribution);
-						$scope.currentSavedContribution = contribution
+						$scope.currentSavedContribution = contribution;
 			
 						console.log('sending to slack, contribution:'+$scope.currentSavedContribution.title);
 						$scope.getChannels()
@@ -342,7 +347,7 @@ angular.module('MyApp').controller(
 				// *****************************************************
 				// function definition
 				$scope.onSubmit = function() {
-					allcontributers = $scope.model.contributers
+					allcontributers = $scope.model.contributers;
 					totalActive = 0;
 					for(i=0;i<allcontributers.length;i++){
 						if(allcontributers[i].contributer_id != 0){
@@ -355,7 +360,7 @@ angular.module('MyApp').controller(
 						return
 					}
 					console.log("In Submit method");
-					console.log($scope.model)
+					console.log($scope.model);
 					$scope.data = SaveContribution.save({}, $scope.model);
 					$scope.data.$promise.then(function(result) {
 						
@@ -369,7 +374,7 @@ angular.module('MyApp').controller(
 				$scope.removeCollaboratorItem = function(contributerId,contributerPecentage,index) {
 					$scope.model.contributers.splice(index, 1);						
 					$scope.changeContribution(contributerId,0,'');
-					allcontributers = $scope.model.contributers							
+					allcontributers = $scope.model.contributers;
 					$scope.updatedUsersList = [];
 					$scope.selectedContributerId = '';
 					for(i = 0 ; i<$scope.users.length ; i++){
@@ -415,8 +420,8 @@ angular.module('MyApp').controller(
 				//$scope.users = User.query();
 				$scope.orderProp = "time_created"; // set initial order criteria
 				$scope.addCollaborator = function(selectedUserId) {
-					console.log('comes here in add'+selectedUserId)
-					allcontributers = $scope.model.contributers							
+					console.log('comes here in add'+selectedUserId);
+					allcontributers = $scope.model.contributers;
 					$scope.updatedUsersList = [];
 					$scope.selectedContributerId = '';
 					for(i = 0 ; i<$scope.users.length ; i++){
@@ -445,7 +450,7 @@ angular.module('MyApp').controller(
 				
 				$scope.closeContribution = function() {
 					console.log("In closeContribution method");
-					console.log($scope.ContributionModelForView.id)
+					console.log($scope.ContributionModelForView.id);
 					$scope.data = CloseContribution.save({},
 							$scope.ContributionModelForView);
 					$scope.data.$promise.then(function(result) {
@@ -468,8 +473,8 @@ angular.module('MyApp').controller(
 				        if($scope.users != undefined){
 				        	for(i = 0 ; i<$scope.users.length ; i++){						
 								if($scope.users[i].id == data.id ){
-									url = $scope.users[i].url
-									realName =  $scope.users[i].real_name
+									url = $scope.users[i].url;
+									realName =  $scope.users[i].real_name;
 									break;
 								}
 							}      				   

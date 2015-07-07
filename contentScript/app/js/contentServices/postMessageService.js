@@ -81,17 +81,8 @@ angular.module('MyApp').service('PostMessageService', function () {
 		openCompose: function() {
 			self.sendGesture("openCompose");
 		},
-		collapseCompose: function() {
-			self.sendGesture("collapseCompose");
-		},
 		closeCompose: function() {
 			self.sendGesture("closeCompose");
-		},
-		setTitle: function(title) {
-			self.sendGesture("setTitle", title);
-		},
-		setHeaderColor: function(color) {
-			self.sendGesture("setHeaderColor", color);
 		}
 	}
 
