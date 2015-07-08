@@ -1,4 +1,4 @@
-angular.module('MyApp').controller('MainCtrl',  ["$scope", "$state","PostMessageService","GetMessageService", function($scope, $state,PostMessageService) {
+angular.module('MyApp').controller('MainCtrl',  ["$scope", "$state","PostMessageService", function($scope, $state,PostMessageService) {
 	$scope.testString = "Hello! by angular iframe extension";
 	$scope.testList = ["apple", "banana", "tomato", 1221321, 2321321321313, 1.231213];
 	$scope.index = 0;
@@ -6,14 +6,14 @@ angular.module('MyApp').controller('MainCtrl',  ["$scope", "$state","PostMessage
 		$scope.index += 1;
 	};
 	
-	//************    Listen to messages inorder to open modal and navigate the App       ************
+	//************    Listen to messages in order to open modal and navigate the App       ************
 	function goTo(options) {
-		//document.querySelector("#APP_PREFIX_CLASS_CONTAINER title").innerHTML = title
 		//alert('GetMessageService: goTo: recieved param:'+options );
-		console.log('MainCtrl: goTo: recieved param:'+options );
-		PostMessageService.gesture.openCompose();
+		console.log('MainCtrl: goTo: received param:'+options );
 
 		$state.go('createOrg');
+
+		PostMessageService.gesture.openIframe();
 	}
 
 	var GESTURES = {
@@ -51,13 +51,13 @@ angular.module('MyApp').controller('MainCtrl',  ["$scope", "$state","PostMessage
 
 	PostMessageService.action("exampleService", {username: "marco-p", psw: "1234"})
 	.done(function(data){
-		console.log("SUCCESS service response ", data)
-	},
-	function(data){
-		console.log("ERROR service response ", data)
-	});
+console.log("SUCCESS service response ", data)
+},
+function(data){
+	console.log("ERROR service response ", data)
+});
 
-	PostMessageService.action("exampleService", {username: "simone-p", psw: "1234"})
+PostMessageService.action("exampleService", {username: "simone-p", psw: "1234"})
 	.done(function(data){
 		console.log("ksadpasdsa ", data)
 	},
@@ -65,7 +65,7 @@ angular.module('MyApp').controller('MainCtrl',  ["$scope", "$state","PostMessage
 		console.log("ioasjdoasj ", data)
 	});
 
-	PostMessageService.action("exampleService", {username: "beppe-p", psw: "1234"})
+PostMessageService.action("exampleService", {username: "beppe-p", psw: "1234"})
 	.done(function(data){
 		console.log("----------> ", data)
 	},
@@ -73,19 +73,19 @@ angular.module('MyApp').controller('MainCtrl',  ["$scope", "$state","PostMessage
 		console.log("---------> ", data)
 	});
 
-	$scope.closeCompose = function() {
-		PostMessageService.gesture.closeCompose(); 
-	}
+$scope.closeCompose = function() {
+	PostMessageService.gesture.closeCompose();
+}
 
-	$scope.collapseCompose = function() {
-		PostMessageService.gesture.collapseCompose();
-	}
-	
-	$scope.setTitleCompose = function(title) {
-		PostMessageService.gesture.setTitle(title);
-	}
+$scope.collapseCompose = function() {
+	PostMessageService.gesture.collapseCompose();
+}
 
-	$scope.changeHeaderColor = function() {
+$scope.setTitleCompose = function(title) {
+	PostMessageService.gesture.setTitle(title);
+}
+
+$scope.changeHeaderColor = function() {
 		PostMessageService.gesture.setHeaderColor("crimson");
 	}
 	*/

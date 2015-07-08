@@ -38,18 +38,18 @@ angular.module('MyApp').service('PostMessageService', function () {
 		   		}
 			});
 		}
-	}
+	};
 
-  	this.init = function() {
+  	this.init = function(portname) {
   		if(arguments.length > 0) {
-  			this.port = chrome.runtime.connect({name: arguments[0]});
+  			this.port = chrome.runtime.connect({name: portname});
   		}
-  	}
+  	};
 
    	this.send = function(message) {
    		// invia un messaggio semplice
    		this.port.postMessage(message)
-   	}
+   	};
 
    	this.action = function(serviceName, httpRequestObject) {
    		// INPUT: invia un messaggio al background con <nome servizio> <corpo della richiesta>
@@ -65,24 +65,25 @@ angular.module('MyApp').service('PostMessageService', function () {
    			"request": httpRequestObject,
    			"successId": successId,
    			"errorId": errorId
-   		})
+   		});
 
    		return new ListenerResponse(successId, errorId)
-   	}
+   	};
 
    	this.sendGesture = function(gestureName, opt) {
    		this.port.postMessage({
 			"gesture": gestureName,
 			"options": opt
 		});
-   	}
+   	};
+
    	var self = this;
    	this.gesture = {
-		openCompose: function() {
-			self.sendGesture("openCompose");
+		openIframe: function() {
+			self.sendGesture("openIframe");
 		},
-		closeCompose: function() {
-			self.sendGesture("closeCompose");
+		closeIframe: function() {
+			self.sendGesture("closeIframe");
 		}
 	}
 

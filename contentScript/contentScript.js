@@ -10,27 +10,29 @@ iframe.addEventListener('load', function(e) {
 });
 
 //compose button
-var openComposeButton = document.createElement("button");
-openComposeButton.setAttribute("id", "COMPOSE_ACTION_BUTTON");
+var openIframeButton = document.createElement("button");
+openIframeButton.setAttribute("id", "COMPOSE_ACTION_BUTTON");
 
-function openCompose() {
+function openIframe() {
+    console.log('displaying iframe');
     iframe.style.display = "block";
 }
 
-function closeCompose() {
+function closeIframe() {
+    console.log('hiding iframe');
     iframe.style.display = "none";
 }
 
 var GESTURES = {
-	"openCompose":openCompose,
-	"closeCompose":closeCompose
+	"openIframe":openIframe,
+	"closeIframe":closeIframe
 };
 
 function init() {
-	buttonReady = setInterval(function(){
-		if(document.querySelector(Config.actionButtonSelector).appendChild){
-			document.querySelector(Config.actionButtonSelector).appendChild(openComposeButton);
-			openComposeButton.onclick = openCompose;
+	var buttonReady = setInterval(function(){
+		if (document.querySelector(Config.actionButtonSelector).appendChild){
+			document.querySelector(Config.actionButtonSelector).appendChild(openIframeButton);
+			openIframeButton.onclick = openIframe;
 			clearInterval(buttonReady);
 		}
 	}, 100);

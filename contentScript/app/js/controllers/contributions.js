@@ -25,7 +25,7 @@ angular.module('MyApp').controller(
 					contributer_id : '0',
 					contributer_percentage : '100',
 					contributer_name:'',					
-					img:'/contentScript/app/images/avatar.png'					
+					img:'/contentScript/app/images/icon-dude.png'
 				} ],
 				intialBid : [ {
 					tokens : '',
