@@ -64,14 +64,14 @@
 						</li>
 					</ul>
 
-					<select ui-select2="select2Config"
-							style="width:96%"
+					<ui-select style="width:96%" search-enabled="false"
 							ng-model='selectedContributerId'
-							ng-change="updateContributer(selectedContributerId)"
-							data-placeholder="Add Contributor">
-						<option value=""></option>
-						<option ng-repeat="user in updatedUsersList" value="{{user.id}}">{{user.name}}</option>
-					</select>
+							ng-change="updateContributer($select.selected.id)">
+						<ui-select-match placeholder="Add Contributor"></ui-select-match>
+						<ui-select-choices repeat="user in updatedUsersList">
+							<div ng-bind-html="formatSelectUser(user)"></div>
+						</ui-select-choices>
+					</ui-select>
 
 				</div>
 

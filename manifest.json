@@ -1,6 +1,6 @@
 {
 	// basic info --------------------------------------------------------------
-	"name"				: "Backfeed Monitor",
+	"name"				: "Backfeed Slack",
 	"version"			: "1.0",
 	"description"		: "Still hard to describe, but we're working on it...",
 	"manifest_version"	: 2,

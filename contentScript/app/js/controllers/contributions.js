@@ -466,28 +466,10 @@ angular.module('MyApp').controller(
 					});
 				}
 				
-				$scope.format = function (data) {	
-				      var url = '';
-				      var realName = '';
-
-				        if($scope.users != undefined){
-				        	for(i = 0 ; i<$scope.users.length ; i++){						
-								if($scope.users[i].id == data.id ){
-									url = $scope.users[i].url;
-									realName =  $scope.users[i].real_name;
-									break;
-								}
-							}      				   
-				        }
-
-					if (!url) url = "images/icon-dude.png";
-				             
-				      return  $("<img src='" + url +"' /><span>"+ data.text + " </span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>"+ realName + " </span>");
-				    };           
-				         
-				    $scope.select2Config = {
-						templateResult: $scope.format,
-						templateSelection: $scope.format
+				$scope.formatSelectUser = function (data) {
+                    if (!data) return;
+					if (!data.url) data.url = "images/icon-dude.png";
+				      return  "<img src='" + data.url +"' /><span>"+ data.name + " </span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>"+ data.real_name + " </span>";
 				    };
 
 			}

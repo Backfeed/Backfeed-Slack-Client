@@ -1,6 +1,6 @@
 'use strict';
 
-var myApp = angular.module('MyApp', ['uiSlider','ngResource', 'ngMessages', 'ui.router', 'mgcrea.ngStrap', 'satellizer','BFAPIServices','ngSanitize','ui.select2']);
+var myApp = angular.module('MyApp', ['uiSlider','ngResource', 'ngMessages', 'ui.router', 'mgcrea.ngStrap', 'satellizer','BFAPIServices','ngSanitize','ui.select']);
 
 myApp.config(function($stateProvider, $urlRouterProvider, $authProvider) {
     $stateProvider
@@ -99,4 +99,6 @@ myApp.config(function($stateProvider, $urlRouterProvider, $authProvider) {
         clientId: '2969711723.3476875864'
     });
 
+}).run(function($templateCache) {
+    $templateCache.put("bootstrap/match.tpl.html","<div class=\"ui-select-match\" ng-hide=\"$select.open\" ng-disabled=\"$select.disabled\" ng-class=\"{\'btn-default-focus\':$select.focus}\"><span tabindex=\"-1\" class=\"btn btn-default form-control ui-select-toggle\" aria-label=\"{{ $select.baseTitle }} activate\" ng-disabled=\"$select.disabled\" ng-click=\"$select.activate()\" style=\"outline: 0;\"><img src=\"/contentScript/app/images/icon-dude.png\" class=\"ui-select-left-image\"><span ng-show=\"$select.isEmpty()\" class=\"ui-select-placeholder text-muted\">{{$select.placeholder}}</span> <span ng-hide=\"$select.isEmpty()\" class=\"ui-select-match-text pull-left\" ng-class=\"{\'ui-select-allow-clear\': $select.allowClear && !$select.isEmpty()}\" ng-transclude=\"\"><img src=\"/contentScript/app/images/icon-dude.png\"></span> <i class=\"plus-icon pull-right\" ng-click=\"$select.toggle($event)\"></i> <a ng-show=\"$select.allowClear && !$select.isEmpty()\" aria-label=\"{{ $select.baseTitle }} clear\" style=\"margin-right: 10px\" ng-click=\"$select.clear($event)\" class=\"pull-right\"></a></span></div>");
 });
