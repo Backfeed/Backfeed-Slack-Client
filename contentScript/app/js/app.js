@@ -11,12 +11,12 @@ myApp.config(function($stateProvider, $urlRouterProvider, $authProvider) {
         })
         .state('contributionDetail', {
             url: '/contribution/:contributionId',
-            templateUrl: chrome.extension.getURL("contentScript/app/partials/contributionDetail.html"),
+            templateUrl: chrome.extension.getURL("contentScript/app/components/contribution/contributionDetail.html"),
             controller: 'ContributionsCtrl'
         })
         .state('createContribution', {
             url: '/contribution',
-            templateUrl: chrome.extension.getURL("contentScript/app/partials/createContribution.html"),
+            templateUrl: chrome.extension.getURL("contentScript/app/components/contribution/createContribution.html"),
             controller: 'ContributionsCtrl'
         })
         .state('createOrg', {
@@ -26,7 +26,7 @@ myApp.config(function($stateProvider, $urlRouterProvider, $authProvider) {
         })
         .state('contributionStatus', {
             url: '/contributionStatus/:contributionId',
-            templateUrl: chrome.extension.getURL("contentScript/app/partials/contributionStatus.html"),
+            templateUrl: chrome.extension.getURL("contentScript/app/components/contribution/contributionStatus.html"),
             controller: 'ContributionStatusCtrl'
         })
         .state('contributions', {
