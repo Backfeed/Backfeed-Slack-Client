@@ -8,7 +8,7 @@ angular.module('MyApp').controller(
             var modal = jQuery('#createContributionModal');
             modal.modal();
             modal.on('hidden.bs.modal', function (e) {
-                PostMessageService.sendGesture('closeCompose');
+                PostMessageService.sendGesture('closeIframe');
             });
 
 			var orgExists;
