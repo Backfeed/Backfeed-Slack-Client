@@ -1,6 +1,6 @@
 'use strict';
 
-var myApp = angular.module('MyApp', ['uiSlider','ngResource', 'ngMessages', 'ui.router', 'mgcrea.ngStrap', 'satellizer','BFAPIServices','ngSanitize','ui.select']);
+var myApp = angular.module('MyApp', ['uiSlider','ngResource', 'ngMessages', 'ui.router', 'mgcrea.ngStrap', 'ui.bootstrap', 'satellizer','BFAPIServices','ngSanitize','ui.select']);
 
 myApp.config(function($stateProvider, $urlRouterProvider, $authProvider) {
     $stateProvider
