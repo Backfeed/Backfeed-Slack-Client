@@ -23,10 +23,10 @@ $(document).on('click', 'button#OAuth', function() {
     //alert('login under construction ..., for the meantime we skip login straight into creating the org.');
 
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        
+
         chrome.tabs.sendMessage(tabs[0].id, {
-            "gesture": 'openCreateOrg',
-            "options": 1
+            "gesture": 'openAddOrganization',
+            "options": {}
         }, function(response) {
             console.log(response.farewell);
         });

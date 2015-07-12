@@ -33,9 +33,9 @@ chrome.runtime.onConnect.addListener(function(port) {
 	});
 });
 
-chrome.runtime.onMessage.addListener(function(msg, sender) {
+chrome.runtime.onMessage.addListener(function(msg) {
     /* First, validate the message's structure */
-    if ((msg.from === 'contentScript')) {
+    if (msg.from === 'contentScript') {
         /* Enable the page-action for the requesting tab */        
 		sendGesture(msg.message)
     }

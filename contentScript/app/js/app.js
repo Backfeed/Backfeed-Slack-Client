@@ -26,7 +26,7 @@ myApp.config(function($stateProvider, $urlRouterProvider, $authProvider) {
         })
         .state('contributionStatus', {
             url: '/contributionStatus/:contributionId',
-            templateUrl: chrome.extension.getURL("contentScript/app/components/contribution/contributionStatus.html"),
+            templateUrl: chrome.extension.getURL("contentScript/app/partials/contributionStatus.html"),
             controller: 'ContributionStatusCtrl'
         })
         .state('contributions', {
@@ -93,7 +93,7 @@ myApp.config(function($stateProvider, $urlRouterProvider, $authProvider) {
             }
         });
 
-    $urlRouterProvider.otherwise('/contribution');
+    //$urlRouterProvider.otherwise('/contribution');
 
     $authProvider.slack({
         clientId: '2969711723.3476875864'

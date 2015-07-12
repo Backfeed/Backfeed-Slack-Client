@@ -79,11 +79,11 @@ angular.module('MyApp').service('PostMessageService', function () {
 
    	var self = this;
    	this.gesture = {
-		openIframe: function(option) {
-			self.sendGesture("openIframe",option);
+		showIframe: function(option) {
+			self.sendGesture("showIframe", option);
 		},
-		closeIframe: function() {
-			self.sendGesture("closeIframe");
+		hideIframe: function() {
+			self.sendGesture("hideIframe");
 		}
 	}
 

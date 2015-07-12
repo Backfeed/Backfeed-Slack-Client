@@ -10,52 +10,50 @@ iframe.addEventListener('load', function(e) {
 });
 
 //compose button
-var openIframeButton = document.createElement("button");
-openIframeButton.setAttribute("id", "COMPOSE_ACTION_BUTTON");
+var showIframeButton = document.createElement("button");
+showIframeButton.setAttribute("id", "COMPOSE_ACTION_BUTTON");
 
-function openIframe(option) {
-    console.log('displaying iframe option: '+option);
-	if(option != 3){
-		chrome.runtime.sendMessage({
-        from:    'contentScript',        
-    	message : {
-                "gesture": 'openContributionPage',
-                "options": 2
-            }
-    });
-	}
-	if(option == 3){
-		console.log('blocking');
-		iframe.style.display = "block";
-	}
-	
-	
+function openAddContributionPage() {
+	chrome.runtime.sendMessage({
+        from:    'contentScript',
+        message : {
+            "gesture": 'openAddContributionPage',
+            "options": {}
+        }
+    }, function(response) {
+		showIframe();
+	});
 }
 
-function closeIframe() {
+function showIframe() {
+    console.log('displaying iframe');
+	iframe.style.display = "block";
+}
+
+function hideIframe() {
     console.log('hiding iframe');
     iframe.style.display = "none";
 }
 
 var GESTURES = {
-	"openIframe":openIframe,
-	"closeIframe":closeIframe
+	"showIframe": showIframe,
+	"hideIframe": hideIframe
 };
 
 function init() {
 	var buttonReady = setInterval(function(){
 		if (document.querySelector(Config.actionButtonSelector).appendChild){
-			document.querySelector(Config.actionButtonSelector).appendChild(openIframeButton);
-			openIframeButton.onclick = openIframe;
+			document.querySelector(Config.actionButtonSelector).appendChild(showIframeButton);
+			showIframeButton.onclick = openAddContributionPage;
 			clearInterval(buttonReady);
 		}
 	}, 100);
 
 	chrome.runtime.onMessage.addListener(function(msg) {		
-		if(msg.gesture && msg.gesture in GESTURES) {
+		if (msg.gesture && msg.gesture in GESTURES) {
 			GESTURES[msg.gesture](msg.options)
 		}
-	})
+	});
 }
 
 var ready = setInterval(function() {

@@ -373,8 +373,12 @@ angular.module('MyApp').controller(
 
                     // TBD: un comment later:
                     $scope.slackPlay(result);
+
+                    $modalInstance.close('submit');
+
+                    $state.go('bids', {'contributionId': result.id});
                 	
-                    $location.path("/bids/" + result.id);
+                    //$location.path("/bids/" + result.id);
 
                 });
             };
