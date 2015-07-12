@@ -6,8 +6,7 @@ angular.module('MyApp').controller(
 
         $scope.closeModal = function() {
             $modalInstance.dismiss('cancel');
-        };
-
+        };		
         var orgExists;
 
         $scope.currencyFormatting = function(value) { return value.toString() + " $"; };
@@ -114,6 +113,11 @@ angular.module('MyApp').controller(
                     $scope.users_organizations_id = userData.userOrgId;
                     $scope.organizationId = userData.orgId;
                     $scope.model.users_organizations_id = userData.userOrgId;
+                    
+                    $scope.access_token = userData.access_token;
+                    $scope.model.owner = userData.userId;
+                    $scope.model.contributers[0].contributer_id = userData.userId;
+                    $scope.model.contributers[0].contributer_name = userData.displayName;
                 }
                 $scope.model.owner = userData.userId;
             }
@@ -162,6 +166,11 @@ angular.module('MyApp').controller(
                 } else {
 
                     $scope.users = allOrgUsersData;
+                    for(i = 0 ; i<$scope.users.length ; i++){
+                        if($scope.users[i].id == $scope.model.owner ){
+                            $scope.model.contributers[0].img =  $scope.users[i].url;
+                        }
+                    }
                     $scope.updatedUsersList = $scope.users;
                 }
 
@@ -364,6 +373,7 @@ angular.module('MyApp').controller(
 
                     // TBD: un comment later:
                     $scope.slackPlay(result);
+                	
                     $location.path("/bids/" + result.id);
 
                 });
@@ -453,6 +463,7 @@ angular.module('MyApp').controller(
                     $scope.ContributionModelForView);
                 $scope.data.$promise.then(function(result) {
                     alert('Contribution closed');
+                    
                     $location.path("/contributions");
                 });
 

@@ -10,14 +10,28 @@ angular.module('MyApp').controller('MainCtrl',  ["$scope", "$state","PostMessage
 	function goTo(options) {
 		//alert('GetMessageService: goTo: recieved param:'+options );
 		console.log('MainCtrl: goTo: received param:'+options );
-
-		$state.go('createOrg');
-
-		PostMessageService.gesture.openIframe();
+		if(options == 1){
+			console.log('Creating Org');
+			$state.go('createOrg');
+			PostMessageService.gesture.openIframe();						
+		}else if(options == 2){{
+			if($state.is('createContribution') == true){
+				console.log('Reloading contributions');				
+				$state.reload();
+				PostMessageService.gesture.openIframe(3);
+			}else{
+				console.log('Starting contributions');				
+				$state.go('createContribution');
+				PostMessageService.gesture.openIframe(3);
+			}
+		}
+		
+		}
+		
 	}
 
 	var GESTURES = {
-		"openCreateOrg": goTo
+		"openCreateOrg": goTo,"openContributionPage": goTo
 	};
 
 	console.log('MainCtrl init');

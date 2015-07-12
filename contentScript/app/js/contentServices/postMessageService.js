@@ -79,8 +79,8 @@ angular.module('MyApp').service('PostMessageService', function () {
 
    	var self = this;
    	this.gesture = {
-		openIframe: function() {
-			self.sendGesture("openIframe");
+		openIframe: function(option) {
+			self.sendGesture("openIframe",option);
 		},
 		closeIframe: function() {
 			self.sendGesture("closeIframe");

@@ -13,9 +13,23 @@ iframe.addEventListener('load', function(e) {
 var openIframeButton = document.createElement("button");
 openIframeButton.setAttribute("id", "COMPOSE_ACTION_BUTTON");
 
-function openIframe() {
-    console.log('displaying iframe');
-    iframe.style.display = "block";
+function openIframe(option) {
+    console.log('displaying iframe option: '+option);
+	if(option != 3){
+		chrome.runtime.sendMessage({
+        from:    'contentScript',        
+    	message : {
+                "gesture": 'openContributionPage',
+                "options": 2
+            }
+    });
+	}
+	if(option == 3){
+		console.log('blocking');
+		iframe.style.display = "block";
+	}
+	
+	
 }
 
 function closeIframe() {
@@ -37,7 +51,7 @@ function init() {
 		}
 	}, 100);
 
-	chrome.runtime.onMessage.addListener(function(msg) {
+	chrome.runtime.onMessage.addListener(function(msg) {		
 		if(msg.gesture && msg.gesture in GESTURES) {
 			GESTURES[msg.gesture](msg.options)
 		}
