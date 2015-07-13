@@ -1,4 +1,4 @@
-BackFeed Chrome Extension
+<h1>BackFeed Chrome Extension</h1>
 
 <h3>install</h3>
 
@@ -24,6 +24,33 @@ First Login into https://stagingenviornment.elasticbeanstalk.com and get your sa
 and copy that satellizer_token into your extension Resources->Local Storage
 
 Now You can create Contribution while clicking on BF Button ( Located on the right bottom side of page)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
