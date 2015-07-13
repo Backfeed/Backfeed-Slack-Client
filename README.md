@@ -1,8 +1,4 @@
-
-angularExtensionTemplate
-========================
-Chrome extension template with angular inside,
-a custom html gadget that inject an iframe with angular app inside
+BackFeed Chrome Extension
 
 <h3>install</h3>
 
@@ -10,22 +6,26 @@ chrome -> options -> extensions -> developer mode ON -> load extension... -> sel
 
 open for example www.google.com 
 
-Now you wll see an icon B ( BackFeed Slack ) in the Extensions Menu
+Now you will see an icon B ( BackFeed Slack ) in the Extensions Menu
 
-You will see a Backfeed button also in the slack page
 
 Run `npm install && gulp` command inside folder `contentScript/app/` to build the app's CSS file.
 
+<h3>Communication between Content Script and Extension</h3>
 
 Communication between Content Script and Extension can be seen in following Wiki Link
 
 https://github.com/Backfeed/BF-Chrome-Extension/wiki/Message-Sending-Guide
+
+<h3>Login</h3>
 
 First Login into https://stagingenviornment.elasticbeanstalk.com and get your satellizer_token from the Resources->Local Storage
 
 and copy that satellizer_token into your extension Resources->Local Storage
 
 Now You can create Contribution while clicking on BF Button ( Located on the right bottom side of page)
+
+
 
 
 <ul>
