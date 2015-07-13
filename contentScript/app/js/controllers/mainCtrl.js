@@ -31,57 +31,8 @@ angular.module('MyApp').controller('MainCtrl',  ["$scope", "$state","PostMessage
 			if(request.gesture && request.gesture in GESTURES) {
 				GESTURES[request.gesture](request.options)
 		}
-
-			//if (request.greeting == "hello")
-			//    sendResponse({farewell: "goodbye"});
 		});
 	};
 	init();
 }]);
 
-//************************
-
-
-/*
- PostMessageService.init("myport");
-
- PostMessageService.action("exampleService", {username: "marco-p", psw: "1234"})
- .done(function(data){
- console.log("SUCCESS service response ", data)
- },
- function(data){
- console.log("ERROR service response ", data)
- });
-
- PostMessageService.action("exampleService", {username: "simone-p", psw: "1234"})
- .done(function(data){
- console.log("ksadpasdsa ", data)
- },
- function(data){
- console.log("ioasjdoasj ", data)
- });
-
- PostMessageService.action("exampleService", {username: "beppe-p", psw: "1234"})
- .done(function(data){
- console.log("----------> ", data)
- },
- function(data){
- console.log("---------> ", data)
- });
-
- $scope.closeCompose = function() {
- PostMessageService.gesture.closeCompose();
- }
-
- $scope.collapseCompose = function() {
- PostMessageService.gesture.collapseCompose();
- }
-
- $scope.setTitleCompose = function(title) {
- PostMessageService.gesture.setTitle(title);
- }
-
- $scope.changeHeaderColor = function() {
- PostMessageService.gesture.setHeaderColor("crimson");
- }
- */
