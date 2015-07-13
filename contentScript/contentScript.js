@@ -17,7 +17,6 @@ function openIframe(option) {
     console.log('displaying iframe option: '+option);
 	if(option != 3){
 		chrome.runtime.sendMessage({
-        from:    'contentScript',        
     	message : {
                 "gesture": 'openContributionPage',
                 "options": 2
