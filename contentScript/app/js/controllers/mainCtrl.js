@@ -1,11 +1,5 @@
-angular.module('MyApp').controller('MainCtrl',  ["$scope", "$state","PostMessageService", function($scope, $state,PostMessageService) {
-	$scope.testString = "Hello! by angular iframe extension";
-	$scope.testList = ["apple", "banana", "tomato", 1221321, 2321321321313, 1.231213];
-	$scope.index = 0;
-	$scope.click = function() {
-		$scope.index += 1;
-	};
-
+angular.module('MyApp').controller('MainCtrl',  ["$scope", "$state","PostMessageService", function($scope, $state,PostMessageService) {	
+	
 	//************    Listen to messages in order to open modal and navigate the App       ************
 	function goToAddOrganization() {
 		console.log('Creating Org');
