@@ -6,15 +6,27 @@ a custom html gadget that inject an iframe with angular app inside
 
 <h3>install</h3>
 
-chrome -> options -> extensions -> developer mode ON -> load extension... -> select folder angularExtensionTemplate -> finish -> 
+chrome -> options -> extensions -> developer mode ON -> load extension... -> select folder BF-Chrome-Extension -> finish -> 
 
 open for example www.google.com 
 
-now you see at the bottom of the screen an action button with "J" to open your custom extension gadget =)
+Now you wll see an icon B ( BackFeed Slack ) in the Extensions Menu
 
-<h3>Content script</h3>
+You will see a Backfeed button also in the slack page
 
 Run `npm install && gulp` command inside folder `contentScript/app/` to build the app's CSS file.
+
+
+Communication between Content Script and Extension can be seen in following Wiki Link
+
+https://github.com/Backfeed/BF-Chrome-Extension/wiki/Message-Sending-Guide
+
+First Login into https://stagingenviornment.elasticbeanstalk.com and get your satellizer_token from the Resources->Local Storage
+
+and copy that satellizer_token into your extension Resources->Local Storage
+
+Now You can create Contribution while clicking on BF Button ( Located on the right bottom side of page)
+
 
 <ul>
 <li>injected html box draggable
