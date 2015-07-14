@@ -14,13 +14,13 @@ var showIframeButton = document.createElement("button");
 showIframeButton.setAttribute("id", "COMPOSE_ACTION_BUTTON");
 
 function openAddContributionPage() {
-	chrome.runtime.sendMessage({
-        from:    'contentScript',
+	chrome.runtime.sendMessage({        
         message : {
             "gesture": 'openAddContributionPage',
             "options": {}
         }
     }, function(response) {
+    	console.log('Here in the callback');
 		showIframe();
 	});
 }

@@ -36,7 +36,7 @@ myApp.config(function($stateProvider, $urlRouterProvider, $authProvider) {
         })
         .state('bids', {
             url: '/bids/:contributionId',
-            templateUrl: chrome.extension.getURL("contentScript/app/partials/createBid.html"),
+            templateUrl: chrome.extension.getURL("contentScript/app/components/bid/createBid.html"),
             controller: 'BidsCtrl'
         })
         .state('users', {

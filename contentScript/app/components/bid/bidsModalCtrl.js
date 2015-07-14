@@ -1,7 +1,12 @@
 angular.module('MyApp')
-  .controller('BidsCtrl', function($scope,$auth,$location,$stateParams,Users,$alert,SaveBidTOContribution,Account,ContributionDetail,UserDetail) {
+  .controller('BidsModalCtrl', function($scope,$auth,$location,$stateParams,Users,$alert,
+		  SaveBidTOContribution,Account,ContributionDetail,UserDetail,$modalInstance,PostMessageService,$state) {
 	  $scope.contributionId = $stateParams.contributionId;
 	  $scope.bidId = $stateParams.bidId;
+	  
+	  $scope.closeModal = function() {
+		  $modalInstance.dismiss('cancel');
+      };
 	 
 	  $scope.getProfile = function() {
 	      Account.getProfile()
@@ -53,6 +58,8 @@ angular.module('MyApp')
 					$scope.bid.reputation = result.reputation;
 					$scope.bid.stake = (parseInt(result.reputation)*18)/100;
 				});
+				
+				PostMessageService.sendGesture('showIframe');
 			}
 	// if not authenticated return to splash:
 	if(!$auth.isAuthenticated()){
@@ -80,13 +87,15 @@ angular.module('MyApp')
 		console.log($scope.bid)
 		$scope.data = SaveBidTOContribution.save({},$scope.bid);
 		$scope.data.$promise.then(function (result) {
+			$modalInstance.close('submit');
 			alert('Bid Successfully created');
-			$location.path("/contributionStatus/"
-					+ $scope.contributionId);
+			$state.go('contributionStatus', {'contributionId': $scope.contributionId});
+			//$location.path("/contributionStatus/"+ $scope.contributionId);
 		},	function (result) {
+				$modalInstance.close('submit');
+				$state.go('contributionStatus', {'contributionId': $scope.contributionId});
 				alert('Evaluation was not processed since you have no reputation left to stake for this contribution.');
-				$location.path("/contributionStatus/"
-						+ $scope.contributionId);
+				//$location.path("/contributionStatus/"+ $scope.contributionId);
 			});
 		
 	};

@@ -1,0 +1,45 @@
+<script type="text/ng-template" id="BidsModalTmpl">
+   
+<div class="modal-header">
+		<img alt="help" src="/contentScript/app/images/close_x.png" ng-click="closeModal()" />
+	</div>
+	<div class="modal-body">
+		<form>
+
+			<div class="row">
+
+				<div class="col-sm-12">
+					<h2>Its Money Time</h2>
+					<h6 id="createBidModalTitle">Home Many Pig Coins "{{title}}" worth <br> to the holon ?</h6>
+					
+				
+
+				</div>
+			</div>
+			<div class="row">
+			<div class="col-sm-6">
+				<div class="form-group"> <input
+									type="text" class="form-control" id="token" placeholder="talk to me in numbers"
+									ng-model="bid.tokens" required >		
+
+							</div>
+			</div>
+			<div class="col-sm-6">
+				<div align="left">{{tokenName}}</div>
+			</div>
+
+			</div>
+
+		</form>
+	</div>
+	<div class="modal-footer">
+		<div class="row">
+			
+			<div class="col-sm-12">
+				<button type="submit" class="btn btn-backfeed submit-button center-block" ng-disabled="!bid.tokens" ng-click="submit()">BACKFEED</button>
+			</div>
+		</div>
+	</div>
+</script>
+
+
