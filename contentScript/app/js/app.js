@@ -26,7 +26,7 @@ myApp.config(function($stateProvider, $urlRouterProvider, $authProvider) {
         })
         .state('contributionStatus', {
             url: '/contributionStatus/:contributionId',
-            templateUrl: chrome.extension.getURL("contentScript/app/partials/contributionStatus.html"),
+            templateUrl: chrome.extension.getURL("contentScript/app/components/contribution/contributionStatus.html"),
             controller: 'ContributionStatusCtrl'
         })
         .state('contributions', {

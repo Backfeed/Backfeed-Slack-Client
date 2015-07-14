@@ -47,6 +47,7 @@ angular.module('MyApp')
 					console.log('result.title'+result.title)
 					$scope.title = result.title;
 					$scope.tokenName = result.tokenName;
+					$scope.code = result.code;
 				});
 				console.log('userData.userId'+userData.userId)
 				console.log('userData.orgId'+userData.orgId)

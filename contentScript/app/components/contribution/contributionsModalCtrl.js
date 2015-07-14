@@ -372,7 +372,7 @@ angular.module('MyApp').controller(
                 $scope.data.$promise.then(function(result) {
 
                     // TBD: un comment later:
-                    $scope.slackPlay(result);
+                    //$scope.slackPlay(result);
 
                     $modalInstance.close('submit');
 

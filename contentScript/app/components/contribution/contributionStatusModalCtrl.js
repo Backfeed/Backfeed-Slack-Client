@@ -1,7 +1,7 @@
 angular.module('MyApp').controller(
-		'ContributionStatusCtrl',
+		'ContributionStatusModalCtrl',
 		function($scope, $auth, $location, $stateParams, $alert, ContributionStatus,				
-				Account, Users) {			
+				Account, Users,$modalInstance,PostMessageService) {			
 			$scope.cotributionStatusModel = {
 					currentValuation : '',
 					totalReputaion : '',
@@ -9,6 +9,10 @@ angular.module('MyApp').controller(
 					myReputaion : ''					
 
 				}
+
+	        $scope.closeModal = function() {
+	            $modalInstance.dismiss('cancel');
+	        };	
 			// if not authenticated return to splash:
 			if (!$auth.isAuthenticated()) {
 				$location.path('splash');
@@ -43,6 +47,7 @@ angular.module('MyApp').controller(
 					$scope.data1.$promise.then(function(result) {
 						$scope.cotributionStatusModel = result;
 					});
+					PostMessageService.sendGesture('showIframe');
 				}
 				
 

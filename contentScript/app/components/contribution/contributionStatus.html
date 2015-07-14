@@ -1,0 +1,43 @@
+<script type="text/ng-template" id="ContributionStatusModalTmpl">
+<div class="modal-header">
+	<img alt="help" src="/contentScript/app/images/close_x.png"
+		ng-click="closeModal()" />
+</div>
+<div class="modal-body">
+	<form>
+		<div class="row">
+			<div class="col-sm-12">
+				<h2>Contribution - Status</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-3">
+				<legend>
+					<i class="ion-person"></i> Current Valuation:
+					{{cotributionStatusModel.currentValuation}}
+				</legend>
+				<legend>
+					<i class="ion-aperture"></i> Total Reputation:
+					{{cotributionStatusModel.totalReputaion}}
+				</legend>
+				<legend>
+					<i class="ion-ribbon-b"></i> My Valuation:
+					{{cotributionStatusModel.myValuation}}
+				</legend>
+				<legend>
+					<i class="ion-clipboard"></i> My Reputation:
+					{{cotributionStatusModel.myReputaion}}
+				</legend>
+			</div>
+			<div class="col-sm-9">
+				<img src="/contentScript/app/images/statPlaceHolder.png" class=""></img>
+
+			</div>
+		</div>
+	</form>
+
+	<div class="modal-footer">
+		<div class="row"></div>		
+	</div>
+</div>
+		</script>
