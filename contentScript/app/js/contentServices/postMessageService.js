@@ -1,4 +1,4 @@
-angular.module('MyApp').service('PostMessageService', function () {
+angular.module('MyApp').service('PostMessageService', function(Account,$state,$alert) {
 
   	this.init = function(portname) {
   		if(arguments.length > 0) {
@@ -23,5 +23,33 @@ angular.module('MyApp').service('PostMessageService', function () {
 			self.sendGesture("hideIframe");
 		}
 	}
+
+   	this.getProfile = function() {
+		Account.getProfile().success(function(data) {
+			orgExists = data.orgexists;
+			if (orgExists == 'false') {
+				$state.go('createOrg', {}, {reload: true});
+			}			
+
+		}).error(function(error) {
+			$alert({
+				content : error.message,
+				animation : 'fadeZoomFadeDown',
+				type : 'material',
+				duration : 3
+			});
+		});
+	};
+	
+   	this.navigate = function() {
+   		userData = Account.getUserData();
+   		if(userData == undefined){
+   			this.getProfile();
+   		}else{
+   			if (userData.orgexists == 'false') {
+   				$state.go('createOrg', {}, {reload: true}); 				
+			}
+   		}
+   	}
 
 });

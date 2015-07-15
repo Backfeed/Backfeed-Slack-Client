@@ -3,8 +3,8 @@ angular.module('MyApp').controller('MainCtrl',  ["$scope", "$state","PostMessage
 	//************    Listen to messages in order to open modal and navigate the App       ************
 	function goToAddOrganization() {
 		console.log('Creating Org');
-		$state.go('createOrg');
-		PostMessageService.gesture.showIframe();
+		PostMessageService.navigate();
+		//$state.go('createOrg', {}, {reload: true});
 	}
 
 	function goToAddContribution() {

@@ -21,8 +21,8 @@ myApp.config(function($stateProvider, $urlRouterProvider, $authProvider) {
         })
         .state('createOrg', {
             url: '/organization',
-            templateUrl: chrome.extension.getURL("contentScript/app/partials/createOrganization.html"),
-            controller: 'OrganizationCtrl'
+            templateUrl: chrome.extension.getURL("contentScript/app/components/organization/createOrganization.html"),
+            controller: 'OrganizationsCtrl'
         })
         .state('contributionStatus', {
             url: '/contributionStatus/:contributionId',

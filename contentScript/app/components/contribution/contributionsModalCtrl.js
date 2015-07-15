@@ -2,7 +2,7 @@ angular.module('MyApp').controller(
     'ContributionsModalCtrl',
     function($scope, $auth, $location, $rootScope,$stateParams, $alert, Contributions,
              ContributionDetail, SaveContribution, CloseContribution,$state,
-             Account, Users, $modalInstance) {
+             Account, Users, $modalInstance,PostMessageService) {
 
         $scope.closeModal = function() {
             $modalInstance.dismiss('cancel');
@@ -431,6 +431,7 @@ angular.module('MyApp').controller(
             }
             //$scope.users = User.query();
             $scope.orderProp = "time_created"; // set initial order criteria
+            PostMessageService.sendGesture('showIframe');
             $scope.addCollaborator = function(selectedUserId) {
                 console.log('comes here in add'+selectedUserId);
                 allcontributers = $scope.model.contributers;

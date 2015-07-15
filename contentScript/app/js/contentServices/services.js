@@ -131,3 +131,13 @@ bfAPIServices.factory('AllOrgs', [ '$resource', function($resource) {
 		}
 	});
 } ]);
+
+bfAPIServices.factory('CheckOrgCode', [ '$resource', function($resource) {
+	return $resource('https://stagingenviornment.elasticbeanstalk.com/organization/checkCode/:code', {}, {
+		checkOrgCode : {
+			method : 'GET',
+			params : {},
+			isArray : false
+		}
+	});
+} ]);
