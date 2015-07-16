@@ -384,8 +384,6 @@ angular.module('MyApp').controller(
                     $modalInstance.close('submit');
 
                     $state.go('bids', {'contributionId': result.id});
-                	
-                    //$location.path("/bids/" + result.id);
 
                 });
             };

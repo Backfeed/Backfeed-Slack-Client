@@ -1,4 +1,4 @@
-angular.module('MyApp').service('PostMessageService', function(Account,$state,$alert) {
+angular.module('MyApp').service('PostMessageService', function(Account,$state) {
 
   	this.init = function(portname) {
   		if(arguments.length > 0) {
@@ -32,12 +32,7 @@ angular.module('MyApp').service('PostMessageService', function(Account,$state,$a
 			}			
 
 		}).error(function(error) {
-			$alert({
-				content : error.message,
-				animation : 'fadeZoomFadeDown',
-				type : 'material',
-				duration : 3
-			});
+			console.log('getProfile: ' + error.message);
 		});
 	};
 	

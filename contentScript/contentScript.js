@@ -41,13 +41,25 @@ var GESTURES = {
 };
 
 function init() {
-	var buttonReady = setInterval(function(){
-		if (document.querySelector(Config.actionButtonSelector).appendChild){
-			document.querySelector(Config.actionButtonSelector).appendChild(showIframeButton);
-			showIframeButton.onclick = openAddContributionPage;
-			clearInterval(buttonReady);
+
+	var observer = new MutationObserver(function(nodes) {
+		var addedNodes = $(nodes[0].addedNodes);
+		if (addedNodes.length > 0) {
+			addedNodes.each(function() {
+				if (this.id == 'menu') {
+					var menuItemsList = $(this).find('#menu_items');
+					var menuItems = menuItemsList.children();
+
+					var addContributionButton = menuItems.last().clone().prependTo(menuItemsList);
+					addContributionButton.removeAttr('data-which');
+					addContributionButton.find('a').attr('href','#').text(' Contribute to Backfeed');
+					addContributionButton.click(openAddContributionPage);
+				}
+			});
 		}
-	}, 100);
+	});
+
+	observer.observe(document.getElementById('client-ui'), {childList: true});
 
 	chrome.runtime.onMessage.addListener(function(msg) {		
 		if (msg.gesture && msg.gesture in GESTURES) {

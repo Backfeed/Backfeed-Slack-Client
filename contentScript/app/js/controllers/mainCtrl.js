@@ -4,6 +4,7 @@ angular.module('MyApp').controller('MainCtrl',  ["$scope", "$state","PostMessage
 	function goToAddOrganization() {
 		console.log('Creating Org');
 		PostMessageService.navigateToCreateOrg();
+		//$state.go('createOrg', {}, {reload: true});
 	}
 
 	function goToAddContribution() {
