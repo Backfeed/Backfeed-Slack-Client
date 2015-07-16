@@ -58,7 +58,6 @@ angular.module('MyApp').controller(
             };
             $scope.getProfile = function() {
                 Account.getProfile().success(function(data) {
-                    console.log('userData is not defined comes 1'+userData)
                     $scope.userId = data.userId;
                     orgExists = data.orgexists;
                     console.log('userData is not defined comes 1 orgExists'+orgExists)
@@ -71,6 +70,10 @@ angular.module('MyApp').controller(
                         $scope.model.contributers[0].contributer_id = data.userId;
                         $scope.model.contributers[0].contributer_name = data.displayName;
                         $scope.getOrgUsers();
+                        PostMessageService.gesture.showIframe();
+                    }else{
+                    	//navigate to create org screen
+                    	$state.go('createOrg', {}, {reload: true});
                     }
                     Account.setUserData(data);
 
@@ -108,7 +111,7 @@ angular.module('MyApp').controller(
                 $scope.userId = userData.userId;
                 console.log('userData is  defined userId'+$scope.userId);
                 orgExists = userData.orgexists;
-                console.log('userData is  defined orgexists'+$scope.orgexists);
+                console.log('userData is  defined orgexists'+orgExists);
                 if (orgExists == 'true') {
                     $scope.users_organizations_id = userData.userOrgId;
                     $scope.organizationId = userData.orgId;
@@ -118,6 +121,10 @@ angular.module('MyApp').controller(
                     $scope.model.owner = userData.userId;
                     $scope.model.contributers[0].contributer_id = userData.userId;
                     $scope.model.contributers[0].contributer_name = userData.displayName;
+                    PostMessageService.gesture.showIframe();
+                }else{
+                	//navigate to create org screen
+                	$state.go('createOrg', {}, {reload: true});
                 }
                 $scope.model.owner = userData.userId;
             }
@@ -431,7 +438,6 @@ angular.module('MyApp').controller(
             }
             //$scope.users = User.query();
             $scope.orderProp = "time_created"; // set initial order criteria
-            PostMessageService.sendGesture('showIframe');
             $scope.addCollaborator = function(selectedUserId) {
                 console.log('comes here in add'+selectedUserId);
                 allcontributers = $scope.model.contributers;

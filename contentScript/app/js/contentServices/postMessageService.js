@@ -41,7 +41,7 @@ angular.module('MyApp').service('PostMessageService', function(Account,$state,$a
 		});
 	};
 	
-   	this.navigate = function() {
+   	this.navigateToCreateOrg = function() {
    		userData = Account.getUserData();
    		if(userData == undefined){
    			this.getProfile();
