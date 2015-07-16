@@ -46,6 +46,13 @@
 		"webRequest",
 	    "http://*/*",
     	"https://*/*",
-    	"notifications"
-	]
+    	"notifications",
+    	"identity"
+	],
+	"oauth2": {
+    "client_id": "113474852674-moi0k0p2434nq43oqhqvtila5rse7vh7.apps.googleusercontent.com",
+    "scopes": [
+      "https://slack.com/oauth/authorize"
+    ]
+  }
 }
