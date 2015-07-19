@@ -17,6 +17,17 @@ Communication between Content Script and Extension can be seen in following Wiki
 
 https://github.com/Backfeed/BF-Chrome-Extension/wiki/Message-Sending-Guide
 
+<h3>On Demand Notifications</h3>
+In cases where the Angular app wants to show notification alerts to the user, inject `PostMessageService` and run:
+
+```
+PostMessageService.gesture.showAlert('message to be displayed', type);
+```
+
+`type` can be one of: alert, success, error, warning, information, confirm.
+
+Full documentation here: [http://ned.im/noty/](http://ned.im/noty/)
+
 <h3>Login</h3>
 
 First Login into https://stagingenviornment.elasticbeanstalk.com and get your satellizer_token from the Resources->Local Storage
