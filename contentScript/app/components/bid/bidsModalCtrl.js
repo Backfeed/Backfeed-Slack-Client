@@ -12,6 +12,8 @@ angular.module('MyApp')
 	      Account.getProfile()
 	        .success(function(data) {
 				Account.setUserData(data);
+				userData = Account.getUserData();
+				getContributionForBid();
 				
 	        })
 	        .error(function(error) {
@@ -37,8 +39,19 @@ angular.module('MyApp')
 			 $scope.getProfile();
 		 }else{
 			 $scope.bid.owner = userData.userId;
+			 getContributionForBid();
 		 }
-		 if ($scope.contributionId && $scope.contributionId != 0) {
+		 
+	// if not authenticated return to splash:
+	if(!$auth.isAuthenticated()){
+		$location.path('splash'); 
+    }
+
+	//$scope.slackUsers = Users.getUsers();
+  
+   
+	function getContributionForBid(){
+		if ($scope.contributionId && $scope.contributionId != 0) {
 			 console.log('comes here'+$scope.contributionId)
 				$scope.data1 = ContributionDetail.getDetail({
 					contributionId : $scope.contributionId
@@ -62,15 +75,7 @@ angular.module('MyApp')
 				
 				PostMessageService.sendGesture('showIframe');
 			}
-	// if not authenticated return to splash:
-	if(!$auth.isAuthenticated()){
-		$location.path('splash'); 
-    }
-
-	//$scope.slackUsers = Users.getUsers();
-  
-   
-	
+	}
    
                   
               

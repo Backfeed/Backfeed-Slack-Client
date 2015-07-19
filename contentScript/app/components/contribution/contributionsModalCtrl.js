@@ -22,6 +22,7 @@ angular.module('MyApp').controller(
                 contributer_id : '0',
                 contributer_percentage : '100',
                 contributer_name:'',
+                contribution1: '50',
                 img:'/contentScript/app/images/icon-dude.png'
             } ],
             intialBid : [ {
@@ -146,17 +147,17 @@ angular.module('MyApp').controller(
                 }
 
                 allcontributers = $scope.model.contributers;
-                contPercentage = 100/allcontributers.length;
+                //contPercentage = 100/allcontributers.length;
 
                 for(i=0;i<allcontributers.length;i++){
                     if(allcontributers[i].contributer_id == 0 && allcontributers[i].contributer_percentage == ''){
                         allcontributers[i].contributer_id = selectedUserId;
-                        allcontributers[i].contributer_percentage = contPercentage;
+                        //allcontributers[i].contributer_percentage = contPercentage;
                         allcontributers[i].img = urlImage;
 
                     }
                 }
-                $scope.changeContribution(selectedUserId,contPercentage,userName);
+                $scope.changeContribution(selectedUserId,userName);
 
 
 
@@ -214,15 +215,40 @@ angular.module('MyApp').controller(
 
             };
 
-            $scope.changeContribution = function(contributerId,contributerPercentage,userName) {
+            $scope.changeContribution = function(contributerId,userName) {
                 totalContribution = 0;
                 allcontributers = $scope.model.contributers;
                 valid = true;
+                console.log('userName is '+userName);
                 if(allcontributers.length){
                     valid = false;
                 }
-                console.log('userName is '+userName);
-                console.log('coming percentage is '+contributerPercentage);
+                
+                for(i=0;i<allcontributers.length;i++){
+					if(allcontributers[i].contributer_id != 0){
+						 if(allcontributers[i].contributer_id != contributerId){
+	                            //totalEarlierRemaining = totalEarlierRemaining + +allcontributers[i].contributer_percentage
+	                        }else{
+	                            if(userName != ''){
+	                                console.log('comes inside is '+userName);
+	                                allcontributers[i].contributer_name = userName;
+	                            }
+
+
+	                        }
+						totalContribution = totalContribution + +allcontributers[i].contribution1;
+					}else{
+						valid = false;								
+					}
+				}
+                
+                for(i=0;i<allcontributers.length;i++){
+					if(allcontributers[i].contributer_id != 0){
+						allcontributers[i].contributer_percentage = ((allcontributers[i].contribution1/totalContribution)*100).toFixed(2);
+					}
+				}
+                
+                /*console.log('coming percentage is '+contributerPercentage);
                 remainingPercentage = 100 - +contributerPercentage;
                 console.log('remaining percentage is '+remainingPercentage);
                 totalEarlierRemaining = 0;
@@ -257,7 +283,7 @@ angular.module('MyApp').controller(
 
 
 
-                }
+                }*/
 
                 $scope.buttonDisabled = valid;
 
@@ -266,7 +292,7 @@ angular.module('MyApp').controller(
             // ******************************* SLACK PLAY ***********************
 
             $scope.formatContributionData = function(contributionData) {
-                var str =   contributionData.title +
+                var str =   contributionData.id +'\n'+contributionData.title+
                     '\ncontent: \n'+contributionData.file;
                 return str;
             };
@@ -379,7 +405,7 @@ angular.module('MyApp').controller(
                 $scope.data.$promise.then(function(result) {
 
                     // TBD: un comment later:
-                    //$scope.slackPlay(result);
+                    $scope.slackPlay(result);
 
                     $modalInstance.close('submit');
 
@@ -388,9 +414,9 @@ angular.module('MyApp').controller(
                 });
             };
 
-            $scope.removeCollaboratorItem = function(contributerId,contributerPecentage,index) {
+            $scope.removeCollaboratorItem = function(contributerId,index) {
                 $scope.model.contributers.splice(index, 1);
-                $scope.changeContribution(contributerId,0,'');
+                $scope.changeContribution(contributerId,'');
                 allcontributers = $scope.model.contributers;
                 $scope.updatedUsersList = [];
                 $scope.selectedContributerId = '';
@@ -460,6 +486,7 @@ angular.module('MyApp').controller(
                     contributer_id:'0',
                     contributer_percentage:'',
                     contributer_name:'',
+                    contribution1:'50',
                     img:'/contentScript/app/images/avatar.png'
                 }) ;
                 $scope.buttonDisabled = true;

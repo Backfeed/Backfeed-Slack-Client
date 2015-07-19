@@ -51,13 +51,17 @@
 
 								<p>{{contributer.contributer_fullname}}</p>
 
-								<input class="contribution-slider" data-rangeslider type="range" min="1" max="99" step="1"
-									   ng-disabled="contributer.contributer_percentage == 100"
-									   ng-model="contributer.contributer_percentage"
-									   ng-change="changeContribution(contributer.contributer_id,contributer.contributer_percentage,'')"/>
+								<input class="contribution-slider" data-rangeslider type="range" min="0" max="100" step="1"
+									  ng-disabled ="contributer.contributer_id == '0'"
+									   ng-model="contributer.contribution1"
+									   ng-change="changeContribution(contributer.contributer_id,'')"/>
 							</div>
 
 							<div class="media-right media-middle"><span contenteditable>{{contributer.contributer_percentage}}</span>%</div>
+<div class = 'class="media-right media-middle"'>			
+							
+								
+							</div>
 						</li>
 					</ul>
 

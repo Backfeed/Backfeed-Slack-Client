@@ -41,3 +41,37 @@ iframe {
 	color: rgb(237, 237, 237);
 	font-size: 19px;
 }
+
+#COMPOSE_ACTION_BID_BUTTON {
+	position: relative;
+	width: 50px;
+	height: 30px;
+	padding: 5px 0px;
+	border: 0px;
+	border-image-source: initial;
+	border-image-slice: initial;
+	border-image-width: initial;
+	border-image-outset: initial;
+	border-image-repeat: initial;
+	min-width: 25px;
+	margin-left: 10px;
+	margin-top: 4px;
+	
+	display: inline-block;
+	float: right;
+	cursor: pointer;
+	z-index: 6;
+
+	/* alternative no img*/
+	background: rgb(84, 84, 84);
+	/* // */
+
+	background-size: contain;
+	border-radius: 3px;
+}
+
+#COMPOSE_ACTION_BID_BUTTON:before{
+	content: "BID";
+	color: rgb(237, 237, 237);
+	font-size: 12px;
+}

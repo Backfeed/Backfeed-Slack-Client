@@ -11,10 +11,16 @@ angular.module('MyApp').controller('MainCtrl',  ["$scope", "$state","PostMessage
 		console.log('Starting contributions');
 		$state.go('createContribution', {}, {reload: true});
 	}
+	
+	function goToAddBid(contributionId) {
+		console.log('Starting bids for contributionID: '+contributionId);
+		$state.go('bids', {'contributionId': contributionId}, {reload: true});
+	}
 
 	var GESTURES = {
 		"openAddOrganization": goToAddOrganization,
-		"openAddContributionPage": goToAddContribution
+		"openAddContributionPage": goToAddContribution,
+		"openAddBidPage": goToAddBid
 	};
 
 	console.log('MainCtrl init');
