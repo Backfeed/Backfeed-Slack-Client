@@ -5,9 +5,7 @@ var iframe = document.createElement("iframe");
 iframe.setAttribute("src", chrome.extension.getURL("contentScript/app/index.html"));
 iframe.setAttribute("frameborder", "0");
 
-iframe.addEventListener('load', function(e) {
-    iframe.style.height = document['body'].offsetHeight + 'px';
-});
+$(window).resize(setIframeHeight);
 
 //compose button
 var addBidButton = document.createElement("button");
@@ -31,7 +29,7 @@ function openAddContributionPage() {
 }
 
 function openAddBidPage(contributionId) {
-	console.log('contributionId is'+contributionId);
+	console.log('contributionId is: ' + contributionId);
 	chrome.runtime.sendMessage({        
         message : {
             "gesture": 'openAddBidPage',
@@ -43,14 +41,25 @@ function openAddBidPage(contributionId) {
 	});
 }
 
+function setIframeHeight() {
+	iframe.style.height = document.documentElement.clientHeight + 'px';
+}
+
+var GESTURES = {
+	"showIframe": showIframe,
+	"hideIframe": hideIframe,
+	"showAlert": showAlert
+};
+
 function showIframe() {
-    console.log('displaying iframe');
+	console.log('displaying iframe');
+	setIframeHeight();
 	iframe.style.display = "block";
 }
 
 function hideIframe() {
-    console.log('hiding iframe');
-    iframe.style.display = "none";
+	console.log('hiding iframe');
+	iframe.style.display = "none";
 }
 
 function showAlert(options) {
@@ -61,11 +70,6 @@ function showAlert(options) {
 	});
 }
 
-var GESTURES = {
-	"showIframe": showIframe,
-	"hideIframe": hideIframe,
-	"showAlert": showAlert
-};
 
 function init() {
 
@@ -107,7 +111,7 @@ function init() {
 						var contributionId = spanText.substring(5,spanText.indexOf("<br>"));
 						var lengthOfText = removalText.length;
 						originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length+4), "");
-						$( '.message_content', $( this ) ).html (originalText)
+						$( '.message_content', $( this ) ).html (originalText);
 						var openComposeButton = document.createElement("button");
 						openComposeButton.setAttribute("id", "COMPOSE_ACTION_BID_BUTTON");
 						openComposeButton.setAttribute("data-contributionId", contributionId);
