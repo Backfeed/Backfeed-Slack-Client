@@ -21,8 +21,12 @@ angular.module('MyApp').service('PostMessageService', function(Account,$state) {
 		},
 		hideIframe: function() {
 			self.sendGesture("hideIframe");
+		},
+		showAlert: function(message, type) {
+			if (!type) type = 'warning';
+			self.sendGesture("showAlert", {message: message, type: type});
 		}
-	}
+	};
 
    	this.getProfile = function() {
 		Account.getProfile().success(function(data) {

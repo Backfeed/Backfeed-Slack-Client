@@ -1,6 +1,6 @@
 angular.module('MyApp').controller(
     'ContributionsModalCtrl',
-    function($scope, $auth, $location, $rootScope,$stateParams, $alert, Contributions,
+    function($scope, $auth, $location, $rootScope,$stateParams, Contributions,
              ContributionDetail, SaveContribution, CloseContribution,$state,
              Account, Users, $modalInstance,PostMessageService) {
 
@@ -79,12 +79,7 @@ angular.module('MyApp').controller(
                     Account.setUserData(data);
 
                 }).error(function(error) {
-                    $alert({
-                        content : error.message,
-                        animation : 'fadeZoomFadeDown',
-                        type : 'material',
-                        duration : 3
-                    });
+                    PostMessageService.gesture.showAlert(error.message, 'error');
                 });
             };
 

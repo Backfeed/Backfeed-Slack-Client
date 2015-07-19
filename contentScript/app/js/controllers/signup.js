@@ -1,5 +1,5 @@
 angular.module('MyApp')
-  .controller('SignupCtrl', function($scope, $alert, $auth) {
+  .controller('SignupCtrl', function($scope, PostMessageService, $auth) {
     $scope.signup = function() {
       $auth.signup({
         displayName: $scope.displayName,
@@ -8,20 +8,10 @@ angular.module('MyApp')
       }).catch(function(response) {
         if (typeof response.data.message === 'object') {
           angular.forEach(response.data.message, function(message) {
-            $alert({
-              content: message[0],
-              animation: 'fadeZoomFadeDown',
-              type: 'material',
-              duration: 3
-            });
+            PostMessageService.gesture.showAlert(message[0], 'error');
           });
         } else {
-          $alert({
-            content: response.data.message,
-            animation: 'fadeZoomFadeDown',
-            type: 'material',
-            duration: 3
-          });
+          PostMessageService.gesture.showAlert(response.data.message, 'error');
         }
       });
     };

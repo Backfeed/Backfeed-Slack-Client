@@ -1,6 +1,6 @@
-angular.module('MyApp').controller('MainCtrl',  ["$scope", "$state","PostMessageService", function($scope, $state,PostMessageService) {	
+angular.module('MyApp').controller('MainCtrl', ["$scope", "$state","PostMessageService", function($scope, $state, PostMessageService) {
 	
-	//************    Listen to messages in order to open modal and navigate the App       ************
+	//************    Listen to incoming messages in order to open modal and navigate the App       ************
 	function goToAddOrganization() {
 		console.log('Creating Org');
 		PostMessageService.navigateToCreateOrg();

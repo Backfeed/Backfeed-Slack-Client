@@ -1,5 +1,5 @@
 angular.module('MyApp')
-  .controller('OrganizationsModalCtrl', function($scope,$auth,$alert,$location,$stateParams,SaveOrg,Account,
+  .controller('OrganizationsModalCtrl', function($scope,$auth,$location,$stateParams,SaveOrg,Account,
 		  Users,AllSlackUsers,CheckOrgTokenName,AllOrgs,$modalInstance,$state,CheckOrgCode,PostMessageService) {
 	  $scope.userData= ''
 	  $scope.validationFailureForTokenName = false;
@@ -30,12 +30,7 @@ angular.module('MyApp')
 				
 	        })
 	        .error(function(error) {
-	        $alert({
-	            content: error.message,
-	            animation: 'fadeZoomFadeDown',
-	            type: 'material',
-	            duration: 3
-	          });
+				  PostMessageService.gesture.showAlert(error.message, 'error');
 	        });
 	    };	    
 	     $scope.userData = Account.getUserData();

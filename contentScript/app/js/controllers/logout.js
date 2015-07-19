@@ -1,19 +1,14 @@
 angular.module('MyApp')
-  .controller('LogoutCtrl', function($auth, $alert,$location,Account,Users) {
+  .controller('LogoutCtrl', function($auth, PostMessageService, $location, Account, Users) {
 	Account.setUserData(undefined); 
 	Users.setAllOrgUsersData(undefined);
+
     if (!$auth.isAuthenticated()) {
         return;
     }
-    $auth.logout()
-      .then(function() {
-        $alert({
-          content: 'You have been logged out',
-          animation: 'fadeZoomFadeDown',
-          type: 'material',
-          duration: 3
-        });
-		$location.path('splash');
-        
-      });
+
+    $auth.logout().then(function() {
+      PostMessageService.gesture.showAlert('You have been logged out', 'information');
+      $location.path('splash');
+    });
   });

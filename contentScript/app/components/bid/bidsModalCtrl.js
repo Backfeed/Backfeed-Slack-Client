@@ -1,5 +1,5 @@
 angular.module('MyApp')
-  .controller('BidsModalCtrl', function($scope,$auth,$location,$stateParams,Users,$alert,
+  .controller('BidsModalCtrl', function($scope,$auth,$location,$stateParams,Users,
 		  SaveBidTOContribution,Account,ContributionDetail,UserDetail,$modalInstance,PostMessageService,$state) {
 	  $scope.contributionId = $stateParams.contributionId;
 	  $scope.bidId = $stateParams.bidId;
@@ -17,12 +17,7 @@ angular.module('MyApp')
 				
 	        })
 	        .error(function(error) {
-	        $alert({
-	            content: error.message,
-	            animation: 'fadeZoomFadeDown',
-	            type: 'material',
-	            duration: 3
-	          });
+				  PostMessageService.gesture.showAlert(error.message, 'error');
 	        });
 	    };
 	    $scope.bid = {			

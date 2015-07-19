@@ -1,5 +1,5 @@
 angular.module('MyApp').controller('NavbarCtrl',
-		function($scope, $auth, Account, $alert, $location) {
+		function($scope, $auth, Account, PostMessageService, $location) {
 
 			$scope.createOrg = function() {
 				console.log("Create Org");
@@ -27,22 +27,17 @@ angular.module('MyApp').controller('NavbarCtrl',
 					$scope.user = data;
 					Account.setUserData(data);
 				}).error(function(error) {
-					$alert({
-						content : error.message,
-						animation : 'fadeZoomFadeDown',
-						type : 'material',
-						duration : 3
-					});
+					PostMessageService.gesture.showAlert(error.message, 'error');
 				});
 			};
 
 			$scope.user = {
 				displayName : "profile"
 			};
+
 			if ($auth.isAuthenticated() == true) {
 				if (Account.getUserData() == undefined) {
 					$scope.getProfile()
 				}
-
 			}
 		});

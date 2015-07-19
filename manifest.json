@@ -32,6 +32,7 @@
 		"js"				: [
 			"contentScript/app/vendor/scripts/jquery.js",
 			"contentScript/app/vendor/scripts/angular.js",
+			"contentScript/vendor/jquery.noty.packaged.js",
 			"contentScript/composeConfig.js" ,
 			"contentScript/contentScript.js"
 		],

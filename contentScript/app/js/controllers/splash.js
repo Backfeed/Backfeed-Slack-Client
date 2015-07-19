@@ -1,5 +1,5 @@
 angular.module('MyApp')
-  .controller('SplashCtrl', function($scope, $alert, $auth,$location,Account) {
+  .controller('SplashCtrl', function($scope, PostMessageService, $auth,$location,Account) {
 		var body = document.getElementsByTagName('body')[0];
 		var element = angular.element(body);
 		element.addClass('splash-background')
@@ -30,38 +30,21 @@ angular.module('MyApp')
 					
 		        })
 		        .error(function(error) {
-		          $alert({
-		            content: error.message,
-		            animation: 'fadeZoomFadeDown',
-		            type: 'material',
-		            duration: 3
-		          });
+					  PostMessageService.gesture.showAlert(error.message, 'error');
 		        });
 		    };
 	$scope.authenticate = function(provider) {
       $auth.authenticate(provider)
         .then(function() {
-          $alert({
-            content: 'You have successfully logged in',
-            animation: 'fadeZoomFadeDown',
-            type: 'material',
-            duration: 3
-          });
-          if(Account.getUserData() == undefined){
-          	console.log('this is empty')
-          	$scope.getProfile();
-          }
-          
-          
-			
+			  PostMessageService.gesture.showAlert('You have successfully logged in', 'success');
+
+			  if(Account.getUserData() == undefined){
+				console.log('this is empty')
+				$scope.getProfile();
+			  }
         })
         .catch(function(response) {
-          $alert({
-            content: response.data ? response.data.message : response,
-            animation: 'fadeZoomFadeDown',
-            type: 'material',
-            duration: 3
-          });
+			  PostMessageService.gesture.showAlert(response.data ? response.data.message : response, 'error');
         });
     };
 	/*

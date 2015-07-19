@@ -1,5 +1,5 @@
 angular.module('MyApp')
-  .controller('ProfileCtrl', function($scope, $auth, $alert, Account) {
+  .controller('ProfileCtrl', function($scope, $auth, PostMessageService, Account) {
 	
 	// if not authenticated return to splash:
 	if(!$auth.isAuthenticated()){
@@ -18,12 +18,7 @@ angular.module('MyApp')
 			
         })
         .error(function(error) {
-          $alert({
-            content: error.message,
-            animation: 'fadeZoomFadeDown',
-            type: 'material',
-            duration: 3
-          });
+            PostMessageService.gesture.showAlert(error.message, 'error');
         });
     };
 
@@ -36,12 +31,7 @@ angular.module('MyApp')
         displayName: $scope.user.displayName,
         email: $scope.user.email
       }).then(function() {
-        $alert({
-          content: 'Profile has been updated',
-          animation: 'fadeZoomFadeDown',
-          type: 'material',
-          duration: 3
-        });
+        PostMessageService.gesture.showAlert('Profile has been updated', 'success');
       });
     };
 
@@ -51,37 +41,21 @@ angular.module('MyApp')
     $scope.link = function(provider) {
 		var supportedProviders = ['trello','slack'];
 		
-		if(supportedProviders.indexOf(provider) == -1){
-			
-			$alert({
-	            content: 'Under construction.',
-	            animation: 'fadeZoomFadeDown',
-	            type: 'material',
-	            duration: 3
-	          });
-			return ;
+		if(supportedProviders.indexOf(provider) == -1) {
+          PostMessageService.gesture.showAlert('Under construction.', 'warning');
+          return;
 		}
 		
-      $auth.link(provider)
-        .then(function() {
-          $alert({
-            content: 'You have successfully linked ' + provider + ' account',
-            animation: 'fadeZoomFadeDown',
-            type: 'material',
-            duration: 3
+        $auth.link(provider)
+          .then(function() {
+                PostMessageService.gesture.showAlert('You have successfully linked ' + provider + ' account', 'success');
+          })
+          .then(function() {
+            $scope.getProfile();
+          })
+          .catch(function(response) {
+                PostMessageService.gesture.showAlert(response.data.message, 'success');
           });
-        })
-        .then(function() {
-          $scope.getProfile();
-        })
-        .catch(function(response) {
-          $alert({
-            content: response.data.message,
-            animation: 'fadeZoomFadeDown',
-            type: 'material',
-            duration: 3
-          });
-        });
     };
 
     /**
@@ -90,36 +64,21 @@ angular.module('MyApp')
     $scope.unlink = function(provider) {
 	
 	   //	*************  currently not supported :
-		$alert({
-           content: 'Under construction.',
-           animation: 'fadeZoomFadeDown',
-           type: 'material',
-           duration: 3
-         });
-		return ;
+        PostMessageService.gesture.showAlert('Under construction.', 'warning');
+        return;
 		
-		//	*************
-	
-      $auth.unlink(provider)
-        .then(function() {
-          $alert({
-            content: 'You have successfully unlinked ' + provider + ' account',
-            animation: 'fadeZoomFadeDown',
-            type: 'material',
-            duration: 3
-          });
-        })
-        .then(function() {
-          $scope.getProfile();
-        })
-        .catch(function(response) {
-          $alert({
-            content: response.data ? response.data.message : 'Could not unlink ' + provider + ' account',
-            animation: 'fadeZoomFadeDown',
-            type: 'material',
-            duration: 3
-          });
-        });
+		/*
+        $auth.unlink(provider)
+            .then(function() {
+                PostMessageService.gesture.showAlert('You have successfully unlinked ' + provider + ' account', 'success');
+            })
+            .then(function() {
+              $scope.getProfile();
+            })
+            .catch(function(response) {
+                PostMessageService.gesture.showAlert(response.data ? response.data.message : 'Could not unlink ' + provider + ' account', 'error');
+            });
+         */
     };
 
 
@@ -210,7 +169,5 @@ angular.module('MyApp')
 	
    
     $scope.getProfile();
-    
-    
 
   });

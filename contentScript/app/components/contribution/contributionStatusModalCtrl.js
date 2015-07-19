@@ -1,6 +1,6 @@
 angular.module('MyApp').controller(
 		'ContributionStatusModalCtrl',
-		function($scope, $auth, $location, $stateParams, $alert, ContributionStatus,				
+		function($scope, $auth, $location, $stateParams, ContributionStatus,
 				Account, Users,$modalInstance,PostMessageService) {			
 			$scope.cotributionStatusModel = {
 					currentValuation : '',
@@ -25,12 +25,7 @@ angular.module('MyApp').controller(
 						Account.setUserData(data);
 
 					}).error(function(error) {
-						$alert({
-							content : error.message,
-							animation : 'fadeZoomFadeDown',
-							type : 'material',
-							duration : 3
-						});
+						PostMessageService.gesture.showAlert(error.message, 'error');
 					});
 				};
 				userData = Account.getUserData();
