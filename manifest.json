@@ -49,6 +49,9 @@
     	"notifications",
     	"identity"
 	],
+	
+	"key":"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvFh9vcHjnhR6q0aqqgIVPvSbSnfH6yoO4NYOiNuICU1xuugAjb7XgjZFyLv38RpLihqHTdzo43jHk1XM6tmCzv+9B6B5L576P0GHZ9DtGC3AObp3CBBtriawLt8uHp6AVdt8atBgtz5VhwLt0/XMLjWBurTGyAN3EvJnn7xKW45Tg5nXDkLFhOkzY5gnObFpfiWlMnJd03+uJJ85ax6ZNq60deOT3pzb1q47FK8LMovVXhO01151RJv44DIJZsU1LjV16rZ+Z2PqawEoPJfL+yYUqR2w377bCzwM1NC3j0yOAWQpooLD5aOPhj1UZaPJiddM0Gz63VPOyd8vJ5UeVQIDAQAB",
+	
 	"oauth2": {
     "client_id": "113474852674-moi0k0p2434nq43oqhqvtila5rse7vh7.apps.googleusercontent.com",
     "scopes": [
