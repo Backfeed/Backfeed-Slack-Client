@@ -6,8 +6,9 @@
 
 <div class="modal-body">
 	<form>
-		<div class="row">
-			<div class="col-sm-12">
+	<div class="row">
+	<div class="col-sm-6">
+
 		<p>Welcome {{userData.displayName}},</p>
 		<h2>Let's create a new holon</h2>
 		<!-- <button type="submit"  class="btn btn-default" ng-click='changeTeam()'>Change Team</button> -->
@@ -20,21 +21,68 @@
 			Your holon has its own value units.<br />How would you like to name
 			them?
 		</p>
-		</div>
-		</div>
-		<div class="row">
-		<div class="col-sm-9">
+
+				
+		<div class="form-group">
 			<input type="text" class="form-control" id="tokenName" required
 				placeholder="e.g. Pig Coins" ng-model="orgModel.token_name"
 				 /> <label>Name</label>
 			 
 		</div>
 
-		<div class="col-sm-3">
+		<div class="form-group">
 			<input type="text" class="form-control" id="tokenCode" required
 				placeholder="PiC" ng-model="orgModel.code"/> <label>Code</label>
 		</div>
+
+		<div class="form-group">
+			<input type="text" class="form-control" id="token" required
+				placeholder="TOKEN" ng-model="orgModel.token"/> <label>Token</label>
 		</div>
+		</div>
+		<div class="col-sm-6">
+					<h2>Contributors <img tooltip="help message" alt="help" src="/contentScript/app/images/icon_help.png"/></h2>
+
+					<ul ng-repeat="contributer in orgModel.contributers" class="media-list">
+						<li class="media contributer-cell">
+							<div class="media-left media-middle">
+								<a href="#">
+									<img class="media-object" src="{{contributer.img}}" alt=""/>
+								</a>
+							</div>
+
+							<div class="media-body">
+								<h4 class="media-heading">{{contributer.contributer_name}}</h4>
+
+								<p>{{contributer.contributer_fullname}}</p>
+
+								<input class="contribution-slider" data-rangeslider type="range" min="0" max="100" step="1"
+									  ng-disabled ="contributer.contributer_id == '0'"
+									   ng-model="contributer.contribution1"
+									   ng-change="changeContribution(contributer.contributer_id,'')"/>
+							</div>
+
+							<div class="media-right media-middle"><span contenteditable>{{contributer.contributer_percentage}}</span>%</div>
+							<div class = 'class="media-right media-middle"'>			
+								<button type="submit" class="btn btn-default" aria-label="Left Align" ng-click='removeCollaboratorItem(contributer.contributer_id,$index)'>
+								  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+								</button>								
+							</div>
+						</li>
+					</ul>
+
+					<ui-select style="width:96%" search-enabled="false"
+							   ng-model='selectedContributerId'
+							   ng-change="updateContributer($select.selected.id)">
+						<ui-select-match placeholder="Add Contributor"></ui-select-match>
+						<ui-select-choices repeat="user in updatedUsersList">
+							<div ng-bind-html="formatSelectUser(user)"></div>
+						</ui-select-choices>
+					</ui-select>
+
+				</div>
+		
+	</div>
 	</form>
 </div>
 
@@ -43,7 +91,7 @@
 		<div class="col-sm-12">
 			<button type="submit"
 				class="btn btn-backfeed submit-button center-block"
-				ng-disabled="!orgModel.token_name  || !orgModel.code || validationFailure"
+				ng-disabled="!orgModel.token_name  || !orgModel.code || !orgModel.token || validationFailure || buttonDisabled"
 				ng-click="submit()">Create Backfeed Holon</button>
 		</div>
 	</div>

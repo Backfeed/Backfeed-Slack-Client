@@ -98,27 +98,32 @@ function init() {
 
 
 	var addBidObserver = new MutationObserver(function(mutations) {
-		  $(".message.bot_message").each(function() {    	
-				var spanElement = $( '.message_content', $( this ) );
-				var spanChildren = spanElement.children('#COMPOSE_ACTION_BID_BUTTON');
-				if(spanChildren.length == 0){
-					spanText = spanElement.html();
-					originalText = spanText;
-					var removalText = "new contribution was created:<br>";
-					var indexOfRemovalContent = spanText.indexOf(removalText);
-					if(indexOfRemovalContent > -1){
-						spanText = spanText.replace(removalText, "");
-						var contributionId = spanText.substring(5,spanText.indexOf("<br>"));
-						var lengthOfText = removalText.length;
-						originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length+4), "");
-						$( '.message_content', $( this ) ).html (originalText);
-						var openComposeButton = document.createElement("button");
-						openComposeButton.setAttribute("id", "COMPOSE_ACTION_BID_BUTTON");
-						openComposeButton.setAttribute("data-contributionId", contributionId);
-						spanElement.append(openComposeButton);
+		  // If current channel is contribution_test
+		  contributionChanneTag = $(".channel_C06GK1Y06.channel.active");
+		  if(contributionChanneTag != undefined && contributionChanneTag.length > 0){
+			  $(".message.bot_message").each(function() {    	
+					var spanElement = $( '.message_content', $( this ) );
+					var spanChildren = spanElement.children('#COMPOSE_ACTION_BID_BUTTON');
+					if(spanChildren.length == 0){
+						spanText = spanElement.html();
+						originalText = spanText;
+						var removalText = "new contribution was created:<br>";
+						var indexOfRemovalContent = spanText.indexOf(removalText);
+						if(indexOfRemovalContent > -1){
+							spanText = spanText.replace(removalText, "");
+							var contributionId = spanText.substring(5,spanText.indexOf("<br>"));
+							var lengthOfText = removalText.length;
+							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length+4), "");
+							$( '.message_content', $( this ) ).html (originalText);
+							var openComposeButton = document.createElement("button");
+							openComposeButton.setAttribute("id", "COMPOSE_ACTION_BID_BUTTON");
+							openComposeButton.setAttribute("data-contributionId", contributionId);
+							spanElement.append(openComposeButton);
+						}
 					}
-				}
-		});		
+			});	
+		  }
+			
 		 
 	});
 

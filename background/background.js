@@ -224,7 +224,15 @@ chrome.runtime.onMessage.addListener(function(msg, sender) {
 	      break;
 
 	    default:
-		  sendGesture(msg.message);
+	      if(localStorage['satellizer_token'] == undefined){
+	    	  sendGesture({
+	              "gesture": 'showAlertFromMainCtr',
+	              "options": {}
+	          }	);	    	 
+	      }else{
+	    	  sendGesture(msg.message);
+	      }
+	      
 	      break;
 	  }
 		    

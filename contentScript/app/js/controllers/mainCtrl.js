@@ -16,11 +16,17 @@ angular.module('MyApp').controller('MainCtrl', ["$scope", "$state","PostMessageS
 		console.log('Starting bids for contributionID: '+contributionId);
 		$state.go('bids', {'contributionId': contributionId}, {reload: true});
 	}
+	
+	function showAlert() {
+		console.log('Showing Alert');
+		PostMessageService.gesture.showAlert('You need to login in case of accessing backfeed', 'error');
+	}
 
 	var GESTURES = {
 		"openAddOrganization": goToAddOrganization,
 		"openAddContributionPage": goToAddContribution,
-		"openAddBidPage": goToAddBid
+		"openAddBidPage": goToAddBid,
+		"showAlertFromMainCtr": showAlert
 	};
 
 	console.log('MainCtrl init');
