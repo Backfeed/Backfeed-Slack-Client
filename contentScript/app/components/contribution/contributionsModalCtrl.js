@@ -2,7 +2,7 @@ angular.module('MyApp').controller(
     'ContributionsModalCtrl',
     function($scope, $auth, $location, $rootScope,$stateParams, Contributions,
              ContributionDetail, SaveContribution, CloseContribution,$state,
-             Account, Users, $modalInstance,PostMessageService) {
+             Account, Users, $modalInstance,PostMessageService, $http) {
 
         $scope.closeModal = function() {
             $modalInstance.dismiss('cancel');
@@ -112,7 +112,7 @@ angular.module('MyApp').controller(
                     $scope.users_organizations_id = userData.userOrgId;
                     $scope.organizationId = userData.orgId;
                     $scope.model.users_organizations_id = userData.userOrgId;
-                    
+
                     $scope.access_token = userData.access_token;
                     $scope.model.owner = userData.userId;
                     $scope.model.contributers[0].contributer_id = userData.userId;
@@ -218,7 +218,7 @@ angular.module('MyApp').controller(
                 if(allcontributers.length){
                     valid = false;
                 }
-                
+
                 for(i=0;i<allcontributers.length;i++){
 					if(allcontributers[i].contributer_id != 0){
 						 if(allcontributers[i].contributer_id != contributerId){
@@ -233,16 +233,16 @@ angular.module('MyApp').controller(
 	                        }
 						totalContribution = totalContribution + +allcontributers[i].contribution1;
 					}else{
-						valid = false;								
+						valid = false;
 					}
 				}
-                
+
                 for(i=0;i<allcontributers.length;i++){
 					if(allcontributers[i].contributer_id != 0){
 						allcontributers[i].contributer_percentage = ((allcontributers[i].contribution1/totalContribution)*100).toFixed(2);
 					}
 				}
-                
+
                 /*console.log('coming percentage is '+contributerPercentage);
                 remainingPercentage = 100 - +contributerPercentage;
                 console.log('remaining percentage is '+remainingPercentage);
@@ -286,37 +286,54 @@ angular.module('MyApp').controller(
 
             // ******************************* SLACK PLAY ***********************
 
-            $scope.formatContributionData = function(contributionData) {
-                var str =   contributionData.id +'\n'+contributionData.title+
-                    '\ncontent: \n'+contributionData.file;
-                return str;
+            $scope.buildContributionMessage = function(contributionData) {
+                var contributersString = '';
+                contributionData.contributionContributers.forEach(function(contributer) {
+                    contributersString += '('+contributer.contributer_percentage+'), ';
+                });
+
+                return 'New contribution submitted'
+                    + '\n'
+                    + '*'+contributionData.title+'*'
+                    + '\n'
+                    + contributionData.file
+                    + '\n'
+                    + contributersString;
             };
 
-            $scope.sendTestMessage = function(channelId,message) {
-                console.log('sending test message to slack :'+message);
+            $scope.sendTestMessage = function(channelId, message) {
+                console.log('sending test message to slack: '+message);
 
                 // 'https://slack.com/api/users.list'
 
                 var url = 'https://slack.com/api/chat.postMessage';
-                console.log('url:'+url);
+                console.log('url: ' + url);
 
                 var token = "xoxp-3655944058-3674335518-3694970236-83726d";
-                //	var key = 'c1bb14ae5cc544231959fc6e9af43218';
                 var data = {
-                    icon_url:'https://s-media-cache-ak0.pinimg.com/236x/71/71/f9/7171f9ba59d5055dd0a865b41ac4b987.jpg',
-                    username:'backfeed-bot',
-                    token:token,
-                    channel:channelId,
-                    text:message
+                    icon_url: 'https://s-media-cache-ak0.pinimg.com/236x/71/71/f9/7171f9ba59d5055dd0a865b41ac4b987.jpg',
+                    username: 'backfeed-bot',
+                    token: token,
+                    channel: channelId,
+                    text: message,
+                    link_names: 1,
+                    parse: "full"
                 };
 
-                // TBD: move to use angularJS instead of Jquery and get rid of need to change  Host when we deploy...
-                // TBD: which API ? do we get 'my borads or boards of orgenziation'
+                // TODO: move to use angularJS instead of Jquery and get rid of need to change  Host when we deploy...
+                // TODO: which API ? do we get 'my borads or boards of orgenziation'.
+                //$http.get(url, data).success(function(response) {
+                //    console.log('message posted successfully!');
+                //}).error(function(response) {
+                //    console.log('message posted erroneously!');
+                //});
                 $.ajax({
                     type: "GET",
                     url: url,
                     data: data,
-                    success: function(){console.log('message posted succesfulyy!')},
+                    success: function(response){
+                        console.log('message posted successfully!');
+                    },
                     persist:true,
                     dataType:'JSON'
                 });
@@ -325,19 +342,22 @@ angular.module('MyApp').controller(
 
             $scope.gotChannels = function(data) {
                 console.log('recieved Channels:');
-                console.dir(data);
-
+                //console.dir(data);
 
                 // get specific channel:
                 var chnls = data.channels;
+
                 for (chnIndx in chnls){
                     var chnl = chnls[chnIndx];
                     console.log('chnl.name:'+chnl.name);
-                    if(chnl.name == 'contributions_test'){
-                        console.log('is random sending ...:')	;
 
-                        channelId = chnl.id;
-                        $scope.sendTestMessage(channelId,'new contribution was created:\n'+$scope.formatContributionData($scope.currentSavedContribution))
+                    // TODO removed hardcoded dependency on channel name
+                    if(chnl.name == 'contributions_test'){
+                        console.log('is random sending ...:');
+
+                        var channelId = chnl.id;
+                        var message = $scope.buildContributionMessage($scope.currentSavedContribution);
+                        $scope.sendTestMessage(channelId, message);
                     }
                 }
             };
@@ -494,7 +514,7 @@ angular.module('MyApp').controller(
                     $scope.ContributionModelForView);
                 $scope.data.$promise.then(function(result) {
                     alert('Contribution closed');
-                    
+
                     $location.path("/contributions");
                 });
 
