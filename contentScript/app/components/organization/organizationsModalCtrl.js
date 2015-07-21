@@ -59,7 +59,11 @@ angular.module('MyApp')
 				
 	        })
 	        .error(function(error) {
-				  PostMessageService.gesture.showAlert(error.message, 'error');
+				  if(error.message == undefined){
+            		PostMessageService.gesture.showAlert('Plese Relogin', 'error');
+            	}else{
+            		PostMessageService.gesture.showAlert(error.message, 'error');
+            	}
 	        });
 	    };	    
 	     $scope.userData = Account.getUserData();

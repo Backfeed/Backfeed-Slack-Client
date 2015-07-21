@@ -13,11 +13,22 @@ angular.module('MyApp')
 	        .success(function(data) {
 				Account.setUserData(data);
 				userData = Account.getUserData();
-				getContributionForBid();
+				orgExists = data.orgexists;
+                console.log('userData is not defined comes 1 orgExists'+orgExists)
+                if (orgExists != 'true') {
+                	//navigate to create org screen
+                	$state.go('createOrg', {}, {reload: true});
+                }else{
+                	getContributionForBid();
+                }
 				
 	        })
 	        .error(function(error) {
-				  PostMessageService.gesture.showAlert(error.message, 'error');
+				  if(error.message == undefined){
+            		PostMessageService.gesture.showAlert('Plese Relogin', 'error');
+            	}else{
+            		PostMessageService.gesture.showAlert(error.message, 'error');
+            	}
 	        });
 	    };
 	    $scope.bid = {			
@@ -34,7 +45,13 @@ angular.module('MyApp')
 			 $scope.getProfile();
 		 }else{
 			 $scope.bid.owner = userData.userId;
-			 getContributionForBid();
+			 orgExists = userData.orgexists;
+             if (orgExists != 'true') {
+             	//navigate to create org screen
+             	$state.go('createOrg', {}, {reload: true});
+             }else{
+             	getContributionForBid();
+             }
 		 }
 		 
 	// if not authenticated return to splash:
