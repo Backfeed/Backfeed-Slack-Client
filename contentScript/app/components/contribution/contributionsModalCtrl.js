@@ -6,7 +6,8 @@ angular.module('MyApp').controller(
 
         $scope.closeModal = function() {
             $modalInstance.dismiss('cancel');
-        };		
+        };
+
         var orgExists;
 
         $scope.currencyFormatting = function(value) { return value.toString() + " $"; };
@@ -29,7 +30,13 @@ angular.module('MyApp').controller(
                 tokens : '',
                 reputation : ''
             } ]
-
+        };
+        $scope.rangeSlider = {
+                options: {
+                    min: 1,
+                    max: 100,
+                    range: 'min'
+                }
         };
 
         console.log('comes here in controller');
@@ -79,11 +86,11 @@ angular.module('MyApp').controller(
                     Account.setUserData(user);
 
                 }).error(function(error) {
-                    if(error.message == undefined){
-                		PostMessageService.gesture.showAlert('Plese Relogin', 'error');
-                	}else{
-                		PostMessageService.gesture.showAlert(error.message, 'error');
-                	}
+                    if (error && error.message) {
+                        PostMessageService.gesture.showAlert(error.message, 'error');
+                    } else {
+                        PostMessageService.gesture.showAlert('Plese Relogin', 'error');
+                    }
                 });
             };
 

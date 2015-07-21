@@ -11,19 +11,27 @@ angular.module('MyApp')
       };
 	
 	  $scope.orgModel = {
-				token_name : '',
-				slack_teamid : '',				
-				name : '',
-				code : '',
-				token :'',
-				contributers : [ {
-	                contributer_id : '0',
-	                contributer_percentage : '100',
-	                contributer_name:'',
-	                contribution1: '50',
-	                img:'/contentScript/app/images/icon-dude.png'
-	            } ]
+			token_name : '',
+			slack_teamid : '',
+			name : '',
+			code : '',
+			token :'',
+			contributers : [ {
+				contributer_id : '0',
+				contributer_percentage : '100',
+				contributer_name:'',
+				contribution1: '50',
+				img:'/contentScript/app/images/icon-dude.png'
+			} ]
+		};
+
+		$scope.rangeSlider = {
+			options: {
+				min: 1,
+				max: 100,
+				range: 'min'
 			}
+		};
 	 
 	  
 	  $scope.organizations = AllOrgs.allOrgs();
