@@ -11,7 +11,7 @@ angular.module('MyApp').controller(
 
         $scope.currencyFormatting = function(value) { return value.toString() + " $"; };
         $scope.organizationId = 'notintialized';
-        $scope.buttonDisabled = true;
+        $scope.buttonDisabled = false;
         $scope.model = {
             title : '',
             file : '',
@@ -484,7 +484,7 @@ angular.module('MyApp').controller(
                     contribution1:'50',
                     img:'/contentScript/app/images/avatar.png'
                 }) ;
-                $scope.buttonDisabled = true;
+                //$scope.buttonDisabled = true;
             };
 
             $scope.closeContribution = function() {

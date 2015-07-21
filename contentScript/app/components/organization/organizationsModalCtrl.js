@@ -4,7 +4,7 @@ angular.module('MyApp')
 	  $scope.userData= ''
 	  $scope.validationFailureForTokenName = false;
 	  $scope.validationFailureForCode = false;
-	  $scope.buttonDisabled = true;
+	  $scope.buttonDisabled = false;
 	  PostMessageService.gesture.hideIframe();
 	  $scope.closeModal = function() {
           $modalInstance.dismiss('cancel');
@@ -191,7 +191,7 @@ angular.module('MyApp')
                  contribution1:'50',
                  img:'/contentScript/app/images/avatar.png'
              }) ;
-             $scope.buttonDisabled = true;
+             //$scope.buttonDisabled = true;
          };
          
          $scope.formatSelectUser = function (data) {
