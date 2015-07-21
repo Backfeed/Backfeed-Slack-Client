@@ -79,6 +79,8 @@ function init() {
 		if (addedNodes.length > 0) {
 			addedNodes.each(function() {
 				if (this.id == 'menu') {
+					this.style.top = parseInt(this.style.top) + 32 + "px";
+
 					var menuItemsList = $(this).find('#menu_items');
 					var menuItems = menuItemsList.children();
 

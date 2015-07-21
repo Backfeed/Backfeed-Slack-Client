@@ -58,25 +58,25 @@ angular.module('MyApp').controller(
                 });
             };
             $scope.getProfile = function() {
-                Account.getProfile().success(function(data) {
-                    $scope.userId = data.userId;
-                    orgExists = data.orgexists;
+                Account.getProfile().success(function(user) {
+                    $scope.userId = user.userId;
+                    orgExists = user.orgexists;
                     console.log('userData is not defined comes 1 orgExists'+orgExists)
                     if (orgExists == 'true') {
-                        $scope.users_organizations_id = data.userOrgId;
-                        $scope.model.users_organizations_id = data.userOrgId;
-                        $scope.organizationId = data.orgId;
-                        $scope.access_token = data.access_token;
-                        $scope.model.owner = data.userId;
-                        $scope.model.contributers[0].contributer_id = data.userId;
-                        $scope.model.contributers[0].contributer_name = data.displayName;
+                        $scope.users_organizations_id = user.userOrgId;
+                        $scope.model.users_organizations_id = user.userOrgId;
+                        $scope.organizationId = user.orgId;
+                        $scope.access_token = user.access_token;
+                        $scope.model.owner = user.userId;
+                        $scope.model.contributers[0].contributer_id = user.userId;
+                        $scope.model.contributers[0].contributer_name = user.displayName;
                         $scope.getOrgUsers();
                         PostMessageService.gesture.showIframe();
                     }else{
                     	//navigate to create org screen
                     	$state.go('createOrg', {}, {reload: true});
                     }
-                    Account.setUserData(data);
+                    Account.setUserData(user);
 
                 }).error(function(error) {
                     if(error.message == undefined){

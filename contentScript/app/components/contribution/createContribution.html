@@ -37,8 +37,8 @@
 				<div class="col-sm-6">
 					<h2>Contributors <img tooltip="help message" alt="help" src="/contentScript/app/images/icon_help.png"/></h2>
 
-					<ul ng-repeat="contributer in model.contributers" class="media-list">
-						<li class="media contributer-cell">
+					<ul class="media-list">
+						<li ng-repeat="contributer in model.contributers" class="media contributer-cell">
 							<div class="media-left media-middle">
 								<a href="#">
 									<img class="media-object" src="{{contributer.img}}" alt=""/>
@@ -47,21 +47,21 @@
 
 							<div class="media-body">
 								<h4 class="media-heading">{{contributer.contributer_name}}</h4>
-
 								<p>{{contributer.contributer_fullname}}</p>
-
-								<input class="contribution-slider" data-rangeslider type="range" min="0" max="100" step="1"
-									  ng-disabled ="contributer.contributer_id == '0'"
-									   ng-model="contributer.contribution1"
-									   ng-change="changeContribution(contributer.contributer_id,'')"/>
 							</div>
 
-							<div class="media-right media-middle"><span contenteditable>{{contributer.contributer_percentage}}</span>%</div>
-							<div class = 'class="media-right media-middle"'>			
+							<div class="media-right media-middle">
+								<span class="contribution-percentage" contenteditable>{{contributer.contributer_percentage}}</span>%
 								<button type="submit" class="btn btn-default" aria-label="Left Align" ng-click='removeCollaboratorItem(contributer.contributer_id,$index)'>
-								  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-								</button>								
+									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+								</button>
 							</div>
+
+							<div ui-slider
+								 class="contribution-slider" min="1" max="100" step="1"
+								 ng-disabled ="contributer.contributer_id == '0'"
+								 ng-model="contributer.contribution1"
+								 ng-change="changeContribution(contributer.contributer_id,'')"></div>
 						</li>
 					</ul>
 
