@@ -9,6 +9,7 @@ angular.module('MyApp').controller(
         };
 
         var orgExists;
+		var slackUsersMap = {};
 
         $scope.currencyFormatting = function(value) { return value.toString() + " $"; };
         $scope.organizationId = 'notintialized';
@@ -52,13 +53,16 @@ angular.module('MyApp').controller(
                 $scope.data.$promise.then(function(result) {
                     Users.setAllOrgUsersData(result);
                     $scope.users = result;
-                    $scope.updatedUsersList = $scope.users;
+                    $scope.updatedUsersList = [];
+                   
                     for(i = 0 ; i<$scope.users.length ; i++){
+						slackUsersMap[$scope.users[i].id] = $scope.users[i].name;	
                         if($scope.users[i].id == $scope.model.owner ){
                             $scope.model.contributers[0].img =  $scope.users[i].url;
-                            $scope.model.contributers[0].contributer_name =  $scope.users[i].name;
-                            break;
+                            $scope.model.contributers[0].contributer_name =  $scope.users[i].name;      
+                            continue;
                         }
+                        $scope.updatedUsersList.push($scope.users[i]);
                     }
                     //$scope.addCollaborator();
                     //$location.path("/contribution/" + result.id);
@@ -181,6 +185,7 @@ angular.module('MyApp').controller(
 
                     $scope.users = allOrgUsersData;
                     for(i = 0 ; i<$scope.users.length ; i++){
+						slackUsersMap[$scope.users[i].id] = $scope.users[i].name;
                         if($scope.users[i].id == $scope.model.owner ){
                             $scope.model.contributers[0].img =  $scope.users[i].url;
                         }
@@ -299,8 +304,16 @@ angular.module('MyApp').controller(
 
             $scope.buildContributionMessage = function(contributionData) {
                 var contributersString = '';
+                var contributersLength = contributionData.contributionContributers.length;
+                var index = 0;
                 contributionData.contributionContributers.forEach(function(contributer) {
-                    contributersString += '('+contributer.contributer_percentage+'), ';
+                	if(index == contributersLength -1){
+                		contributersString += '@'+slackUsersMap[contributer.contributer_id] +' '+contributer.contributer_percentage+'%';
+                	}else{
+                		contributersString += '@'+slackUsersMap[contributer.contributer_id] +' '+contributer.contributer_percentage+'%, ';
+                	}
+                	index++;
+                    
                 });
 
                 return 'New contribution submitted'

@@ -53,13 +53,14 @@ angular.module('MyApp')
 	  
 	  $scope.getProfile = function() {
 	      Account.getProfile()
-	        .success(function(data) {
-				Account.setUserData(data);
+	        .success(function(user) {
+				Account.setUserData(user);
 				$scope.userData = Account.getUserData();
 				$scope.userId = $scope.userData.userId;
 				$scope.userName = $scope.userData.displayName;
 				$scope.orgModel.name = $scope.userData.slackTeamName;
 				$scope.orgModel.slack_teamid = $scope.userData.slackTeamId;
+				$scope.access_token = $scope.userData.access_token;
 				$scope.orgModel.contributers[0].contributer_id = $scope.userData.slackUserId;
 				$scope.orgModel.contributers[0].contributer_name = $scope.userData.displayName;
                 $scope.getOrgUsers();
@@ -84,6 +85,7 @@ angular.module('MyApp')
 			 $scope.orgModel.slack_teamid = $scope.userData.slackTeamId;
              $scope.orgModel.contributers[0].contributer_id = $scope.userData.slackUserId;
              $scope.orgModel.contributers[0].contributer_name = $scope.userData.displayName;
+             $scope.access_token = $scope.userData.access_token;
              $scope.getOrgUsers();
              PostMessageService.gesture.showIframe();
 		 }
@@ -227,7 +229,118 @@ angular.module('MyApp')
 	   
    };
    
+// ******************************* SLACK PLAY ***********************
+
    
+
+   $scope.sendTestMessage = function(channelId, message) {
+       console.log('sending test message to slack: '+message);
+
+       // 'https://slack.com/api/users.list'
+
+       var url = 'https://slack.com/api/chat.postMessage';
+       console.log('url: ' + url);
+
+       var token = "xoxp-3655944058-3674335518-3694970236-83726d";
+       var data = {
+           icon_url: 'https://s-media-cache-ak0.pinimg.com/236x/71/71/f9/7171f9ba59d5055dd0a865b41ac4b987.jpg',
+           username: 'backfeed-bot',
+           token: token,
+           channel: channelId,
+           text: message,
+           link_names: 1,
+           parse: "full"
+       };
+
+       // TODO: move to use angularJS instead of Jquery and get rid of need to change  Host when we deploy...
+       // TODO: which API ? do we get 'my borads or boards of orgenziation'.
+       //$http.get(url, data).success(function(response) {
+       //    console.log('message posted successfully!');
+       //}).error(function(response) {
+       //    console.log('message posted erroneously!');
+       //});
+       $.ajax({
+           type: "GET",
+           url: url,
+           data: data,
+           success: function(response){
+               console.log('message posted successfully!');
+           },
+           persist:true,
+           dataType:'JSON'
+       });
+   };
+
+
+   $scope.gotChannels = function(data) {
+       console.log('recieved Channels:');
+       //console.dir(data);
+
+       // get specific channel:
+       var chnls = data.channels;
+       var message = 'Organization '+$scope.currentOrgName+' is created. You can install by downloading from this URL';
+       for (chnIndx in chnls){
+           var chnl = chnls[chnIndx];
+           console.log('chnl.name:'+chnl.name);
+
+           // TODO removed hardcoded dependency on channel name
+           if(chnl.name == 'general'){
+               var channelId = chnl.id;
+               $scope.sendTestMessage(channelId, message);
+           }
+       }
+       //sending message to each users
+       var slackUsers = $scope.users;
+       for (userIndx in slackUsers){
+    	   var slackUser = slackUsers[userIndx];
+           var slackUserId = slackUser.id;
+           //TODO will remove this if clause while creating extension
+           if(slackUserId == 'U0547SA4S' || slackUserId == 'U03KU9VF8' || slackUserId == 'U06KQ1U10'){
+        	   $scope.sendTestMessage(slackUserId, message);
+           }
+           
+       }
+   };
+
+   $scope.getChannels = function() {
+
+       console.log('getting channels using access Token:'+$scope.access_token);
+
+       // 'https://slack.com/api/users.list'
+
+       var url = 'https://slack.com/api/channels.list';
+       console.log('url:'+url);
+
+       var token = "xoxp-3655944058-3674335518-3694970236-83726d";
+       //	var key = 'c1bb14ae5cc544231959fc6e9af43218';
+       var data = {
+           token:token
+           //,key:key
+       };
+
+       // TBD: move to use angularJS instead of Jquery and get rid of need to change  Host when we deploy...
+       // TBD: which API ? do we get 'my borads or boards of orgenziation'
+       $.ajax({
+           type: "GET",
+           url: url,
+           data: data,
+           success: $scope.gotChannels,
+           persist:true,
+           dataType:'JSON'
+       });
+
+   };
+
+   $scope.slackPlay = function(orgName) {
+       console.dir(orgName);
+       $scope.currentOrgName = orgName;
+
+       console.log('sending to slack, orgName:'+$scope.currentOrgName);
+       $scope.getChannels()
+
+   };
+   // *****************************************************
+
    
   
    
@@ -270,6 +383,7 @@ angular.module('MyApp')
 											console.log('Inserted userorg id : '+result.id)
 										 	Account.setUserData($scope.userData);
 											alert('Successfully created organization');
+											$scope.slackPlay($scope.orgModel.name);
 											$modalInstance.close('submit');
 											
 										});
