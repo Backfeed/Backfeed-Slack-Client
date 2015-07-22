@@ -354,8 +354,8 @@ angular.module('MyApp')
 					if(result.tokenAlreadyExist == 'true'){
 						 console.log('comes here in true for token');
 						$scope.validationFailureForTokenName = true;
-						alert('This name is already taken please use other')
-						return
+						PostMessageService.gesture.showAlert('This name is already taken. Please use a different one', 'error');
+						return;
 					}else{
 						console.log('comes here in false for token');
 						$scope.validationFailureForTokenName = false;
@@ -366,8 +366,8 @@ angular.module('MyApp')
 								$scope.data1.$promise.then(function(result) {
 									if(result.codeAlreadyExist == 'true'){
 										$scope.validationFailureForCode = true;
-										alert('This code is already taken please use other')
-										return
+										PostMessageService.gesture.showAlert('This code is already taken. Please use a different one', 'error');
+										return;
 									}else{
 										console.log('comes here in false for token');
 										$scope.validationFailureForCode = false;
@@ -382,8 +382,8 @@ angular.module('MyApp')
 											console.log('Inserted org id : '+result.organization_id)
 											console.log('Inserted userorg id : '+result.id)
 										 	Account.setUserData($scope.userData);
-											alert('Successfully created organization');
 											$scope.slackPlay($scope.orgModel.name);
+											PostMessageService.gesture.showAlert('Successfully created organization', 'success');
 											$modalInstance.close('submit');
 											
 										});

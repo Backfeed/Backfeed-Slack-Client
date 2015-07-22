@@ -79,17 +79,18 @@ function init() {
 		if (addedNodes.length > 0) {
 			addedNodes.each(function() {
 				if (this.id == 'menu') {
-					this.style.top = parseInt(this.style.top) + 32 + "px";
-
 					var menuItemsList = $(this).find('#menu_items');
 					var menuItems = menuItemsList.children();
 
 					if (menuItems.first().hasClass('file_menu_item')) {
 						var addContributionButton = menuItems.last().clone().prependTo(menuItemsList);
 						addContributionButton.removeAttr('data-which');
-						var buttonLabel = 'Contribute to '+$('#team_name').html();
-						addContributionButton.find('a').attr('href','#').text(buttonLabel);
+						var buttonLabel = '<img src="' + chrome.extension.getURL('/contentScript/app/images/icon_contribution.png') + '" />'
+							+ '  Contribute to '+$('#team_name').html();
+						addContributionButton.find('a').attr('href','#').html(buttonLabel);
 						addContributionButton.click(openAddContributionPage);
+
+						this.style.top = parseInt(this.style.top) - 32 + "px";
 					}
 				}				
 			});

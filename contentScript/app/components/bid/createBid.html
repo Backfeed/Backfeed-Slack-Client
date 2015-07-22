@@ -7,34 +7,25 @@
 		<form>
 
 			<div class="row">
-
 				<div class="col-sm-12">
 					<h2>Its Money Time</h2>
-					<h6 id="createBidModalTitle">Home Many {{tokenName}}  "{{title}}" worth <br> to the holon ?</h6>
-					
-				
-
+					<h6 id="createBidModalTitle">Home Many {{tokenName}}  does "{{title}}" worth to the holon?</h6>
 				</div>
 			</div>
+
 			<div class="row">
-			<div class="col-sm-6">
-				<div class="form-group"> <input
-									type="text" class="form-control" id="token" placeholder="talk to me in numbers"
-									ng-model="bid.tokens" required >		
-
-							</div>
-			</div>
-			<div class="col-sm-6">
-				<div align="left">{{code}}</div>
-			</div>
-
+				<div class="col-sm-12">
+					<div class="input-group">
+						<input class="form-control" id="token" placeholder="talk to me in numbers" ng-model="bid.tokens" required />
+						<span class="input-group-addon">{{code}}</span>
+					</div>
+				</div>
 			</div>
 
 		</form>
 	</div>
 	<div class="modal-footer">
 		<div class="row">
-			
 			<div class="col-sm-12">
 				<button type="submit" class="btn btn-backfeed submit-button center-block" ng-disabled="!bid.tokens" ng-click="submit()">BACKFEED</button>
 			</div>

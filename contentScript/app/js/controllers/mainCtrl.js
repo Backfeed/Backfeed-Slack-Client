@@ -19,7 +19,7 @@ angular.module('MyApp').controller('MainCtrl', ["$scope", "$state","PostMessageS
 	
 	function showAlert() {
 		console.log('Showing Alert');
-		PostMessageService.gesture.showAlert('You need to login in case of accessing backfeed', 'error');
+		PostMessageService.gesture.showAlert('You need to login in order to use the extension. Click the extension icon above.', 'error');
 	}
 
 	var GESTURES = {

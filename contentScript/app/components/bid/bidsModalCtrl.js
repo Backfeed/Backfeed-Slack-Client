@@ -101,21 +101,21 @@ angular.module('MyApp')
 
 	$scope.submit = function(){
 		console.log("In Submit method");
-		 
-		console.log($scope.bid)
+		console.log($scope.bid);
+
 		$scope.data = SaveBidTOContribution.save({},$scope.bid);
-		$scope.data.$promise.then(function (result) {
+		$scope.data.$promise.then(function(result) {
 			$modalInstance.close('submit');
-			alert('Bid Successfully created');
-			$state.go('contributionStatus', {'contributionId': $scope.contributionId});
-			//$location.path("/contributionStatus/"+ $scope.contributionId);
-		},	function (result) {
-				$modalInstance.close('submit');
-				$state.go('contributionStatus', {'contributionId': $scope.contributionId});
-				alert('Evaluation was not processed since you have no reputation left to stake for this contribution.');
-				//$location.path("/contributionStatus/"+ $scope.contributionId);
-			});
-		
+			PostMessageService.gesture.showAlert('Bid Successfully created', 'success');
+			PostMessageService.gesture.hideIframe();
+			//$state.go('contributionStatus', {'contributionId': $scope.contributionId});
+		}, function(result) {
+			$modalInstance.close('submit');
+			PostMessageService.gesture.showAlert('Evaluation was not processed since you have no reputation left to stake for this contribution.', 'error');
+			PostMessageService.gesture.hideIframe();
+			//$state.go('contributionStatus', {'contributionId': $scope.contributionId});
+		});
+
 	};
 	
 	

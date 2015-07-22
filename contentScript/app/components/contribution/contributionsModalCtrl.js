@@ -2,7 +2,7 @@ angular.module('MyApp').controller(
     'ContributionsModalCtrl',
     function($scope, $auth, $location, $rootScope,$stateParams, Contributions,
              ContributionDetail, SaveContribution, CloseContribution,$state,
-             Account, Users, $modalInstance,PostMessageService, $http) {
+             Account, Users, $modalInstance,PostMessageService) {
 
         $scope.closeModal = function() {
             $modalInstance.dismiss('cancel');
@@ -93,7 +93,7 @@ angular.module('MyApp').controller(
                     if (error && error.message) {
                         PostMessageService.gesture.showAlert(error.message, 'error');
                     } else {
-                        PostMessageService.gesture.showAlert('Plese Relogin', 'error');
+                        PostMessageService.gesture.showAlert('Please Relogin', 'error');
                     }
                 });
             };
@@ -437,7 +437,7 @@ angular.module('MyApp').controller(
                 }
                 console.log('total is '+totalActive);
                 if(totalActive <=0 ){
-                    alert("At least one contributer should be there");
+                    PostMessageService.gesture.showAlert('At least one contributer should be there', 'error');
                     return
                 }
                 console.log("In Submit method");
@@ -539,7 +539,7 @@ angular.module('MyApp').controller(
                 $scope.data = CloseContribution.save({},
                     $scope.ContributionModelForView);
                 $scope.data.$promise.then(function(result) {
-                    alert('Contribution closed');
+                    PostMessageService.gesture.showAlert('Contribution closed', 'information');
 
                     $location.path("/contributions");
                 });
@@ -555,7 +555,7 @@ angular.module('MyApp').controller(
             $scope.formatSelectUser = function (data) {
                 if (!data) return;
                 if (!data.url) data.url = "images/icon-dude.png";
-                return  "<img src='" + data.url +"' /><span>"+ data.name + " </span><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>"+ data.real_name + " </span>";
+                return  "<img src='" + data.url +"' /><span>"+ data.name + " </span><br/><span>"+ data.real_name + " </span>";
             };
 
         }

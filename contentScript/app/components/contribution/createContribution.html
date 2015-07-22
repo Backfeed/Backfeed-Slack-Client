@@ -81,17 +81,11 @@
 		</form>
 	</div>
 
-	<div class="modal-footer">
-		<div class="row">
-			<div class="col-sm-6">
-				<p class="lead">Adding Value is the best...</p>
-			</div>
-			<div class="col-sm-6">
-				<button type="submit"
-						class="btn btn-backfeed submit-button center-block"
-						ng-disabled="!model.title || !model.file || buttonDisabled"
-						ng-click="onSubmit()">Add Value</button>
-			</div>
-		</div>
+	<div class="modal-footer flex">
+		<p class="lead">Adding Value is the best...</p>
+		<button type="submit"
+				class="btn btn-backfeed submit-button"
+				ng-disabled="!model.title || !model.file || buttonDisabled"
+				ng-click="onSubmit()">Add Value</button>
 	</div>
 </script>
