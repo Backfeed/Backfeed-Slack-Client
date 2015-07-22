@@ -24,11 +24,11 @@ angular.module('MyApp')
 				
 	        })
 	        .error(function(error) {
-				  if(error.message == undefined){
-            		PostMessageService.gesture.showAlert('Plese Relogin', 'error');
-            	}else{
-            		PostMessageService.gesture.showAlert(error.message, 'error');
-            	}
+	        	if (error && error.message) {
+                    PostMessageService.gesture.showAlert(error.message, 'error');
+                } else {
+                    PostMessageService.gesture.showAlert('Plese Relogin', 'error');
+                }
 	        });
 	    };
 	    $scope.bid = {			

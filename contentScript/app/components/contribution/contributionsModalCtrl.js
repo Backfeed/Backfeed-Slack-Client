@@ -304,6 +304,8 @@ angular.module('MyApp').controller(
                 });
 
                 return 'New contribution submitted'
+                	+ '\n'
+                	+ contributionData.id
                     + '\n'
                     + '*'+contributionData.title+'*'
                     + '\n'

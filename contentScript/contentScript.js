@@ -109,7 +109,7 @@ function init() {
 					if(spanChildren.length == 0){
 						spanText = spanElement.html();
 						originalText = spanText;
-						var removalText = "new contribution was created:<br>";
+						var removalText = "New contribution submitted<br>";
 						var indexOfRemovalContent = spanText.indexOf(removalText);
 						if(indexOfRemovalContent > -1){
 							spanText = spanText.replace(removalText, "");
