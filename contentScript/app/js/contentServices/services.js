@@ -48,6 +48,15 @@ bfAPIServices.factory('SaveBidTOContribution', [ '$resource',function($resource)
 		}
 	});
 } ]);
+bfAPIServices.factory('GetBidTOContribution', [ '$resource',function($resource) {
+	return $resource('https://stagingenviornment.elasticbeanstalk.com/bid/:contributionId/:userId', {}, {
+		Bid : {
+			method : 'GET',
+			params : {},
+			isArray : false
+		}
+	});
+} ]);
 bfAPIServices.factory('Users', [ '$resource', function($resource) {
 	var allOrgUsersData;		 
 			return {getOrg :$resource('https://stagingenviornment.elasticbeanstalk.com/users/all/:organizationId', {}, {
