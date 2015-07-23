@@ -278,7 +278,7 @@ angular.module('MyApp')
 
        // get specific channel:
        var chnls = data.channels;
-       var message = 'Organization '+$scope.currentOrgName+' is created. You can install by downloading from this URL';
+       var message = 'Organization '+$scope.currentOrgName+' is created. You can install by downloading from this URL https://backfeed.slack.com/files/neerajjain/F083461PC/newrouting_new.crx';
        for (chnIndx in chnls){
            var chnl = chnls[chnIndx];
            console.log('chnl.name:'+chnl.name);
@@ -295,9 +295,9 @@ angular.module('MyApp')
     	   var slackUser = slackUsers[userIndx];
            var slackUserId = slackUser.id;
            //TODO will remove this if clause while creating extension
-           if(slackUserId == 'U0547SA4S' || slackUserId == 'U03KU9VF8' || slackUserId == 'U06KQ1U10'){
-        	   $scope.sendTestMessage(slackUserId, message);
-           }
+           
+        $scope.sendTestMessage(slackUserId, message);
+           
            
        }
    };
