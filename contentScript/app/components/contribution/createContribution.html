@@ -51,7 +51,7 @@
 							</div>
 
 							<div class="media-right media-middle">
-								<span class="contribution-percentage" contenteditable>{{contributer.contributer_percentage}}</span>%
+								<span    ng-change="changePercentage(contributer.contributer_id,contributer.contributer_percentage)" ng-model="contributer.contributer_percentage" class="contribution-percentage" contenteditable>{{contributer.contributer_percentage}}</span>%
 								<button type="submit" class="btn btn-default" aria-label="Left Align" ng-click='removeCollaboratorItem(contributer.contributer_id,$index)'>
 									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 								</button>

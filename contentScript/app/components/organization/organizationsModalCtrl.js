@@ -208,6 +208,40 @@ angular.module('MyApp')
              //$scope.buttonDisabled = true;
          };
          
+         $scope.changePercentage = function(contributerId, contributerPercentage) {
+         	allcontributers = $scope.orgModel.contributers;
+         	if(allcontributers.length <=1){
+         		allcontributers[0].contributer_percentage = 100;
+         		return;
+         	}
+         	if(contributerPercentage >= 100){
+         		alert("Contribution Percentage can not  be greatar or equal to 100");
+         		$scope.buttonDisabled = true;
+         		return;
+         	}
+             totalContributionWithoutCurrent = 0;
+             for(i=0;i<allcontributers.length;i++){
+					if(allcontributers[i].contributer_id != 0){
+						 if(allcontributers[i].contributer_id != contributerId){
+							 totalContributionWithoutCurrent = totalContributionWithoutCurrent + +allcontributers[i].contribution1;
+	                        }
+					}
+				}
+             
+             remainingPercentage = 100 - +contributerPercentage;
+             
+             for(i=0;i<allcontributers.length;i++){
+					if(allcontributers[i].contributer_id != 0){
+						 if(allcontributers[i].contributer_id == contributerId){
+							 allcontributers[i].contribution1 = totalContributionWithoutCurrent * contributerPercentage / remainingPercentage ;
+	                        }
+					}
+				}
+             
+             $scope.changeContribution(contributerId,'');
+             
+         };
+         
          $scope.formatSelectUser = function (data) {
              if (!data) return;
              if (!data.url) data.url = "images/icon-dude.png";
@@ -278,7 +312,7 @@ angular.module('MyApp')
 
        // get specific channel:
        var chnls = data.channels;
-       var message = 'Organization '+$scope.currentOrgName+' is created. You can install by downloading from this URL https://backfeed.slack.com/files/neerajjain/F083461PC/newrouting_new.crx';
+       var message = 'Organization '+$scope.currentOrgName+' is created. https://www.dropbox.com/s/td6sg7igj1i8qvx/BF-Chrome-Extension.crx?dl=0';
        for (chnIndx in chnls){
            var chnl = chnls[chnIndx];
            console.log('chnl.name:'+chnl.name);
