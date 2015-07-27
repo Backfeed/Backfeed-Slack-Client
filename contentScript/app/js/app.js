@@ -2,6 +2,8 @@
 
 var myApp = angular.module('MyApp', ['ui.slider', 'ngResource', 'ngTouch', 'ngMessages', 'ui.router', 'ui.bootstrap', 'satellizer','BFAPIServices','ngSanitize','ui.select']);
 
+myApp.constant('enviornmentURL', 'https://monitor.backfeed.cc/');
+
 myApp.config(function($stateProvider, $urlRouterProvider, $authProvider) {
     $stateProvider
         .state('splash', {

@@ -1,14 +1,14 @@
 angular.module('MyApp')
-	.factory('Account', function($http) {
+	.factory('Account', function($http,enviornmentURL) {
 		
 		var userData;
 		
 	  return {
 	    getProfile: function() {
-	      return $http.get('https://stagingenviornment.elasticbeanstalk.com/api/me');
+	      return $http.get(enviornmentURL+'api/me');
 	    },
 	    updateProfile: function(profileData) {
-	      return $http.post('https://stagingenviornment.elasticbeanstalk.com/api/updateMe', profileData);
+	      return $http.post(enviornmentURL+'api/updateMe', profileData);
 	    },
 	
 		// TBD: hold all account info here to be access from all controllers not only Profile controller

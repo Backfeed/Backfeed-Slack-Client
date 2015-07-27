@@ -118,7 +118,7 @@ function submitToken(token) {
 	// passing slack token to server to obtain satellizer_token (to be used in API calls)
 	$.ajax({
 	  type: 'POST',
-	  url: 'https://stagingenviornment.elasticbeanstalk.com/auth/ext_login',
+	  url: 'https://monitor.backfeed.cc/auth/ext_login',
 	  data: params,
 	  success: function(data) {
 	       console.log('server returned, satellizer token:'+data.token);

@@ -1,8 +1,8 @@
 'use strict';
 var bfAPIServices = angular.module('BFAPIServices', [ 'ngResource' ]);
 
-bfAPIServices.factory('Contributions', [ '$resource', function($resource) {
-	return $resource('https://stagingenviornment.elasticbeanstalk.com/contribution/all/:organizationId', {}, {
+bfAPIServices.factory('Contributions', [ '$resource','enviornmentURL', function($resource,enviornmentURL) {
+	return $resource(enviornmentURL+'contribution/all/:organizationId', {}, {
 		getAllContributions : {
 			method : 'GET',
 			params : {},
@@ -11,8 +11,8 @@ bfAPIServices.factory('Contributions', [ '$resource', function($resource) {
 	});
 } ]);
 
-bfAPIServices.factory('ContributionDetail', [ '$resource', function($resource) {
-	return $resource('https://stagingenviornment.elasticbeanstalk.com/contribution/:contributionId', {}, {
+bfAPIServices.factory('ContributionDetail', [ '$resource','enviornmentURL', function($resource,enviornmentURL) {
+	return $resource(enviornmentURL+'contribution/:contributionId', {}, {
 		getDetail : {
 			method : 'GET',
 			params : {},
@@ -21,8 +21,8 @@ bfAPIServices.factory('ContributionDetail', [ '$resource', function($resource) {
 	});
 } ]);
 
-bfAPIServices.factory('SaveContribution', [ '$resource', function($resource) {
-	return $resource('https://stagingenviornment.elasticbeanstalk.com/contribution', {}, {
+bfAPIServices.factory('SaveContribution', [ '$resource','enviornmentURL', function($resource,enviornmentURL) {
+	return $resource(enviornmentURL+'contribution', {}, {
 		save : {
 			method : 'POST',
 			params : {},
@@ -30,8 +30,8 @@ bfAPIServices.factory('SaveContribution', [ '$resource', function($resource) {
 		}
 	});
 } ]);
-bfAPIServices.factory('CloseContribution', [ '$resource', function($resource) {
-	return $resource('https://stagingenviornment.elasticbeanstalk.com/contribution/close', {}, {
+bfAPIServices.factory('CloseContribution', [ '$resource','enviornmentURL', function($resource,enviornmentURL) {
+	return $resource(enviornmentURL+'contribution/close', {}, {
 		save : {
 			method : 'POST',
 			params : {},
@@ -39,8 +39,8 @@ bfAPIServices.factory('CloseContribution', [ '$resource', function($resource) {
 		}
 	});
 } ]);
-bfAPIServices.factory('SaveBidTOContribution', [ '$resource',function($resource) {
-	return $resource('https://stagingenviornment.elasticbeanstalk.com/bids', {}, {
+bfAPIServices.factory('SaveBidTOContribution', [ '$resource','enviornmentURL', function($resource,enviornmentURL) {
+	return $resource(enviornmentURL+'bids', {}, {
 		save : {
 			method : 'POST',
 			params : {},
@@ -48,8 +48,8 @@ bfAPIServices.factory('SaveBidTOContribution', [ '$resource',function($resource)
 		}
 	});
 } ]);
-bfAPIServices.factory('GetBidTOContribution', [ '$resource',function($resource) {
-	return $resource('https://stagingenviornment.elasticbeanstalk.com/bid/:contributionId/:userId', {}, {
+bfAPIServices.factory('GetBidTOContribution', [ '$resource','enviornmentURL', function($resource,enviornmentURL) {
+	return $resource(enviornmentURL+'bid/:contributionId/:userId', {}, {
 		Bid : {
 			method : 'GET',
 			params : {},
@@ -57,9 +57,9 @@ bfAPIServices.factory('GetBidTOContribution', [ '$resource',function($resource) 
 		}
 	});
 } ]);
-bfAPIServices.factory('Users', [ '$resource', function($resource) {
+bfAPIServices.factory('Users', [ '$resource','enviornmentURL', function($resource,enviornmentURL) {
 	var allOrgUsersData;		 
-			return {getOrg :$resource('https://stagingenviornment.elasticbeanstalk.com/users/all/:organizationId', {}, {
+			return {getOrg :$resource(enviornmentURL+'users/all/:organizationId', {}, {
 			getUsers: {
 				method : 'GET',
 				params : {},
@@ -71,8 +71,8 @@ bfAPIServices.factory('Users', [ '$resource', function($resource) {
     },};
 } ]);
 	
-bfAPIServices.factory('UserDetail', [ '$resource', function($resource) {
-	return $resource('https://stagingenviornment.elasticbeanstalk.com/users/:userId/:organizationId', {}, {
+bfAPIServices.factory('UserDetail', [ '$resource','enviornmentURL', function($resource,enviornmentURL) {
+	return $resource(enviornmentURL+'users/:userId/:organizationId', {}, {
 		getDetail : {
 			method : 'GET',
 			params : {},
@@ -81,8 +81,8 @@ bfAPIServices.factory('UserDetail', [ '$resource', function($resource) {
 	});
 } ]);
 
-bfAPIServices.factory('SaveUser', [ '$resource', function($resource) {
-	return $resource('https://stagingenviornment.elasticbeanstalk.com/users', {}, {
+bfAPIServices.factory('SaveUser', [ '$resource','enviornmentURL', function($resource,enviornmentURL) {
+	return $resource(enviornmentURL+'users', {}, {
 		save : {
 			method : 'POST',
 			params : {},
@@ -91,8 +91,8 @@ bfAPIServices.factory('SaveUser', [ '$resource', function($resource) {
 	});
 } ]);
 
-bfAPIServices.factory('ContributionStatus', [ '$resource', function($resource) {
-	return $resource('https://stagingenviornment.elasticbeanstalk.com/contribution/status/:id/:userId', {}, {
+bfAPIServices.factory('ContributionStatus', [ '$resource','enviornmentURL', function($resource,enviornmentURL) {
+	return $resource(enviornmentURL+'contribution/status/:id/:userId', {}, {
 		getDetail : {
 			method : 'GET',
 			params : {},
@@ -101,8 +101,8 @@ bfAPIServices.factory('ContributionStatus', [ '$resource', function($resource) {
 	});
 } ]);
 
-bfAPIServices.factory('SaveOrg', [ '$resource', function($resource) {
-	return $resource('https://stagingenviornment.elasticbeanstalk.com/organization', {}, {
+bfAPIServices.factory('SaveOrg', [ '$resource','enviornmentURL', function($resource,enviornmentURL) {
+	return $resource(enviornmentURL+'organization', {}, {
 		save : {
 			method : 'POST',
 			params : {},
@@ -111,8 +111,8 @@ bfAPIServices.factory('SaveOrg', [ '$resource', function($resource) {
 	});
 } ]);
 
-bfAPIServices.factory('CheckOrgTokenName', [ '$resource', function($resource) {
-	return $resource('https://stagingenviornment.elasticbeanstalk.com/organization/checkTokenName/:tokenName', {}, {
+bfAPIServices.factory('CheckOrgTokenName', [ '$resource','enviornmentURL', function($resource,enviornmentURL) {
+	return $resource(enviornmentURL+'organization/checkTokenName/:tokenName', {}, {
 		checkOrgTokenName : {
 			method : 'GET',
 			params : {},
@@ -121,8 +121,8 @@ bfAPIServices.factory('CheckOrgTokenName', [ '$resource', function($resource) {
 	});
 } ]);
 
-bfAPIServices.factory('AllSlackUsers', [ '$resource', function($resource) {
-	return $resource('https://stagingenviornment.elasticbeanstalk.com/allSlackUsers', {}, {
+bfAPIServices.factory('AllSlackUsers', [ '$resource','enviornmentURL', function($resource,enviornmentURL) {
+	return $resource(enviornmentURL+'allSlackUsers', {}, {
 		allSlackUsers : {
 			method : 'GET',
 			params : {},
@@ -131,8 +131,8 @@ bfAPIServices.factory('AllSlackUsers', [ '$resource', function($resource) {
 	});
 } ]);
 
-bfAPIServices.factory('AllOrgs', [ '$resource', function($resource) {
-	return $resource('https://stagingenviornment.elasticbeanstalk.com/organization/all', {}, {
+bfAPIServices.factory('AllOrgs', [ '$resource','enviornmentURL', function($resource,enviornmentURL) {
+	return $resource(enviornmentURL+'organization/all', {}, {
 		allOrgs : {
 			method : 'GET',
 			params : {},
@@ -141,8 +141,8 @@ bfAPIServices.factory('AllOrgs', [ '$resource', function($resource) {
 	});
 } ]);
 
-bfAPIServices.factory('CheckOrgCode', [ '$resource', function($resource) {
-	return $resource('https://stagingenviornment.elasticbeanstalk.com/organization/checkCode/:code', {}, {
+bfAPIServices.factory('CheckOrgCode', [ '$resource','enviornmentURL', function($resource,enviornmentURL) {
+	return $resource(enviornmentURL+'organization/checkCode/:code', {}, {
 		checkOrgCode : {
 			method : 'GET',
 			params : {},
