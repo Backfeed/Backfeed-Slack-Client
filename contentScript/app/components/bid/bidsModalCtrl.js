@@ -14,7 +14,7 @@ angular.module('MyApp')
 				Account.setUserData(data);
 				userData = Account.getUserData();
 				orgExists = data.orgexists;
-                console.log('userData is not defined comes 1 orgExists'+orgExists)
+                console.log('userData is not defined comes 1 orgExists'+orgExists);
                 if (orgExists != 'true') {
                 	//navigate to create org screen
                 	$state.go('createOrg', {}, {reload: true});
@@ -70,26 +70,26 @@ angular.module('MyApp')
 			});
 			$scope.data3.$promise.then(function(result1) {
 				 if(result1.bidExists == 'true'){
-					 PostMessageService.gesture.showAlert('User has already Bidded', 'error');
+					 PostMessageService.gesture.showAlert('You already bidded on this contribution.', 'error');
 					 //$state.go('contributionStatus', {'contributionId': $scope.contributionId});
 				 }else{
-					 console.log('comes here'+$scope.contributionId)
+					 console.log('comes here'+$scope.contributionId);
 						$scope.data1 = ContributionDetail.getDetail({
 							contributionId : $scope.contributionId
 						});
 						$scope.data1.$promise.then(function(result) {
-							console.log('result.title'+result.title)
+							console.log('result.title'+result.title);
 							$scope.title = result.title;
 							$scope.tokenName = result.tokenName;
 							$scope.code = result.code;
 						});
-						console.log('userData.userId'+userData.userId)
-						console.log('userData.orgId'+userData.orgId)
+						console.log('userData.userId'+userData.userId);
+						console.log('userData.orgId'+userData.orgId);
 						$scope.data2 = UserDetail.getDetail({
 							'userId' : userData.userId,'organizationId':userData.orgId 
 						});
 						$scope.data2.$promise.then(function(result) {
-							console.log('result.reputaion'+result.reputaion)
+							console.log('result.reputaion'+result.reputaion);
 							$scope.bid.reputation = result.reputation;
 							$scope.bid.stake = (parseInt(result.reputation)*18)/100;
 						});
