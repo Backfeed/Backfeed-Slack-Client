@@ -11,7 +11,7 @@ $(window).resize(setIframeHeight);
 var addBidButton = document.createElement("button");
 addBidButton.setAttribute("id", "COMPOSE_ACTION_BID_BUTTON");
 
-$(document).on('click', "button#COMPOSE_ACTION_BID_BUTTON", function() {
+$(document).on('click', "#COMPOSE_ACTION_BID_BUTTON", function() {
 	var contributionIdForThisBid = $(this).attr('data-contributionId');
 	openAddBidPage(contributionIdForThisBid);
 });
@@ -102,29 +102,39 @@ function init() {
 
 	var addBidObserver = new MutationObserver(function(mutations) {
 		  // If current channel is contribution_test
-		  contributionChanneTag = $(".channel_C06GK1Y06.channel.active");
-		  if(contributionChanneTag != undefined && contributionChanneTag.length > 0){
-			  $(".message.bot_message").each(function() {    	
-					var spanElement = $( '.message_content', $( this ) );
+		  if (document.getElementsByClassName('channel_C06GK1Y06')[0].classList.contains('active')) {
+
+			  var mutationWithAddedNodes = Array.from(mutations).filter(function(mutation) {
+				  return mutation.addedNodes.length > 0;
+			  })[0];
+
+			  var messagesFromBot = Array.from(mutationWithAddedNodes.addedNodes).filter(function(node) {
+				  return node.classList && node.classList.contains('bot_message');
+			  });
+
+			  messagesFromBot.forEach(function(message) {
+					var spanElement = $( '.message_content', $(message));
 					var spanChildren = spanElement.children('#COMPOSE_ACTION_BID_BUTTON');
-					if(spanChildren.length == 0){
-						spanText = spanElement.html();
-						originalText = spanText;
+					if (spanChildren.length == 0){
+						var spanText = spanElement.html();
+						var originalText = spanText;
 						var removalText = "New contribution submitted<br>";
 						var indexOfRemovalContent = spanText.indexOf(removalText);
-						if(indexOfRemovalContent > -1){
+						if (indexOfRemovalContent > -1){
 							spanText = spanText.replace(removalText, "");
 							var contributionId = spanText.substring(5,spanText.indexOf("<br>"));
 							var lengthOfText = removalText.length;
 							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length+4), "");
-							$( '.message_content', $( this ) ).html (originalText);
-							var openComposeButton = document.createElement("button");
+							$( '.message_content', $(message)).html (originalText);
+
+							var openComposeButton = document.createElement("span");
 							openComposeButton.setAttribute("id", "COMPOSE_ACTION_BID_BUTTON");
 							openComposeButton.setAttribute("data-contributionId", contributionId);
-							spanElement.append(openComposeButton);
+							openComposeButton.textContent = "BID";
+							$(openComposeButton).insertBefore(spanElement);
 						}
 					}
-			});	
+			});
 		  }
 			
 		 

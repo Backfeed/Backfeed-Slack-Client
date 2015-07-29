@@ -8,7 +8,7 @@ iframe {
 	z-index: 1000;
 }
 
-#COMPOSE_ACTION_BID_BUTTON {
+/*#COMPOSE_ACTION_BID_BUTTON {
 	height: 30px;
 	padding: 5px 0;
 	border: 0;
@@ -23,4 +23,19 @@ iframe {
 	content: "BID";
 	color: rgb(237, 237, 237);
 	font-size: 12px;
+}*/
+
+#COMPOSE_ACTION_BID_BUTTON {
+	display: inline;
+	padding: .2em .6em .3em;
+	font-size: 75%;
+	font-weight: 700;
+	line-height: 1;
+	color: #fff;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: baseline;
+	border-radius: .25em;
+	background: rgb(84, 84, 84);
+	cursor: pointer;
 }
