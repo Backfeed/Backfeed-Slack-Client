@@ -25,6 +25,7 @@ angular.module('MyApp').controller(
                 contributer_percentage : '100',
                 contributer_name:'',
                 contribution1: '50',
+                className:'media contributer-cell',
                 img:'/contentScript/app/images/icon-dude.png'
             } ],
             intialBid : [ {
@@ -59,7 +60,9 @@ angular.module('MyApp').controller(
 						slackUsersMap[$scope.users[i].id] = $scope.users[i].name;	
                         if($scope.users[i].id == $scope.model.owner ){
                             $scope.model.contributers[0].img =  $scope.users[i].url;
-                            $scope.model.contributers[0].contributer_name =  $scope.users[i].name;      
+                            $scope.model.contributers[0].contributer_name =  $scope.users[i].name;  
+                            $scope.model.contributers[0].className = "media contributer-cell";
+                            
                             continue;
                         }
                         $scope.updatedUsersList.push($scope.users[i]);
@@ -81,6 +84,7 @@ angular.module('MyApp').controller(
                         $scope.model.owner = user.userId;
                         $scope.model.contributers[0].contributer_id = user.userId;
                         $scope.model.contributers[0].contributer_name = user.displayName;
+                        $scope.model.contributers[0].className = "media contributer-cell";
                         $scope.getOrgUsers();
                         PostMessageService.gesture.showIframe();
                     }else{
@@ -132,6 +136,7 @@ angular.module('MyApp').controller(
                     $scope.model.owner = userData.userId;
                     $scope.model.contributers[0].contributer_id = userData.userId;
                     $scope.model.contributers[0].contributer_name = userData.displayName;
+                    $scope.model.contributers[0].className = "media contributer-cell";
                     PostMessageService.gesture.showIframe();
                 }else{
                 	//navigate to create org screen
@@ -166,6 +171,7 @@ angular.module('MyApp').controller(
                         allcontributers[i].img = urlImage;
 
                     }
+                    
                 }
                 $scope.changeContribution(selectedUserId,userName);
 
@@ -226,6 +232,32 @@ angular.module('MyApp').controller(
 
             };
             
+            $scope.clickContributer = function(contributerId) {
+            	angular.element('#'+contributerId).trigger('focus');
+            	console.log('contributerId is '+contributerId);
+            	allcontributers = $scope.model.contributers;
+            	var sliderDivElement;
+            	var sliderSpanElement;
+            	 for(i=0;i<allcontributers.length;i++){
+ 						 if(allcontributers[i].contributer_id != contributerId){
+	 							sliderDivElement = angular.element('#slider'+allcontributers[i].contributer_id+" div");
+	 							sliderDivElement.removeClass('ui-widget-header-active');
+	 							allcontributers[i].className = "media contributer-cell";
+	 							sliderSpanElement = angular.element('#slider'+allcontributers[i].contributer_id+" span");
+	 							sliderSpanElement.removeClass('ui-slider-handle-show');
+	 							allcontributers[i].className = "media contributer-cell";
+ 	                        }else{
+ 	                        	angular.element('#'+allcontributers[i].contributer_id).trigger('focus');
+ 	                        	sliderDivElement = angular.element('#slider'+allcontributers[i].contributer_id+" div");
+ 	                        	sliderDivElement.removeClass('ui-widget-header-active');
+	 							sliderDivElement.addClass('ui-widget-header-active');
+	 							sliderSpanElement = angular.element('#slider'+allcontributers[i].contributer_id+" span");
+	 							sliderSpanElement.removeClass('ui-slider-handle-show');
+	 							sliderSpanElement.addClass('ui-slider-handle-show');
+ 	                        	allcontributers[i].className = "media contributer-cell activeContributer";
+ 	                        } 					
+ 				}
+            };
             $scope.changeContribution = function(contributerId,userName) {
                 totalContribution = 0;
                 allcontributers = $scope.model.contributers;
@@ -234,15 +266,35 @@ angular.module('MyApp').controller(
                 if(allcontributers.length){
                     valid = false;
                 }
-
+                var sliderDivElement;
                 for(i=0;i<allcontributers.length;i++){
 					if(allcontributers[i].contributer_id != 0){
 						 if(allcontributers[i].contributer_id != contributerId){
+							 	allcontributers[i].className = "media contributer-cell";
+							 	sliderDivElement = angular.element('#slider'+allcontributers[i].contributer_id+" div");
+							 	sliderDivElement.removeClass('ui-widget-header-active');
+							 	sliderSpanElement = angular.element('#slider'+allcontributers[i].contributer_id+" span");
+	 							sliderSpanElement.removeClass('ui-slider-handle-show');
 	                            //totalEarlierRemaining = totalEarlierRemaining + +allcontributers[i].contributer_percentage
 	                        }else{
+	                        	
 	                            if(userName != ''){
 	                                console.log('comes inside is '+userName);
 	                                allcontributers[i].contributer_name = userName;
+	                                allcontributers[i].className = "media contributer-cell";
+	                                sliderDivElement = angular.element('#slider'+contributerId+" div");
+	                                sliderDivElement.removeClass('ui-widget-header-active');
+	                                sliderSpanElement = angular.element('#slider'+contributerId+" span");
+		 							sliderSpanElement.removeClass('ui-slider-handle-show');
+	                            }else{
+	                            	angular.element('#'+allcontributers[i].contributer_id).trigger('focus');
+	                            	sliderDivElement = angular.element('#slider'+allcontributers[i].contributer_id+" div");
+	                            	sliderDivElement.removeClass('ui-widget-header-active');
+	                            	sliderDivElement.addClass('ui-widget-header-active');
+	                            	sliderSpanElement = angular.element('#slider'+allcontributers[i].contributer_id+" span");
+		 							sliderSpanElement.removeClass('ui-slider-handle-show');
+		 							sliderSpanElement.addClass('ui-slider-handle-show');
+	                            	allcontributers[i].className = "media contributer-cell activeContributer";
 	                            }
 
 
@@ -564,6 +616,7 @@ angular.module('MyApp').controller(
                     contributer_percentage:'',
                     contributer_name:'',
                     contribution1:'50',
+                    className:'media contributer-cell',
                     img:'/contentScript/app/images/avatar.png'
                 }) ;
                 //$scope.buttonDisabled = true;
