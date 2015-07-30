@@ -1,14 +1,13 @@
 angular.module('MyApp').controller(
 		'ContributionStatusModalCtrl',
 		function($scope, $auth, $location, $stateParams, ContributionStatus,
-				Account, Users,$modalInstance,PostMessageService) {			
+				Account, Users,$modalInstance,PostMessageService) {
 			$scope.cotributionStatusModel = {
 					currentValuation : '',
 					totalReputaion : '',
 					myValuation : '',
-					myReputaion : ''					
-
-				}
+					myReputaion : ''
+				};
 
 	        $scope.closeModal = function() {
 	            $modalInstance.dismiss('cancel');
@@ -36,10 +35,10 @@ angular.module('MyApp').controller(
 					$scope.userId = userData.userId;
 				}
 				if ($scope.contributionId && $scope.contributionId != 0 && $scope.userId && $scope.userId != 0) {
-					$scope.data1 = ContributionStatus.getDetail({
+					$scope.contributionStatus = ContributionStatus.getDetail({
 						id : $scope.contributionId,userId : $scope.userId
 					});
-					$scope.data1.$promise.then(function(result) {
+					$scope.contributionStatus.$promise.then(function(result) {
 						$scope.cotributionStatusModel = result;
 					});
 					PostMessageService.sendGesture('showIframe');

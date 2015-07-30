@@ -18,6 +18,8 @@ angular.module('MyApp')
 	       userData = data;
 	    },
 		getUserData:function(){
+			console.log('getUserData:');
+			console.dir(userData);
 			return userData;
 		}
 	

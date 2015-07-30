@@ -33,7 +33,7 @@
 			"contentScript/app/vendor/scripts/jquery.js",
 			"contentScript/app/vendor/scripts/angular.js",
 			"contentScript/vendor/jquery.noty.packaged.js",
-			"contentScript/app/vendor/scripts/array-from.js",
+			"contentScript/vendor/array-from.js",
 			"contentScript/composeConfig.js" ,
 			"contentScript/contentScript.js"
 		],

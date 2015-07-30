@@ -14,7 +14,9 @@ angular.module('MyApp').controller('MainCtrl', ["$scope", "$state","PostMessageS
 	
 	function goToAddBid(contributionId) {
 		console.log('Starting bids for contributionID: '+contributionId);
-		$state.go('bids', {'contributionId': contributionId}, {reload: true});
+		//change back to 'bids' after done work on contribution status
+		//$state.go('bids', {'contributionId': contributionId}, {reload: true});
+		$state.go('contributionStatus', {'contributionId': contributionId}, {reload: true});
 	}
 	
 	function showAlert() {

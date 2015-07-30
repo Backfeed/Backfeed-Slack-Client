@@ -66,7 +66,8 @@ angular.module('MyApp')
 		if ($scope.contributionId && $scope.contributionId != 0) {
 			//check for exsting contribution
 			$scope.data3 = GetBidTOContribution.Bid({
-				'contributionId':$scope.contributionId,'userId' : userData.userId
+				'contributionId':$scope.contributionId,
+				'userId' : userData.userId
 			});
 			$scope.data3.$promise.then(function(result1) {
 				 if(result1.bidExists == 'true'){

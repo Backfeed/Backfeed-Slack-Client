@@ -6,31 +6,54 @@
 	<form>
 		<div class="row">
 			<div class="col-sm-12">
-				<h2>Contribution - Status</h2>
+				<h2>{contribution.title}</h2>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-3">
+			<div class="col-sm-4">
 				<legend>
-					<i class="ion-person"></i> Current Valuation:
-					{{cotributionStatusModel.currentValuation}}
+					<i class="ion-ribbon-b"></i> Current Valuation:
+					{{contributionStatus.currentValuation}}
 				</legend>
 				<legend>
-					<i class="ion-aperture"></i> Total Reputation:
-					{{cotributionStatusModel.totalReputaion}}
+					<i class="ion-chatbox-working"></i> My estimate:
+					{{contributionStatus.myValuation}}
 				</legend>
 				<legend>
-					<i class="ion-ribbon-b"></i> My Valuation:
-					{{cotributionStatusModel.myValuation}}
+					<i class="ion-arrow-graph-up-right"></i> My Rep profit/loss: {contributionStatus.reputationDelta}
 				</legend>
 				<legend>
-					<i class="ion-clipboard"></i> My Reputation:
-					{{cotributionStatusModel.myReputaion}}
+					<i class="ion-mic-a"></i> My weight in the holon: {contributionStatus.myWeight}
 				</legend>
+				<legend>
+					<i class="ion-speakerphone"></i> {contributionStatus.groupWeight}% of the holon backfeeded this value
+				</legend>
+				<h3>{contribution.content}</h3>
+				<p>contribution.content contribution.content contribution.content contribution.content contribution.content contribution.content contribution.content contribution.content </p>
+				<p>contribution.content contribution.content contribution.content contribution.content contribution.content contribution.content contribution.content contribution.content </p>
+				<p>contribution.content contribution.content contribution.content contribution.content contribution.content contribution.content contribution.content contribution.content </p>
+				<p>contribution.content contribution.content contribution.content contribution.content contribution.content contribution.content contribution.content contribution.content </p>
+				<p>contribution.content contribution.content contribution.content contribution.content contribution.content contribution.content contribution.content contribution.content </p>
 			</div>
-			<div class="col-sm-9">
-				<img src="/contentScript/app/images/statPlaceHolder.png" class=""></img>
-
+			<div class="col-sm-8">
+				<table class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>Timestamp&nbsp;<img tooltip="help message" alt="help" src="/contentScript/app/images/icon_help.png"/></th>
+							<th>Bid&nbsp;<img tooltip="help message" alt="help" src="/contentScript/app/images/icon_help.png"/></th>
+							<th>Reputation &nbsp;<img tooltip="User's reputation while bidding" alt="help" src="/contentScript/app/images/icon_help.png"/></th>
+							<th>Contribution Value&nbsp;<img tooltip="What was the value of this contribution after this bid" alt="help" src="/contentScript/app/images/icon_help.png"/></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr repeatt="contributionStatus.bids as bid">
+							<td>bid.when</td>
+							<td>bid.evaluation</td>
+							<td>bid.weight</td>
+							<td>bid.contributionValueNow</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</form>

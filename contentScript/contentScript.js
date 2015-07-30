@@ -104,10 +104,12 @@ function init() {
 		  // If current channel is contribution_test
 		  if (document.getElementsByClassName('channel_C06GK1Y06')[0].classList.contains('active')) {
 
+			  // in case there is more than one mutation, use only the one with added nodes.
 			  var mutationWithAddedNodes = Array.from(mutations).filter(function(mutation) {
 				  return mutation.addedNodes.length > 0;
 			  })[0];
 
+			  // Fetch only messages sent by a bot
 			  var messagesFromBot = Array.from(mutationWithAddedNodes.addedNodes).filter(function(node) {
 				  return node.classList && node.classList.contains('bot_message');
 			  });
