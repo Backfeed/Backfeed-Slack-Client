@@ -22,5 +22,6 @@ $(document).on('click', 'button#OAuth', function() {
 
 $(document).on('click', '#logout', function() {
   localStorage.clear();
+  chrome.runtime.sendMessage({message: 'logout'});
   //loadView();
 });

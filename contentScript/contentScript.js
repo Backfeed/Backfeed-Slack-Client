@@ -13,8 +13,15 @@ addBidButton.setAttribute("id", "COMPOSE_ACTION_BID_BUTTON");
 
 $(document).on('click', "#COMPOSE_ACTION_BID_BUTTON", function() {
 	var contributionIdForThisBid = $(this).attr('data-contributionId');
-	openAddBidPage(contributionIdForThisBid);
+	var textContent = $(this).text();
+	if(textContent == 'BID'){
+		openAddBidPage(contributionIdForThisBid);
+	}else{
+		openShowContributionStatusPage(contributionIdForThisBid);
+	}
+	
 });
+
 
 function openAddContributionPage() {
 	chrome.runtime.sendMessage({
@@ -23,12 +30,15 @@ function openAddContributionPage() {
             "options": {}
         }
     }, function(response) {
-    	console.log('Here in the callback');
-		showIframe();
+    	console.log('Here in the callback from add contribution page');
 	});
 }
 
+function windowRefresh(){
+	window.location.reload();
+}
 function openAddBidPage(contributionId) {
+	
 	console.log('contributionId is: ' + contributionId);
 	chrome.runtime.sendMessage({        
         message : {
@@ -36,8 +46,20 @@ function openAddBidPage(contributionId) {
             "options": contributionId
         }
     }, function(response) {
-    	console.log('Here in the callback');
-		showIframe();
+    	console.log('Here in the callback from add bid page');
+	});
+}
+
+function openShowContributionStatusPage(contributionId) {
+	
+	console.log('contributionId is: ' + contributionId);
+	chrome.runtime.sendMessage({        
+        message : {
+            "gesture": 'openContributionStatusPage',
+            "options": contributionId
+        }
+    }, function(response) {
+    	console.log('Here in the callback from contribution status page');
 	});
 }
 
@@ -48,7 +70,8 @@ function setIframeHeight() {
 var GESTURES = {
 	"showIframe": showIframe,
 	"hideIframe": hideIframe,
-	"showAlert": showAlert
+	"showAlert": showAlert,
+	"windowRefresh": windowRefresh
 };
 
 function showIframe() {
@@ -57,9 +80,12 @@ function showIframe() {
 	iframe.style.display = "block";
 }
 
-function hideIframe() {
-	console.log('hiding iframe');
+function hideIframe(options) {
+	console.log('hiding iframe'+options);
 	iframe.style.display = "none";
+	if(options != undefined && options != ''){
+		$( "span[data-contributionId*="+options+"]" ).text("STATUS");
+	}
 }
 
 function showAlert(options) {
@@ -68,6 +94,61 @@ function showAlert(options) {
 		text: options.message,
 		type: options.type
 	});
+}
+
+function checkUserLogin(mutations){	
+	 if (document.getElementsByClassName('channel_C06GK1Y06')[0].classList.contains('active')) {
+
+			  // in case there is more than one mutation, use only the one with added nodes.
+			  var mutationWithAddedNodes = Array.from(mutations).filter(function(mutation) {
+				  return mutation.addedNodes.length > 0;
+			  })[0];
+
+			  // Fetch only messages sent by a bot
+			  var messagesFromBot = Array.from(mutationWithAddedNodes.addedNodes).filter(function(node) {
+				  return node.classList && node.classList.contains('bot_message');
+			  });
+			  chrome.runtime.sendMessage({        
+			        message : {
+			            "gesture": 'checkUserLogin',
+			            "options": {}
+			        }
+			    }, function(response) {			    				    	
+			    	if(response.login == 'true'){
+			    		  messagesFromBot.forEach(function(message) {
+								var spanElement = $( '.message_content', $(message));
+								var spanChildren = spanElement.children('#COMPOSE_ACTION_BID_BUTTON');
+								if (spanChildren.length == 0){
+									var spanText = spanElement.html();
+									var originalText = spanText;
+									var removalText = "New contribution submitted<br>";
+									var indexOfRemovalContent = spanText.indexOf(removalText);
+									if (indexOfRemovalContent > -1){
+										spanText = spanText.replace(removalText, "");
+										var contributionId = spanText.substring(5,spanText.indexOf("<br>"));
+										var lengthOfText = removalText.length;
+										originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length+4), "");
+										$( '.message_content', $(message)).html (originalText);
+										var contributionIdInx = $.inArray(contributionId, response.contributionIds);
+										var openComposeButton = document.createElement("span");
+										openComposeButton.setAttribute("data-contributionId", contributionId);
+										openComposeButton.setAttribute("id", "COMPOSE_ACTION_BID_BUTTON");
+										if(contributionIdInx == -1){
+											openComposeButton.textContent = "BID";
+										}else{
+											openComposeButton.textContent = "STATUS";
+										}
+										$(openComposeButton).insertBefore(spanElement);
+									}
+								}
+						});
+			  		   
+			    	}
+					//showIframe();
+				});
+			
+		  }	
+	
 }
 
 
@@ -101,45 +182,8 @@ function init() {
 
 
 	var addBidObserver = new MutationObserver(function(mutations) {
-		  // If current channel is contribution_test
-		  if (document.getElementsByClassName('channel_C06GK1Y06')[0].classList.contains('active')) {
-
-			  // in case there is more than one mutation, use only the one with added nodes.
-			  var mutationWithAddedNodes = Array.from(mutations).filter(function(mutation) {
-				  return mutation.addedNodes.length > 0;
-			  })[0];
-
-			  // Fetch only messages sent by a bot
-			  var messagesFromBot = Array.from(mutationWithAddedNodes.addedNodes).filter(function(node) {
-				  return node.classList && node.classList.contains('bot_message');
-			  });
-
-			  messagesFromBot.forEach(function(message) {
-					var spanElement = $( '.message_content', $(message));
-					var spanChildren = spanElement.children('#COMPOSE_ACTION_BID_BUTTON');
-					if (spanChildren.length == 0){
-						var spanText = spanElement.html();
-						var originalText = spanText;
-						var removalText = "New contribution submitted<br>";
-						var indexOfRemovalContent = spanText.indexOf(removalText);
-						if (indexOfRemovalContent > -1){
-							spanText = spanText.replace(removalText, "");
-							var contributionId = spanText.substring(5,spanText.indexOf("<br>"));
-							var lengthOfText = removalText.length;
-							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length+4), "");
-							$( '.message_content', $(message)).html (originalText);
-
-							var openComposeButton = document.createElement("span");
-							openComposeButton.setAttribute("id", "COMPOSE_ACTION_BID_BUTTON");
-							openComposeButton.setAttribute("data-contributionId", contributionId);
-							openComposeButton.textContent = "BID";
-							$(openComposeButton).insertBefore(spanElement);
-						}
-					}
-			});
-		  }
-			
-		 
+		//check whether user is login slack extension		  
+		  checkUserLogin(mutations);
 	});
 
 	addBidObserver.observe(document.getElementById('msgs_div'), {childList: true});

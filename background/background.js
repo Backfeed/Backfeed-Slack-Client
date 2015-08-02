@@ -8,6 +8,7 @@ function beginStream() {
 		"gesture": 'openAddOrganization',
 		"options": {}
 	});
+	
 }
 
 
@@ -215,22 +216,47 @@ chrome.runtime.onConnect.addListener(function(port) {
 });
 
 
-chrome.runtime.onMessage.addListener(function(msg, sender) {
+chrome.runtime.onMessage.addListener(function(msg, sender,sendResponse) {
 	
 	switch (msg.message) {
 
 	    case 'beginOAuth':
 	      beginOAuth();
 	      break;
+	      
+	    case 'logout':
+	    	sendGesture({
+	              "gesture": 'logout',
+	              "options": {}
+	          }	);
+		      break;
 
 	    default:
 	      if(localStorage['satellizer_token'] == undefined){
+	    	  sendResponse({login: "false"});
 	    	  sendGesture({
 	              "gesture": 'showAlertFromMainCtr',
 	              "options": {}
 	          }	);	    	 
 	      }else{
-	    	  sendGesture(msg.message);
+	    	  	var token = localStorage['bf-ext-token'];
+
+	    		var params = {token:token};
+
+	    		// passing slack token to server to obtain satellizer_token (to be used in API calls)
+	    		$.ajax({
+	    		  type: 'POST',
+	    		  url: 'https://monitor.backfeed.cc/allContributionsFromUser',
+	    		  data: params,
+	    		  success: function(data) {
+	    		       console.log('server returned, satellizer token:'+data);
+	    		       sendResponse({login: "true",contributionIds:data});
+	    		       sendGesture(msg.message,sendResponse);
+	    		  }
+	    		});
+	    		
+	    		return true;
+	    	  
 	      }
 	      
 	      break;

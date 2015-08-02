@@ -19,12 +19,14 @@ angular.module('MyApp').service('PostMessageService', function(Account,$state) {
 		showIframe: function(option) {
 			self.sendGesture("showIframe", option);
 		},
-		hideIframe: function() {
-			self.sendGesture("hideIframe");
+		hideIframe: function(option) {
+			self.sendGesture("hideIframe",option);
 		},
 		showAlert: function(message, type) {
 			if (!type) type = 'warning';
 			self.sendGesture("showAlert", {message: message, type: type});
+		},windowRefresh: function(option) {
+			self.sendGesture("windowRefresh", option);
 		}
 	};
 
@@ -33,6 +35,8 @@ angular.module('MyApp').service('PostMessageService', function(Account,$state) {
 			orgExists = data.orgexists;
 			if (orgExists == 'false') {
 				$state.go('createOrg', {}, {reload: true});
+			}else{
+				self.gesture.windowRefresh();
 			}			
 
 		}).error(function(error) {
@@ -47,6 +51,8 @@ angular.module('MyApp').service('PostMessageService', function(Account,$state) {
    		}else{
    			if (userData.orgexists == 'false') {
    				$state.go('createOrg', {}, {reload: true}); 				
+			}else{
+				self.gesture.windowRefresh();
 			}
    		}
    	}

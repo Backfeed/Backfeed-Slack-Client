@@ -121,7 +121,7 @@ angular.module('MyApp')
 		$scope.data.$promise.then(function(result) {
 			$modalInstance.close('submit');
 			PostMessageService.gesture.showAlert('Bid Successfully created', 'success');
-			PostMessageService.gesture.hideIframe();
+			PostMessageService.gesture.hideIframe($scope.contributionId);
 			//$state.go('contributionStatus', {'contributionId': $scope.contributionId});
 		}, function(result) {
 			$modalInstance.close('submit');

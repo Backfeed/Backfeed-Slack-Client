@@ -12,6 +12,18 @@ angular.module('MyApp').controller(
 	        $scope.closeModal = function() {
 	            $modalInstance.dismiss('cancel');
 	        };	
+	        
+	        $scope.getContributionStatus = function(){
+	        	if ($scope.contributionId && $scope.contributionId != 0 && $scope.userId && $scope.userId != 0) {
+					$scope.contributionStatus = ContributionStatus.getDetail({
+						id : $scope.contributionId,userId : $scope.userId
+					});
+					$scope.contributionStatus.$promise.then(function(result) {
+						$scope.cotributionStatusModel = result;
+					});
+					PostMessageService.sendGesture('showIframe');
+	        	}
+	        };
 			// if not authenticated return to splash:
 			if (!$auth.isAuthenticated()) {
 				$location.path('splash');
@@ -22,6 +34,7 @@ angular.module('MyApp').controller(
 					Account.getProfile().success(function(data) {
 						$scope.userId = data.userId;
 						Account.setUserData(data);
+						$scope.getContributionStatus();
 
 					}).error(function(error) {
 						PostMessageService.gesture.showAlert(error.message, 'error');
@@ -33,16 +46,9 @@ angular.module('MyApp').controller(
 					$scope.getProfile();
 				} else {
 					$scope.userId = userData.userId;
+					$scope.getContributionStatus();
 				}
-				if ($scope.contributionId && $scope.contributionId != 0 && $scope.userId && $scope.userId != 0) {
-					$scope.contributionStatus = ContributionStatus.getDetail({
-						id : $scope.contributionId,userId : $scope.userId
-					});
-					$scope.contributionStatus.$promise.then(function(result) {
-						$scope.cotributionStatusModel = result;
-					});
-					PostMessageService.sendGesture('showIframe');
-				}
+				
 				
 
 			}

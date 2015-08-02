@@ -14,8 +14,11 @@ angular.module('MyApp').controller('MainCtrl', ["$scope", "$state","PostMessageS
 	
 	function goToAddBid(contributionId) {
 		console.log('Starting bids for contributionID: '+contributionId);
-		//change back to 'bids' after done work on contribution status
-		//$state.go('bids', {'contributionId': contributionId}, {reload: true});
+		$state.go('bids', {'contributionId': contributionId}, {reload: true});
+	}
+	
+	function goToContributionStatus(contributionId) {
+		console.log('Starting showing status: '+contributionId);
 		$state.go('contributionStatus', {'contributionId': contributionId}, {reload: true});
 	}
 	
@@ -23,12 +26,19 @@ angular.module('MyApp').controller('MainCtrl', ["$scope", "$state","PostMessageS
 		console.log('Showing Alert');
 		PostMessageService.gesture.showAlert('You need to login in order to use the extension. Click the extension icon above.', 'error');
 	}
+	
+	function logout() {
+		console.log('Logging Out');
+		PostMessageService.gesture.windowRefresh();
+	}
 
 	var GESTURES = {
 		"openAddOrganization": goToAddOrganization,
 		"openAddContributionPage": goToAddContribution,
 		"openAddBidPage": goToAddBid,
-		"showAlertFromMainCtr": showAlert
+		"showAlertFromMainCtr": showAlert,
+		"openContributionStatusPage":goToContributionStatus,
+		"logout":logout
 	};
 
 	console.log('MainCtrl init');
@@ -40,7 +50,6 @@ angular.module('MyApp').controller('MainCtrl', ["$scope", "$state","PostMessageS
 
 		chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 			console.log(sender.tab ? "from a content script:" + sender.tab.url : "from the extension");
-
 			if(request.gesture && request.gesture in GESTURES) {
 				GESTURES[request.gesture](request.options)
 		}
