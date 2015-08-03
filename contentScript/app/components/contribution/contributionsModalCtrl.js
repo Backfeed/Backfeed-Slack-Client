@@ -61,7 +61,14 @@ angular.module('MyApp').controller(
                         if($scope.users[i].id == $scope.model.owner ){
                             $scope.model.contributers[0].img =  $scope.users[i].url;
                             $scope.model.contributers[0].contributer_name =  $scope.users[i].name;  
-                            $scope.model.contributers[0].className = "media contributer-cell";
+                            angular.element('#'+$scope.model.contributers[0].contributer_id).trigger('focus');
+	                        sliderDivElement = angular.element('#slider'+$scope.model.contributers[0].contributer_id+" div");
+	                        sliderDivElement.removeClass('ui-widget-header-active');
+ 							sliderDivElement.addClass('ui-widget-header-active');
+ 							sliderSpanElement = angular.element('#slider'+$scope.model.contributers[0].contributer_id+" span");
+ 							sliderSpanElement.removeClass('ui-slider-handle-show');
+ 							sliderSpanElement.addClass('ui-slider-handle-show');
+ 							$scope.model.contributers[0].className = "media contributer-cell activeContributer";
                             
                             continue;
                         }
@@ -84,7 +91,14 @@ angular.module('MyApp').controller(
                         $scope.model.owner = user.userId;
                         $scope.model.contributers[0].contributer_id = user.userId;
                         $scope.model.contributers[0].contributer_name = user.displayName;
-                        $scope.model.contributers[0].className = "media contributer-cell";
+                        angular.element('#'+$scope.model.contributers[0].contributer_id).trigger('focus');
+                        sliderDivElement = angular.element('#slider'+$scope.model.contributers[0].contributer_id+" div");
+                        sliderDivElement.removeClass('ui-widget-header-active');
+						sliderDivElement.addClass('ui-widget-header-active');
+						sliderSpanElement = angular.element('#slider'+$scope.model.contributers[0].contributer_id+" span");
+						sliderSpanElement.removeClass('ui-slider-handle-show');
+						sliderSpanElement.addClass('ui-slider-handle-show');
+						$scope.model.contributers[0].className = "media contributer-cell activeContributer";
                         $scope.getOrgUsers();
                         PostMessageService.gesture.showIframe();
                     }else{
@@ -137,6 +151,14 @@ angular.module('MyApp').controller(
                     $scope.model.contributers[0].contributer_id = userData.userId;
                     $scope.model.contributers[0].contributer_name = userData.displayName;
                     $scope.model.contributers[0].className = "media contributer-cell";
+                    angular.element('#'+$scope.model.contributers[0].contributer_id).trigger('focus');
+                    sliderDivElement = angular.element('#slider'+$scope.model.contributers[0].contributer_id+" div");
+                    sliderDivElement.removeClass('ui-widget-header-active');
+					sliderDivElement.addClass('ui-widget-header-active');
+					sliderSpanElement = angular.element('#slider'+$scope.model.contributers[0].contributer_id+" span");
+					sliderSpanElement.removeClass('ui-slider-handle-show');
+					sliderSpanElement.addClass('ui-slider-handle-show');
+					$scope.model.contributers[0].className = "media contributer-cell activeContributer";
                     PostMessageService.gesture.showIframe();
                 }else{
                 	//navigate to create org screen
@@ -166,7 +188,9 @@ angular.module('MyApp').controller(
 
                 for(i=0;i<allcontributers.length;i++){
                     if(allcontributers[i].contributer_id == 0 && allcontributers[i].contributer_percentage == ''){
+                    	console.log('comes here firt');
                         allcontributers[i].contributer_id = selectedUserId;
+                        
                         //allcontributers[i].contributer_percentage = contPercentage;
                         allcontributers[i].img = urlImage;
 
@@ -174,8 +198,17 @@ angular.module('MyApp').controller(
                     
                 }
                 $scope.changeContribution(selectedUserId,userName);
-
-
+                setTimeout(function(){ 
+                	angular.element('#'+selectedUserId).trigger('focus');
+                	 sliderDivElement = angular.element('#slider'+selectedUserId+" div");
+                     sliderDivElement.removeClass('ui-widget-header-active');
+ 					sliderDivElement.addClass('ui-widget-header-active');
+ 					sliderSpanElement = angular.element('#slider'+selectedUserId+" span");
+ 					sliderSpanElement.removeClass('ui-slider-handle-show');
+ 					sliderSpanElement.addClass('ui-slider-handle-show');
+ 					$scope.model.contributers[0].className = "media contributer-cell activeContributer";
+                	
+                }, 100);
 
             };
 
@@ -279,13 +312,9 @@ angular.module('MyApp').controller(
 	                        }else{
 	                        	
 	                            if(userName != ''){
-	                                console.log('comes inside is '+userName);
-	                                allcontributers[i].contributer_name = userName;
-	                                allcontributers[i].className = "media contributer-cell";
-	                                sliderDivElement = angular.element('#slider'+contributerId+" div");
-	                                sliderDivElement.removeClass('ui-widget-header-active');
-	                                sliderSpanElement = angular.element('#slider'+contributerId+" span");
-		 							sliderSpanElement.removeClass('ui-slider-handle-show');
+	                                console.log('comes inside is '+userName+allcontributers[i].contributer_id);
+	                                allcontributers[i].contributer_name = userName;	                               
+	                               
 	                            }else{
 	                            	angular.element('#'+allcontributers[i].contributer_id).trigger('focus');
 	                            	sliderDivElement = angular.element('#slider'+allcontributers[i].contributer_id+" div");
@@ -534,7 +563,7 @@ angular.module('MyApp').controller(
                 $scope.data.$promise.then(function(result) {
 
                     // TBD: un comment later:
-                    $scope.slackPlay(result);
+                    //$scope.slackPlay(result);
 
                     $modalInstance.close('submit');
 

@@ -46,7 +46,14 @@ angular.module('MyApp')
                   if($scope.users[i].id == $scope.userData.slackUserId ){
                       $scope.orgModel.contributers[0].img =  $scope.users[i].url;
                       $scope.orgModel.contributers[0].contributer_name =  $scope.users[i].name;
-                      $scope.orgModel.contributers[0].className = "media contributer-cell";
+                      angular.element('#'+$scope.orgModel.contributers[0].contributer_id).trigger('focus');
+                  	  sliderDivElement = angular.element('#slider'+$scope.orgModel.contributers[0].contributer_id+" div");
+                  	  sliderDivElement.removeClass('ui-widget-header-active');
+					  sliderDivElement.addClass('ui-widget-header-active');
+					  sliderSpanElement = angular.element('#slider'+$scope.orgModel.contributers[0].contributer_id+" span");
+					  sliderSpanElement.removeClass('ui-slider-handle-show');
+					  sliderSpanElement.addClass('ui-slider-handle-show');
+					  $scope.orgModel.contributers[0].className = "media contributer-cell activeContributer";
                       break;
                   }
               }
@@ -65,7 +72,14 @@ angular.module('MyApp')
 				$scope.access_token = $scope.userData.access_token;
 				$scope.orgModel.contributers[0].contributer_id = $scope.userData.slackUserId;
 				$scope.orgModel.contributers[0].contributer_name = $scope.userData.displayName;
-				$scope.orgModel.contributers[0].className = "media contributer-cell";
+				angular.element('#'+$scope.orgModel.contributers[0].contributer_id).trigger('focus');
+            	sliderDivElement = angular.element('#slider'+$scope.orgModel.contributers[0].contributer_id+" div");
+            	sliderDivElement.removeClass('ui-widget-header-active');
+				sliderDivElement.addClass('ui-widget-header-active');
+				sliderSpanElement = angular.element('#slider'+$scope.orgModel.contributers[0].contributer_id+" span");
+				sliderSpanElement.removeClass('ui-slider-handle-show');
+				sliderSpanElement.addClass('ui-slider-handle-show');
+				$scope.orgModel.contributers[0].className = "media contributer-cell activeContributer";
                 $scope.getOrgUsers();
                 PostMessageService.gesture.showIframe();
 				
@@ -88,7 +102,14 @@ angular.module('MyApp')
 			 $scope.orgModel.slack_teamid = $scope.userData.slackTeamId;
              $scope.orgModel.contributers[0].contributer_id = $scope.userData.slackUserId;
              $scope.orgModel.contributers[0].contributer_name = $scope.userData.displayName;
-             $scope.orgModel.contributers[0].className = "media contributer-cell";
+             angular.element('#'+$scope.orgModel.contributers[0].contributer_id).trigger('focus');
+         	 sliderDivElement = angular.element('#slider'+$scope.orgModel.contributers[0].contributer_id+" div");
+         	 sliderDivElement.removeClass('ui-widget-header-active');
+			 sliderDivElement.addClass('ui-widget-header-active');
+			 sliderSpanElement = angular.element('#slider'+$scope.orgModel.contributers[0].contributer_id+" span");
+			 sliderSpanElement.removeClass('ui-slider-handle-show');
+			 sliderSpanElement.addClass('ui-slider-handle-show');
+			 $scope.orgModel.contributers[0].className = "media contributer-cell activeContributer";
              $scope.access_token = $scope.userData.access_token;
              $scope.getOrgUsers();
              PostMessageService.gesture.showIframe();
@@ -119,7 +140,17 @@ angular.module('MyApp')
                  }
              }
              $scope.changeContribution(selectedUserId,userName);
-
+             setTimeout(function(){ 
+             	angular.element('#'+selectedUserId).trigger('focus');
+             	 sliderDivElement = angular.element('#slider'+selectedUserId+" div");
+                  sliderDivElement.removeClass('ui-widget-header-active');
+					sliderDivElement.addClass('ui-widget-header-active');
+					sliderSpanElement = angular.element('#slider'+selectedUserId+" span");
+					sliderSpanElement.removeClass('ui-slider-handle-show');
+					sliderSpanElement.addClass('ui-slider-handle-show');
+					$scope.orgModel.contributers[0].className = "media contributer-cell activeContributer";
+             	
+             }, 100);
 
 
          };
@@ -466,7 +497,7 @@ angular.module('MyApp')
 											console.log('Inserted org id : '+result.organization_id)
 											console.log('Inserted userorg id : '+result.id)
 										 	Account.setUserData($scope.userData);
-											$scope.slackPlay($scope.orgModel.name);
+											//$scope.slackPlay($scope.orgModel.name);
 											PostMessageService.gesture.showAlert('Successfully created organization', 'success');
 											$modalInstance.close('submit');
 											

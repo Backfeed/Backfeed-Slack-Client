@@ -3,7 +3,7 @@ angular.module('MyApp')
 		  GetBidTOContribution,SaveBidTOContribution,Account,ContributionDetail,UserDetail,$modalInstance,PostMessageService,$state) {
 	  $scope.contributionId = $stateParams.contributionId;
 	  $scope.bidId = $stateParams.bidId;
-	  
+	  PostMessageService.sendGesture('hideIframe');
 	  $scope.closeModal = function() {
 		  $modalInstance.dismiss('cancel');
       };
@@ -75,6 +75,17 @@ angular.module('MyApp')
 					 //$state.go('contributionStatus', {'contributionId': $scope.contributionId});
 				 }else{
 					 console.log('comes here'+$scope.contributionId);
+						
+						console.log('userData.userId'+userData.userId);
+						console.log('userData.orgId'+userData.orgId);
+						$scope.data2 = UserDetail.getDetail({
+							'userId' : userData.userId,'organizationId':userData.orgId 
+						});
+						$scope.data2.$promise.then(function(result1) {
+							console.log('result.reputaion'+result1.reputaion);
+							$scope.bid.reputation = result1.reputation;
+							$scope.bid.stake = (parseInt(result1.reputation)*18)/100;
+						});
 						$scope.data1 = ContributionDetail.getDetail({
 							contributionId : $scope.contributionId
 						});
@@ -83,16 +94,6 @@ angular.module('MyApp')
 							$scope.title = result.title;
 							$scope.tokenName = result.tokenName;
 							$scope.code = result.code;
-						});
-						console.log('userData.userId'+userData.userId);
-						console.log('userData.orgId'+userData.orgId);
-						$scope.data2 = UserDetail.getDetail({
-							'userId' : userData.userId,'organizationId':userData.orgId 
-						});
-						$scope.data2.$promise.then(function(result) {
-							console.log('result.reputaion'+result.reputaion);
-							$scope.bid.reputation = result.reputation;
-							$scope.bid.stake = (parseInt(result.reputation)*18)/100;
 						});
 						
 						PostMessageService.sendGesture('showIframe');

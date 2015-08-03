@@ -143,6 +143,25 @@ function checkUserLogin(mutations){
 								}
 						});
 			  		   
+			    	}else{
+			    		messagesFromBot.forEach(function(message) {
+							var spanElement = $( '.message_content', $(message));
+							var spanChildren = spanElement.children('#COMPOSE_ACTION_BID_BUTTON');
+							if (spanChildren.length == 0){
+								var spanText = spanElement.html();
+								var originalText = spanText;
+								var removalText = "New contribution submitted<br>";
+								var indexOfRemovalContent = spanText.indexOf(removalText);
+								if (indexOfRemovalContent > -1){
+									spanText = spanText.replace(removalText, "");
+									var contributionId = spanText.substring(5,spanText.indexOf("<br>"));
+									var lengthOfText = removalText.length;
+									originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length+4), "");
+									$( '.message_content', $(message)).html (originalText);
+									
+								}
+							}
+					});
 			    	}
 					//showIframe();
 				});
