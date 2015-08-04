@@ -6,34 +6,29 @@
 	<form>
 		<div class="row">
 			<div class="col-sm-12">
-				<h2>{contribution.title}</h2>
+				<h2>{{cotributionStatusModel.title}}</h2>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-sm-4">
 				<legend>
 					<i class="ion-ribbon-b"></i> Current Valuation:
-					{{contributionStatus.currentValuation}}
+					{{cotributionStatusModel.currentValuation}}
 				</legend>
 				<legend>
 					<i class="ion-chatbox-working"></i> My estimate:
-					{{contributionStatus.myValuation}}
+					{{cotributionStatusModel.myValuation}}
 				</legend>
 				<legend>
-					<i class="ion-arrow-graph-up-right"></i> My Rep profit/loss: {contributionStatus.reputationDelta}
+					<i class="ion-arrow-graph-up-right"></i> My Rep profit/loss: {{cotributionStatusModel.reputationDelta}}
 				</legend>
 				<legend>
-					<i class="ion-mic-a"></i> My weight in the holon: {contributionStatus.myWeight}
+					<i class="ion-mic-a"></i> My weight in the holon: {{cotributionStatusModel.myWeight}}
 				</legend>
 				<legend>
-					<i class="ion-speakerphone"></i> {contributionStatus.groupWeight}% of the holon backfeeded this value
+					<i class="ion-speakerphone"></i> {{cotributionStatusModel.groupWeight}}% of the holon backfeeded this value
 				</legend>
-				<h3>{contribution.content}</h3>
-				<p>contribution.content contribution.content contribution.content contribution.content contribution.content contribution.content contribution.content contribution.content </p>
-				<p>contribution.content contribution.content contribution.content contribution.content contribution.content contribution.content contribution.content contribution.content </p>
-				<p>contribution.content contribution.content contribution.content contribution.content contribution.content contribution.content contribution.content contribution.content </p>
-				<p>contribution.content contribution.content contribution.content contribution.content contribution.content contribution.content contribution.content contribution.content </p>
-				<p>contribution.content contribution.content contribution.content contribution.content contribution.content contribution.content contribution.content contribution.content </p>
+				<h3>{{cotributionStatusModel.file}}</h3>				
 			</div>
 			<div class="col-sm-8">
 				<table class="table table-bordered table-hover">
@@ -46,11 +41,11 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr repeatt="contributionStatus.bids as bid">
-							<td>bid.when</td>
-							<td>bid.evaluation</td>
-							<td>bid.weight</td>
-							<td>bid.contributionValueNow</td>
+						<tr ng-repeat="bid in cotributionStatusModel.bids">
+							<td>{{bid.time_created | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+							<td>{{bid.tokens}}</td>
+							<td>{{bid.reputation}}</td>
+							<td>{{bid.contribution_value_after_bid}}</td>
 						</tr>
 					</tbody>
 				</table>

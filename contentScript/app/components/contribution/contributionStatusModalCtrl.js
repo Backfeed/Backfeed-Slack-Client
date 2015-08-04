@@ -3,10 +3,19 @@ angular.module('MyApp').controller(
 		function($scope, $auth, $location, $stateParams, ContributionStatus,
 				Account, Users,$modalInstance,PostMessageService) {
 			$scope.cotributionStatusModel = {
+					file:'',
+					title:'',
 					currentValuation : '',
-					totalReputaion : '',
+					myWeight : '',
 					myValuation : '',
-					myReputaion : ''
+					reputationDelta : '',
+					groupWeight : '',
+					bids : [ {
+						time_created : '',
+		                tokens:'',
+		                reputation: '',
+		                contribution_value_after_bid:''
+		            } ]
 				};
 
 	        $scope.closeModal = function() {
