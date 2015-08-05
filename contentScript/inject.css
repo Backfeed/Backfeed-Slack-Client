@@ -39,3 +39,12 @@ iframe {
 	background: rgb(84, 84, 84);
 	cursor: pointer;
 }
+
+#member_preview_scroller .user_status_button a {
+	width: 99% !important;
+	max-width: initial !important;
+}
+#client-ui #team_list .user_status_button .member_action_button {
+	width: 100% !important;
+	max-width: initial !important;
+}

@@ -37,6 +37,7 @@ function openAddContributionPage() {
 function windowRefresh(){
 	window.location.reload();
 }
+
 function openAddBidPage(contributionId) {
 	
 	console.log('contributionId is: ' + contributionId);
@@ -48,7 +49,9 @@ function openAddBidPage(contributionId) {
     }, function(response) {
     	console.log('Here in the callback from add bid page');
 	});
+
 }
+
 
 function openShowContributionStatusPage(contributionId) {
 	
@@ -61,6 +64,7 @@ function openShowContributionStatusPage(contributionId) {
     }, function(response) {
     	console.log('Here in the callback from contribution status page');
 	});
+
 }
 
 function setIframeHeight() {
@@ -96,127 +100,157 @@ function showAlert(options) {
 	});
 }
 
-function checkUserLogin(mutations){	
-	 if (document.getElementsByClassName('channel_C06GK1Y06')[0].classList.contains('active')) {
+/**
+ * DOM Mutation Observers Callbacks
+ */
 
-			  // in case there is more than one mutation, use only the one with added nodes.
-			  var mutationWithAddedNodes = Array.from(mutations).filter(function(mutation) {
-				  return mutation.addedNodes.length > 0;
-			  })[0];
-
-			  // Fetch only messages sent by a bot
-			  var messagesFromBot = Array.from(mutationWithAddedNodes.addedNodes).filter(function(node) {
-				  return node.classList && node.classList.contains('bot_message');
-			  });
-			  chrome.runtime.sendMessage({        
-			        message : {
-			            "gesture": 'checkUserLogin',
-			            "options": {}
-			        }
-			    }, function(response) {			    				    	
-			    	if(response.login == 'true'){
-			    		  messagesFromBot.forEach(function(message) {
-								var spanElement = $( '.message_content', $(message));
-								var spanChildren = spanElement.children('#COMPOSE_ACTION_BID_BUTTON');
-								if (spanChildren.length == 0){
-									var spanText = spanElement.html();
-									var originalText = spanText;
-									var removalText = "New contribution submitted<br>";
-									var indexOfRemovalContent = spanText.indexOf(removalText);
-									if (indexOfRemovalContent > -1){
-										spanText = spanText.replace(removalText, "");
-										var contributionId = spanText.substring(5,spanText.indexOf("<br>"));
-										var lengthOfText = removalText.length;
-										originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length+4), "");
-										$( '.message_content', $(message)).html (originalText);
-										var contributionIdInx = $.inArray(contributionId, response.contributionIds);
-										var openComposeButton = document.createElement("span");
-										openComposeButton.setAttribute("data-contributionId", contributionId);
-										openComposeButton.setAttribute("id", "COMPOSE_ACTION_BID_BUTTON");
-										if(contributionIdInx == -1){
-											openComposeButton.textContent = "BID";
-										}else{
-											openComposeButton.textContent = "STATUS";
-										}
-										$(openComposeButton).insertBefore(spanElement);
-									}
-								}
-						});
-			  		   
-			    	}else{
-			    		messagesFromBot.forEach(function(message) {
-							var spanElement = $( '.message_content', $(message));
-							var spanChildren = spanElement.children('#COMPOSE_ACTION_BID_BUTTON');
-							if (spanChildren.length == 0){
-								var spanText = spanElement.html();
-								var originalText = spanText;
-								var removalText = "New contribution submitted<br>";
-								var indexOfRemovalContent = spanText.indexOf(removalText);
-								if (indexOfRemovalContent > -1){
-									spanText = spanText.replace(removalText, "");
-									var contributionId = spanText.substring(5,spanText.indexOf("<br>"));
-									var lengthOfText = removalText.length;
-									originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length+4), "");
-									$( '.message_content', $(message)).html (originalText);
-									
-								}
-							}
-					});
-			    	}
-					//showIframe();
-				});
-			
-		  }	
-	
-}
-
-
-function init() {
-
-	var addContributionObserver = new MutationObserver(function(nodes) {
-		  
-		var addedNodes = $(nodes[0].addedNodes);
-		if (addedNodes.length > 0) {
-			addedNodes.each(function() {
-				if (this.id == 'menu') {
-					var menuItemsList = $(this).find('#menu_items');
-					var menuItems = menuItemsList.children();
-
-					if (menuItems.first().hasClass('file_menu_item')) {
-						var addContributionButton = menuItems.last().clone().prependTo(menuItemsList);
-						addContributionButton.removeAttr('data-which');
-						var buttonLabel = '<img src="' + chrome.extension.getURL('/contentScript/app/images/icon_contribution.png') + '" />'
-							+ '  Contribute to '+$('#team_name').html();
-						addContributionButton.find('a').attr('href','#').html(buttonLabel);
-						addContributionButton.click(openAddContributionPage);
-
-						this.style.top = parseInt(this.style.top) - 32 + "px";
-					}
-				}				
+function onTeamMembersListObservation(mutations) {
+	var teamDirectory = mutations[0].target;
+	if (mutations[0].attributeName == 'class' && teamDirectory.classList.contains('active')) {
+		if (!document.getElementById('member_preview_container').classList.contains('hidden')) {
+			var $memberContainer = $('#member_preview_scroller');
+			$memberContainer.append('<div class="top_margin user_status_button"><a class="member_action_button btn btn_outline">Collaborative Overview</a></div>')
+		} else {
+			$('.team_list_item').each(function(i, teamItem) {
+				singleTeamMemberObserver.observe(teamItem, {attributes: true, attributeFilter: ['class']});
 			});
 		}
-	});
+	}
+}
+
+function onSingleTeamMemberObservation(mutations) {
+	var teamMember = mutations[0].target;
+	if (teamMember.classList.contains('expanded')) {
+		if ($(teamMember).find('.user_status_button').length == 0) {
+			$(teamMember).append('<div class="top_margin user_status_button"><a class="member_action_button btn btn_outline">Collaborative Overview</a></div>')
+		}
+	} else {
+		$(teamMember).find('.user_status_button').remove();
+	}
+}
+
+function onAddContributionObservation(nodes) {
+	var addedNodes = $(nodes[0].addedNodes);
+	if (addedNodes.length > 0) {
+		addedNodes.each(function() {
+			if (this.id == 'menu') {
+				var menuItemsList = $(this).find('#menu_items');
+				var menuItems = menuItemsList.children();
+
+				if (menuItems.first().hasClass('file_menu_item')) {
+					var addContributionButton = menuItems.last().clone().prependTo(menuItemsList);
+					addContributionButton.removeAttr('data-which');
+					var buttonLabel = '<img src="' + chrome.extension.getURL('/contentScript/app/images/icon_contribution.png') + '" />'
+						+ '  Contribute to '+$('#team_name').html();
+					addContributionButton.find('a').attr('href','#').html(buttonLabel);
+					addContributionButton.click(openAddContributionPage);
+
+					this.style.top = parseInt(this.style.top) - 32 + "px";
+				}
+			}
+		});
+	}
+}
+
+function onAddBidObservation(mutations) {
+	//check whether user is login slack extension
+	if (document.getElementsByClassName('channel_C06GK1Y06')[0].classList.contains('active')) {
+
+		// in case there is more than one mutation, use only the one with added nodes.
+		var mutationWithAddedNodes = Array.from(mutations).filter(function(mutation) {
+			return mutation.addedNodes.length > 0;
+		})[0];
+
+		// Fetch only messages sent by a bot
+		var messagesFromBot = Array.from(mutationWithAddedNodes.addedNodes).filter(function(node) {
+			return node.classList && node.classList.contains('bot_message');
+		});
+
+		chrome.runtime.sendMessage({
+			message : {
+				"gesture": 'checkUserLogin',
+				"options": {}
+			}
+		}, function(response) {
+			if (response.login == 'true') {
+				messagesFromBot.forEach(function(message) {
+					var spanElement = $( '.message_content', $(message));
+					var spanChildren = spanElement.children('#COMPOSE_ACTION_BID_BUTTON');
+					if (spanChildren.length == 0){
+						var spanText = spanElement.html();
+						var originalText = spanText;
+						var removalText = "New contribution submitted<br>";
+						var indexOfRemovalContent = spanText.indexOf(removalText);
+						if (indexOfRemovalContent > -1){
+							spanText = spanText.replace(removalText, "");
+							var contributionId = spanText.substring(5,spanText.indexOf("<br>"));
+							var lengthOfText = removalText.length;
+							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length+4), "");
+							$( '.message_content', $(message)).html (originalText);
+							var contributionIdInx = $.inArray(contributionId, response.contributionIds);
+							var openComposeButton = document.createElement("span");
+							openComposeButton.setAttribute("data-contributionId", contributionId);
+							openComposeButton.setAttribute("id", "COMPOSE_ACTION_BID_BUTTON");
+							if(contributionIdInx == -1){
+								openComposeButton.textContent = "BID";
+							}else{
+								openComposeButton.textContent = "STATUS";
+							}
+							$(openComposeButton).insertBefore(spanElement);
+						}
+					}
+				});
+
+			} else {
+				messagesFromBot.forEach(function(message) {
+					var spanElement = $( '.message_content', $(message));
+					var spanChildren = spanElement.children('#COMPOSE_ACTION_BID_BUTTON');
+					if (spanChildren.length == 0){
+						var spanText = spanElement.html();
+						var originalText = spanText;
+						var removalText = "New contribution submitted<br>";
+						var indexOfRemovalContent = spanText.indexOf(removalText);
+						if (indexOfRemovalContent > -1){
+							spanText = spanText.replace(removalText, "");
+							var contributionId = spanText.substring(5,spanText.indexOf("<br>"));
+							var lengthOfText = removalText.length;
+							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length+4), "");
+							$( '.message_content', $(message)).html (originalText);
+
+						}
+					}
+				});
+			}
+		});
+	}
+}
+
+/**
+ * END: DOM Mutation Observers Callbacks :END
+ */
+
+
+// Single member is shown
+var teamMembersListObserver = new MutationObserver(onTeamMembersListObservation);
+
+// More buttons are shown for a single team member in the list of team members
+var singleTeamMemberObserver = new MutationObserver(onSingleTeamMemberObservation);
+
+var addContributionObserver = new MutationObserver(onAddContributionObservation);
+var addBidObserver = new MutationObserver(onAddBidObservation);
+
+
+$(function() {
+    document.body.appendChild(iframe);
 
 	addContributionObserver.observe(document.getElementById('client-ui'), {childList: true});
-
-
-	var addBidObserver = new MutationObserver(function(mutations) {
-		//check whether user is login slack extension		  
-		  checkUserLogin(mutations);
-	});
-
 	addBidObserver.observe(document.getElementById('msgs_div'), {childList: true});
-		
+	teamMembersListObserver.observe(document.getElementById('team_tab'), {attributes: true});
+
 
 	chrome.runtime.onMessage.addListener(function(msg) {
 		if (msg.gesture && msg.gesture in GESTURES) {
 			GESTURES[msg.gesture](msg.options)
 		}
 	});
-}
-
-var ready = setInterval(function() {
-    document.body.appendChild(iframe);
-    init();
-    clearInterval(ready);
-} ,500);
+});
