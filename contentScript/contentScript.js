@@ -155,7 +155,6 @@ function onAddContributionObservation(nodes) {
 function onAddBidObservation(mutations) {
 	//check whether user is login slack extension
 	if (document.getElementsByClassName('channel_C06GK1Y06')[0].classList.contains('active')) {
-
 		// in case there is more than one mutation, use only the one with added nodes.
 		var mutationWithAddedNodes = Array.from(mutations).filter(function(mutation) {
 			return mutation.addedNodes.length > 0;
@@ -187,14 +186,17 @@ function onAddBidObservation(mutations) {
 							var lengthOfText = removalText.length;
 							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length+4), "");
 							$( '.message_content', $(message)).html (originalText);
-							var contributionIdInx = $.inArray(contributionId, response.contributionIds);
 							var openComposeButton = document.createElement("span");
 							openComposeButton.setAttribute("data-contributionId", contributionId);
 							openComposeButton.setAttribute("id", "COMPOSE_ACTION_BID_BUTTON");
-							if(contributionIdInx == -1){
-								openComposeButton.textContent = "BID";
-							}else{
-								openComposeButton.textContent = "STATUS";
+							openComposeButton.textContent = "BID";
+							var contributionIdsVar = response.contributionIds;
+							contributionIdsVar = contributionIdsVar.substring(1, contributionIdsVar.length-1);
+							var contributionIdsVarArray = contributionIdsVar.split(",");
+							for (i = 0; i < contributionIdsVarArray.length; i++) {
+								if(contributionIdsVarArray[i].trim() == contributionId){
+									openComposeButton.textContent = "STATUS";
+								}
 							}
 							$(openComposeButton).insertBefore(spanElement);
 						}
