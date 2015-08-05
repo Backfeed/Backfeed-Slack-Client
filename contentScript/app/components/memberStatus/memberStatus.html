@@ -1,0 +1,62 @@
+<script type="text/ng-template" id="MemberStatusModalTmpl">
+<div class="modal-header">
+	<img alt="Close modal" class="close" src="/contentScript/app/images/close_x.png" ng-click="closeModal()" />
+	<h4 class="modal-title">Your Stats</h4>
+</div>
+<div class="modal-body">
+	<form>
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="media">
+					<div class="media-left">
+						<a href="#">
+							<img class="media-object" src="/contentScript/app/images/avatar.png" alt="" style="width: 50px;" />
+						</a>
+					</div>
+					<div class="media-body">
+						<h4 class="media-heading">Jen Stephens</h4>
+						<span class="hashtag">#</span>Jane
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+
+			</div>
+			<div class="col-sm-4">
+
+			</div>
+			<div class="col-sm-4">
+
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<table class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>Timestamp&nbsp;<img tooltip="help message" alt="help" src="/contentScript/app/images/icon_help.png"/></th>
+							<th>Bid&nbsp;<img tooltip="help message" alt="help" src="/contentScript/app/images/icon_help.png"/></th>
+							<th>Reputation &nbsp;<img tooltip="User's reputation while bidding" alt="help" src="/contentScript/app/images/icon_help.png"/></th>
+							<th>Contribution Value&nbsp;<img tooltip="What was the value of this contribution after this bid" alt="help" src="/contentScript/app/images/icon_help.png"/></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="bid in cotributionStatusModel.bids">
+							<td>{{bid.time_created | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+							<td>{{bid.tokens}}</td>u
+							<td>{{bid.reputation}}</td>
+							<td>{{bid.contribution_value_after_bid}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</form>
+
+	<div class="modal-footer">
+		<div class="row"></div>		
+	</div>
+</div>
+		</script>

@@ -411,9 +411,7 @@ angular.module('MyApp')
            var slackUserId = slackUser.id;
            //TODO will remove this if clause while creating extension
            
-        $scope.sendTestMessage(slackUserId, message);
-           
-           
+        	$scope.sendTestMessage(slackUserId, message);
        }
    };
 

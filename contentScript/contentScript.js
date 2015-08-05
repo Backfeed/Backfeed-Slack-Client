@@ -14,14 +14,28 @@ addBidButton.setAttribute("id", "COMPOSE_ACTION_BID_BUTTON");
 $(document).on('click', "#COMPOSE_ACTION_BID_BUTTON", function() {
 	var contributionIdForThisBid = $(this).attr('data-contributionId');
 	var textContent = $(this).text();
-	if(textContent == 'BID'){
+	if (textContent == 'BID') {
 		openAddBidPage(contributionIdForThisBid);
-	}else{
+	} else {
 		openShowContributionStatusPage(contributionIdForThisBid);
 	}
-	
 });
 
+$(document).on('click', ".member_status_button", function() {
+    var memberId = $(this).siblings('.member_details').find('.member_preview_link').data('member-id');
+    openMemberStatusPage(memberId);
+});
+
+function openMemberStatusPage(memberId) {
+    chrome.runtime.sendMessage({
+        message : {
+            "gesture": 'openMemberStatusPage',
+            "options": memberId
+        }
+    }, function(response) {
+        console.log('Here in the callback from member status page');
+    });
+}
 
 function openAddContributionPage() {
 	chrome.runtime.sendMessage({
@@ -87,8 +101,8 @@ function showIframe() {
 function hideIframe(options) {
 	console.log('hiding iframe'+options);
 	iframe.style.display = "none";
-	if(options != undefined && options != ''){
-		$( "span[data-contributionId*="+options+"]" ).text("STATUS");
+	if (options != undefined && options != '') {
+		$("span[data-contributionId*="+options+"]").text("STATUS");
 	}
 }
 
@@ -100,8 +114,9 @@ function showAlert(options) {
 	});
 }
 
+
 /**
- * DOM Mutation Observers Callbacks
+ * START: DOM Mutation Observers Callbacks :START
  */
 
 function onTeamMembersListObservation(mutations) {
@@ -109,7 +124,7 @@ function onTeamMembersListObservation(mutations) {
 	if (mutations[0].attributeName == 'class' && teamDirectory.classList.contains('active')) {
 		if (!document.getElementById('member_preview_container').classList.contains('hidden')) {
 			var $memberContainer = $('#member_preview_scroller');
-			$memberContainer.append('<div class="top_margin user_status_button"><a class="member_action_button btn btn_outline">Collaborative Overview</a></div>')
+			$memberContainer.append('<div class="top_margin member_status_button"><a class="member_action_button btn btn_outline">Collaborative Overview</a></div>')
 		} else {
 			$('.team_list_item').each(function(i, teamItem) {
 				singleTeamMemberObserver.observe(teamItem, {attributes: true, attributeFilter: ['class']});
@@ -121,11 +136,11 @@ function onTeamMembersListObservation(mutations) {
 function onSingleTeamMemberObservation(mutations) {
 	var teamMember = mutations[0].target;
 	if (teamMember.classList.contains('expanded')) {
-		if ($(teamMember).find('.user_status_button').length == 0) {
-			$(teamMember).append('<div class="top_margin user_status_button"><a class="member_action_button btn btn_outline">Collaborative Overview</a></div>')
+		if ($(teamMember).find('.member_status_button').length == 0) {
+			$(teamMember).append('<div class="top_margin member_status_button"><a class="member_action_button btn btn_outline">Collaborative Overview</a></div>')
 		}
 	} else {
-		$(teamMember).find('.user_status_button').remove();
+		$(teamMember).find('.member_status_button').remove();
 	}
 }
 
@@ -217,8 +232,7 @@ function onAddBidObservation(mutations) {
 							var contributionId = spanText.substring(5,spanText.indexOf("<br>"));
 							var lengthOfText = removalText.length;
 							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length+4), "");
-							$( '.message_content', $(message)).html (originalText);
-
+							$( '.message_content', $(message)).html(originalText);
 						}
 					}
 				});

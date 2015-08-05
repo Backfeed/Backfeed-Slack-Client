@@ -8,23 +8,6 @@ iframe {
 	z-index: 1000;
 }
 
-/*#COMPOSE_ACTION_BID_BUTTON {
-	height: 30px;
-	padding: 5px 0;
-	border: 0;
-	min-width: 50px;
-	float: right;
-	background: rgb(84, 84, 84);
-	border-radius: 3px;
-	line-height: initial;
-}
-
-#COMPOSE_ACTION_BID_BUTTON:before{
-	content: "BID";
-	color: rgb(237, 237, 237);
-	font-size: 12px;
-}*/
-
 #COMPOSE_ACTION_BID_BUTTON {
 	display: inline;
 	padding: .2em .6em .3em;
@@ -40,11 +23,11 @@ iframe {
 	cursor: pointer;
 }
 
-#member_preview_scroller .user_status_button a {
+#member_preview_scroller .member_status_button a {
 	width: 99% !important;
 	max-width: initial !important;
 }
-#client-ui #team_list .user_status_button .member_action_button {
+#client-ui #team_list .member_status_button .member_action_button {
 	width: 100% !important;
 	max-width: initial !important;
 }

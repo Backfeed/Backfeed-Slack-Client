@@ -18,8 +18,13 @@ angular.module('MyApp').controller('MainCtrl', ["$scope", "$state","PostMessageS
 	}
 	
 	function goToContributionStatus(contributionId) {
-		console.log('Starting showing status: '+contributionId);
+		console.log('Starting showing contribution status: '+contributionId);
 		$state.go('contributionStatus', {'contributionId': contributionId}, {reload: true});
+	}
+
+	function goToMemberStatus(memberId) {
+		console.log('Starting showing member status: '+memberId);
+		$state.go('memberStatus', {'memberId': memberId}, {reload: true});
 	}
 	
 	function showAlert() {
@@ -37,8 +42,9 @@ angular.module('MyApp').controller('MainCtrl', ["$scope", "$state","PostMessageS
 		"openAddContributionPage": goToAddContribution,
 		"openAddBidPage": goToAddBid,
 		"showAlertFromMainCtr": showAlert,
-		"openContributionStatusPage":goToContributionStatus,
-		"logout":logout
+		"openContributionStatusPage": goToContributionStatus,
+		"openMemberStatusPage": goToMemberStatus,
+		"logout": logout
 	};
 
 	console.log('MainCtrl init');

@@ -28,8 +28,13 @@ myApp.config(function($stateProvider, $urlRouterProvider, $authProvider) {
         })
         .state('contributionStatus', {
             url: '/contributionStatus/:contributionId',
-            templateUrl: chrome.extension.getURL("contentScript/app/components/contribution/contributionStatus.html"),
+            templateUrl: chrome.extension.getURL("contentScript/app/components/contributionStatus/contributionStatus.html"),
             controller: 'ContributionStatusCtrl'
+        })
+        .state('memberStatus', {
+            url: '/memberStatus/:memberId',
+            templateUrl: chrome.extension.getURL("contentScript/app/components/memberStatus/memberStatus.html"),
+            controller: 'MemberStatusCtrl'
         })
         .state('contributions', {
             url: '/contributions',
