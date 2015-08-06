@@ -68,7 +68,7 @@ angular.module('MyApp').controller(
  							sliderSpanElement = angular.element('#slider'+$scope.model.contributers[0].contributer_id+" span");
  							sliderSpanElement.removeClass('ui-slider-handle-show');
  							sliderSpanElement.addClass('ui-slider-handle-show');
- 							$scope.model.contributers[0].className = "media contributer-cell activeContributer";
+ 							$scope.model.contributers[0].className = "media contributer-cell active-contributer";
                             
                             continue;
                         }
@@ -98,7 +98,7 @@ angular.module('MyApp').controller(
 						sliderSpanElement = angular.element('#slider'+$scope.model.contributers[0].contributer_id+" span");
 						sliderSpanElement.removeClass('ui-slider-handle-show');
 						sliderSpanElement.addClass('ui-slider-handle-show');
-						$scope.model.contributers[0].className = "media contributer-cell activeContributer";
+						$scope.model.contributers[0].className = "media contributer-cell active-contributer";
                         $scope.getOrgUsers();
                         PostMessageService.gesture.showIframe();
                     }else{
@@ -158,7 +158,7 @@ angular.module('MyApp').controller(
 					sliderSpanElement = angular.element('#slider'+$scope.model.contributers[0].contributer_id+" span");
 					sliderSpanElement.removeClass('ui-slider-handle-show');
 					sliderSpanElement.addClass('ui-slider-handle-show');
-					$scope.model.contributers[0].className = "media contributer-cell activeContributer";
+					$scope.model.contributers[0].className = "media contributer-cell active-contributer";
                     PostMessageService.gesture.showIframe();
                 }else{
                 	//navigate to create org screen
@@ -206,7 +206,7 @@ angular.module('MyApp').controller(
  					sliderSpanElement = angular.element('#slider'+selectedUserId+" span");
  					sliderSpanElement.removeClass('ui-slider-handle-show');
  					sliderSpanElement.addClass('ui-slider-handle-show');
- 					$scope.model.contributers[0].className = "media contributer-cell activeContributer";
+ 					$scope.model.contributers[0].className = "media contributer-cell active-contributer";
                 	
                 }, 100);
 
@@ -287,7 +287,7 @@ angular.module('MyApp').controller(
 	 							sliderSpanElement = angular.element('#slider'+allcontributers[i].contributer_id+" span");
 	 							sliderSpanElement.removeClass('ui-slider-handle-show');
 	 							sliderSpanElement.addClass('ui-slider-handle-show');
- 	                        	allcontributers[i].className = "media contributer-cell activeContributer";
+ 	                        	allcontributers[i].className = "media contributer-cell active-contributer";
  	                        } 					
  				}
             };
@@ -323,7 +323,7 @@ angular.module('MyApp').controller(
 	                            	sliderSpanElement = angular.element('#slider'+allcontributers[i].contributer_id+" span");
 		 							sliderSpanElement.removeClass('ui-slider-handle-show');
 		 							sliderSpanElement.addClass('ui-slider-handle-show');
-	                            	allcontributers[i].className = "media contributer-cell activeContributer";
+	                            	allcontributers[i].className = "media contributer-cell active-contributer";
 	                            }
 
 

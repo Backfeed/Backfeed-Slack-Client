@@ -54,7 +54,37 @@
   }  
 }
 
-.activeContributer {
+.member-stats {
+  display: flex;
+  justify-content: space-around;
+
+  margin-top: 2rem;
+  margin-bottom: 5rem;
+}
+
+.member-stat {
+  display: flex;
+
+  .member-stat-icon {
+    .size(40px, 40px);
+  }
+
+  .member-stat-data {
+    font-size: x-large;
+    font-weight: 100;
+
+    small {
+      font-size: 60%;
+      color: darkgray;
+    }
+  }
+}
+
+.ng-hide {
+  display: none;
+}
+
+.active-contributer {
   background-color: #edefef;
 }
 
@@ -141,18 +171,6 @@
   width:100px;
 }
 
-.userAvatar{
-  padding-right: 20px;
-
-}
-
-.userDeActivated{
-  opacity: 0.3;
-}
-
-.userActivated{
-  opacity: 1.0;
-}
 .splash-login-btn{
   margin-top:30px;
 }

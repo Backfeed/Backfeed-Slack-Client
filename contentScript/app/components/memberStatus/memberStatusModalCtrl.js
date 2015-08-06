@@ -2,21 +2,25 @@ angular.module('MyApp').controller(
 		'MemberStatusModalCtrl',
 		function($scope, $auth, $location, $stateParams, ContributionStatus,
 				Account, Users,$modalInstance,PostMessageService) {
-			$scope.cotributionStatusModel = {
-					file:'',
-					title:'',
-					currentValuation : '',
-					myWeight : '',
-					myValuation : '',
-					reputationDelta : '',
-					groupWeight : '',
-					bids : [ {
-						time_created : '',
-		                tokens:'',
-		                reputation: '',
-		                contribution_value_after_bid:''
-		            } ]
-				};
+
+			$scope.memberStatusModel = {
+				file:'',
+				title:'',
+				currentValuation : '',
+				myWeight : '',
+				myValuation : '',
+				reputationDelta : '',
+				groupWeight : '',
+				bids : [ {
+					time_created : '',
+					tokens:'',
+					reputation: '',
+					contribution_value_after_bid:''
+				} ]
+			};
+
+			$scope.sortType     = 'date'; // set the default sort type
+			$scope.sortReverse  = false;  // set the default sort order
 
 	        $scope.closeModal = function() {
 	            $modalInstance.dismiss('cancel');
@@ -34,6 +38,7 @@ angular.module('MyApp').controller(
 					PostMessageService.sendGesture('showIframe');
 	        	}
 	        };
+
 			// if not authenticated return to splash:
 			if (!$auth.isAuthenticated()) {
 				$location.path('splash');
@@ -56,7 +61,7 @@ angular.module('MyApp').controller(
 					$scope.getProfile();
 				} else {
 					$scope.userId = userData.userId;
-					$scope.getContributionStatus();
+					$scope.getMemberStatus();
 				}
 				
 				

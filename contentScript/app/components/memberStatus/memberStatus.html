@@ -5,6 +5,7 @@
 </div>
 <div class="modal-body">
 	<form>
+
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="media">
@@ -14,40 +15,87 @@
 						</a>
 					</div>
 					<div class="media-body">
-						<h4 class="media-heading">Jen Stephens</h4>
+						<h2 class="media-heading">Jen Stephens</h2>
 						<span class="hashtag">#</span>Jane
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-sm-4">
 
+		<div class="member-stats">
+			<div class="member-stat">
+				<img class="member-stat-icon" alt="Contribution" src="/contentScript/app/images/contribution.png" />
+				<div>
+					<div class="member-stat-data">12</div>
+					<div>Contributions&nbsp;<img tooltip="help message" alt="help" src="/contentScript/app/images/icon_help.png"/></div>
+				</div>
 			</div>
-			<div class="col-sm-4">
-
+			<div class="member-stat">
+				<img class="member-stat-icon" alt="Tokens" src="/contentScript/app/images/tokens.png" />
+				<div>
+					<div class="member-stat-data">3400</div>
+					<div>Tokens&nbsp;<img tooltip="help message" alt="help" src="/contentScript/app/images/icon_help.png"/></div>
+				</div>
 			</div>
-			<div class="col-sm-4">
-
+			<div class="member-stat">
+				<img class="member-stat-icon" alt="Reputation" src="/contentScript/app/images/rep.png" />
+				<div>
+					<div class="member-stat-data">320&nbsp;<small>67%</small></div>
+					<div>Reputation&nbsp;<img tooltip="help message" alt="help" src="/contentScript/app/images/icon_help.png"/></div>
+				</div>
 			</div>
 		</div>
+
 		<div class="row">
 			<div class="col-sm-12">
-				<table class="table table-bordered table-hover">
+				<table class="table table-condensed table-hover">
 					<thead>
-						<tr>
-							<th>Timestamp&nbsp;<img tooltip="help message" alt="help" src="/contentScript/app/images/icon_help.png"/></th>
-							<th>Bid&nbsp;<img tooltip="help message" alt="help" src="/contentScript/app/images/icon_help.png"/></th>
-							<th>Reputation &nbsp;<img tooltip="User's reputation while bidding" alt="help" src="/contentScript/app/images/icon_help.png"/></th>
-							<th>Contribution Value&nbsp;<img tooltip="What was the value of this contribution after this bid" alt="help" src="/contentScript/app/images/icon_help.png"/></th>
-						</tr>
+					<tr>
+						<td>
+							<a href="#" ng-click="sortType = 'title'; sortReverse = !sortReverse">
+								Contribution
+								<span ng-show="sortType == 'title' && !sortReverse" class="fa fa-caret-down"></span>
+								<span ng-show="sortType == 'title' && sortReverse" class="fa fa-caret-up"></span>
+							</a>
+						</td>
+						<td>
+							<a href="#" ng-click="sortType = 'date'; sortReverse = !sortReverse">
+								Date
+								<span ng-show="sortType == 'date' && !sortReverse" class="fa fa-caret-down"></span>
+								<span ng-show="sortType == 'date' && sortReverse" class="fa fa-caret-up"></span>
+							</a>
+						</td>
+						<td>
+							<a href="#" ng-click="sortType = 'rep_percent'; sortReverse = !sortReverse">
+								Rep %
+								<span ng-show="sortType == 'rep_percent' && !sortReverse" class="fa fa-caret-down"></span>
+								<span ng-show="sortType == 'rep_percent' && sortReverse" class="fa fa-caret-up"></span>
+							</a>
+						</td>
+						<td>
+							<a href="#" ng-click="sortType = 'current_value'; sortReverse = !sortReverse">
+								Current Value
+								<span ng-show="sortType == 'current_value' && !sortReverse" class="fa fa-caret-down"></span>
+								<span ng-show="sortType == 'current_value' && sortReverse" class="fa fa-caret-up"></span>
+							</a>
+						</td>
+						<td>
+							<a href="#" ng-click="sortType = 'my_rep'; sortReverse = !sortReverse">
+								My Rep
+								<span ng-show="sortType == 'my_rep' && !sortReverse" class="fa fa-caret-down"></span>
+								<span ng-show="sortType == 'my_rep' && sortReverse" class="fa fa-caret-up"></span>
+							</a>
+						</td>
+					</tr>
 					</thead>
+
 					<tbody>
-						<tr ng-repeat="bid in cotributionStatusModel.bids">
-							<td>{{bid.time_created | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-							<td>{{bid.tokens}}</td>u
-							<td>{{bid.reputation}}</td>
-							<td>{{bid.contribution_value_after_bid}}</td>
+						<tr ng-repeat="bid in memberStatusModel.bids | orderBy:sortType:sortReverse">
+							<td>bid.contribution_name</td>
+							<td>bid.time_created</td>
+							<td>bid.reputation_percent</td>
+							<td>bid.current_value</td>
+							<td>bid.my_rep</td>
 						</tr>
 					</tbody>
 				</table>
