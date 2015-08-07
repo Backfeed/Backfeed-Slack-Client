@@ -81,6 +81,18 @@ bfAPIServices.factory('UserDetail', [ '$resource','enviornmentURL', function($re
 	});
 } ]);
 
+
+bfAPIServices.factory('MemberStatus', [ '$resource','enviornmentURL', function($resource,enviornmentURL) {
+	return $resource(enviornmentURL+'member/status/:orgId/:userId', {}, {
+		getDetail : {
+			method : 'GET',
+			params : {},
+			isArray : false
+		}
+	});
+} ]);
+
+
 bfAPIServices.factory('SaveUser', [ '$resource','enviornmentURL', function($resource,enviornmentURL) {
 	return $resource(enviornmentURL+'users', {}, {
 		save : {

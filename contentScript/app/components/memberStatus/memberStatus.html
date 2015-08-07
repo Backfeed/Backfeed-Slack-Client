@@ -11,12 +11,12 @@
 				<div class="media">
 					<div class="media-left">
 						<a href="#">
-							<img class="media-object" src="/contentScript/app/images/avatar.png" alt="" style="width: 50px;" />
+							<img class="media-object" src="{{memberStatusModel.url}}"  alt="" style="width: 50px;" />
 						</a>
 					</div>
 					<div class="media-body">
-						<h2 class="media-heading">Jen Stephens</h2>
-						<span class="hashtag">#</span>Jane
+						<h2 class="media-heading">{{memberStatusModel.fullName}}</h2>
+						<span class="hashtag">#</span>{{memberStatusModel.name}}
 					</div>
 				</div>
 			</div>
@@ -26,21 +26,21 @@
 			<div class="member-stat">
 				<img class="member-stat-icon" alt="Contribution" src="/contentScript/app/images/contribution.png" />
 				<div>
-					<div class="member-stat-data">12</div>
+					<div class="member-stat-data">{{memberStatusModel.contributionLength}}</div>
 					<div>Contributions&nbsp;<img tooltip="help message" alt="help" src="/contentScript/app/images/icon_help.png"/></div>
 				</div>
 			</div>
 			<div class="member-stat">
 				<img class="member-stat-icon" alt="Tokens" src="/contentScript/app/images/tokens.png" />
 				<div>
-					<div class="member-stat-data">3400</div>
+					<div class="member-stat-data">{{memberStatusModel.org_tokens}}</div>
 					<div>Tokens&nbsp;<img tooltip="help message" alt="help" src="/contentScript/app/images/icon_help.png"/></div>
 				</div>
 			</div>
 			<div class="member-stat">
 				<img class="member-stat-icon" alt="Reputation" src="/contentScript/app/images/rep.png" />
 				<div>
-					<div class="member-stat-data">320&nbsp;<small>67%</small></div>
+					<div class="member-stat-data">{{memberStatusModel.org_reputation}}&nbsp;<small>{{memberStatusModel.reputationPercentage}}%</small></div>
 					<div>Reputation&nbsp;<img tooltip="help message" alt="help" src="/contentScript/app/images/icon_help.png"/></div>
 				</div>
 			</div>
@@ -59,43 +59,43 @@
 							</a>
 						</td>
 						<td>
-							<a href="#" ng-click="sortType = 'date'; sortReverse = !sortReverse">
+							<a href="#" ng-click="sortType = 'cTime'; sortReverse = !sortReverse">
 								Date
-								<span ng-show="sortType == 'date' && !sortReverse" class="fa fa-caret-down"></span>
-								<span ng-show="sortType == 'date' && sortReverse" class="fa fa-caret-up"></span>
+								<span ng-show="sortType == 'cTime' && !sortReverse" class="fa fa-caret-down"></span>
+								<span ng-show="sortType == 'cTime' && sortReverse" class="fa fa-caret-up"></span>
 							</a>
 						</td>
 						<td>
-							<a href="#" ng-click="sortType = 'rep_percent'; sortReverse = !sortReverse">
+							<a href="#" ng-click="sortType = 'myWeight'; sortReverse = !sortReverse">
 								Rep %
-								<span ng-show="sortType == 'rep_percent' && !sortReverse" class="fa fa-caret-down"></span>
-								<span ng-show="sortType == 'rep_percent' && sortReverse" class="fa fa-caret-up"></span>
+								<span ng-show="sortType == 'myWeight' && !sortReverse" class="fa fa-caret-down"></span>
+								<span ng-show="sortType == 'myWeight' && sortReverse" class="fa fa-caret-up"></span>
 							</a>
 						</td>
 						<td>
-							<a href="#" ng-click="sortType = 'current_value'; sortReverse = !sortReverse">
+							<a href="#" ng-click="sortType = 'currentValuation'; sortReverse = !sortReverse">
 								Current Value
-								<span ng-show="sortType == 'current_value' && !sortReverse" class="fa fa-caret-down"></span>
-								<span ng-show="sortType == 'current_value' && sortReverse" class="fa fa-caret-up"></span>
+								<span ng-show="sortType == 'currentValuation' && !sortReverse" class="fa fa-caret-down"></span>
+								<span ng-show="sortType == 'currentValuation' && sortReverse" class="fa fa-caret-up"></span>
 							</a>
 						</td>
 						<td>
-							<a href="#" ng-click="sortType = 'my_rep'; sortReverse = !sortReverse">
+							<a href="#" ng-click="sortType = 'reputationDelta'; sortReverse = !sortReverse">
 								My Rep
-								<span ng-show="sortType == 'my_rep' && !sortReverse" class="fa fa-caret-down"></span>
-								<span ng-show="sortType == 'my_rep' && sortReverse" class="fa fa-caret-up"></span>
+								<span ng-show="sortType == 'reputationDelta' && !sortReverse" class="fa fa-caret-down"></span>
+								<span ng-show="sortType == 'reputationDelta' && sortReverse" class="fa fa-caret-up"></span>
 							</a>
 						</td>
 					</tr>
 					</thead>
 
 					<tbody>
-						<tr ng-repeat="bid in memberStatusModel.bids | orderBy:sortType:sortReverse">
-							<td>bid.contribution_name</td>
-							<td>bid.time_created</td>
-							<td>bid.reputation_percent</td>
-							<td>bid.current_value</td>
-							<td>bid.my_rep</td>
+						<tr ng-repeat="contribution in memberStatusModel.contributions | orderBy:sortType:sortReverse">
+							<td>{{contribution.title}}</td>
+							<td>{{contribution.cTime}}</td>
+							<td>{{contribution.myWeight}}</td>
+							<td>{{contribution.currentValuation}}</td>
+							<td>{{contribution.reputationDelta}}</td>
 						</tr>
 					</tbody>
 				</table>

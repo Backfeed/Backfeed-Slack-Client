@@ -1,21 +1,22 @@
 angular.module('MyApp').controller(
 		'MemberStatusModalCtrl',
-		function($scope, $auth, $location, $stateParams, ContributionStatus,
+		function($scope, $auth, $location, $stateParams, MemberStatus,
 				Account, Users,$modalInstance,PostMessageService) {
 
 			$scope.memberStatusModel = {
-				file:'',
-				title:'',
-				currentValuation : '',
-				myWeight : '',
-				myValuation : '',
-				reputationDelta : '',
-				groupWeight : '',
-				bids : [ {
-					time_created : '',
-					tokens:'',
-					reputation: '',
-					contribution_value_after_bid:''
+				org_tokens:'',
+				org_reputation:'',
+				contributionLength : '',
+				url : '',
+				fullName : '',
+				name : '',
+				reputationPercentage : '',
+				contributions : [ {
+					currentValuation : '',
+					reputationDelta:'',
+					myWeight: '',
+					title:'',
+					cTime: ''
 				} ]
 			};
 
@@ -28,13 +29,13 @@ angular.module('MyApp').controller(
 	        
 	        $scope.getMemberStatus = function(){
 	        	if ($scope.memberId && $scope.memberId != 0) {
-					//$scope.contributionStatus = ContributionStatus.getDetail({
-					//	id: $scope.contributionId,
-					//	userId: $scope.userId
-					//});
-					//$scope.contributionStatus.$promise.then(function(result) {
-					//	$scope.cotributionStatusModel = result;
-					//});
+					$scope.memberStatus = MemberStatus.getDetail({
+						orgId: $scope.orgId,
+						userId: $scope.memberId
+					});
+					$scope.memberStatus.$promise.then(function(result) {
+						$scope.memberStatusModel = result;
+					});
 					PostMessageService.sendGesture('showIframe');
 	        	}
 	        };
@@ -47,6 +48,7 @@ angular.module('MyApp').controller(
 				$scope.getProfile = function() {
 					Account.getProfile().success(function(data) {
 						$scope.userId = data.userId;
+						$scope.orgId= data.orgId;
 						Account.setUserData(data);
 						$scope.getMemberStatus();
 
@@ -61,6 +63,7 @@ angular.module('MyApp').controller(
 					$scope.getProfile();
 				} else {
 					$scope.userId = userData.userId;
+					$scope.orgId= userData.orgId;
 					$scope.getMemberStatus();
 				}
 				
