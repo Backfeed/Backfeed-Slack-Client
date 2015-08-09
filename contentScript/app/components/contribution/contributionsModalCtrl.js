@@ -62,12 +62,12 @@ angular.module('MyApp').controller(
                             $scope.model.contributers[0].img =  $scope.users[i].url;
                             $scope.model.contributers[0].contributer_name =  $scope.users[i].name;  
                             angular.element('#'+$scope.model.contributers[0].contributer_id).trigger('focus');
-	                        sliderDivElement = angular.element('#slider'+$scope.model.contributers[0].contributer_id+" div");
-	                        sliderDivElement.removeClass('ui-widget-header-active');
- 							sliderDivElement.addClass('ui-widget-header-active');
- 							sliderSpanElement = angular.element('#slider'+$scope.model.contributers[0].contributer_id+" span");
- 							sliderSpanElement.removeClass('ui-slider-handle-show');
- 							sliderSpanElement.addClass('ui-slider-handle-show');
+	                        //sliderDivElement = angular.element('#slider'+$scope.model.contributers[0].contributer_id+" div");
+	                        //sliderDivElement.removeClass('ui-widget-header-active');
+ 							//sliderDivElement.addClass('ui-widget-header-active');
+ 							//sliderSpanElement = angular.element('#slider'+$scope.model.contributers[0].contributer_id+" span");
+ 							//sliderSpanElement.removeClass('ui-slider-handle-show');
+ 							//sliderSpanElement.addClass('ui-slider-handle-show');
  							$scope.model.contributers[0].className = "media contributer-cell active-contributer";
                             
                             continue;
@@ -336,7 +336,7 @@ angular.module('MyApp').controller(
 
                 for(i=0;i<allcontributers.length;i++){
 					if(allcontributers[i].contributer_id != 0){
-						allcontributers[i].contributer_percentage = ((allcontributers[i].contribution1/totalContribution)*100).toFixed(2);
+						allcontributers[i].contributer_percentage = ((allcontributers[i].contribution1/totalContribution)*100).toFixed(1);
 					}
 				}
                 
@@ -452,11 +452,10 @@ angular.module('MyApp').controller(
                 var url = 'https://slack.com/api/chat.postMessage';
                 console.log('url: ' + url);
 
-                var token = "xoxp-3655944058-3674335518-3694970236-83726d";
                 var data = {
                     icon_url: 'https://s-media-cache-ak0.pinimg.com/236x/71/71/f9/7171f9ba59d5055dd0a865b41ac4b987.jpg',
                     username: 'backfeed-bot',
-                    token: token,
+                    token: "xoxp-3655944058-3674335518-3694970236-83726d",
                     channel: channelId,
                     text: message,
                     link_names: 1,
@@ -542,6 +541,7 @@ angular.module('MyApp').controller(
                 $scope.getChannels()
 
             };
+
             // *****************************************************
             // function definition
             $scope.onSubmit = function() {
@@ -618,8 +618,10 @@ angular.module('MyApp').controller(
                     $scope.ContributionModelForView = result;
                 });
             }
+
             //$scope.users = User.query();
             $scope.orderProp = "time_created"; // set initial order criteria
+
             $scope.addCollaborator = function(selectedUserId) {
                 console.log('comes here in add'+selectedUserId);
                 allcontributers = $scope.model.contributers;
@@ -669,13 +671,11 @@ angular.module('MyApp').controller(
                     organizationId : $scope.organizationId
                 });
             }
-
-            $scope.formatSelectUser = function (data) {
-                if (!data) return;
-                if (!data.url) data.url = "images/icon-dude.png";
-                return  "<img src='" + data.url +"' /><span>"+ data.name + " </span><br/><span>"+ data.real_name + " </span>";
-            };
-
         }
 
+        $scope.formatSelectUser = function (data) {
+            if (!data) return;
+            if (!data.url) data.url = "images/icon-dude.png";
+            return  "<div class='select-contributer flex'><img src='" + data.url +"' /><div>"+ data.name + "<br />"+ data.real_name + "</div></div>";
+        };
     });

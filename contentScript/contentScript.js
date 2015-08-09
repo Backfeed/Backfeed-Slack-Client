@@ -124,7 +124,7 @@ function onTeamMembersListObservation(mutations) {
 	if (mutations[0].attributeName == 'class' && teamDirectory.classList.contains('active')) {
 		if (!document.getElementById('member_preview_container').classList.contains('hidden')) {
 			var $memberContainer = $('#member_preview_scroller');
-			$memberContainer.append('<div class="top_margin member_status_button"><a class="member_action_button btn btn_outline">Collaborative Overview</a></div>')
+			$memberContainer.append('<div class="top_margin member_status_button"><a class="member_action_button btn btn_outline">Collaborator Overview</a></div>')
 		} else {
 			$('.team_list_item').each(function(i, teamItem) {
 				singleTeamMemberObserver.observe(teamItem, {attributes: true, attributeFilter: ['class']});
@@ -137,7 +137,7 @@ function onSingleTeamMemberObservation(mutations) {
 	var teamMember = mutations[0].target;
 	if (teamMember.classList.contains('expanded')) {
 		if ($(teamMember).find('.member_status_button').length == 0) {
-			$(teamMember).append('<div class="top_margin member_status_button"><a class="member_action_button btn btn_outline">Collaborative Overview</a></div>')
+			$(teamMember).append('<div class="top_margin member_status_button"><a class="member_action_button btn btn_outline">Collaborator Overview</a></div>')
 		}
 	} else {
 		$(teamMember).find('.member_status_button').remove();

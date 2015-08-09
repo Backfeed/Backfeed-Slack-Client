@@ -51,9 +51,8 @@ angular.module('MyApp').controller(
 						$scope.orgId= data.orgId;
 						Account.setUserData(data);
 						$scope.getMemberStatus();
-
 					}).error(function(error) {
-						PostMessageService.gesture.showAlert(error.message, 'error');
+						PostMessageService.gesture.showAlert('Please relogin', 'error');
 					});
 				};
 

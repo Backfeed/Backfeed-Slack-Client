@@ -1,7 +1,7 @@
 <script type="text/ng-template" id="MemberStatusModalTmpl">
 <div class="modal-header">
 	<img alt="Close modal" class="close" src="/contentScript/app/images/close_x.png" ng-click="closeModal()" />
-	<h4 class="modal-title">Your Stats</h4>
+	<h4 class="modal-title">your stats</h4>
 </div>
 <div class="modal-body">
 	<form>
@@ -11,12 +11,21 @@
 				<div class="media">
 					<div class="media-left">
 						<a href="#">
-							<img class="media-object" src="{{memberStatusModel.url}}"  alt="" style="width: 50px;" />
+							<img class="media-object img-circle" src="{{memberStatusModel.url}}"  alt="" style="width: 50px;" />
 						</a>
 					</div>
 					<div class="media-body">
-						<h2 class="media-heading">{{memberStatusModel.fullName}}</h2>
-						<span class="hashtag">#</span>{{memberStatusModel.name}}
+						<h1 class="member-name media-heading">{{memberStatusModel.fullName}}</h1>
+						<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 17.6 17.6" enable-background="new 0 0 17.6 17.6" xml:space="preserve" width="18px">
+							<path fill="#231F20" d="M8.3,17.6c-0.6,0-1.1-0.4-1.3-0.9L2.5,3.7C2.3,3,2.7,2.2,3.4,2c0.7-0.3,1.5,0.1,1.8,0.9l4.5,12.9
+								c0.3,0.7-0.1,1.5-0.9,1.8C8.6,17.6,8.5,17.6,8.3,17.6z"></path>
+							<path fill="#231F20" d="M13.7,15.7c-0.6,0-1.1-0.4-1.3-0.9L8,1.8C7.7,1.1,8.1,0.3,8.8,0.1c0.7-0.3,1.5,0.1,1.8,0.9l4.5,12.9
+								c0.3,0.7-0.1,1.5-0.9,1.8C14.1,15.7,13.9,15.7,13.7,15.7z"></path>
+							<path fill="#231F20" d="M3.3,15.1c-0.6,0-1.1-0.4-1.3-0.9c-0.3-0.7,0.1-1.5,0.9-1.8L15.7,8c0.7-0.3,1.5,0.1,1.8,0.9
+								s-0.1,1.5-0.9,1.8L3.7,15.1C3.6,15.1,3.4,15.1,3.3,15.1z"></path>
+							<path fill="#231F20" d="M1.4,9.7c-0.6,0-1.1-0.4-1.3-0.9C-0.2,8,0.2,7.3,0.9,7l12.9-4.5c0.7-0.3,1.5,0.1,1.8,0.9
+								c0.3,0.7-0.1,1.5-0.9,1.8L1.8,9.6C1.7,9.7,1.5,9.7,1.4,9.7z"></path>
+						</svg><span class="member-username">&nbsp;{{memberStatusModel.name}}</span>
 					</div>
 				</div>
 			</div>
@@ -25,23 +34,23 @@
 		<div class="member-stats">
 			<div class="member-stat">
 				<img class="member-stat-icon" alt="Contribution" src="/contentScript/app/images/contribution.png" />
-				<div>
-					<div class="member-stat-data">{{memberStatusModel.contributionLength}}</div>
-					<div>Contributions&nbsp;<img tooltip="help message" alt="help" src="/contentScript/app/images/icon_help.png"/></div>
+				<div class="member-stat-item">
+					<div class="member-stat-data">{{memberStatusModel.contributionLength | number:0}}</div>
+					<div class="member-stat-label">Contributions&nbsp;<img tooltip="help message" alt="help" src="/contentScript/app/images/icon_help.png"/></div>
 				</div>
 			</div>
 			<div class="member-stat">
 				<img class="member-stat-icon" alt="Tokens" src="/contentScript/app/images/tokens.png" />
-				<div>
-					<div class="member-stat-data">{{memberStatusModel.org_tokens}}</div>
-					<div>Tokens&nbsp;<img tooltip="help message" alt="help" src="/contentScript/app/images/icon_help.png"/></div>
+				<div class="member-stat-item">
+					<div class="member-stat-data">{{memberStatusModel.org_tokens | number:0}}</div>
+					<div class="member-stat-label">Tokens&nbsp;<img tooltip="help message" alt="help" src="/contentScript/app/images/icon_help.png"/></div>
 				</div>
 			</div>
 			<div class="member-stat">
 				<img class="member-stat-icon" alt="Reputation" src="/contentScript/app/images/rep.png" />
-				<div>
-					<div class="member-stat-data">{{memberStatusModel.org_reputation}}&nbsp;<small>{{memberStatusModel.reputationPercentage}}%</small></div>
-					<div>Reputation&nbsp;<img tooltip="help message" alt="help" src="/contentScript/app/images/icon_help.png"/></div>
+				<div class="member-stat-item">
+					<div class="member-stat-data">{{memberStatusModel.org_reputation | number:0}}&nbsp;<small>{{memberStatusModel.reputationPercentage | number:0}}%</small></div>
+					<div class="member-stat-label">Reputation&nbsp;<img tooltip="help message" alt="help" src="/contentScript/app/images/icon_help.png"/></div>
 				</div>
 			</div>
 		</div>
@@ -52,35 +61,35 @@
 					<thead>
 					<tr>
 						<td>
-							<a href="#" ng-click="sortType = 'title'; sortReverse = !sortReverse">
+							<a class="table-column-title" href="#" ng-click="sortType = 'title'; sortReverse = !sortReverse">
 								Contribution
 								<span ng-show="sortType == 'title' && !sortReverse" class="fa fa-caret-down"></span>
 								<span ng-show="sortType == 'title' && sortReverse" class="fa fa-caret-up"></span>
 							</a>
 						</td>
 						<td>
-							<a href="#" ng-click="sortType = 'cTime'; sortReverse = !sortReverse">
+							<a class="table-column-title" href="#" ng-click="sortType = 'cTime'; sortReverse = !sortReverse">
 								Date
 								<span ng-show="sortType == 'cTime' && !sortReverse" class="fa fa-caret-down"></span>
 								<span ng-show="sortType == 'cTime' && sortReverse" class="fa fa-caret-up"></span>
 							</a>
 						</td>
 						<td>
-							<a href="#" ng-click="sortType = 'myWeight'; sortReverse = !sortReverse">
+							<a class="table-column-title" href="#" ng-click="sortType = 'myWeight'; sortReverse = !sortReverse">
 								Rep %
 								<span ng-show="sortType == 'myWeight' && !sortReverse" class="fa fa-caret-down"></span>
 								<span ng-show="sortType == 'myWeight' && sortReverse" class="fa fa-caret-up"></span>
 							</a>
 						</td>
 						<td>
-							<a href="#" ng-click="sortType = 'currentValuation'; sortReverse = !sortReverse">
+							<a class="table-column-title" href="#" ng-click="sortType = 'currentValuation'; sortReverse = !sortReverse">
 								Current Value
 								<span ng-show="sortType == 'currentValuation' && !sortReverse" class="fa fa-caret-down"></span>
 								<span ng-show="sortType == 'currentValuation' && sortReverse" class="fa fa-caret-up"></span>
 							</a>
 						</td>
 						<td>
-							<a href="#" ng-click="sortType = 'reputationDelta'; sortReverse = !sortReverse">
+							<a class="table-column-title" href="#" ng-click="sortType = 'reputationDelta'; sortReverse = !sortReverse">
 								My Rep
 								<span ng-show="sortType == 'reputationDelta' && !sortReverse" class="fa fa-caret-down"></span>
 								<span ng-show="sortType == 'reputationDelta' && sortReverse" class="fa fa-caret-up"></span>
