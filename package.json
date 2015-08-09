@@ -1,11 +1,12 @@
 {
-  "name": "BF-Extension-Angular-App",
+  "name": "BF-Slack-Extension",
   "version": "1.0.0",
   "description": "",
-  "main": "index.html",
+  "main": "extension/contentScript/app/index.html",
   "author": "Backfeed",
   "license": "ISC",
   "devDependencies": {
+    "crx": "^3.0.3",
     "del": "^1.2.0",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^2.3.1",

@@ -1,0 +1,95 @@
+<script type="text/ng-template" id="ContributionsModalTmpl">
+	<div class="modal-header">
+		<img alt="Close modal" class="close-modal" src="/extension/contentScript/app/images/close_x.png" ng-click="closeModal()" />
+	</div>
+
+	<div class="modal-body">
+		<form>
+
+			<div class="row">
+
+				<div class="col-sm-6">
+
+					<h2 id="createContributionModalTitle">New Value <img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png"/></h2>
+
+					<div class="form-group">
+						<input type="text"
+							   class="form-control"
+							   id="title"
+							   required
+							   placeholder="Name of the new value"
+							   ng-model="model.title"/>
+						<label>Title</label>
+					</div>
+
+					<div class="form-group">
+						<textarea class="form-control"
+								  id="content"
+								  required
+								  rows="5"
+								  placeholder="tell us more..."
+								  ng-model="model.file"></textarea>
+						<label>Content</label>
+					</div>
+
+				</div>
+
+				<div class="col-sm-6">
+					<h2>Contributors <img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png"/></h2>
+
+					<ul class="media-list">
+						<li ng-repeat="contributer in model.contributers" class="{{contributer.className}}" ng-click="clickContributer(contributer.contributer_id)">
+							<div class="media-left media-middle">
+								<a href="#">
+									<img class="media-object" ng-src="{{contributer.img}}" alt=""/>
+								</a>
+							</div>
+
+							<div class="media-body">
+								<h4 class="media-heading">{{contributer.contributer_name}}</h4>
+								<p>{{contributer.contributer_fullname}}</p>
+							</div>
+
+							<div class="media-right media-middle">
+								<span id="{{contributer.contributer_id}}"
+									  ng-change="changePercentage(contributer.contributer_id,contributer.contributer_percentage)"
+									  ng-model="contributer.contributer_percentage"
+									  class="contribution-percentage"
+									  contenteditable>{{contributer.contributer_percentage | number:0}}</span>%
+								<button type="submit" class="icon-button" aria-label="Left Align" ng-click='removeCollaboratorItem(contributer.contributer_id,$index)'>
+									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+								</button>
+							</div>
+
+							<div id="slider{{contributer.contributer_id}}" ui-slider="rangeSlider.options"
+								 class="contribution-slider"
+								 ng-disabled ="contributer.contributer_id == '0'"
+								 ng-model="contributer.contribution1"
+								 ng-change="changeContribution(contributer.contributer_id,'')"></div>
+						</li>
+					</ul>
+
+					<ui-select style="width:96%" search-enabled="false"
+							   ng-model='selectedContributerId'
+							   ng-change="updateContributer($select.selected.id)">
+						<ui-select-match placeholder="Add Contributor"></ui-select-match>
+						<ui-select-choices repeat="user in updatedUsersList">
+							<div ng-bind-html="formatSelectUser(user)"></div>
+						</ui-select-choices>
+					</ui-select>
+
+				</div>
+
+			</div>
+
+		</form>
+	</div>
+
+	<div class="modal-footer flex">
+		<p class="lead">Adding Value is the best...</p>
+		<button type="submit"
+				class="btn btn-backfeed submit-button"
+				ng-disabled="!model.title || !model.file || buttonDisabled"
+				ng-click="onSubmit()">Add Value</button>
+	</div>
+</script>

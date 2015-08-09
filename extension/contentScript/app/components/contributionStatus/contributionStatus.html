@@ -1,0 +1,60 @@
+<script type="text/ng-template" id="ContributionStatusModalTmpl">
+<div class="modal-header">
+	<img alt="Close modal" class="close-modal" src="/extension/contentScript/app/images/close_x.png" ng-click="closeModal()" />
+</div>
+<div class="modal-body">
+	<form>
+		<div class="row">
+			<div class="col-sm-12">
+				<h2>{{cotributionStatusModel.title}}</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<legend>
+					<i class="ion-ribbon-b"></i> Current Valuation:
+					{{cotributionStatusModel.currentValuation}}
+				</legend>
+				<legend>
+					<i class="ion-chatbox-working"></i> My estimate:
+					{{cotributionStatusModel.myValuation}}
+				</legend>
+				<legend>
+					<i class="ion-arrow-graph-up-right"></i> My Rep profit/loss: {{cotributionStatusModel.reputationDelta}}
+				</legend>
+				<legend>
+					<i class="ion-mic-a"></i> My weight in the holon: {{cotributionStatusModel.myWeight}}
+				</legend>
+				<legend>
+					<i class="ion-speakerphone"></i> {{cotributionStatusModel.groupWeight}}% of the holon backfeeded this value
+				</legend>
+				<h3>{{cotributionStatusModel.file}}</h3>				
+			</div>
+			<div class="col-sm-8">
+				<table class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>Timestamp&nbsp;<img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png"/></th>
+							<th>Bid&nbsp;<img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png"/></th>
+							<th>Reputation &nbsp;<img tooltip="User's reputation while bidding" alt="help" src="/extension/contentScript/app/images/icon_help.png"/></th>
+							<th>Contribution Value&nbsp;<img tooltip="What was the value of this contribution after this bid" alt="help" src="/extension/contentScript/app/images/icon_help.png"/></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="bid in cotributionStatusModel.bids">
+							<td>{{bid.time_created | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+							<td>{{bid.tokens}}</td>
+							<td>{{bid.reputation}}</td>
+							<td>{{bid.contribution_value_after_bid}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</form>
+
+	<div class="modal-footer">
+		<div class="row"></div>		
+	</div>
+</div>
+		</script>

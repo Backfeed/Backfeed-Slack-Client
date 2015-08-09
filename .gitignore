@@ -1,3 +1,5 @@
 .idea/
 /bin/
 /config.json
+/build/
+/node_modules/

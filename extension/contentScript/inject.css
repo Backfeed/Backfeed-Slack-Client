@@ -1,0 +1,33 @@
+iframe {
+	display: none;
+	width: 100%;
+	border: 0;
+	overflow: hidden;
+	position: fixed;
+	top: 0;
+	z-index: 1000;
+}
+
+#COMPOSE_ACTION_BID_BUTTON {
+	display: inline;
+	padding: .2em .6em .3em;
+	font-size: 75%;
+	font-weight: 700;
+	line-height: 1;
+	color: #fff;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: baseline;
+	border-radius: .25em;
+	background: rgb(84, 84, 84);
+	cursor: pointer;
+}
+
+#member_preview_scroller .member_status_button a {
+	width: 99% !important;
+	max-width: initial !important;
+}
+#client-ui #team_list .member_status_button .member_action_button {
+	width: 100% !important;
+	max-width: initial !important;
+}

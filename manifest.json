@@ -1,5 +1,4 @@
 {
-	// basic info --------------------------------------------------------------
 	"name"				: "Backfeed Slack",
 	"version"			: "1.0",
 	"description"		: "Still hard to describe, but we're working on it...",
@@ -11,14 +10,16 @@
 		"128": "assets/icon128.png"
 	},
 	"background"		: {
-		"page"			: "background/background.html"
+		"page"			: "extension/background/background.html"
 	},
-	// type --------------------------------------------------------------
+
+  	"browser_action"	: "type",
 	"browser_action"	: {
 		"default_icon"	: "assets/icon128.png",
-		"default_popup" : "popup/popup.html"
+		"default_popup" : "extension/popup/popup.html"
 	},
-	// page injection --------------------------------------------------------------	
+
+	"content_scripts"	: "page injection",
 	"content_scripts"	: [{
 		"matches"			: [ "*://*.slack.com/*" ],
 		"exclude_globs"		: [ 
@@ -28,20 +29,21 @@
 			"*.mpg","*.mpeg","*.qt","*.mp4","*.m4v","*.m4a","*.mp3","*.ogv","*.ogm","*.ogg","*.oga","*.webm","*.wav",
 			"*.","*." 
 		],
-		"css"				: ["contentScript/inject.css"],
+		"css"				: ["extension/contentScript/inject.css"],
 		"js"				: [
-			"contentScript/app/vendor/scripts/jquery.js",
-			"contentScript/app/vendor/scripts/angular.js",
-			"contentScript/vendor/jquery.noty.packaged.js",
-			"contentScript/vendor/array-from.js",
-			"contentScript/composeConfig.js" ,
-			"contentScript/contentScript.js"
+			"extension/contentScript/app/vendor/scripts/jquery.js",
+			"extension/contentScript/app/vendor/scripts/angular.js",
+			"extension/contentScript/vendor/jquery.noty.packaged.js",
+			"extension/contentScript/vendor/array-from.js",
+			"extension/contentScript/composeConfig.js" ,
+			"extension/contentScript/contentScript.js"
 		],
 		"run_at" 			: "document_end"
 	}],
-	// imports & permissions --------------------------------------------------------------	
-	"web_accessible_resources"  : [ 
-		"contentScript/app/*"
+
+	"web_accessible_resources"  : "imports",
+	"web_accessible_resources"  : [
+		"extension/contentScript/app/*"
 	],	
 	"permissions"				: [ 
 		"tabs",
