@@ -22,6 +22,9 @@ $(document).on('click', 'button#OAuth', function() {
 
 $(document).on('click', '#logout', function() {
   localStorage.clear();
+  chrome.storage.sync.remove('channelId', function () {
+      console.log("remove channelId")
+  });
   chrome.runtime.sendMessage({message: 'logout'});
   //loadView();
 });

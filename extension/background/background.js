@@ -123,6 +123,11 @@ function submitToken(token) {
 	  data: params,
 	  success: function(data) {
 	       console.log('server returned, satellizer token:'+data.token);
+	       if(data.orgChannelId != ''){
+	    	   chrome.storage.sync.set({'channelId':data.orgChannelId}, function () {
+	    	        console.log("set channelId")
+	    	    });
+	       }
 		   localStorage.setItem('satellizer_token', data.token);
 			beginStream();
 	  }
