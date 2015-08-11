@@ -1,7 +1,7 @@
 angular.module('MyApp').controller(
 		'MemberStatusModalCtrl',
 		function($scope, $auth, $location, $stateParams, MemberStatus,
-				Account, Users,$modalInstance,PostMessageService) {
+				Account, Users,$modalInstance,PostMessageService,$state) {
 
 			$scope.memberStatusModel = {
 				org_tokens:'',
@@ -16,7 +16,8 @@ angular.module('MyApp').controller(
 					reputationDelta:'',
 					myWeight: '',
 					title:'',
-					cTime: ''
+					cTime: '',
+					id:''
 				} ]
 			};
 
@@ -34,11 +35,21 @@ angular.module('MyApp').controller(
 						userId: $scope.memberId
 					});
 					$scope.memberStatus.$promise.then(function(result) {
+						if($scope.memberId == $scope.slackUserId){
+							$scope.memberStatus ='Your';
+						}else{
+							$scope.memberStatus ='User';
+						}
 						$scope.memberStatusModel = result;
 					});
 					PostMessageService.sendGesture('showIframe');
 	        	}
 	        };
+	        
+	        $scope.goToStatusPage = function(contributionId){
+	        	$state.go('contributionStatus', {'contributionId': contributionId});
+	        };
+	        	        
 
 			// if not authenticated return to splash:
 			if (!$auth.isAuthenticated()) {
@@ -49,6 +60,7 @@ angular.module('MyApp').controller(
 					Account.getProfile().success(function(data) {
 						$scope.userId = data.userId;
 						$scope.orgId= data.orgId;
+						$scope.slackUserId = data.slackUserId;
 						Account.setUserData(data);
 						$scope.getMemberStatus();
 					}).error(function(error) {
@@ -63,6 +75,7 @@ angular.module('MyApp').controller(
 				} else {
 					$scope.userId = userData.userId;
 					$scope.orgId= userData.orgId;
+					$scope.slackUserId = userData.slackUserId;
 					$scope.getMemberStatus();
 				}
 				

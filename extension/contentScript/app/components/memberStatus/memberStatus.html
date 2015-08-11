@@ -1,7 +1,7 @@
 <script type="text/ng-template" id="MemberStatusModalTmpl">
 <div class="modal-header">
 	<img alt="Close modal" class="close" src="/extension/contentScript/app/images/close_x.png" ng-click="closeModal()" />
-	<h4 class="modal-title">your stats</h4>
+	<h4 class="modal-title">{{memberStatus}} stats</h4>
 </div>
 <div class="modal-body">
 	<form>
@@ -100,7 +100,7 @@
 
 					<tbody>
 						<tr ng-repeat="contribution in memberStatusModel.contributions | orderBy:sortType:sortReverse">
-							<td>{{contribution.title}}</td>
+							<td><a ng-click="goToStatusPage(contribution.id)">{{contribution.title}}</a></td>
 							<td>{{contribution.cTime}}</td>
 							<td>{{contribution.myWeight}}</td>
 							<td>{{contribution.currentValuation}}</td>
