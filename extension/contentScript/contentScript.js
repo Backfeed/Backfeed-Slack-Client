@@ -156,7 +156,7 @@ function onAddContributionObservation(nodes) {
 					var addContributionButton = menuItems.last().clone().prependTo(menuItemsList);
 					addContributionButton.removeAttr('data-which');
 					var buttonLabel = '<img src="' + chrome.extension.getURL('/extension/contentScript/app/images/icon_contribution.png') + '" />'
-						+ '  Contribute to '+$('#team_name').html();
+						+ '&nbsp;&nbsp;Submit Contribution';
 					addContributionButton.find('a').attr('href','#').html(buttonLabel);
 					addContributionButton.click(openAddContributionPage);
 

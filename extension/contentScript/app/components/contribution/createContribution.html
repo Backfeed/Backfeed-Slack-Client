@@ -10,14 +10,14 @@
 
 				<div class="col-sm-6">
 
-					<h2 id="createContributionModalTitle">New Value <img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png"/></h2>
+					<h2 id="createContributionModalTitle">New Contribution <img tooltip="In this page you submit a new contribution for the team to evaluate. You will be rewarded with tokens based on the evaluation of it." alt="help" src="/extension/contentScript/app/images/icon_help.png"/></h2>
 
 					<div class="form-group">
 						<input type="text"
 							   class="form-control"
 							   id="title"
 							   required
-							   placeholder="Name of the new value"
+							   placeholder="Name of the new contribution"
 							   ng-model="model.title"/>
 						<label>Title</label>
 					</div>
@@ -27,7 +27,7 @@
 								  id="content"
 								  required
 								  rows="5"
-								  placeholder="tell us more..."
+								  placeholder="Describe the contribution to the team. Add links to relevant resources."
 								  ng-model="model.file"></textarea>
 						<label>Content</label>
 					</div>
@@ -35,7 +35,7 @@
 				</div>
 
 				<div class="col-sm-6">
-					<h2>Contributors <img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png"/></h2>
+					<h2>Contributors <img tooltip="This is the list of people who worked together on this new effort. Their part in it will be used to distribute among them the tokens rewarded to them by the team." alt="help" src="/extension/contentScript/app/images/icon_help.png"/></h2>
 
 					<ul class="media-list">
 						<li ng-repeat="contributer in model.contributers" class="{{contributer.className}}" ng-click="clickContributer(contributer.contributer_id)">
@@ -86,10 +86,10 @@
 	</div>
 
 	<div class="modal-footer flex">
-		<p class="lead">Adding Value is the best...</p>
+		<p class="lead">Not only must justice be done; it must be seen to be done.</p>
 		<button type="submit"
 				class="btn btn-backfeed submit-button"
 				ng-disabled="!model.title || !model.file || buttonDisabled"
-				ng-click="onSubmit()">Add Value</button>
+				ng-click="onSubmit()">Add Contribution</button>
 	</div>
 </script>

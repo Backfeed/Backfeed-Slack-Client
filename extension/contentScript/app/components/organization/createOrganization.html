@@ -10,11 +10,11 @@
 
 		<div class="col-sm-6">
 			<p>Welcome {{userData.displayName}},</p>
-			<h2>Let's create a new holon</h2>
-			<p>A holon is something that is<br />simultaneously a part and a whole</p>
+			<h2>Let's create a new team</h2>
+			<p>A team is something that is<br />simultaneously a part and a whole</p>
 			<br />
 			<br />
-			<p>Your holon has its own value units.<br />How would you like to name them?</p>
+			<p>Your team has its own value units.<br />How would you like to name them?</p>
 
 			<div class="form-group">
 				<input type="text" class="form-control" id="tokenName" required
@@ -89,7 +89,7 @@
 			<button type="submit"
 				class="btn btn-backfeed submit-button center-block"
 				ng-disabled="!orgModel.token_name  || !orgModel.code || !orgModel.token || validationFailure || buttonDisabled"
-				ng-click="submit()">Create Backfeed Holon</button>
+				ng-click="submit()">Create Team</button>
 		</div>
 	</div>
 </div>
