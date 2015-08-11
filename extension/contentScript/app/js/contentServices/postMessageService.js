@@ -27,6 +27,8 @@ angular.module('MyApp').service('PostMessageService', function(Account,$state) {
 			self.sendGesture("showAlert", {message: message, type: type});
 		},windowRefresh: function(option) {
 			self.sendGesture("windowRefresh", option);
+		},setChannelId: function(channelId) {
+			self.sendGesture("setChannelId", channelId);
 		}
 	};
 

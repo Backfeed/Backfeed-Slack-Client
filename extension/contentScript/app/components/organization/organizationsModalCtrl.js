@@ -18,6 +18,7 @@ angular.module('MyApp')
         name : '',
         code : '',
         token :'',
+        channelName :'',
         contributers : [ {
             contributer_id : '0',
             contributer_percentage : '100',
@@ -480,7 +481,11 @@ angular.module('MyApp')
 										console.log($scope.orgModel)
 										$scope.data = SaveOrg.save({},$scope.orgModel);
 										$scope.data.$promise.then(function (result) {
-										
+											if(result.channelExists == 'true'){
+												PostMessageService.gesture.showAlert('Channel '+$scope.orgModel.channelName+' already exists. Please choose another', 'error');
+												return;
+											}
+											PostMessageService.gesture.setChannelId(result.channelId);
 											$scope.userData.orgId = result.organization_id;
 											$scope.userData.userOrgId = result.id;
 											$scope.userData.orgexists = "true";

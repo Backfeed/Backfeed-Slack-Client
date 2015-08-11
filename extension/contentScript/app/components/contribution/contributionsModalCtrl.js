@@ -488,13 +488,10 @@ angular.module('MyApp').controller(
 
                 // get specific channel:
                 var chnls = data.channels;
-
-                for (chnIndx in chnls){
-                    var chnl = chnls[chnIndx];
-                    console.log('chnl.name:'+chnl.name);
-
+                for (chnIndx in chnls){                
+                    var chnl = chnls[chnIndx];                   
                     // TODO removed hardcoded dependency on channel name
-                    if(chnl.name == 'contributions_test'){
+                    if(chnl.id == $scope.currentSavedContribution.channelId){
                         console.log('is random sending ...:');
 
                         var channelId = chnl.id;

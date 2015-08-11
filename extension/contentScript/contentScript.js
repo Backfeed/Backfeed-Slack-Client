@@ -89,7 +89,8 @@ var GESTURES = {
 	"showIframe": showIframe,
 	"hideIframe": hideIframe,
 	"showAlert": showAlert,
-	"windowRefresh": windowRefresh
+	"windowRefresh": windowRefresh,
+	"setChannelId":setChannelId
 };
 
 function showIframe() {
@@ -104,6 +105,13 @@ function hideIframe(options) {
 	if (options != undefined && options != '') {
 		$("span[data-contributionId*="+options+"]").text("STATUS");
 	}
+}
+
+function setChannelId(channelId) {
+	console.log("set channelId"+channelId )
+	chrome.storage.sync.set({'channelId':channelId}, function () {
+        console.log("set channelId")
+    });
 }
 
 function showAlert(options) {
@@ -168,77 +176,88 @@ function onAddContributionObservation(nodes) {
 }
 
 function onAddBidObservation(mutations) {
-	//check whether user is login slack extension
-	if (document.getElementsByClassName('channel_C06GK1Y06')[0].classList.contains('active')) {
-		// in case there is more than one mutation, use only the one with added nodes.
-		var mutationWithAddedNodes = Array.from(mutations).filter(function(mutation) {
-			return mutation.addedNodes.length > 0;
-		})[0];
-
-		// Fetch only messages sent by a bot
-		var messagesFromBot = Array.from(mutationWithAddedNodes.addedNodes).filter(function(node) {
-			return node.classList && node.classList.contains('bot_message');
-		});
-
-		chrome.runtime.sendMessage({
-			message : {
-				"gesture": 'checkUserLogin',
-				"options": {}
-			}
-		}, function(response) {
-			if (response.login == 'true') {
-				messagesFromBot.forEach(function(message) {
-					var spanElement = $( '.message_content', $(message));
-					var spanChildren = spanElement.children('#COMPOSE_ACTION_BID_BUTTON');
-					if (spanChildren.length == 0){
-						var spanText = spanElement.html();
-						var originalText = spanText;
-						var removalText = "New contribution submitted<br>";
-						var indexOfRemovalContent = spanText.indexOf(removalText);
-						if (indexOfRemovalContent > -1){
-							spanText = spanText.replace(removalText, "");
-							var contributionId = spanText.substring(5,spanText.indexOf("<br>"));
-							var lengthOfText = removalText.length;
-							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length+4), "");
-							$( '.message_content', $(message)).html (originalText);
-							var openComposeButton = document.createElement("span");
-							openComposeButton.setAttribute("data-contributionId", contributionId);
-							openComposeButton.setAttribute("id", "COMPOSE_ACTION_BID_BUTTON");
-							openComposeButton.textContent = "BID";
-							var contributionIdsVar = response.contributionIds;
-							contributionIdsVar = contributionIdsVar.substring(1, contributionIdsVar.length-1);
-							var contributionIdsVarArray = contributionIdsVar.split(",");
-							for (i = 0; i < contributionIdsVarArray.length; i++) {
-								if(contributionIdsVarArray[i].trim() == contributionId){
-									openComposeButton.textContent = "STATUS";
+	var channelId = '';
+	chrome.storage.sync.get('channelId', function (response) {
+		channelId = response.channelId;
+		if(channelId != undefined){
+			  console.log("channelId is "+channelId)
+		        var channelClassName = 'channel_'+channelId;
+		        //check whether user is login slack extension
+				if (document.getElementsByClassName(channelClassName)[0].classList.contains('active')) {
+					// in case there is more than one mutation, use only the one with added nodes.
+					var mutationWithAddedNodes = Array.from(mutations).filter(function(mutation) {
+						return mutation.addedNodes.length > 0;
+					})[0];
+			
+					// Fetch only messages sent by a bot
+					var messagesFromBot = Array.from(mutationWithAddedNodes.addedNodes).filter(function(node) {
+						return node.classList && node.classList.contains('bot_message');
+					});
+					console.log('comes her ein12')
+					chrome.runtime.sendMessage({
+						message : {
+							"gesture": 'checkUserLogin',
+							"options": {}
+						}
+					}, function(response) {
+						console.log('comes her ein')
+						if (response.login == 'true') {
+							messagesFromBot.forEach(function(message) {
+								var spanElement = $( '.message_content', $(message));
+								var spanChildren = spanElement.children('#COMPOSE_ACTION_BID_BUTTON');
+								if (spanChildren.length == 0){
+									var spanText = spanElement.html();
+									var originalText = spanText;
+									var removalText = "New contribution submitted<br>";
+									var indexOfRemovalContent = spanText.indexOf(removalText);
+									if (indexOfRemovalContent > -1){
+										spanText = spanText.replace(removalText, "");
+										var contributionId = spanText.substring(5,spanText.indexOf("<br>"));
+										var lengthOfText = removalText.length;
+										originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length+4), "");
+										$( '.message_content', $(message)).html (originalText);
+										var openComposeButton = document.createElement("span");
+										openComposeButton.setAttribute("data-contributionId", contributionId);
+										openComposeButton.setAttribute("id", "COMPOSE_ACTION_BID_BUTTON");
+										openComposeButton.textContent = "BID";
+										var contributionIdsVar = response.contributionIds;
+										contributionIdsVar = contributionIdsVar.substring(1, contributionIdsVar.length-1);
+										var contributionIdsVarArray = contributionIdsVar.split(",");
+										for (i = 0; i < contributionIdsVarArray.length; i++) {
+											if(contributionIdsVarArray[i].trim() == contributionId){
+												openComposeButton.textContent = "STATUS";
+											}
+										}
+										$(openComposeButton).insertBefore(spanElement);
+									}
 								}
-							}
-							$(openComposeButton).insertBefore(spanElement);
+							});
+			
+						} else {
+							messagesFromBot.forEach(function(message) {
+								var spanElement = $( '.message_content', $(message));
+								var spanChildren = spanElement.children('#COMPOSE_ACTION_BID_BUTTON');
+								if (spanChildren.length == 0){
+									var spanText = spanElement.html();
+									var originalText = spanText;
+									var removalText = "New contribution submitted<br>";
+									var indexOfRemovalContent = spanText.indexOf(removalText);
+									if (indexOfRemovalContent > -1){
+										spanText = spanText.replace(removalText, "");
+										var contributionId = spanText.substring(5,spanText.indexOf("<br>"));
+										var lengthOfText = removalText.length;
+										originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length+4), "");
+										$( '.message_content', $(message)).html(originalText);
+									}
+								}
+							});
 						}
-					}
-				});
-
-			} else {
-				messagesFromBot.forEach(function(message) {
-					var spanElement = $( '.message_content', $(message));
-					var spanChildren = spanElement.children('#COMPOSE_ACTION_BID_BUTTON');
-					if (spanChildren.length == 0){
-						var spanText = spanElement.html();
-						var originalText = spanText;
-						var removalText = "New contribution submitted<br>";
-						var indexOfRemovalContent = spanText.indexOf(removalText);
-						if (indexOfRemovalContent > -1){
-							spanText = spanText.replace(removalText, "");
-							var contributionId = spanText.substring(5,spanText.indexOf("<br>"));
-							var lengthOfText = removalText.length;
-							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length+4), "");
-							$( '.message_content', $(message)).html(originalText);
-						}
-					}
-				});
-			}
-		});
-	}
+					});
+				}
+		}
+      
+    });
+	
 }
 
 /**
