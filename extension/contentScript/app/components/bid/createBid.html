@@ -9,7 +9,7 @@
 			<div class="row">
 				<div class="col-sm-12">
 					<h2>It's Backfeeding Time!</h2>
-					<h6 id="createBidModalTitle">How many {{tokenName}} does "{{title}}" worth to the tea?</h6>
+					<h6 id="createBidModalTitle">How many {{tokenName}} does "{{title}}" worth to the team?</h6>
 				</div>
 			</div>
 
@@ -32,12 +32,13 @@
 			</div>
 
 		</form>
+		<p class="lead">Once submitting your evaluation you will not be able to change it.</p>
 	</div>
 
-	<div class="modal-footer flex">
-		<p class="lead">Once submitting your evaluation you will not be able to change it.</p>
+	<div class="modal-footer">
+
 		<button type="submit"
-				class="btn btn-backfeed submit-button"
+				class="btn btn-backfeed submit-button center-block"
 				ng-disabled="!bid.tokens || !validationPass"
 				ng-click="submit()">EVALUATE</button>
 	</div>

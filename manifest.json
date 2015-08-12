@@ -1,7 +1,7 @@
 {
-	"name"				: "Backfeed Slack",
-	"version"			: "1.0",
-	"description"		: "Still hard to describe, but we're working on it...",
+	"name"				: "Backfeed Slack Extension",
+	"version"			: "0.0.0.1",
+	"description"		: "Add a layer of Decentralized Collaboration to your Slack team. ",
 	"manifest_version"	: 2,
 	"icons"				: {
 		"16": "assets/icon16.png",
@@ -54,10 +54,10 @@
     	"identity",
     	"storage"
 	],
-	
-	"key":"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvFh9vcHjnhR6q0aqqgIVPvSbSnfH6yoO4NYOiNuICU1xuugAjb7XgjZFyLv38RpLihqHTdzo43jHk1XM6tmCzv+9B6B5L576P0GHZ9DtGC3AObp3CBBtriawLt8uHp6AVdt8atBgtz5VhwLt0/XMLjWBurTGyAN3EvJnn7xKW45Tg5nXDkLFhOkzY5gnObFpfiWlMnJd03+uJJ85ax6ZNq60deOT3pzb1q47FK8LMovVXhO01151RJv44DIJZsU1LjV16rZ+Z2PqawEoPJfL+yYUqR2w377bCzwM1NC3j0yOAWQpooLD5aOPhj1UZaPJiddM0Gz63VPOyd8vJ5UeVQIDAQAB",
-	
-	"oauth2": {
+
+  	"key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuOHc0C3vI+rjGIP/fFZh0a8t0g+nbX2zg6nDnCTkBplNWMzFGE1ltnbtAy/Bj7cFQmtC4a7Hn+zB5kxc0vq46bqfGQcV+d5j6rkPmgc8Uw3mFFuNbeS+fscEK2SVH4Iv60mXmTrjPWO9Hlc87mGW3+W/OZpoAlwBHaB6cIVAew73qXTeQpWxmPFUA4mR5ZAsHWs4TRY/sEzjZx+8MEIVUtmOZW64GYLH3kdO9vjXKWNHmCE2Nvh+7+rLtVFTP88oM5F8VV6Nq/vnfceyPH8SyQjGRs3KeMssuRfZVYoDAOw1ggKEA1hc6n2yxe2AUQX7rAM5kyrU4qrxthIW8EYb3wIDAQAB",
+
+  	"oauth2": {
 	  "client_id": "683102339371-n0f33vha14ji23c3kh31dm2ka4ndk2tp.apps.googleusercontent.com",
 	  "scopes": [
 		"https://slack.com/oauth/authorize"

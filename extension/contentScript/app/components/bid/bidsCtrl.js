@@ -5,7 +5,7 @@ angular.module('MyApp').controller('BidsCtrl',
             templateUrl: 'BidsModalTmpl',
             controller: 'BidsModalCtrl',
             scope: $scope,
-            size: 'sm'
+            size: 'md'
         });
 
         modal.result.then(function() {

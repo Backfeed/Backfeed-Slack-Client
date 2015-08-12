@@ -11,10 +11,11 @@
 		<div class="col-sm-6">
 			<p>Welcome {{userData.displayName}},</p>
 			<h2>Let's create a new team</h2>
-			<p>A team is something that is<br />simultaneously a part and a whole</p>
-			<br />
-			<br />
-			<p>Your team has its own value units.<br />How would you like to name them?</p>
+			<p>Let's set up the Backfeed experience.<br />You are the first from your team to install the extension.<br />
+			From now on, value and reputation will be distributed to each member according to her contribution to the team.<br />
+			Also, name the coin that will be used to measure the relative contributions. Choose a symbol for it.<br />
+			Using the coin, evaluate the whole work that has been done so far (future contributions should be evaluated relatively to the work done so far).<br />
+			Finally, choose a name for the contributions channel in which the Backfeed bot will send notifications.</p>
 
 			<div class="form-group">
 				<input type="text" class="form-control" id="tokenName" required
@@ -34,12 +35,12 @@
 
 			<div class="form-group">
 				<input type="text" class="form-control" id="contributionChannelName" required
-					placeholder="e.g. contribution Test" ng-model="orgModel.channelName"/> <label>Contribution Channel Name</label>
+					placeholder="e.g. contributions" ng-model="orgModel.channelName"/> <label>Contribution Channel Name</label>
 			</div>
 		</div>
 
 		<div class="col-sm-6">
-			<h2>Contributors <img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png"/></h2>
+			<h2>Contributors <img tooltip="We need your input. please specify each member of the team that has contributed so far, and the relative weight of her contribution." alt="help" src="/extension/contentScript/app/images/icon_help.png"/></h2>
 
 			<ul class="media-list">
 				<li ng-repeat="contributer in orgModel.contributers" class="{{contributer.className}}" ng-click="clickContributer(contributer.contributer_id)">

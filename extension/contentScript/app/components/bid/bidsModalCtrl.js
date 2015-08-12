@@ -107,9 +107,6 @@ angular.module('MyApp')
 			
 			}
 	}
-   
-                  
-              
 
 	if($scope.contributionId && $scope.contributionId != 0){
 		$scope.bid.contribution_id =$scope.contributionId ;
