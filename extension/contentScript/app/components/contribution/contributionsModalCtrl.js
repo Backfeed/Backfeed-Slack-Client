@@ -566,7 +566,10 @@ angular.module('MyApp').controller(
 
                     $state.go('bids', {'contributionId': result.id});
 
-                });
+                }, function(error) {
+                	console.log('Error in sumbmitting Contribution');
+                	PostMessageService.gesture.showAlert('Your Contribution was not submitted. Please use english', 'error');
+               });
             };
 
             $scope.removeCollaboratorItem = function(contributerId,index) {

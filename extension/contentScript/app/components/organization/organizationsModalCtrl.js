@@ -495,7 +495,9 @@ angular.module('MyApp')
 											//$scope.slackPlay($scope.orgModel.name);
 											PostMessageService.gesture.showAlert('Successfully created organization', 'success');
 											$modalInstance.close('submit');
-											
+										}, function(error) {
+						                	console.log('Error in creating Organization');
+						                	PostMessageService.gesture.showAlert('Your Organization was not created. Please use english', 'error');	
 										});
 									}
 								});
