@@ -103,7 +103,7 @@ myApp.config(function($stateProvider, $urlRouterProvider, $authProvider) {
     //$urlRouterProvider.otherwise('/contribution');
 
     $authProvider.slack({
-        clientId: '2969711723.3476875864'
+        clientId: '3655944058.8209971669'
     });
 
 }).run(function($templateCache) {

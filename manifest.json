@@ -58,7 +58,7 @@
   	"key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuOHc0C3vI+rjGIP/fFZh0a8t0g+nbX2zg6nDnCTkBplNWMzFGE1ltnbtAy/Bj7cFQmtC4a7Hn+zB5kxc0vq46bqfGQcV+d5j6rkPmgc8Uw3mFFuNbeS+fscEK2SVH4Iv60mXmTrjPWO9Hlc87mGW3+W/OZpoAlwBHaB6cIVAew73qXTeQpWxmPFUA4mR5ZAsHWs4TRY/sEzjZx+8MEIVUtmOZW64GYLH3kdO9vjXKWNHmCE2Nvh+7+rLtVFTP88oM5F8VV6Nq/vnfceyPH8SyQjGRs3KeMssuRfZVYoDAOw1ggKEA1hc6n2yxe2AUQX7rAM5kyrU4qrxthIW8EYb3wIDAQAB",
 
   	"oauth2": {
-	  "client_id": "683102339371-n0f33vha14ji23c3kh31dm2ka4ndk2tp.apps.googleusercontent.com",
+	  "client_id": "113474852674-moi0k0p2434nq43oqhqvtila5rse7vh7.apps.googleusercontent.com",
 	  "scopes": [
 		"https://slack.com/oauth/authorize"
 	  ]
