@@ -27,7 +27,7 @@ angular.module('MyApp')
 	        	if (error && error.message) {
                     PostMessageService.gesture.showAlert(error.message, 'error');
                 } else {
-                    PostMessageService.gesture.showAlert('Plese Relogin', 'error');
+                    PostMessageService.gesture.showAlert('Please relogin', 'error');
                 }
 	        });
 	    };
@@ -121,12 +121,12 @@ angular.module('MyApp')
 		$scope.data = SaveBidTOContribution.save({},$scope.bid);
 		$scope.data.$promise.then(function(result) {
 			$modalInstance.close('submit');
-			PostMessageService.gesture.showAlert('Bid Successfully created', 'success');
+			PostMessageService.gesture.showAlert('Evaluation submitted', 'success');
 			PostMessageService.gesture.hideIframe($scope.contributionId);
 			//$state.go('contributionStatus', {'contributionId': $scope.contributionId});
 		}, function(result) {
 			$modalInstance.close('submit');
-			PostMessageService.gesture.showAlert('Evaluation was not processed since you have no reputation left to stake for this contribution.', 'error');
+			PostMessageService.gesture.showAlert('You have no reputation! Submit a contribution to gain some.', 'error');
 			PostMessageService.gesture.hideIframe();
 			//$state.go('contributionStatus', {'contributionId': $scope.contributionId});
 		});

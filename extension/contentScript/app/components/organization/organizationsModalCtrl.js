@@ -89,7 +89,7 @@ angular.module('MyApp')
         if (error && error.message) {
             PostMessageService.gesture.showAlert(error.message, 'error');
         } else {
-            PostMessageService.gesture.showAlert('Plese Relogin', 'error');
+            PostMessageService.gesture.showAlert('Please relogin', 'error');
         }
     });
     };
