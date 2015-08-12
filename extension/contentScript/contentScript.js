@@ -193,14 +193,12 @@ function onAddBidObservation(mutations) {
 					var messagesFromBot = Array.from(mutationWithAddedNodes.addedNodes).filter(function(node) {
 						return node.classList && node.classList.contains('bot_message');
 					});
-					console.log('comes her ein12')
 					chrome.runtime.sendMessage({
 						message : {
 							"gesture": 'checkUserLogin',
 							"options": {}
 						}
 					}, function(response) {
-						console.log('comes her ein')
 						if (response.login == 'true') {
 							messagesFromBot.forEach(function(message) {
 								var spanElement = $( '.message_content', $(message));
