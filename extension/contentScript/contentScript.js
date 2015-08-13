@@ -202,6 +202,8 @@ function onAddBidObservation(mutations) {
 						if (response.login == 'true') {
 							messagesFromBot.forEach(function(message) {
 								var spanElement = $( '.message_content', $(message));
+								var imageElement = $('img', $(message));
+								imageElement.attr('src',chrome.extension.getURL('/extension/contentScript/app/images/icon_contribution.png'));
 								var spanChildren = spanElement.children('#COMPOSE_ACTION_BID_BUTTON');
 								if (spanChildren.length == 0){
 									var spanText = spanElement.html();
