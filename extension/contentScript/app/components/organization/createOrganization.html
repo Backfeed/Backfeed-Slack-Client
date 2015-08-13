@@ -77,7 +77,7 @@
 
 			<ui-select style="width:96%" search-enabled="false"
 					   ng-model='selectedContributerId'
-					   ng-change="updateContributer($select.selected.id)">
+					   on-select="updateContributer($select.selected.id)">
 				<ui-select-match placeholder="Add Contributor"></ui-select-match>
 				<ui-select-choices repeat="user in updatedUsersList">
 					<div ng-bind-html="formatSelectUser(user)"></div>
