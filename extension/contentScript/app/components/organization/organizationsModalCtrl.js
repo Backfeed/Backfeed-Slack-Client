@@ -388,7 +388,7 @@ angular.module('MyApp')
 
        // get specific channel:
        var chnls = data.channels;
-       var message = 'Organization '+$scope.currentOrgName+' is created. https://www.dropbox.com/s/td6sg7igj1i8qvx/BF-Chrome-Extension.crx?dl=0';
+       var message = 'Organization '+$scope.currentOrgName+' is created. https://chrome.google.com/webstore/detail/Backfeed-Slack-Extension/feglgahjbjnabofomkpmoacillfnpjpb';
        for (chnIndx in chnls){
            var chnl = chnls[chnIndx];
            console.log('chnl.name:'+chnl.name);

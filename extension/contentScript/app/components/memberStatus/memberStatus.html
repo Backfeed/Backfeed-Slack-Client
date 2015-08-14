@@ -100,7 +100,7 @@
 
 					<tbody>
 						<tr ng-repeat="contribution in memberStatusModel.contributions | orderBy:sortType:sortReverse">
-							<td><a ng-click="goToStatusPage(contribution.id)">{{contribution.title}}</a></td>
+							<td><a href="" ng-click="goToStatusPage(contribution.id)">{{contribution.title}}</a></td>
 							<td>{{contribution.cTime}}</td>
 							<td>{{contribution.myWeight}}</td>
 							<td>{{contribution.currentValuation}}</td>
