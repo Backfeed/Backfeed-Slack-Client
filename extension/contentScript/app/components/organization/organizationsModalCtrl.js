@@ -512,7 +512,7 @@ angular.module('MyApp')
 
     $scope.formatSelectUser = function (data) {
         if (!data) return;
-        if (!data.url) data.url = "images/icon-dude.png";
+        if (!data.url) data.url = chrome.extension.getURL("extension/contentScript/app/images/icon-dude.png");
         return  "<div class='select-contributer flex'><img ng-src='" + data.url +"' /><div>"+ data.name + "<br />"+ data.real_name + "</div></div>";
     };
 });
