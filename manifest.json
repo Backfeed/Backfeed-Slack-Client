@@ -1,6 +1,6 @@
 {
 	"name"				: "Backfeed Slack Extension",
-	"version"			: "0.0.0.4",
+	"version"			: "0.0.0.5",
 	"description"		: "Add a layer of Decentralized Collaboration to your Slack team. ",
 	"manifest_version"	: 2,
 	"icons"				: {
