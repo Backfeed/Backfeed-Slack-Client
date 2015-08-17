@@ -385,6 +385,10 @@ angular.module('MyApp').controller(
            
             $scope.changePercentage = function(contributerId, contributerPercentage) {
             	allcontributers = $scope.model.contributers;
+            	var find = '<br>';
+            	var re = new RegExp(find, 'g');
+            	contributerPercentage = contributerPercentage.replace(re, '');
+            	contributerPercentage = contributerPercentage.trim();
             	if(allcontributers.length <=1){
             		allcontributers[0].contributer_percentage = 100;
             		return;

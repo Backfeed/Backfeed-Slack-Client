@@ -296,6 +296,10 @@ angular.module('MyApp')
 
      $scope.changePercentage = function(contributerId, contributerPercentage) {
         allcontributers = $scope.orgModel.contributers;
+        var find = '<br>';
+    	var re = new RegExp(find, 'g');
+    	contributerPercentage = contributerPercentage.replace(re, '');
+    	contributerPercentage = contributerPercentage.trim();
         if(allcontributers.length <=1){
             allcontributers[0].contributer_percentage = 100;
             return;
@@ -381,14 +385,13 @@ angular.module('MyApp')
        });
    };
 
-
    $scope.gotChannels = function(data) {
        console.log('recieved Channels:');
        //console.dir(data);
 
        // get specific channel:
        var chnls = data.channels;
-       var message = 'Organization '+$scope.currentOrgName+' is created. https://chrome.google.com/webstore/detail/Backfeed-Slack-Extension/feglgahjbjnabofomkpmoacillfnpjpb';
+       var message = 'Organization '+$scope.currentOrgName+' is created. https://chrome.google.com/webstore/detail/backfeed-slack-extension/feglgahjbjnabofomkpmoacillfnpjpb';
        for (chnIndx in chnls){
            var chnl = chnls[chnIndx];
            console.log('chnl.name:'+chnl.name);
