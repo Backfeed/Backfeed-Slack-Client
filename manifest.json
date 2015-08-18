@@ -1,35 +1,35 @@
 {
-	"name"				: "Backfeed Slack Extension",
-	"version"			: "0.0.0.5",
-	"description"		: "Add a layer of Decentralized Collaboration to your Slack team. ",
-	"manifest_version"	: 2,
-	"icons"				: {
+	"name": "Backfeed Slack Extension",
+	"version": "0.0.0.5",
+	"description": "Add a layer of Decentralized Collaboration to your Slack team.",
+	"manifest_version": 2,
+	"icons": {
 		"16": "assets/icon16.png",
 		"48": "assets/icon48.png",
 		"128": "assets/icon128.png"
 	},
-	"background"		: {
-		"page"			: "extension/background/background.html"
+	"background": {
+		"page": "extension/background/background.html"
 	},
 
-  	"browser_action"	: "type",
-	"browser_action"	: {
-		"default_icon"	: "assets/icon128.png",
-		"default_popup" : "extension/popup/popup.html"
+  	"browser_action": "type",
+	"browser_action": {
+		"default_icon": "assets/icon128.png",
+		"default_popup": "extension/popup/popup.html"
 	},
 
-	"content_scripts"	: "page injection",
-	"content_scripts"	: [{
-		"matches"			: [ "*://*.slack.com/*" ],
-		"exclude_globs"		: [ 
+	"content_scripts": "page injection",
+	"content_scripts": [{
+		"matches": [ "*://*.slack.com/*" ],
+		"exclude_globs": [
 			"*.jpg","*.jpeg","*.gif","*.png","*.bmp","*.webp",
 			"*.css","*.swf","*.js","*.zip","*.rar","*.tar","*.tar.gz","*.tgz","*.tar.bz2","*.tbz2",
 			"*.doc","*.docx","*.ppt","*.pptx","*.xls","*.xlsx","*.pdf","*.xml","*.txt",
 			"*.mpg","*.mpeg","*.qt","*.mp4","*.m4v","*.m4a","*.mp3","*.ogv","*.ogm","*.ogg","*.oga","*.webm","*.wav",
 			"*.","*." 
 		],
-		"css"				: ["extension/contentScript/inject.css"],
-		"js"				: [
+		"css": ["extension/contentScript/inject.css"],
+		"js": [
 			"extension/contentScript/app/vendor/scripts/jquery.js",
 			"extension/contentScript/app/vendor/scripts/angular.js",
 			"extension/contentScript/vendor/jquery.noty.packaged.js",
@@ -37,14 +37,14 @@
 			"extension/contentScript/composeConfig.js" ,
 			"extension/contentScript/contentScript.js"
 		],
-		"run_at" 			: "document_end"
+		"run_at": "document_end"
 	}],
 
-	"web_accessible_resources"  : "imports",
-	"web_accessible_resources"  : [
+	"web_accessible_resources": "imports",
+	"web_accessible_resources": [
 		"extension/contentScript/app/*"
 	],	
-	"permissions"				: [ 
+	"permissions": [
 		"tabs",
 		"webRequest",
 	    "http://*/*",
