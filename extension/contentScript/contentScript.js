@@ -181,9 +181,9 @@ function onAddBidObservation(mutations) {
 		channelId = response.channelId;
 		if(channelId != undefined){
 			  console.log("channelId is "+channelId)
-		        var channelClassName = 'channel_'+channelId;
+				var channelNode = document.getElementsByClassName('channel_'+channelId);
 		        //check whether user is login slack extension
-				if (document.getElementsByClassName(channelClassName)[0].classList.contains('active')) {
+				if (channelNode.length > 0 && channelNode[0].classList.contains('active')) {
 					// in case there is more than one mutation, use only the one with added nodes.
 					var mutationWithAddedNodes = Array.from(mutations).filter(function(mutation) {
 						return mutation.addedNodes.length > 0;
