@@ -1,6 +1,6 @@
 {
 	"name": "Backfeed Slack Extension",
-	"version": "0.0.0.5",
+	"version": "0.0.0.6",
 	"description": "Add a layer of Decentralized Collaboration to your Slack team.",
 	"manifest_version": 2,
 	"icons": {
@@ -12,13 +12,11 @@
 		"page": "extension/background/background.html"
 	},
 
-  	"browser_action": "type",
 	"browser_action": {
 		"default_icon": "assets/icon128.png",
 		"default_popup": "extension/popup/popup.html"
 	},
 
-	"content_scripts": "page injection",
 	"content_scripts": [{
 		"matches": [ "*://*.slack.com/*" ],
 		"exclude_globs": [
@@ -40,7 +38,6 @@
 		"run_at": "document_end"
 	}],
 
-	"web_accessible_resources": "imports",
 	"web_accessible_resources": [
 		"extension/contentScript/app/*"
 	],	

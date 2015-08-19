@@ -17,7 +17,7 @@ $(document).on('click', "#COMPOSE_ACTION_BID_BUTTON", function() {
 	if (textContent == 'BID') {
 		openAddBidPage(contributionIdForThisBid);
 	} else {
-		openShowContributionStatusPage(contributionIdForThisBid);
+		openContributionStatusPage(contributionIdForThisBid);
 	}
 });
 
@@ -67,7 +67,7 @@ function openAddBidPage(contributionId) {
 }
 
 
-function openShowContributionStatusPage(contributionId) {
+function openContributionStatusPage(contributionId) {
 	
 	console.log('contributionId is: ' + contributionId);
 	chrome.runtime.sendMessage({        
@@ -108,9 +108,9 @@ function hideIframe(options) {
 }
 
 function setChannelId(channelId) {
-	console.log("set channelId"+channelId )
+	console.log("set channelId: "+channelId);
 	chrome.storage.sync.set({'channelId':channelId}, function () {
-        console.log("set channelId")
+        console.log("set channelId");
     });
 }
 
@@ -152,112 +152,130 @@ function onSingleTeamMemberObservation(mutations) {
 	}
 }
 
-function onAddContributionObservation(nodes) {
+function onFloatingMenuOpened(nodes) {
 	var addedNodes = $(nodes[0].addedNodes);
 	if (addedNodes.length > 0) {
 		addedNodes.each(function() {
 			if (this.id == 'menu') {
-				var menuItemsList = $(this).find('#menu_items');
-				var menuItems = menuItemsList.children();
-
-				if (menuItems.first().hasClass('file_menu_item')) {
-					var addContributionButton = menuItems.last().clone().prependTo(menuItemsList);
-					addContributionButton.removeAttr('data-which');
-					var buttonLabel = '<img src="' + chrome.extension.getURL('/extension/contentScript/app/images/icon_contribution.png') + '" />'
-						+ '&nbsp;&nbsp;Submit Contribution';
-					addContributionButton.find('a').attr('href','#').html(buttonLabel);
-					addContributionButton.click(openAddContributionPage);
-
-					this.style.top = parseInt(this.style.top) - 32 + "px";
+				if (this.classList.contains('file_menu')) {
+					addContributionButton.bind(this)();
+				} else if ($(this).find('.menu_member_header').length !== 0) {
+					memberStatusButton.bind(this)();
 				}
+
 			}
 		});
 	}
+}
+
+function addContributionButton() {
+	var menuItemsList = $(this).find('#menu_items'),
+		menuItems = menuItemsList.children();
+
+	var addContributionButton = menuItems.last().clone().prependTo(menuItemsList);
+	addContributionButton.removeAttr('data-which');
+
+	var contributionIcon = chrome.extension.getURL('/extension/contentScript/app/images/icon_contribution.png');
+	var buttonLabel = '<img src="' + contributionIcon + '" />&nbsp;&nbsp;Submit Contribution';
+	addContributionButton.find('a').attr('href','#').html(buttonLabel);
+
+	addContributionButton.click(openAddContributionPage);
+
+	this.style.top = parseInt(this.style.top) - 32 + "px";
+}
+
+function memberStatusButton() {
+	var menuItemsList = $(this).find('#menu_items');
+	var memberId = $(this).find('.member_preview_link').data('member-id');
+	var memberStatusButton = $('<li id="member_status_backfeed"><a>Collaborator Overview</a></li>').prependTo(menuItemsList);
+	memberStatusButton.on('click', function() {
+		openMemberStatusPage(memberId);
+	});
+
 }
 
 function onAddBidObservation(mutations) {
 	var channelId = '';
 	chrome.storage.sync.get('channelId', function (response) {
 		channelId = response.channelId;
-		if(channelId != undefined){
-			  console.log("channelId is "+channelId)
-				var channelNode = document.getElementsByClassName('channel_'+channelId);
-		        //check whether user is login slack extension
-				if (channelNode.length > 0 && channelNode[0].classList.contains('active')) {
-					// in case there is more than one mutation, use only the one with added nodes.
-					var mutationWithAddedNodes = Array.from(mutations).filter(function(mutation) {
-						return mutation.addedNodes.length > 0;
-					})[0];
-			
-					// Fetch only messages sent by a bot
-					var messagesFromBot = Array.from(mutationWithAddedNodes.addedNodes).filter(function(node) {
-						return node.classList && node.classList.contains('bot_message');
-					});
-					chrome.runtime.sendMessage({
-						message : {
-							"gesture": 'checkUserLogin',
-							"options": {}
-						}
-					}, function(response) {
-						if (response.login == 'true') {
-							messagesFromBot.forEach(function(message) {
-								var spanElement = $( '.message_content', $(message));
-								var imageElement = $('img', $(message));
-								imageElement.attr('src',chrome.extension.getURL('/extension/contentScript/app/images/icon_contribution.png'));
-								var spanChildren = spanElement.children('#COMPOSE_ACTION_BID_BUTTON');
-								if (spanChildren.length == 0){
-									var spanText = spanElement.html();
-									var originalText = spanText;
-									var removalText = "New contribution submitted<br>";
-									var indexOfRemovalContent = spanText.indexOf(removalText);
-									if (indexOfRemovalContent > -1){
-										spanText = spanText.replace(removalText, "");
-										var contributionId = spanText.substring(5,spanText.indexOf("<br>"));
-										var lengthOfText = removalText.length;
-										originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length+4), "");
-										$( '.message_content', $(message)).html (originalText);
-										var openComposeButton = document.createElement("span");
-										openComposeButton.setAttribute("data-contributionId", contributionId);
-										openComposeButton.setAttribute("id", "COMPOSE_ACTION_BID_BUTTON");
-										openComposeButton.textContent = "BID";
-										var contributionIdsVar = response.contributionIds;
-										contributionIdsVar = contributionIdsVar.substring(1, contributionIdsVar.length-1);
-										var contributionIdsVarArray = contributionIdsVar.split(",");
-										for (i = 0; i < contributionIdsVarArray.length; i++) {
-											if(contributionIdsVarArray[i].trim() == contributionId){
-												openComposeButton.textContent = "STATUS";
-											}
+		if(channelId != undefined) {
+		  	console.log("channelId is: "+channelId);
+			var channelNode = document.getElementsByClassName('channel_'+channelId);
+			//check whether user is login slack extension
+			if (channelNode.length > 0 && channelNode[0].classList.contains('active')) {
+				// in case there is more than one mutation, use only the one with added nodes.
+				var mutationWithAddedNodes = Array.from(mutations).filter(function(mutation) {
+					return mutation.addedNodes.length > 0;
+				})[0];
+
+				// Fetch only messages sent by a bot
+				var messagesFromBot = Array.from(mutationWithAddedNodes.addedNodes).filter(function(node) {
+					return node.classList && node.classList.contains('bot_message');
+				});
+				chrome.runtime.sendMessage({
+					message : {
+						"gesture": 'checkUserLogin',
+						"options": {}
+					}
+				}, function(response) {
+					if (response.login == 'true') {
+						messagesFromBot.forEach(function(message) {
+							var spanElement = $( '.message_content', $(message));
+							var imageElement = $('img', $(message));
+							var contributionIcon = chrome.extension.getURL('/extension/contentScript/app/images/icon_contribution.png');
+							imageElement.attr('src', contributionIcon);
+							var spanChildren = spanElement.children('#COMPOSE_ACTION_BID_BUTTON');
+							if (spanChildren.length == 0){
+								var spanText = spanElement.html();
+								var originalText = spanText;
+								var removalText = "New contribution submitted<br>";
+								var indexOfRemovalContent = spanText.indexOf(removalText);
+								if (indexOfRemovalContent > -1){
+									spanText = spanText.replace(removalText, "");
+									var contributionId = spanText.substring(5,spanText.indexOf("<br>"));
+									var lengthOfText = removalText.length;
+									originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length+4), "");
+									$( '.message_content', $(message)).html (originalText);
+									var openComposeButton = document.createElement("span");
+									openComposeButton.setAttribute("data-contributionId", contributionId);
+									openComposeButton.setAttribute("id", "COMPOSE_ACTION_BID_BUTTON");
+									openComposeButton.textContent = "BID";
+									var contributionIdsVar = response.contributionIds;
+									contributionIdsVar = contributionIdsVar.substring(1, contributionIdsVar.length-1);
+									var contributionIdsVarArray = contributionIdsVar.split(",");
+									for (var i = 0; i < contributionIdsVarArray.length; i++) {
+										if(contributionIdsVarArray[i].trim() == contributionId){
+											openComposeButton.textContent = "STATUS";
 										}
-										$(openComposeButton).insertBefore(spanElement);
 									}
+									$(openComposeButton).insertBefore(spanElement);
 								}
-							});
-			
-						} else {
-							messagesFromBot.forEach(function(message) {
-								var spanElement = $( '.message_content', $(message));
-								var spanChildren = spanElement.children('#COMPOSE_ACTION_BID_BUTTON');
-								if (spanChildren.length == 0){
-									var spanText = spanElement.html();
-									var originalText = spanText;
-									var removalText = "New contribution submitted<br>";
-									var indexOfRemovalContent = spanText.indexOf(removalText);
-									if (indexOfRemovalContent > -1){
-										spanText = spanText.replace(removalText, "");
-										var contributionId = spanText.substring(5,spanText.indexOf("<br>"));
-										var lengthOfText = removalText.length;
-										originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length+4), "");
-										$( '.message_content', $(message)).html(originalText);
-									}
+							}
+						});
+
+					} else {
+						messagesFromBot.forEach(function(message) {
+							var spanElement = $( '.message_content', $(message));
+							var spanChildren = spanElement.children('#COMPOSE_ACTION_BID_BUTTON');
+							if (spanChildren.length == 0){
+								var spanText = spanElement.html();
+								var originalText = spanText;
+								var removalText = "New contribution submitted<br>";
+								var indexOfRemovalContent = spanText.indexOf(removalText);
+								if (indexOfRemovalContent > -1){
+									spanText = spanText.replace(removalText, "");
+									var contributionId = spanText.substring(5,spanText.indexOf("<br>"));
+									var lengthOfText = removalText.length;
+									originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length+4), "");
+									$( '.message_content', $(message)).html(originalText);
 								}
-							});
-						}
-					});
-				}
+							}
+						});
+					}
+				});
+			}
 		}
-      
     });
-	
 }
 
 /**
@@ -271,14 +289,14 @@ var teamMembersListObserver = new MutationObserver(onTeamMembersListObservation)
 // More buttons are shown for a single team member in the list of team members
 var singleTeamMemberObserver = new MutationObserver(onSingleTeamMemberObservation);
 
-var addContributionObserver = new MutationObserver(onAddContributionObservation);
+var floatingMenuObserver = new MutationObserver(onFloatingMenuOpened);
 var addBidObserver = new MutationObserver(onAddBidObservation);
 
 
 $(function() {
     document.body.appendChild(iframe);
 
-	addContributionObserver.observe(document.getElementById('client-ui'), {childList: true});
+	floatingMenuObserver.observe(document.getElementById('client-ui'), {childList: true});
 	addBidObserver.observe(document.getElementById('msgs_div'), {childList: true});
 	teamMembersListObserver.observe(document.getElementById('team_tab'), {attributes: true});
 
