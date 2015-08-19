@@ -14,7 +14,7 @@ addBidButton.setAttribute("id", "COMPOSE_ACTION_BID_BUTTON");
 $(document).on('click', "#COMPOSE_ACTION_BID_BUTTON", function() {
 	var contributionIdForThisBid = $(this).attr('data-contributionId');
 	var textContent = $(this).text();
-	if (textContent == 'BID') {
+	if (textContent == 'EVALUATE') {
 		openAddBidPage(contributionIdForThisBid);
 	} else {
 		openContributionStatusPage(contributionIdForThisBid);
@@ -239,7 +239,7 @@ function onAddBidObservation(mutations) {
 									var openComposeButton = document.createElement("span");
 									openComposeButton.setAttribute("data-contributionId", contributionId);
 									openComposeButton.setAttribute("id", "COMPOSE_ACTION_BID_BUTTON");
-									openComposeButton.textContent = "BID";
+									openComposeButton.textContent = "EVALUATE";
 									var contributionIdsVar = response.contributionIds;
 									contributionIdsVar = contributionIdsVar.substring(1, contributionIdsVar.length-1);
 									var contributionIdsVarArray = contributionIdsVar.split(",");
