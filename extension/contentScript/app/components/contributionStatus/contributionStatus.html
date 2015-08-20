@@ -34,17 +34,17 @@
 				<table class="table table-bordered table-hover text-center">
 					<thead>
 						<tr>
-							<th><img tooltip="Timestamp" alt="help" src="/extension/contentScript/app/images/star.png"/></th>
-							<th><img tooltip="Bid" alt="help" src="/extension/contentScript/app/images/tokens.png"/></th>
-							<th><img tooltip="User's reputation while bidding" alt="help" src="/extension/contentScript/app/images/rep.png"/></th>
-							<th><img tooltip="What was the value of this contribution after this bid" alt="help" src="/extension/contentScript/app/images/heart.png"/></th>
+							<th><img tooltip="Time at which the contribution was submitted" alt="help" src="/extension/contentScript/app/images/star.png"/></th>
+							<th><img tooltip="Evaluation" alt="help" src="/extension/contentScript/app/images/tokens.png"/></th>
+							<th><img tooltip="Weight" alt="help" src="/extension/contentScript/app/images/rep.png"/></th>
+							<th><img tooltip="Value After Evaluation" alt="help" src="/extension/contentScript/app/images/heart.png"/></th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr ng-repeat="bid in cotributionStatusModel.bids">
 							<td>{{bid.time_created | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-							<td>{{bid.tokens}}</td>
-							<td>{{bid.reputation}}</td>
+							<td>{{bid.tokens | number:0}}</td>
+							<td>{{bid.reputation | number:0}}</td>
 							<td>{{bid.contribution_value_after_bid}}</td>
 						</tr>
 					</tbody>

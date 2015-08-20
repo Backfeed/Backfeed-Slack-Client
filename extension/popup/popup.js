@@ -14,10 +14,9 @@ chrome.runtime.onMessage.addListener(function(request,sender,sendResponse) {
 
 // slack login :
 $(document).on('click', 'button#OAuth', function() {
-    
-    console.log('OAuth dance initiated');
-	chrome.runtime.sendMessage({message: 'beginOAuth'});
-  
+  console.log('OAuth dance initiated');
+  chrome.runtime.sendMessage({message: 'beginOAuth'});
+  window.close();
 });
 
 $(document).on('click', '#logout', function() {
@@ -26,5 +25,6 @@ $(document).on('click', '#logout', function() {
       console.log("remove channelId")
   });
   chrome.runtime.sendMessage({message: 'logout'});
+  window.close();
   //loadView();
 });

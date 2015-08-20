@@ -1,41 +1,9 @@
-console.log("compose injected...");
-
 //compose iframe
 var iframe = document.createElement("iframe");
 iframe.setAttribute("src", chrome.extension.getURL("extension/contentScript/app/index.html"));
 iframe.setAttribute("frameborder", "0");
 
 $(window).resize(setIframeHeight);
-
-//compose button
-var addBidButton = document.createElement("button");
-addBidButton.setAttribute("id", "COMPOSE_ACTION_BID_BUTTON");
-
-$(document).on('click', "#COMPOSE_ACTION_BID_BUTTON", function() {
-	var contributionIdForThisBid = $(this).attr('data-contributionId');
-	var textContent = $(this).text();
-	if (textContent == 'EVALUATE') {
-		openAddBidPage(contributionIdForThisBid);
-	} else {
-		openContributionStatusPage(contributionIdForThisBid);
-	}
-});
-
-$(document).on('click', ".member_status_button", function() {
-    var memberId = $(this).siblings('.member_details').find('.member_preview_link').data('member-id');
-    openMemberStatusPage(memberId);
-});
-
-function openMemberStatusPage(memberId) {
-    chrome.runtime.sendMessage({
-        message : {
-            "gesture": 'openMemberStatusPage',
-            "options": memberId
-        }
-    }, function(response) {
-        console.log('Here in the callback from member status page');
-    });
-}
 
 function openAddContributionPage() {
 	chrome.runtime.sendMessage({
@@ -48,9 +16,6 @@ function openAddContributionPage() {
 	});
 }
 
-function windowRefresh(){
-	window.location.reload();
-}
 
 function openAddBidPage(contributionId) {
 	
@@ -66,7 +31,6 @@ function openAddBidPage(contributionId) {
 
 }
 
-
 function openContributionStatusPage(contributionId) {
 	
 	console.log('contributionId is: ' + contributionId);
@@ -81,8 +45,38 @@ function openContributionStatusPage(contributionId) {
 
 }
 
+function openMemberStatusPage(memberId) {
+	chrome.runtime.sendMessage({
+		message : {
+			"gesture": 'openMemberStatusPage',
+			"options": memberId
+		}
+	}, function(response) {
+		console.log('Here in the callback from member status page');
+	});
+}
+
+$(document).on('click', "#COMPOSE_ACTION_BID_BUTTON", function() {
+	var contributionIdForThisBid = $(this).attr('data-contributionId');
+	var textContent = $(this).text();
+	if (textContent == 'EVALUATE') {
+		openAddBidPage(contributionIdForThisBid);
+	} else {
+		openContributionStatusPage(contributionIdForThisBid);
+	}
+});
+
+$(document).on('click', ".member_status_button", function() {
+	var memberId = $(this).siblings('.member_details').find('.member_preview_link').data('member-id');
+	openMemberStatusPage(memberId);
+});
+
 function setIframeHeight() {
 	iframe.style.height = document.documentElement.clientHeight + 'px';
+}
+
+function windowRefresh(){
+	window.location.reload();
 }
 
 var GESTURES = {

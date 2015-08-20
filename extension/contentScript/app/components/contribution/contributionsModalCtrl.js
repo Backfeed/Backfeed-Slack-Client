@@ -292,51 +292,51 @@ angular.module('MyApp').controller(
  				}
             };
             $scope.changeContribution = function(contributerId,userName) {
-                totalContribution = 0;
-                allcontributers = $scope.model.contributers;
-                valid = true;
+                var totalContribution = 0,
+                    allContributers = $scope.model.contributers,
+                    valid = true;
                 console.log('userName is '+userName);
-                if(allcontributers.length){
+                if (allContributers.length) {
                     valid = false;
                 }
                 var sliderDivElement;
-                for(i=0;i<allcontributers.length;i++){
-					if(allcontributers[i].contributer_id != 0){
-						 if(allcontributers[i].contributer_id != contributerId){
-							 	allcontributers[i].className = "media contributer-cell";
-							 	sliderDivElement = angular.element('#slider'+allcontributers[i].contributer_id+" div");
+                for(i=0;i<allContributers.length;i++){
+					if(allContributers[i].contributer_id != 0){
+						 if(allContributers[i].contributer_id != contributerId){
+							 	allContributers[i].className = "media contributer-cell";
+							 	sliderDivElement = angular.element('#slider'+allContributers[i].contributer_id+" div");
 							 	sliderDivElement.removeClass('ui-widget-header-active');
-							 	sliderSpanElement = angular.element('#slider'+allcontributers[i].contributer_id+" span");
+							 	sliderSpanElement = angular.element('#slider'+allContributers[i].contributer_id+" span");
 	 							sliderSpanElement.removeClass('ui-slider-handle-show');
-	                            //totalEarlierRemaining = totalEarlierRemaining + +allcontributers[i].contributer_percentage
+	                            //totalEarlierRemaining = totalEarlierRemaining + +allContributers[i].contributer_percentage
 	                        }else{
 	                        	
 	                            if(userName != ''){
-	                                console.log('comes inside is '+userName+allcontributers[i].contributer_id);
-	                                allcontributers[i].contributer_name = userName;	                               
+	                                console.log('comes inside is '+userName+allContributers[i].contributer_id);
+	                                allContributers[i].contributer_name = userName;
 	                               
 	                            }else{
-	                            	angular.element('#'+allcontributers[i].contributer_id).trigger('focus');
-	                            	sliderDivElement = angular.element('#slider'+allcontributers[i].contributer_id+" div");
+	                            	angular.element('#'+allContributers[i].contributer_id).trigger('focus');
+	                            	sliderDivElement = angular.element('#slider'+allContributers[i].contributer_id+" div");
 	                            	sliderDivElement.removeClass('ui-widget-header-active');
 	                            	sliderDivElement.addClass('ui-widget-header-active');
-	                            	sliderSpanElement = angular.element('#slider'+allcontributers[i].contributer_id+" span");
+	                            	sliderSpanElement = angular.element('#slider'+allContributers[i].contributer_id+" span");
 		 							sliderSpanElement.removeClass('ui-slider-handle-show');
 		 							sliderSpanElement.addClass('ui-slider-handle-show');
-	                            	allcontributers[i].className = "media contributer-cell active-contributer";
+	                            	allContributers[i].className = "media contributer-cell active-contributer";
 	                            }
 
 
 	                        }
-						totalContribution = totalContribution + +allcontributers[i].contribution1;
+						totalContribution = totalContribution + +allContributers[i].contribution1;
 					}else{
 						valid = false;
 					}
 				}
 
-                for(i=0;i<allcontributers.length;i++){
-					if(allcontributers[i].contributer_id != 0){
-						allcontributers[i].contributer_percentage = ((allcontributers[i].contribution1/totalContribution)*100).toFixed(1);
+                for(var i=0; i<allContributers.length; i++){
+					if(allContributers[i].contributer_id != 0){
+						allContributers[i].contributer_percentage = ((allContributers[i].contribution1/totalContribution)*100).toFixed(1);
 					}
 				}
                 
@@ -394,7 +394,7 @@ angular.module('MyApp').controller(
             		return;
             	}
             	if(contributerPercentage >= 100){
-            		alert("Contribution Percentage can not  be greatar or equal to 100");
+            		alert("Contribution Percentage can not  be greater or equal to 100");
             		$scope.buttonDisabled = true;
             		return;
             	}
@@ -428,13 +428,12 @@ angular.module('MyApp').controller(
                 var contributersLength = contributionData.contributionContributers.length;
                 var index = 0;
                 contributionData.contributionContributers.forEach(function(contributer) {
-                	if(index == contributersLength -1){
+                	if(index == contributersLength -1) {
                 		contributersString += '@'+slackUsersMap[contributer.contributer_id] +' '+contributer.contributer_percentage+'%';
-                	}else{
+                	} else {
                 		contributersString += '@'+slackUsersMap[contributer.contributer_id] +' '+contributer.contributer_percentage+'%, ';
                 	}
                 	index++;
-                    
                 });
 
                 return 'New contribution submitted'
