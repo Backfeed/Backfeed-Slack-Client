@@ -28,7 +28,25 @@
 				<legend>
 					<i class="ion-speakerphone"></i> {{cotributionStatusModel.groupWeight}}% of the team backfeeded this value
 				</legend>
-				<h3>{{cotributionStatusModel.file}}</h3>				
+				<h3>{{cotributionStatusModel.file}}</h3>	
+				<table class="table table-bordered table-hover text-center">
+					<thead>
+						<tr>
+							<th>URL</th>
+							<th>Contributer Name</th>
+							<th>Contributer Full Name</th>
+							<th>Contributer Percentage</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="contributionContributer in cotributionStatusModel.contributionContributers">
+							<td><img ng-src="{{contributionContributer.url}}" </img></td>
+							<td>{{contributionContributer.name}}</td>
+							<td>{{contributionContributer.real_name}}</td>
+							<td>{{contributionContributer.contributer_percentage}}%</td>
+						</tr>
+					</tbody>
+				</table>			
 			</div>
 			<div class="col-sm-8">
 				<table class="table table-bordered table-hover text-center">

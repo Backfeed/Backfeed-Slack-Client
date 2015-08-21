@@ -15,6 +15,12 @@ angular.module('MyApp').controller(
 		                tokens:'',
 		                reputation: '',
 		                contribution_value_after_bid:''
+		            } ],
+		            contributionContributers : [ {
+		            	contributer_percentage : '',
+		            	name:'',
+		            	real_name: '',
+		            	url:''
 		            } ]
 				};
 

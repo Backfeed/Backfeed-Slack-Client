@@ -40,7 +40,14 @@ angular.module('MyApp').controller(
 						}else{
 							$scope.memberStatus ='User';
 						}
+						
 						$scope.memberStatusModel = result;
+						var allcontributions = $scope.memberStatusModel.contributions;
+		                //contPercentage = 100/allcontributers.length;
+
+		                for(i=0;i<allcontributions.length;i++){
+		                	allcontributions[i].myWeight = allcontributions[i].myWeight.toFixed(2);
+		                }
 					});
 					PostMessageService.sendGesture('showIframe');
 	        	}

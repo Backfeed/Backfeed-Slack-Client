@@ -19,6 +19,13 @@ $(document).on('click', 'button#OAuth', function() {
   window.close();
 });
 
+$(document).ready(function(){
+	   $('body').on('click', 'a', function(){
+	     chrome.tabs.create({url: $(this).attr('href')});
+	     return false;
+	   });
+	});
+
 $(document).on('click', '#logout', function() {
   localStorage.clear();
   chrome.storage.sync.remove('channelId', function () {
