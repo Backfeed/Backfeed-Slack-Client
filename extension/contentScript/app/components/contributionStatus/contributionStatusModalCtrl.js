@@ -35,6 +35,9 @@ angular.module('MyApp').controller(
 					});
 					$scope.contributionStatus.$promise.then(function(result) {
 						$scope.cotributionStatusModel = result;
+						$scope.cotributionStatusModel.myWeight = $scope.cotributionStatusModel.myWeight.toFixed(2);
+						$scope.cotributionStatusModel.groupWeight = $scope.cotributionStatusModel.groupWeight.toFixed(2);
+
 					});
 					PostMessageService.sendGesture('showIframe');
 	        	}
