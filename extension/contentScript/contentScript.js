@@ -226,7 +226,7 @@ function onAddBidObservation(mutations) {
 								var indexOfRemovalContent = spanText.indexOf(removalText);
 								if (indexOfRemovalContent > -1){
 									spanText = spanText.replace(removalText, "");
-									var contributionId = spanText.substring(5,spanText.indexOf("<br>"));
+									var contributionId = spanText.substring(4,spanText.indexOf("<br>"));
 									var lengthOfText = removalText.length;
 									originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length+4), "");
 									$( '.message_content', $(message)).html (originalText);
