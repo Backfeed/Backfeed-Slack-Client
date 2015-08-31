@@ -17,12 +17,12 @@ myApp.config(function($stateProvider, $urlRouterProvider, $authProvider, $compil
             controller: 'ContributionsCtrl'
         })
         .state('createContribution', {
-            url: '/contribution',
+            url: '/contribution/:channelId',
             templateUrl: chrome.extension.getURL("extension/contentScript/app/components/contribution/createContribution.html"),
             controller: 'ContributionsCtrl'
         })
         .state('createOrg', {
-            url: '/organization',
+            url: '/organization/:channelId',
             templateUrl: chrome.extension.getURL("extension/contentScript/app/components/organization/createOrganization.html"),
             controller: 'OrganizationsCtrl'
         })
@@ -42,7 +42,7 @@ myApp.config(function($stateProvider, $urlRouterProvider, $authProvider, $compil
             controller: 'ContributionsCtrl'
         })
         .state('bids', {
-            url: '/bids/:contributionId',
+            url: '/bids/:contributionId/:organizationId',
             templateUrl: chrome.extension.getURL("extension/contentScript/app/components/bid/createBid.html"),
             controller: 'BidsCtrl'
         })

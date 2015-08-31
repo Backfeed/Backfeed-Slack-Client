@@ -1,8 +1,9 @@
 angular.module('MyApp').controller('ContributionsCtrl',
-    function(PostMessageService, $modal) {
+    function(PostMessageService, $modal,$scope) {
         var modal = $modal.open({
             templateUrl: "ContributionsModalTmpl",
-            controller: 'ContributionsModalCtrl'
+            controller: 'ContributionsModalCtrl',
+            scope: $scope
         });
 
         modal.result.then(function() {

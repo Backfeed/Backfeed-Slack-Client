@@ -2,17 +2,17 @@ angular.module('MyApp').controller(
     'ContributionsModalCtrl',
     function($scope, $auth, $location, $rootScope,$stateParams, Contributions,
              ContributionDetail, SaveContribution, CloseContribution,$state,
-             Account, Users, $modalInstance,PostMessageService) {
+             Account, Users, $modalInstance,PostMessageService,ChannelOrg) {
 
         $scope.closeModal = function() {
             $modalInstance.dismiss('cancel');
         };
-
+        $scope.channelId = $stateParams.channelId;
         var orgExists;
 		var slackUsersMap = {};
-		
+		var orgId = '';
         $scope.currencyFormatting = function(value) { return value.toString() + " $"; };
-        $scope.organizationId = 'notintialized';
+        //$scope.organizationId = 'notintialized';
         $scope.buttonDisabled = false;
         $scope.model = {
             title : '',
@@ -42,14 +42,106 @@ angular.module('MyApp').controller(
         };
 
         console.log('comes here in controller');
+        
+        $scope.channelOrgExists = function() {
+            console.log("In channelOrgExists method");
+            $scope.channelOrgExistsData = ChannelOrg.exits({
+            	channelId: $scope.channelId,
+            	slackTeamId: $scope.slackTeamId,
+            	userId:$scope.userId
+			});
+			$scope.channelOrgExistsData.$promise.then(function(result) {
+				if(result.channleOrgExists == 'true'){
+					 $scope.users_organizations_id = result.userOrgId;
+                     $scope.organizationId = result.orgId;
+                     orgId = $scope.organizationId;
+                     $scope.model.users_organizations_id = result.userOrgId;
+                     $scope.model.owner = $scope.userId;
+                     $scope.model.contributers[0].contributer_id = $scope.userId;
+                     $scope.model.contributers[0].contributer_name = $scope.displayName;
+                     $scope.model.contributers[0].className = "media contributer-cell";
+                     angular.element('#'+$scope.model.contributers[0].contributer_id).trigger('focus');
+                     sliderDivElement = angular.element('#slider'+$scope.model.contributers[0].contributer_id+" div");
+                     sliderDivElement.removeClass('ui-widget-header-active');
+ 					sliderDivElement.addClass('ui-widget-header-active');
+ 					sliderSpanElement = angular.element('#slider'+$scope.model.contributers[0].contributer_id+" span");
+ 					sliderSpanElement.removeClass('ui-slider-handle-show');
+ 					sliderSpanElement.addClass('ui-slider-handle-show');
+ 					$scope.model.contributers[0].className = "media contributer-cell active-contributer";
+                     PostMessageService.gesture.showIframe();
+                     allOrgUsersData = Users.getAllOrgUsersData();
+                     if (allOrgUsersData == undefined) {
+                         $scope.getOrgUsers();
+                     } else {
+
+                         $scope.users = allOrgUsersData;
+                         for(i = 0 ; i<$scope.users.length ; i++){
+     						slackUsersMap[$scope.users[i].id] = $scope.users[i].name;
+                             if($scope.users[i].id == $scope.model.owner ){
+                                 $scope.model.contributers[0].img =  $scope.users[i].url;
+                             }
+                         }
+                         $scope.updatedUsersList = $scope.users;
+                     }
+				}else{
+					console.log('comes here');
+					//navigate to create org screen
+                	$state.go('createOrg', {'channelId': $scope.channelId}, {reload: true});
+				}
+				
+			});
+
+                
+
+        };
+        
+        $scope.getProfile = function() {
+            Account.getProfile().success(function(user) {
+                $scope.userId = user.userId;
+                $scope.access_token = user.access_token;
+                $scope.slackTeamId = user.slackTeamId;
+                $scope.displayName = user.displayName;
+                $scope.channelOrgExists();
+                Account.setUserData(user);
+
+            }).error(function(error) {
+                if (error && error.message) {
+                    PostMessageService.gesture.showAlert(error.message, 'error');
+                } else {
+                    PostMessageService.gesture.showAlert('Please relogin', 'error');
+                }
+            });
+        };
+        
+        
 
         // if not authenticated return to splash:
         if (!$auth.isAuthenticated()) {
             $location.path('splash');
         } else {
+        	console.log(' $scope.channelId'+ $scope.channelId);
+        	if($scope.channelId && $scope.channelId != 0){
+        		userData = Account.getUserData();
+                if (userData == undefined) {
+                    console.log('userData is not defined'+userData);
+                    $scope.getProfile();
+                } else {
+                    console.log('userData is  defined'+userData);
+                    $scope.userId = userData.userId;
+                    $scope.slackTeamId = userData.slackTeamId;
+                    $scope.access_token = userData.access_token;
+                    $scope.displayName = userData.displayName;
+                    console.log('userData is  defined userId'+$scope.userId);
+                    $scope.channelOrgExists();
+                }        		
+            }
+        	
+        	
+        	
+        	
             $scope.getOrgUsers = function() {
                 $scope.data = Users.getOrg.getUsers({
-                    organizationId : $scope.organizationId
+                    organizationId : orgId
                 });
                 $scope.data.$promise.then(function(result) {
                     Users.setAllOrgUsersData(result);
@@ -78,94 +170,11 @@ angular.module('MyApp').controller(
                     //$location.path("/contribution/" + result.id);
                 });
             };
-            $scope.getProfile = function() {
-                Account.getProfile().success(function(user) {
-                    $scope.userId = user.userId;
-                    orgExists = user.orgexists;
-                    console.log('userData is not defined comes 1 orgExists'+orgExists)
-                    if (orgExists == 'true') {
-                        $scope.users_organizations_id = user.userOrgId;
-                        $scope.model.users_organizations_id = user.userOrgId;
-                        $scope.organizationId = user.orgId;
-                        $scope.access_token = user.access_token;
-                        $scope.model.owner = user.userId;
-                        $scope.model.contributers[0].contributer_id = user.userId;
-                        $scope.model.contributers[0].contributer_name = user.displayName;
-                        angular.element('#'+$scope.model.contributers[0].contributer_id).trigger('focus');
-                        sliderDivElement = angular.element('#slider'+$scope.model.contributers[0].contributer_id+" div");
-                        sliderDivElement.removeClass('ui-widget-header-active');
-						sliderDivElement.addClass('ui-widget-header-active');
-						sliderSpanElement = angular.element('#slider'+$scope.model.contributers[0].contributer_id+" span");
-						sliderSpanElement.removeClass('ui-slider-handle-show');
-						sliderSpanElement.addClass('ui-slider-handle-show');
-						$scope.model.contributers[0].className = "media contributer-cell active-contributer";
-                        $scope.getOrgUsers();
-                        PostMessageService.gesture.showIframe();
-                    }else{
-                    	//navigate to create org screen
-                    	$state.go('createOrg', {}, {reload: true});
-                    }
-                    Account.setUserData(user);
+            
 
-                }).error(function(error) {
-                    if (error && error.message) {
-                        PostMessageService.gesture.showAlert(error.message, 'error');
-                    } else {
-                        PostMessageService.gesture.showAlert('Please relogin', 'error');
-                    }
-                });
-            };
+           
 
-            $scope.ifOrgExists = function() {
-                if (Account.getUserData() != undefined) {
-                    $scope.user = Account.getUserData();
-                    if (Account.getUserData().orgexists == 'false') {
-                        orgExists = "false";
-                        return false;
-                    } else {
-                        orgExists = "true";
-                        return true;
-                    }
-                }
-
-            };
-
-            userData = Account.getUserData();
-
-            if (userData == undefined) {
-                console.log('userData is not defined'+userData);
-                $scope.getProfile();
-            } else {
-                console.log('userData is  defined'+userData);
-                $scope.userId = userData.userId;
-                console.log('userData is  defined userId'+$scope.userId);
-                orgExists = userData.orgexists;
-                console.log('userData is  defined orgexists'+orgExists);
-                if (orgExists == 'true') {
-                    $scope.users_organizations_id = userData.userOrgId;
-                    $scope.organizationId = userData.orgId;
-                    $scope.model.users_organizations_id = userData.userOrgId;
-
-                    $scope.access_token = userData.access_token;
-                    $scope.model.owner = userData.userId;
-                    $scope.model.contributers[0].contributer_id = userData.userId;
-                    $scope.model.contributers[0].contributer_name = userData.displayName;
-                    $scope.model.contributers[0].className = "media contributer-cell";
-                    angular.element('#'+$scope.model.contributers[0].contributer_id).trigger('focus');
-                    sliderDivElement = angular.element('#slider'+$scope.model.contributers[0].contributer_id+" div");
-                    sliderDivElement.removeClass('ui-widget-header-active');
-					sliderDivElement.addClass('ui-widget-header-active');
-					sliderSpanElement = angular.element('#slider'+$scope.model.contributers[0].contributer_id+" span");
-					sliderSpanElement.removeClass('ui-slider-handle-show');
-					sliderSpanElement.addClass('ui-slider-handle-show');
-					$scope.model.contributers[0].className = "media contributer-cell active-contributer";
-                    PostMessageService.gesture.showIframe();
-                }else{
-                	//navigate to create org screen
-                	$state.go('createOrg', {}, {reload: true});
-                }
-                $scope.model.owner = userData.userId;
-            }
+            
 
             $scope.updateContributer = function(selectedUserId) {
                 if(selectedUserId == ''){
@@ -212,27 +221,6 @@ angular.module('MyApp').controller(
 
             };
 
-
-
-
-            allOrgUsersData = Users.getAllOrgUsersData();
-            console.log('here orgExists is'+orgExists);
-            if (orgExists == 'true') {
-                if (allOrgUsersData == undefined) {
-                    $scope.getOrgUsers();
-                } else {
-
-                    $scope.users = allOrgUsersData;
-                    for(i = 0 ; i<$scope.users.length ; i++){
-						slackUsersMap[$scope.users[i].id] = $scope.users[i].name;
-                        if($scope.users[i].id == $scope.model.owner ){
-                            $scope.model.contributers[0].img =  $scope.users[i].url;
-                        }
-                    }
-                    $scope.updatedUsersList = $scope.users;
-                }
-
-            }
 
             $scope.contributionId = $stateParams.contributionId;
 
@@ -566,8 +554,9 @@ angular.module('MyApp').controller(
                     $scope.slackPlay(result);
 
                     $modalInstance.close('submit');
-
-                    $state.go('bids', {'contributionId': result.id});
+                    PostMessageService.sendGesture('hideIframe');
+                    console.log('orgid is'+orgId);
+                    $state.go('bids', {'contributionId': result.id,'organizationId':orgId});
 
                 }, function(error) {
                 	console.log('Error in sumbmitting Contribution');
@@ -669,7 +658,7 @@ angular.module('MyApp').controller(
 
             };
 
-            if ($auth.isAuthenticated()) {
+            if ($auth.isAuthenticated() && $scope.organizationId && $scope.organizationId != 0) {
                 $scope.contributions = Contributions.getAllContributions({
                     organizationId : $scope.organizationId
                 });

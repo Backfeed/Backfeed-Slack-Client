@@ -5,7 +5,7 @@ function beginStream() {
 	console.log("log in completed.");
 	
 	sendGesture({
-		"gesture": 'openAddOrganization',
+		"gesture": 'refreshWindows',
 		"options": {}
 	});
 	
@@ -124,8 +124,8 @@ function submitToken(token) {
 	  success: function(data) {
 	       console.log('server returned, satellizer token:'+data.token);
 	       if(data.orgChannelId != ''){
-	    	   chrome.storage.sync.set({'channelId':data.orgChannelId}, function () {
-	    	        console.log("set channelId")
+	    	        chrome.storage.sync.set({'channelId':data.orgChannelId}, function () {
+	    	    		 console.log("set channelId")
 	    	    });
 	       }
 		   localStorage.setItem('satellizer_token', data.token);
@@ -251,7 +251,7 @@ chrome.runtime.onMessage.addListener(function(msg, sender,sendResponse) {
 	    		// passing slack token to server to obtain satellizer_token (to be used in API calls)
 	    		$.ajax({
 	    		  type: 'POST',
-	    		  url: 'https://monitor.backfeed.cc/allContributionsFromUser',
+				  url: 'https://monitor.backfeed.cc/allContributionsFromUser',
 	    		  data: params,
 	    		  success: function(data) {
 	    		       console.log('server returned, satellizer token:'+data);

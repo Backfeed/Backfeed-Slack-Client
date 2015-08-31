@@ -5,11 +5,11 @@ iframe.setAttribute("frameborder", "0");
 
 $(window).resize(setIframeHeight);
 
-function openAddContributionPage() {
+function openAddContributionPage(channelId) {
 	chrome.runtime.sendMessage({
         message : {
             "gesture": 'openAddContributionPage',
-            "options": {}
+            "options": channelId
         }
     }, function(response) {
     	console.log('Here in the callback from add contribution page');
@@ -163,8 +163,11 @@ function onFloatingMenuOpened(nodes) {
 }
 
 function addContributionButton() {
-	var menuItemsList = $(this).find('#menu_items'),
-		menuItems = menuItemsList.children();
+	
+	var menuItemsList = $(this).find('#menu_items');
+	var channelId = $('#channel-list').find('.active').find('.channel_name').attr('data-channel-id');
+	console.log('channelId is '+channelId);
+	menuItems = menuItemsList.children();
 
 	var addContributionButton = menuItems.last().clone().prependTo(menuItemsList);
 	addContributionButton.removeAttr('data-which');
@@ -172,8 +175,9 @@ function addContributionButton() {
 	var contributionIcon = chrome.extension.getURL('/extension/contentScript/app/images/icon_contribution.png');
 	var buttonLabel = '<img src="' + contributionIcon + '" />&nbsp;&nbsp;Submit Contribution';
 	addContributionButton.find('a').attr('href','#').html(buttonLabel);
-
-	addContributionButton.click(openAddContributionPage);
+	addContributionButton.on('click', function() {
+		openAddContributionPage(channelId);
+	});
 
 	this.style.top = parseInt(this.style.top) - 32 + "px";
 }
@@ -189,85 +193,16 @@ function memberStatusButton() {
 }
 
 function onAddBidObservation(mutations) {
-	var channelId = '';
+	var channelIds = '';
 	chrome.storage.sync.get('channelId', function (response) {
-		channelId = response.channelId;
-		if(channelId != undefined) {
-		  	console.log("channelId is: "+channelId);
-			var channelNode = document.getElementsByClassName('channel_'+channelId);
-			//check whether user is login slack extension
-			if (channelNode.length > 0 && channelNode[0].classList.contains('active')) {
-				// in case there is more than one mutation, use only the one with added nodes.
-				var mutationWithAddedNodes = Array.from(mutations).filter(function(mutation) {
-					return mutation.addedNodes.length > 0;
-				})[0];
-
-				// Fetch only messages sent by a bot
-				var messagesFromBot = Array.from(mutationWithAddedNodes.addedNodes).filter(function(node) {
-					return node.classList && node.classList.contains('bot_message');
-				});
-				chrome.runtime.sendMessage({
-					message : {
-						"gesture": 'checkUserLogin',
-						"options": {}
-					}
-				}, function(response) {
-					if (response.login == 'true') {
-						messagesFromBot.forEach(function(message) {
-							var spanElement = $( '.message_content', $(message));
-							var imageElement = $('img', $(message));
-							var contributionIcon = chrome.extension.getURL('/extension/contentScript/app/images/icon_contribution.png');
-							imageElement.attr('src', contributionIcon);
-							var spanChildren = spanElement.children('#COMPOSE_ACTION_BID_BUTTON');
-							if (spanChildren.length == 0){
-								var spanText = spanElement.html();
-								var originalText = spanText;
-								var removalText = "New contribution submitted<br>";
-								var indexOfRemovalContent = spanText.indexOf(removalText);
-								if (indexOfRemovalContent > -1){
-									spanText = spanText.replace(removalText, "");
-									var contributionId = spanText.substring(5,spanText.indexOf("<br>"));
-									var lengthOfText = removalText.length;
-									originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length+4), "");
-									$( '.message_content', $(message)).html (originalText);
-									var openComposeButton = document.createElement("span");
-									openComposeButton.setAttribute("data-contributionId", contributionId);
-									openComposeButton.setAttribute("id", "COMPOSE_ACTION_BID_BUTTON");
-									openComposeButton.textContent = "EVALUATE";
-									var contributionIdsVar = response.contributionIds;
-									contributionIdsVar = contributionIdsVar.substring(1, contributionIdsVar.length-1);
-									var contributionIdsVarArray = contributionIdsVar.split(",");
-									for (var i = 0; i < contributionIdsVarArray.length; i++) {
-										if(contributionIdsVarArray[i].trim() == contributionId){
-											openComposeButton.textContent = "STATUS";
-										}
-									}
-									$(openComposeButton).insertBefore(spanElement);
-								}
-							}
-						});
-
-					} else {
-						messagesFromBot.forEach(function(message) {
-							var spanElement = $( '.message_content', $(message));
-							var spanChildren = spanElement.children('#COMPOSE_ACTION_BID_BUTTON');
-							if (spanChildren.length == 0){
-								var spanText = spanElement.html();
-								var originalText = spanText;
-								var removalText = "New contribution submitted<br>";
-								var indexOfRemovalContent = spanText.indexOf(removalText);
-								if (indexOfRemovalContent > -1){
-									spanText = spanText.replace(removalText, "");
-									var contributionId = spanText.substring(5,spanText.indexOf("<br>"));
-									var lengthOfText = removalText.length;
-									originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length+4), "");
-									$( '.message_content', $(message)).html(originalText);
-								}
-							}
-						});
-					}
-				});
+		channelIds = response.channelId;
+		console.log('channelIds are '+channelIds);
+		if(channelIds != undefined) {
+			var channelIdsVarArray = channelIds.split(",");
+			for (i = 0; i < channelIdsVarArray.length; i++) { 
+			    bidObservationOnChannelId(channelIdsVarArray[i],mutations);
 			}
+			
 		}
     });
 }
@@ -275,7 +210,85 @@ function onAddBidObservation(mutations) {
 /**
  * END: DOM Mutation Observers Callbacks :END
  */
+function bidObservationOnChannelId(channelId,mutations){
 
+  	
+	var channelNode = document.getElementsByClassName('channel_'+channelId);
+	//check whether user is login slack extension
+	if (channelNode.length > 0 && channelNode[0].classList.contains('active')) {
+		// in case there is more than one mutation, use only the one with added nodes.
+		var mutationWithAddedNodes = Array.from(mutations).filter(function(mutation) {
+			return mutation.addedNodes.length > 0;
+		})[0];
+
+		// Fetch only messages sent by a bot
+		var messagesFromBot = Array.from(mutationWithAddedNodes.addedNodes).filter(function(node) {
+			return node.classList && node.classList.contains('bot_message');
+		});
+		chrome.runtime.sendMessage({
+			message : {
+				"gesture": 'checkUserLogin',
+				"options": {}
+			}
+		}, function(response) {
+			if (response.login == 'true') {
+				messagesFromBot.forEach(function(message) {
+					var spanElement = $( '.message_content', $(message));
+					var imageElement = $('img', $(message));
+					var contributionIcon = chrome.extension.getURL('/extension/contentScript/app/images/icon_contribution.png');
+					imageElement.attr('src', contributionIcon);
+					var spanChildren = spanElement.children('#COMPOSE_ACTION_BID_BUTTON');
+					if (spanChildren.length == 0){
+						var spanText = spanElement.html();
+						var originalText = spanText;
+						var removalText = "New contribution submitted<br>";
+						var indexOfRemovalContent = spanText.indexOf(removalText);
+						if (indexOfRemovalContent > -1){
+							spanText = spanText.replace(removalText, "");
+							var contributionId = spanText.substring(4,spanText.indexOf("<br>"));
+							var lengthOfText = removalText.length;
+							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length+4), "");
+							$( '.message_content', $(message)).html (originalText);
+							var openComposeButton = document.createElement("span");
+							openComposeButton.setAttribute("data-contributionId", contributionId);
+							openComposeButton.setAttribute("id", "COMPOSE_ACTION_BID_BUTTON");
+							openComposeButton.textContent = "EVALUATE";
+							var contributionIdsVar = response.contributionIds;
+							contributionIdsVar = contributionIdsVar.substring(1, contributionIdsVar.length-1);
+							var contributionIdsVarArray = contributionIdsVar.split(",");
+							for (var i = 0; i < contributionIdsVarArray.length; i++) {
+								if(contributionIdsVarArray[i].trim() == contributionId){
+									openComposeButton.textContent = "STATUS";
+								}
+							}
+							$(openComposeButton).insertBefore(spanElement);
+						}
+					}
+				});
+
+			} else {
+				messagesFromBot.forEach(function(message) {
+					var spanElement = $( '.message_content', $(message));
+					var spanChildren = spanElement.children('#COMPOSE_ACTION_BID_BUTTON');
+					if (spanChildren.length == 0){
+						var spanText = spanElement.html();
+						var originalText = spanText;
+						var removalText = "New contribution submitted<br>";
+						var indexOfRemovalContent = spanText.indexOf(removalText);
+						if (indexOfRemovalContent > -1){
+							spanText = spanText.replace(removalText, "");
+							var contributionId = spanText.substring(5,spanText.indexOf("<br>"));
+							var lengthOfText = removalText.length;
+							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length+4), "");
+							$( '.message_content', $(message)).html(originalText);
+						}
+					}
+				});
+			}
+		});
+	}
+
+}
 
 // Single member is shown
 var teamMembersListObserver = new MutationObserver(onTeamMembersListObservation);

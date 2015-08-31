@@ -6,7 +6,7 @@ angular.module('MyApp')
     $scope.validationFailureForTokenName = false;
     $scope.validationFailureForCode = false;
     $scope.buttonDisabled = false;
-
+    $scope.channelId = $stateParams.channelId;
     PostMessageService.gesture.hideIframe();
     $scope.closeModal = function() {
       $modalInstance.dismiss('cancel');
@@ -18,6 +18,7 @@ angular.module('MyApp')
         name : '',
         code : '',
         token :'',
+        channelId :$scope.channelId,
         channelName :'',
         contributers : [ {
             contributer_id : '0',
@@ -355,7 +356,8 @@ angular.module('MyApp')
        var url = 'https://slack.com/api/chat.postMessage';
        console.log('url: ' + url);
 
-       var token = "xoxp-3655944058-3674335518-3694970236-83726d";
+       //var token = "xoxp-3655944058-3674335518-3694970236-83726d";
+       var token = $scope.access_token;
        var data = {
            icon_url: 'https://s-media-cache-ak0.pinimg.com/236x/71/71/f9/7171f9ba59d5055dd0a865b41ac4b987.jpg',
            username: 'backfeed-bot',
@@ -401,14 +403,15 @@ angular.module('MyApp')
                $scope.sendTestMessage(channelId, message);
            }
        }
+       $scope.sendTestMessage($scope.channelId, message);
        //sending message to each users
-       var slackUsers = $scope.users;
+       /*var slackUsers = $scope.users;
        for (userIndx in slackUsers){
     	   var slackUser = slackUsers[userIndx];
            var slackUserId = slackUser.id;
            
         	$scope.sendTestMessage(slackUserId, message);
-       }
+       }*/
    };
 
    $scope.getChannels = function() {
@@ -420,7 +423,8 @@ angular.module('MyApp')
        var url = 'https://slack.com/api/channels.list';
        console.log('url:'+url);
 
-       var token = "xoxp-3655944058-3674335518-3694970236-83726d";
+       //var token = "xoxp-3655944058-3674335518-3694970236-83726d";
+       var token = $scope.access_token;
        //	var key = 'c1bb14ae5cc544231959fc6e9af43218';
        var data = {
            token:token
@@ -434,6 +438,70 @@ angular.module('MyApp')
            url: url,
            data: data,
            success: $scope.gotChannels,
+           persist:true,
+           dataType:'JSON'
+       });
+
+   };
+   
+   
+   $scope.gotChannelsForOrgCreation = function(data) {
+       console.log('recieved Channels:');
+       //console.dir(data);
+
+       // get specific channel:
+       var chnls = data.channels;
+       for (chnIndx in chnls){
+           var chnl = chnls[chnIndx];
+           if(chnl.id == $scope.channelId){
+        	   $scope.orgModel.channelName = chnl.name;
+        	   break;
+           }
+       }
+	   	$scope.data = SaveOrg.save({},$scope.orgModel);
+		$scope.data.$promise.then(function (result) {		
+			console.log('channels Ids are'+result.channelId)
+			PostMessageService.gesture.setChannelId(result.channelId);
+			$scope.userData.orgId = result.organization_id;
+			$scope.userData.userOrgId = result.id;
+			$scope.userData.orgexists = "true";
+			console.log('Inserted org id : '+result.organization_id)
+			console.log('Inserted userorg id : '+result.id)
+		 	Account.setUserData($scope.userData);
+			//$scope.slackPlay($scope.orgModel.name);
+			PostMessageService.gesture.showAlert('Successfully created organization', 'success');
+			$modalInstance.close('submit');
+			$state.go('createContribution', {'channelId': $scope.channelId}, {reload: true});
+		}, function(error) {
+	    	console.log('Error in creating Organization');
+	    	PostMessageService.gesture.showAlert('Your Organization was not created. Please use english', 'error');	
+		});
+   };
+
+   $scope.getChannelsForOrgCreation = function() {
+
+       console.log('getting channels using access Token:'+$scope.access_token);
+
+       // 'https://slack.com/api/users.list'
+
+       var url = 'https://slack.com/api/channels.list';
+       console.log('url:'+url);
+
+       //var token = "xoxp-3655944058-3674335518-3694970236-83726d";
+       var token = $scope.access_token;
+       //	var key = 'c1bb14ae5cc544231959fc6e9af43218';
+       var data = {
+           token:token
+           //,key:key
+       };
+
+       // TBD: move to use angularJS instead of Jquery and get rid of need to change  Host when we deploy...
+       // TBD: which API ? do we get 'my borads or boards of orgenziation'
+       $.ajax({
+           type: "GET",
+           url: url,
+           data: data,
+           success: $scope.gotChannelsForOrgCreation,
            persist:true,
            dataType:'JSON'
        });
@@ -482,26 +550,8 @@ angular.module('MyApp')
 										$scope.validationFailureForCode = false;
 										console.log("In Submit method");
 										console.log($scope.orgModel)
-										$scope.data = SaveOrg.save({},$scope.orgModel);
-										$scope.data.$promise.then(function (result) {
-											if(result.channelExists == 'true'){
-												PostMessageService.gesture.showAlert('Channel '+$scope.orgModel.channelName+' already exists. Please choose another', 'error');
-												return;
-											}
-											PostMessageService.gesture.setChannelId(result.channelId);
-											$scope.userData.orgId = result.organization_id;
-											$scope.userData.userOrgId = result.id;
-											$scope.userData.orgexists = "true";
-											console.log('Inserted org id : '+result.organization_id)
-											console.log('Inserted userorg id : '+result.id)
-										 	Account.setUserData($scope.userData);
-											$scope.slackPlay($scope.orgModel.name);
-											PostMessageService.gesture.showAlert('Successfully created organization', 'success');
-											$modalInstance.close('submit');
-										}, function(error) {
-						                	console.log('Error in creating Organization');
-						                	PostMessageService.gesture.showAlert('Your Organization was not created. Please use english', 'error');	
-										});
+										$scope.getChannelsForOrgCreation();
+									
 									}
 								});
 						   }

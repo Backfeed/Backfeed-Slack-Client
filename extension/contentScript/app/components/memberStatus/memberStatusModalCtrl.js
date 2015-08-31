@@ -1,8 +1,8 @@
 angular.module('MyApp').controller(
 		'MemberStatusModalCtrl',
 		function($scope, $auth, $location, $stateParams, MemberStatus,
-				Account, Users,$modalInstance,PostMessageService,$state) {
-
+				Account, Users,$modalInstance,PostMessageService,$state,Member,MemberStatusForAllOrgs) {
+			$scope.selectedOrgId = -1
 			$scope.memberStatusModel = {
 				org_tokens:'',
 				org_reputation:'',
@@ -30,8 +30,11 @@ angular.module('MyApp').controller(
 	        
 	        $scope.getMemberStatus = function(){
 	        	if ($scope.memberId && $scope.memberId != 0) {
-					$scope.memberStatus = MemberStatus.getDetail({
-						orgId: $scope.orgId,
+	        		$scope.memberOrgs = Member.getOrgs({
+						slackTeamId: $scope.slackTeamId
+					});
+					$scope.memberStatus = MemberStatusForAllOrgs.getDetail({
+						slackTeamId: $scope.slackTeamId,
 						userId: $scope.memberId
 					});
 					$scope.memberStatus.$promise.then(function(result) {
@@ -53,6 +56,33 @@ angular.module('MyApp').controller(
 	        	}
 	        };
 	        
+	        $scope.updateTable = function(){
+	        	if ($scope.selectedOrgId && $scope.selectedOrgId != -1) {
+					$scope.memberStatus = MemberStatus.getDetail({
+						orgId: $scope.selectedOrgId,
+						userId: $scope.memberId
+					});
+					$scope.memberStatus.$promise.then(function(result) {
+						if($scope.memberId == $scope.slackUserId){
+							$scope.memberStatus ='Your';
+						}else{
+							$scope.memberStatus ='User';
+						}
+						
+						$scope.memberStatusModel = result;
+						var allcontributions = $scope.memberStatusModel.contributions;
+		                //contPercentage = 100/allcontributers.length;
+
+		                for(i=0;i<allcontributions.length;i++){
+		                	allcontributions[i].myWeight = allcontributions[i].myWeight.toFixed(2);
+		                }
+					});
+					PostMessageService.sendGesture('showIframe');
+	        	}else{
+	        		 $scope.getMemberStatus();
+	        	}
+	        };
+	        
 	        $scope.goToStatusPage = function(contributionId){
 	        	$state.go('contributionStatus', {'contributionId': contributionId});
 	        };
@@ -63,11 +93,12 @@ angular.module('MyApp').controller(
 				$location.path('splash');
 			} else {
 				$scope.memberId = $stateParams.memberId;
+				
 				$scope.getProfile = function() {
 					Account.getProfile().success(function(data) {
 						$scope.userId = data.userId;
-						$scope.orgId= data.orgId;
 						$scope.slackUserId = data.slackUserId;
+						$scope.slackTeamId = data.slackTeamId;
 						Account.setUserData(data);
 						$scope.getMemberStatus();
 					}).error(function(error) {
@@ -81,8 +112,8 @@ angular.module('MyApp').controller(
 					$scope.getProfile();
 				} else {
 					$scope.userId = userData.userId;
-					$scope.orgId= userData.orgId;
 					$scope.slackUserId = userData.slackUserId;
+					$scope.slackTeamId = userData.slackTeamId;
 					$scope.getMemberStatus();
 				}
 				

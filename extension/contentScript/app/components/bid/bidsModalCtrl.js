@@ -3,11 +3,12 @@ angular.module('MyApp')
 		  GetBidTOContribution,SaveBidTOContribution,Account,ContributionDetail,UserDetail,$modalInstance,PostMessageService,$state) {
 	  $scope.contributionId = $stateParams.contributionId;
 	  $scope.bidId = $stateParams.bidId;
+	  $scope.organizationId = $stateParams.organizationId;
 	  PostMessageService.sendGesture('hideIframe');
+	  
 	  $scope.closeModal = function() {
 		  $modalInstance.dismiss('cancel');
       };
-      
       $scope.checkNumber = function(num) {		 
 		  $scope.validationPass = !isNaN(parseFloat(num)) && isFinite(num);		  		  
       };
@@ -17,14 +18,16 @@ angular.module('MyApp')
 	        .success(function(data) {
 				Account.setUserData(data);
 				userData = Account.getUserData();
-				orgExists = data.orgexists;
-                console.log('userData is not defined comes 1 orgExists'+orgExists);
-                if (orgExists != 'true') {
+				$scope.userId = userData.userId;
+				//orgExists = data.orgexists;
+                //console.log('userData is not defined comes 1 orgExists'+orgExists);
+				getContributionForBid();
+                /*if (orgExists != 'true') {
                 	//navigate to create org screen
                 	$state.go('createOrg', {}, {reload: true});
                 }else{
                 	getContributionForBid();
-                }
+                }*/
 				
 	        })
 	        .error(function(error) {
@@ -49,13 +52,15 @@ angular.module('MyApp')
 			 $scope.getProfile();
 		 }else{
 			 $scope.bid.owner = userData.userId;
-			 orgExists = userData.orgexists;
+			 $scope.userId = userData.userId;
+			 getContributionForBid();
+			 /*orgExists = userData.orgexists;
              if (orgExists != 'true') {
              	//navigate to create org screen
              	$state.go('createOrg', {}, {reload: true});
              }else{
              	getContributionForBid();
-             }
+             }*/
 		 }
 		 
 	// if not authenticated return to splash:
@@ -71,7 +76,7 @@ angular.module('MyApp')
 			//check for exsting contribution
 			$scope.data3 = GetBidTOContribution.Bid({
 				'contributionId':$scope.contributionId,
-				'userId' : userData.userId
+				'userId' :  $scope.userId
 			});
 			$scope.data3.$promise.then(function(result1) {
 				 if(result1.bidExists == 'true'){
@@ -79,11 +84,11 @@ angular.module('MyApp')
 					 //$state.go('contributionStatus', {'contributionId': $scope.contributionId});
 				 }else{
 					 console.log('comes here'+$scope.contributionId);
-						
-						console.log('userData.userId'+userData.userId);
-						console.log('userData.orgId'+userData.orgId);
+					 $scope.organizationId = result1.organizationId;
+						console.log('userData.userId'+ $scope.userId);
+						console.log('userData.orgId'+$scope.organizationId);
 						$scope.data2 = UserDetail.getDetail({
-							'userId' : userData.userId,'organizationId':userData.orgId 
+							'userId' :  $scope.userId,'organizationId':$scope.organizationId
 						});
 						$scope.data2.$promise.then(function(result1) {
 							console.log('result.reputaion'+result1.reputaion);

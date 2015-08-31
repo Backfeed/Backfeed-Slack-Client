@@ -30,7 +30,15 @@
 				</div>
 			</div>
 		</div>
-
+		<div class="row">
+			<div class="col-sm-12">
+				<div> Select Org: 
+    				<select  name="orgSelection" ng-model="selectedOrgId" ng-change="updateTable();">
+						<option value="-1">All Orgs</option>
+      					<option ng-repeat="memberOrg in memberOrgs" value="{{memberOrg.id}}">{{memberOrg.channelName}}</option>
+    				</select></div>
+			</div>
+		</div>
 		<div class="member-stats">
 			<div class="member-stat">
 				<img class="member-stat-icon" alt="Contribution" src="/extension/contentScript/app/images/contribution.png" />

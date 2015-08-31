@@ -7,9 +7,9 @@ angular.module('MyApp').controller('MainCtrl', ["$scope", "$state","PostMessageS
 		//$state.go('createOrg', {}, {reload: true});
 	}
 
-	function goToAddContribution() {
-		console.log('Starting contributions');
-		$state.go('createContribution', {}, {reload: true});
+	function goToAddContribution(channelId) {
+		console.log('Starting contributions'+channelId);
+		$state.go('createContribution', {'channelId': channelId}, {reload: true});
 	}
 	
 	function goToAddBid(contributionId) {
@@ -32,6 +32,11 @@ angular.module('MyApp').controller('MainCtrl', ["$scope", "$state","PostMessageS
 		PostMessageService.gesture.showAlert('You need to login in order to use the extension. Click the extension icon above.', 'error');
 	}
 	
+	function refreshWindows() {
+		console.log('Refresh Windows');
+		PostMessageService.gesture.windowRefresh();
+	}
+	
 	function logout() {
 		console.log('Logging Out');
 		PostMessageService.gesture.windowRefresh();
@@ -44,6 +49,7 @@ angular.module('MyApp').controller('MainCtrl', ["$scope", "$state","PostMessageS
 		"showAlertFromMainCtr": showAlert,
 		"openContributionStatusPage": goToContributionStatus,
 		"openMemberStatusPage": goToMemberStatus,
+		"refreshWindows": refreshWindows,
 		"logout": logout
 	};
 

@@ -81,10 +81,40 @@ bfAPIServices.factory('UserDetail', [ '$resource','enviornmentURL', function($re
 	});
 } ]);
 
+bfAPIServices.factory('Member', [ '$resource','enviornmentURL', function($resource,enviornmentURL) {
+	return $resource(enviornmentURL+'organization/member/:slackTeamId', {}, {
+		getOrgs : {
+			method : 'GET',
+			params : {},
+			isArray : true
+		}
+	});
+} ]);
+
 
 bfAPIServices.factory('MemberStatus', [ '$resource','enviornmentURL', function($resource,enviornmentURL) {
 	return $resource(enviornmentURL+'member/status/:orgId/:userId', {}, {
 		getDetail : {
+			method : 'GET',
+			params : {},
+			isArray : false
+		}
+	});
+} ]);
+
+bfAPIServices.factory('MemberStatusForAllOrgs', [ '$resource','enviornmentURL', function($resource,enviornmentURL) {
+	return $resource(enviornmentURL+'member/statusallOrgs/:slackTeamId/:userId', {}, {
+		getDetail : {
+			method : 'GET',
+			params : {},
+			isArray : false
+		}
+	});
+} ]);
+
+bfAPIServices.factory('ChannelOrg', [ '$resource','enviornmentURL', function($resource,enviornmentURL) {
+	return $resource(enviornmentURL+'organization/channel/:channelId/:slackTeamId/:userId', {}, {
+		exits : {
 			method : 'GET',
 			params : {},
 			isArray : false
