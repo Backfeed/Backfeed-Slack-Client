@@ -20,6 +20,8 @@ angular.module('MyApp')
         token :'',
         channelId :$scope.channelId,
         channelName :'',
+        a :'50',
+        b :'50',
         contributers : [ {
             contributer_id : '0',
             contributer_percentage : '100',
@@ -37,6 +39,8 @@ angular.module('MyApp')
             range: 'min'
         }
     };
+    
+    
 	 
 	  
     $scope.organizations = AllOrgs.allOrgs();
@@ -46,6 +50,22 @@ angular.module('MyApp')
       $scope.data.$promise.then(function(result) {
           $scope.users = result;
           $scope.updatedUsersList = $scope.users;
+          sliderDivElement = angular.element('#sliderPassingResponsbility div');
+          sliderDivElement.removeClass('ui-widget-header-active');
+          sliderDivElement.addClass('ui-widget-header-active');
+          sliderSpanElement = angular.element('#sliderPassingResponsbility span');
+          sliderSpanElement.removeClass('ui-slider-handle-show');
+          sliderSpanElement.addClass('ui-slider-handle-show');
+          
+          sliderDivElement = angular.element('#sliderConsideration div');
+          sliderDivElement.removeClass('ui-widget-header-active');
+          sliderDivElement.addClass('ui-widget-header-active');
+          sliderSpanElement = angular.element('#sliderConsideration span');
+          sliderSpanElement.removeClass('ui-slider-handle-show');
+          sliderSpanElement.addClass('ui-slider-handle-show');
+          
+          
+          $scope.orgModel.contributers[0].className = "media contributer-cell active-contributer";
           for(i = 0 ; i<$scope.users.length ; i++){
               if($scope.users[i].id == $scope.userData.slackUserId ){
                   $scope.orgModel.contributers[0].img =  $scope.users[i].url;

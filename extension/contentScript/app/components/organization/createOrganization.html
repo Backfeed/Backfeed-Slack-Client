@@ -35,9 +35,38 @@
 				<input type="text" class="form-control" id="token" required
 					placeholder="e.g. 10000" ng-model="orgModel.token"/> <label>Total Number of Tokens</label>
 			</div>
-			
-		</div>
 
+					<div class="media-body">
+						<h4 class="media-heading">How fast do you want to pass on the responsibility over the project to new contributers ?</h4>
+						<div id="sliderPassingResponsbility" ui-slider="rangeSlider.options"
+							 class="contribution-slider"
+							
+							 ng-model="orgModel.a">
+						</div>
+						<br/>
+						<span id="spanPassingResponsbility"
+							  
+							  ng-model="orgModel.a"
+							  class="contribution-percentage"
+							  >{{orgModel.a}}%
+						</span>
+						<br/>
+						<br/>
+						<h4 class="media-heading">what would you conside as a "similiar evaluation" of contributions ?</h4>
+						<div id="sliderConsideration" ui-slider="rangeSlider.options"
+							 class="contribution-slider"
+							
+							 ng-model="orgModel.b"
+						</div>
+						<br/>
+						<span id="spanConsideration"
+							  
+							  ng-model="orgModel.b"
+							  class="contribution-percentage"
+							  >{{orgModel.b}}%
+						</span>
+					</div>
+			</div>
 		<div class="col-sm-6">
 			<h2>Contributors <img tooltip="We need your input. please specify each member of the team that has contributed so far, and the relative weight of her contribution." alt="help" src="/extension/contentScript/app/images/icon_help.png"/></h2>
 
@@ -72,6 +101,7 @@
 						</button>
 					</div>
 				</li>
+
 			</ul>
 
 			<ui-select style="width:96%" search-enabled="false"
@@ -98,6 +128,8 @@
 		</div>
 	</div>
 </div>
+
+
 
 
 </script>
