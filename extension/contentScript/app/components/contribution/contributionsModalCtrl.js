@@ -85,6 +85,8 @@ angular.module('MyApp').controller(
                      }
 				}else{
 					console.log('comes here');
+					 $modalInstance.close('submit');
+	                 PostMessageService.sendGesture('hideIframe');
 					//navigate to create org screen
                 	$state.go('createOrg', {'channelId': $scope.channelId}, {reload: true});
 				}
