@@ -488,7 +488,7 @@ angular.module('MyApp')
 			console.log('Inserted org id : '+result.organization_id)
 			console.log('Inserted userorg id : '+result.id)
 		 	Account.setUserData($scope.userData);
-			//$scope.slackPlay($scope.orgModel.name);
+			$scope.slackPlay($scope.orgModel.name);
 			PostMessageService.gesture.showAlert('Successfully created organization', 'success');
 			$modalInstance.close('submit');
 			$state.go('createContribution', {'channelId': $scope.channelId}, {reload: true});

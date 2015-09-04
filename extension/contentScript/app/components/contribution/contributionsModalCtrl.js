@@ -444,11 +444,11 @@ angular.module('MyApp').controller(
 
                 var url = 'https://slack.com/api/chat.postMessage';
                 console.log('url: ' + url);
-
+                var token = $scope.access_token;
                 var data = {
                     icon_url: 'https://s-media-cache-ak0.pinimg.com/236x/71/71/f9/7171f9ba59d5055dd0a865b41ac4b987.jpg',
                     username: 'backfeed-bot',
-                    token: "xoxp-3655944058-3674335518-3694970236-83726d",
+                    token: token,
                     channel: channelId,
                     text: message,
                     link_names: 1,
@@ -503,7 +503,8 @@ angular.module('MyApp').controller(
                 var url = 'https://slack.com/api/channels.list';
                 console.log('url:'+url);
 
-                var token = "xoxp-3655944058-3674335518-3694970236-83726d";
+                //var token = "xoxp-3655944058-3674335518-3694970236-83726d";
+                var token = $scope.access_token;
                 //	var key = 'c1bb14ae5cc544231959fc6e9af43218';
                 var data = {
                     token:token
