@@ -81,7 +81,7 @@ angular.module('MyApp')
 			$scope.data3.$promise.then(function(result1) {
 				 if(result1.bidExists == 'true'){
 					 PostMessageService.gesture.showAlert('You already bidded on this contribution.', 'error');
-					 //$state.go('contributionStatus', {'contributionId': $scope.contributionId});
+					 $state.go('contributionStatus', {'contributionId': $scope.contributionId}, {reload: true});
 				 }else{
 					 console.log('comes here'+$scope.contributionId);
 					 $scope.organizationId = result1.organizationId;
@@ -129,7 +129,7 @@ angular.module('MyApp')
 			$modalInstance.close('submit');
 			PostMessageService.gesture.showAlert('Evaluation submitted', 'success');
 			PostMessageService.gesture.hideIframe($scope.contributionId);
-			//$state.go('contributionStatus', {'contributionId': $scope.contributionId});
+			$state.go('contributionStatus', {'contributionId': $scope.contributionId}, {reload: true});
 		}, function(result) {
 			$modalInstance.close('submit');
 			PostMessageService.gesture.showAlert('You have no reputation! Submit a contribution to gain some.', 'error');
