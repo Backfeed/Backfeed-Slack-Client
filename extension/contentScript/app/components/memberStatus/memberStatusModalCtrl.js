@@ -17,6 +17,7 @@ angular.module('MyApp').controller(
 					myWeight: '',
 					title:'',
 					cTime: '',
+					tokenName: '',
 					id:''
 				} ]
 			};

@@ -103,6 +103,13 @@
 								<span ng-show="sortType == 'reputationDelta' && sortReverse" class="fa fa-caret-up"></span>
 							</a>
 						</td>
+						<td>
+							<a class="table-column-title" href="#" ng-click="sortType = 'tokenName'; sortReverse = !sortReverse">
+								Token Name
+								<span ng-show="sortType == 'tokenName' && !sortReverse" class="fa fa-caret-down"></span>
+								<span ng-show="sortType == 'tokenName' && sortReverse" class="fa fa-caret-up"></span>
+							</a>
+						</td>
 					</tr>
 					</thead>
 
@@ -113,6 +120,7 @@
 							<td>{{contribution.myWeight}}</td>
 							<td>{{contribution.currentValuation}}</td>
 							<td>{{contribution.reputationDelta}}</td>
+							<td>{{contribution.tokenName}}</td>
 						</tr>
 					</tbody>
 				</table>
