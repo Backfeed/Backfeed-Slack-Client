@@ -1,23 +1,20 @@
 angular.module('MyApp').controller('NavbarCtrl',
 		function($scope, $auth, Account, PostMessageService, $location) {
 
-			$scope.createOrg = function() {
-				console.log("Create Org");
-				$location.path("/organization");
+			$scope.addProject = function() {
+				console.log("Create Project");
+				$location.path("/project");
 			};
 
 			$scope.isAuthenticated = function() {
 				return $auth.isAuthenticated();
 			};
-			$scope.ifOrgExists = function() {
+
+			$scope.ifProjectExists = function() {
 				if (Account.getUserData() != undefined) {					
 					$scope.user = Account.getUserData();
-					console.log(Account.getUserData().orgexists)
-					if (Account.getUserData().orgexists == 'false') {
-						return false;
-					} else {
-						return true;
-					}
+					console.log(Account.getUserData().projectExists);
+					return Account.getUserData().projectExists != 'false';
 				}
 
 			};

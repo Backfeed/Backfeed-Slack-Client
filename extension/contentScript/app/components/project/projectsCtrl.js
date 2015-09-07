@@ -1,8 +1,8 @@
-angular.module('MyApp').controller('OrganizationsCtrl',
+angular.module('MyApp').controller('ProjectsCtrl',
     function(PostMessageService, $modal,$scope) {
         var modal = $modal.open({
-            templateUrl: "OrganizationsModalTmpl",
-            controller: 'OrganizationsModalCtrl',
+            templateUrl: "ProjectsModalTmpl",
+            controller: 'ProjectsModalCtrl',
             scope: $scope
         });
 

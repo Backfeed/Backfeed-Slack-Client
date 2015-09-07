@@ -2,24 +2,23 @@ angular.module('MyApp').controller(
     'ContributionsModalCtrl',
     function($scope, $auth, $location, $rootScope,$stateParams, Contributions,
              ContributionDetail, SaveContribution, CloseContribution,$state,
-             Account, Users, $modalInstance,PostMessageService,ChannelOrg) {
+             Account, Users, $modalInstance,PostMessageService,ChannelProject) {
 
         $scope.closeModal = function() {
             $modalInstance.dismiss('cancel');
         };
         $scope.channelId = $stateParams.channelId;
-        var orgExists;
 		var slackUsersMap = {};
-		var orgId = '';
+		var projectId = '';
         $scope.currencyFormatting = function(value) { return value.toString() + " $"; };
-        //$scope.organizationId = 'notintialized';
+        //$scope.projectId = 'notintialized';
         $scope.buttonDisabled = false;
         $scope.model = {
             title : '',
             file : '',
             owner : '',
             min_reputation_to_close : '',
-            users_organizations_id : '',
+            users_projects_id : '',
             contributers : [ {
                 contributer_id : '0',
                 contributer_percentage : '100',
@@ -39,40 +38,40 @@ angular.module('MyApp').controller(
 
         console.log('comes here in controller');
         
-        $scope.channelOrgExists = function() {
-            console.log("In channelOrgExists method");
-            $scope.channelOrgExistsData = ChannelOrg.exits({
+        $scope.ChannelProjectExists = function() {
+            console.log("In ChannelProjectExists method");
+            $scope.ChannelProjectExistsData = ChannelProject.exists({
             	channelId: $scope.channelId,
             	slackTeamId: $scope.slackTeamId,
             	userId:$scope.userId
 			});
-			$scope.channelOrgExistsData.$promise.then(function(result) {
+			$scope.ChannelProjectExistsData.$promise.then(function(result) {
 				if(result.channleOrgExists == 'true'){
-					 $scope.users_organizations_id = result.userOrgId;
-                     $scope.organizationId = result.orgId;
-                     orgId = $scope.organizationId;
-                     $scope.model.users_organizations_id = result.userOrgId;
+					 $scope.users_projects_id = result.userOrgId;
+                     $scope.projectId = result.orgId;
+                     projectId = $scope.projectId;
+                     $scope.model.users_projects_id = result.userOrgId;
                      $scope.model.owner = $scope.userId;
                      $scope.model.contributers[0].contributer_id = $scope.userId;
                      $scope.model.contributers[0].contributer_name = $scope.displayName;
                      $scope.model.contributers[0].className = "media contributer-cell";
                      angular.element('#'+$scope.model.contributers[0].contributer_id).trigger('focus');
-                     sliderDivElement = angular.element('#slider'+$scope.model.contributers[0].contributer_id+" div");
+                    var sliderDivElement = angular.element('#slider'+$scope.model.contributers[0].contributer_id+" div");
                      sliderDivElement.removeClass('ui-widget-header-active');
  					sliderDivElement.addClass('ui-widget-header-active');
- 					sliderSpanElement = angular.element('#slider'+$scope.model.contributers[0].contributer_id+" span");
+                    var sliderSpanElement = angular.element('#slider'+$scope.model.contributers[0].contributer_id+" span");
  					sliderSpanElement.removeClass('ui-slider-handle-show');
  					sliderSpanElement.addClass('ui-slider-handle-show');
  					$scope.model.contributers[0].className = "media contributer-cell active-contributer";
                      PostMessageService.gesture.showIframe();
-                     allOrgUsersData = Users.getAllOrgUsersData();
-                     if (allOrgUsersData == undefined) {
-                         $scope.getOrgUsers();
+                     var allProjectUsersData = Users.getAllProjectUsersData();
+                     if (allProjectUsersData == undefined) {
+                         $scope.getProjectUsers();
                      } else {
 
-                         $scope.users = allOrgUsersData;
+                         $scope.users = allProjectUsersData;
                          $scope.updatedUsersList = [];
-                         for(i = 0 ; i<$scope.users.length ; i++){
+                         for(var i=0; i<$scope.users.length ; i++){
      						slackUsersMap[$scope.users[i].id] = $scope.users[i].name;
                              if($scope.users[i].id == $scope.model.owner ){
                                  $scope.model.contributers[0].img =  $scope.users[i].url;
@@ -86,7 +85,7 @@ angular.module('MyApp').controller(
 					 $modalInstance.close('submit');
 	                 PostMessageService.sendGesture('hideIframe');
 					//navigate to create org screen
-                	$state.go('createOrg', {'channelId': $scope.channelId}, {reload: true});
+                	$state.go('addProject', {'channelId': $scope.channelId}, {reload: true});
 				}
 				
 			});
@@ -101,7 +100,7 @@ angular.module('MyApp').controller(
                 $scope.access_token = user.access_token;
                 $scope.slackTeamId = user.slackTeamId;
                 $scope.displayName = user.displayName;
-                $scope.channelOrgExists();
+                $scope.ChannelProjectExists();
                 Account.setUserData(user);
 
             }).error(function(error) {
@@ -121,7 +120,7 @@ angular.module('MyApp').controller(
         } else {
         	console.log(' $scope.channelId'+ $scope.channelId);
         	if($scope.channelId && $scope.channelId != 0){
-        		userData = Account.getUserData();
+                var userData = Account.getUserData();
                 if (userData == undefined) {
                     console.log('userData is not defined'+userData);
                     $scope.getProfile();
@@ -132,23 +131,23 @@ angular.module('MyApp').controller(
                     $scope.access_token = userData.access_token;
                     $scope.displayName = userData.displayName;
                     console.log('userData is  defined userId'+$scope.userId);
-                    $scope.channelOrgExists();
+                    $scope.ChannelProjectExists();
                 }        		
             }
         	
         	
         	
         	
-            $scope.getOrgUsers = function() {
-                $scope.data = Users.getOrg.getUsers({
-                    organizationId : orgId
+            $scope.getProjectUsers = function() {
+                $scope.data = Users.getProject.getUsers({
+                    projectId : projectId
                 });
                 $scope.data.$promise.then(function(result) {
-                    Users.setAllOrgUsersData(result);
+                    Users.setAllProjectUsersData(result);
                     $scope.users = result;
                     $scope.updatedUsersList = [];
                    
-                    for(i = 0 ; i<$scope.users.length ; i++){
+                    for(var i = 0 ; i<$scope.users.length ; i++){
 						slackUsersMap[$scope.users[i].id] = $scope.users[i].name;	
                         if($scope.users[i].id == $scope.model.owner ){
                             $scope.model.contributers[0].img =  $scope.users[i].url;
@@ -182,8 +181,8 @@ angular.module('MyApp').controller(
                 }
                 console.log('comes here firt');
                 $scope.addCollaborator(selectedUserId);
-                urlImage = '';
-                userName = '';
+                var urlImage = '';
+                var userName = '';
                 for(i = 0 ; i<$scope.users.length ; i++){
                     if($scope.users[i].id == selectedUserId ){
                         urlImage =  $scope.users[i].url;
@@ -192,11 +191,11 @@ angular.module('MyApp').controller(
                     }
                 }
 
-                allcontributers = $scope.model.contributers;
+                var allcontributers = $scope.model.contributers;
                 //contPercentage = 100/allcontributers.length;
 
-                for(i=0;i<allcontributers.length;i++){
-                    if(allcontributers[i].contributer_id == 0 && allcontributers[i].contributer_percentage == ''){
+                for (var i=0; i<allcontributers.length; i++) {
+                    if (allcontributers[i].contributer_id == 0 && allcontributers[i].contributer_percentage == ''){
                     	console.log('comes here firt');
                         allcontributers[i].contributer_id = selectedUserId;
                         
@@ -209,10 +208,10 @@ angular.module('MyApp').controller(
                 $scope.changeContribution(selectedUserId,userName);
                 setTimeout(function(){ 
                 	angular.element('#'+selectedUserId).trigger('focus');
-                	 sliderDivElement = angular.element('#slider'+selectedUserId+" div");
+                    var sliderDivElement = angular.element('#slider'+selectedUserId+" div");
                      sliderDivElement.removeClass('ui-widget-header-active');
  					sliderDivElement.addClass('ui-widget-header-active');
- 					sliderSpanElement = angular.element('#slider'+selectedUserId+" span");
+                    var sliderSpanElement = angular.element('#slider'+selectedUserId+" span");
  					sliderSpanElement.removeClass('ui-slider-handle-show');
  					sliderSpanElement.addClass('ui-slider-handle-show');
  					$scope.model.contributers[0].className = "media contributer-cell active-contributer";
@@ -229,7 +228,7 @@ angular.module('MyApp').controller(
                 file : '',
                 owner : '',
                 min_reputation_to_close : '',
-                users_organizations_id : '',
+                users_projects_id : '',
                 contributionContributers : [ {
                     contributer_id : '',
                     contributer_percentage : ''
@@ -244,7 +243,7 @@ angular.module('MyApp').controller(
             };
 
             $scope.getContribution = function(entity) {
-                var constributionId = 0;
+                var contributionId = 0;
                 if (entity) {
                     contributionId = entity.id;
                 }
@@ -256,10 +255,10 @@ angular.module('MyApp').controller(
             $scope.clickContributer = function(contributerId) {
             	angular.element('#'+contributerId).trigger('focus');
             	console.log('contributerId is '+contributerId);
-            	allcontributers = $scope.model.contributers;
+                var allcontributers = $scope.model.contributers;
             	var sliderDivElement;
             	var sliderSpanElement;
-            	 for(i=0;i<allcontributers.length;i++){
+            	 for(var i=0;i<allcontributers.length;i++){
  						 if(allcontributers[i].contributer_id != contributerId){
 	 							sliderDivElement = angular.element('#slider'+allcontributers[i].contributer_id+" div");
 	 							sliderDivElement.removeClass('ui-widget-header-active');
@@ -288,34 +287,35 @@ angular.module('MyApp').controller(
                     valid = false;
                 }
                 var sliderDivElement;
+                var sliderSpanElement;
                 for(i=0;i<allContributers.length;i++){
 					if(allContributers[i].contributer_id != 0){
 						 if(allContributers[i].contributer_id != contributerId){
-							 	allContributers[i].className = "media contributer-cell";
-							 	sliderDivElement = angular.element('#slider'+allContributers[i].contributer_id+" div");
-							 	sliderDivElement.removeClass('ui-widget-header-active');
-							 	sliderSpanElement = angular.element('#slider'+allContributers[i].contributer_id+" span");
-	 							sliderSpanElement.removeClass('ui-slider-handle-show');
-	                            //totalEarlierRemaining = totalEarlierRemaining + +allContributers[i].contributer_percentage
-	                        }else{
-	                        	
-	                            if(userName != ''){
-	                                console.log('comes inside is '+userName+allContributers[i].contributer_id);
-	                                allContributers[i].contributer_name = userName;
-	                               
-	                            }else{
-	                            	angular.element('#'+allContributers[i].contributer_id).trigger('focus');
-	                            	sliderDivElement = angular.element('#slider'+allContributers[i].contributer_id+" div");
-	                            	sliderDivElement.removeClass('ui-widget-header-active');
-	                            	sliderDivElement.addClass('ui-widget-header-active');
-	                            	sliderSpanElement = angular.element('#slider'+allContributers[i].contributer_id+" span");
-		 							sliderSpanElement.removeClass('ui-slider-handle-show');
-		 							sliderSpanElement.addClass('ui-slider-handle-show');
-	                            	allContributers[i].className = "media contributer-cell active-contributer";
-	                            }
+                            allContributers[i].className = "media contributer-cell";
+                            sliderDivElement = angular.element('#slider'+allContributers[i].contributer_id+" div");
+                            sliderDivElement.removeClass('ui-widget-header-active');
+                            sliderSpanElement = angular.element('#slider'+allContributers[i].contributer_id+" span");
+                            sliderSpanElement.removeClass('ui-slider-handle-show');
+                            //totalEarlierRemaining = totalEarlierRemaining + +allContributers[i].contributer_percentage
+                        }else{
+
+                            if(userName != ''){
+                                console.log('comes inside is '+userName+allContributers[i].contributer_id);
+                                allContributers[i].contributer_name = userName;
+
+                            }else{
+                                angular.element('#'+allContributers[i].contributer_id).trigger('focus');
+                                sliderDivElement = angular.element('#slider'+allContributers[i].contributer_id+" div");
+                                sliderDivElement.removeClass('ui-widget-header-active');
+                                sliderDivElement.addClass('ui-widget-header-active');
+                                sliderSpanElement = angular.element('#slider'+allContributers[i].contributer_id+" span");
+                                sliderSpanElement.removeClass('ui-slider-handle-show');
+                                sliderSpanElement.addClass('ui-slider-handle-show');
+                                allContributers[i].className = "media contributer-cell active-contributer";
+                            }
 
 
-	                        }
+                        }
 						totalContribution = totalContribution + +allContributers[i].contribution1;
 					}else{
 						valid = false;
@@ -372,12 +372,12 @@ angular.module('MyApp').controller(
             
            
             $scope.changePercentage = function(contributerId, contributerPercentage) {
-            	allcontributers = $scope.model.contributers;
+                var allcontributers = $scope.model.contributers;
             	var find = '<br>';
             	var re = new RegExp(find, 'g');
             	contributerPercentage = contributerPercentage.replace(re, '');
             	contributerPercentage = contributerPercentage.trim();
-            	if(allcontributers.length <=1){
+            	if(allcontributers.length <= 1){
             		allcontributers[0].contributer_percentage = 100;
             		return;
             	}
@@ -386,18 +386,18 @@ angular.module('MyApp').controller(
             		$scope.buttonDisabled = true;
             		return;
             	}
-                totalContributionWithoutCurrent = 0;
-                for(i=0;i<allcontributers.length;i++){
+                var totalContributionWithoutCurrent = 0;
+                for(var i=0;i<allcontributers.length;i++){
 					if(allcontributers[i].contributer_id != 0){
 						 if(allcontributers[i].contributer_id != contributerId){
 							 totalContributionWithoutCurrent = totalContributionWithoutCurrent + +allcontributers[i].contribution1;
 	                        }
 					}
 				}
+
+                var remainingPercentage = 100 - +contributerPercentage;
                 
-                remainingPercentage = 100 - +contributerPercentage;
-                
-                for(i=0;i<allcontributers.length;i++){
+                for(var i=0; i<allcontributers.length; i++){
 					if(allcontributers[i].contributer_id != 0){
 						 if(allcontributers[i].contributer_id == contributerId){
 							 allcontributers[i].contribution1 = totalContributionWithoutCurrent * contributerPercentage / remainingPercentage ;
@@ -454,7 +454,7 @@ angular.module('MyApp').controller(
                 };
 
                 // TODO: move to use angularJS instead of Jquery and get rid of need to change  Host when we deploy...
-                // TODO: which API ? do we get 'my borads or boards of orgenziation'.
+                // TODO: which API ? do we get 'my boards or boards of project'.
                 //$http.get(url, data).success(function(response) {
                 //    console.log('message posted successfully!');
                 //}).error(function(response) {
@@ -478,14 +478,14 @@ angular.module('MyApp').controller(
                 //console.dir(data);
 
                 // get specific channel:
-                var chnls = data.channels;
-                for (chnIndx in chnls){                
-                    var chnl = chnls[chnIndx];                   
+                var channels = data.channels;
+                for (var channelIndex in channels){
+                    var channel = channels[channelIndex];
                     // TODO removed hardcoded dependency on channel name
-                    if(chnl.id == $scope.currentSavedContribution.channelId){
+                    if(channel.id == $scope.currentSavedContribution.channelId){
                         console.log('is random sending ...:');
 
-                        var channelId = chnl.id;
+                        var channelId = channel.id;
                         var message = $scope.buildContributionMessage($scope.currentSavedContribution);
                         $scope.sendTestMessage(channelId, message);
                     }
@@ -510,7 +510,7 @@ angular.module('MyApp').controller(
                 };
 
                 // TBD: move to use angularJS instead of Jquery and get rid of need to change  Host when we deploy...
-                // TBD: which API ? do we get 'my borads or boards of orgenziation'
+                // TBD: which API ? do we get 'my boards or boards of project'
                 $.ajax({
                     type: "GET",
                     url: url,
@@ -534,9 +534,9 @@ angular.module('MyApp').controller(
             // *****************************************************
             // function definition
             $scope.onSubmit = function() {
-                allcontributers = $scope.model.contributers;
-                totalActive = 0;
-                for(i=0;i<allcontributers.length;i++){
+                var allcontributers = $scope.model.contributers;
+                var totalActive = 0;
+                for(var i=0;i<allcontributers.length;i++){
                     if(allcontributers[i].contributer_id != 0){
                         totalActive = totalActive + 1;
                     }
@@ -556,11 +556,11 @@ angular.module('MyApp').controller(
 
                     $modalInstance.close('submit');
                     PostMessageService.sendGesture('hideIframe');
-                    console.log('orgid is'+orgId);
-                    $state.go('evaluations', {'contributionId': result.id,'organizationId':orgId});
+                    console.log('projectId is'+projectId);
+                    $state.go('evaluations', {'contributionId': result.id,'projectId':projectId});
 
                 }, function(error) {
-                	console.log('Error in sumbmitting Contribution');
+                	console.log('Error in submitting Contribution');
                 	PostMessageService.gesture.showAlert('Your Contribution was not submitted. Please use english', 'error');
                });
             };
@@ -568,12 +568,12 @@ angular.module('MyApp').controller(
             $scope.removeCollaboratorItem = function(contributerId,index) {
                 $scope.model.contributers.splice(index, 1);
                 $scope.changeContribution(contributerId,'');
-                allcontributers = $scope.model.contributers;
+                var allcontributers = $scope.model.contributers;
                 $scope.updatedUsersList = [];
                 $scope.selectedContributerId = '';
-                for(i = 0 ; i<$scope.users.length ; i++){
-                    userExist = false;
-                    for(j=0;j<allcontributers.length;j++){
+                for(var i = 0 ; i<$scope.users.length ; i++){
+                    var userExist = false;
+                    for(var j=0;j<allcontributers.length;j++){
                         if($scope.users[i].id == allcontributers[j].contributer_id ){
                             userExist = true;
                             break;
@@ -617,15 +617,15 @@ angular.module('MyApp').controller(
 
             $scope.addCollaborator = function(selectedUserId) {
                 console.log('comes here in add'+selectedUserId);
-                allcontributers = $scope.model.contributers;
+                var allcontributers = $scope.model.contributers;
                 $scope.updatedUsersList = [];
                 $scope.selectedContributerId = '';
-                for(i = 0 ; i<$scope.users.length ; i++){
+                for(var i = 0 ; i<$scope.users.length ; i++){
                     if($scope.users[i].id == selectedUserId){
                         continue;
                     }
-                    userExist = false;
-                    for(j=0;j<allcontributers.length;j++){
+                    var userExist = false;
+                    for(var j=0;j<allcontributers.length;j++){
                         if($scope.users[i].id == allcontributers[j].contributer_id){
                             userExist = true;
                             break;
@@ -659,9 +659,9 @@ angular.module('MyApp').controller(
 
             };
 
-            if ($auth.isAuthenticated() && $scope.organizationId && $scope.organizationId != 0) {
+            if ($auth.isAuthenticated() && $scope.projectId && $scope.projectId != 0) {
                 $scope.contributions = Contributions.getAllContributions({
-                    organizationId : $scope.organizationId
+                    projectId: $scope.projectId
                 });
             }
         }

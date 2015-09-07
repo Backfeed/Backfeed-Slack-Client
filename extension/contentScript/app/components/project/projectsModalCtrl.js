@@ -1,18 +1,20 @@
-angular.module('MyApp')
-  .controller('OrganizationsModalCtrl', function($scope,$auth,$location,$stateParams,SaveOrg,Account,
-		  Users,AllSlackUsers,CheckOrgTokenName,AllOrgs,$modalInstance,$state,CheckOrgCode,PostMessageService) {
+angular.module('MyApp').controller('ProjectsModalCtrl',
+    function($scope, $auth, $location, $stateParams, SaveProject, Account, Users, AllSlackUsers, CheckProjectTokenName,
+             $modalInstance, $state, CheckProjectCode, PostMessageService) {
 
-    $scope.userData= ''
+    $scope.userData= '';
     $scope.validationFailureForTokenName = false;
     $scope.validationFailureForCode = false;
     $scope.buttonDisabled = false;
     $scope.channelId = $stateParams.channelId;
+
     PostMessageService.gesture.hideIframe();
+
     $scope.closeModal = function() {
       $modalInstance.dismiss('cancel');
     };
 	
-    $scope.orgModel = {
+    $scope.projectModel = {
         token_name : '',
         slack_teamid : '',
         name : '',
@@ -39,21 +41,16 @@ angular.module('MyApp')
             range: 'min'
         }
     };
-    
-    
-	 
-	  
-    $scope.organizations = AllOrgs.allOrgs();
-	  
-    $scope.getOrgUsers = function() {
+
+    $scope.getProjectUsers = function() {
       $scope.data = AllSlackUsers.allSlackUsers();
       $scope.data.$promise.then(function(result) {
           $scope.users = result;
           $scope.updatedUsersList = [];
-          sliderDivElement = angular.element('#sliderPassingResponsbility div');
+          sliderDivElement = angular.element('#sliderPassingResponsibility div');
           sliderDivElement.removeClass('ui-widget-header-active');
           sliderDivElement.addClass('ui-widget-header-active');
-          sliderSpanElement = angular.element('#sliderPassingResponsbility span');
+          sliderSpanElement = angular.element('#sliderPassingResponsibility span');
           sliderSpanElement.removeClass('ui-slider-handle-show');
           sliderSpanElement.addClass('ui-slider-handle-show');
           
@@ -63,22 +60,22 @@ angular.module('MyApp')
           sliderSpanElement = angular.element('#sliderConsideration span');
           sliderSpanElement.removeClass('ui-slider-handle-show');
           sliderSpanElement.addClass('ui-slider-handle-show');
-          
-          
-          $scope.orgModel.contributers[0].className = "media contributer-cell active-contributer";
-          for(i = 0 ; i<$scope.users.length ; i++){
-              if($scope.users[i].id == $scope.userData.slackUserId ){
-                  $scope.orgModel.contributers[0].img =  $scope.users[i].url;
-                  $scope.orgModel.contributers[0].contributer_name =  $scope.users[i].name;
-                  angular.element('#'+$scope.orgModel.contributers[0].contributer_id).trigger('focus');
-                  sliderDivElement = angular.element('#slider'+$scope.orgModel.contributers[0].contributer_id+" div");
+
+          $scope.projectModel.contributers[0].className = "media contributer-cell active-contributer";
+
+          for (var i = 0; i<$scope.users.length; i++) {
+              if ($scope.users[i].id == $scope.userData.slackUserId ) {
+                  $scope.projectModel.contributers[0].img =  $scope.users[i].url;
+                  $scope.projectModel.contributers[0].contributer_name =  $scope.users[i].name;
+                  angular.element('#'+$scope.projectModel.contributers[0].contributer_id).trigger('focus');
+                  sliderDivElement = angular.element('#slider'+$scope.projectModel.contributers[0].contributer_id+" div");
                   sliderDivElement.removeClass('ui-widget-header-active');
                   sliderDivElement.addClass('ui-widget-header-active');
-                  sliderSpanElement = angular.element('#slider'+$scope.orgModel.contributers[0].contributer_id+" span");
+                  sliderSpanElement = angular.element('#slider'+$scope.projectModel.contributers[0].contributer_id+" span");
                   sliderSpanElement.removeClass('ui-slider-handle-show');
                   sliderSpanElement.addClass('ui-slider-handle-show');
-                  $scope.orgModel.contributers[0].className = "media contributer-cell active-contributer";
-              }else{
+                  $scope.projectModel.contributers[0].className = "media contributer-cell active-contributer";
+              } else {
             	  $scope.updatedUsersList.push($scope.users[i]);
               }
           }
@@ -86,34 +83,34 @@ angular.module('MyApp')
     };
 
     $scope.getProfile = function() {
-    Account.getProfile().success(function(user) {
-        Account.setUserData(user);
-        $scope.userData = Account.getUserData();
-        $scope.userId = $scope.userData.userId;
-        $scope.userName = $scope.userData.displayName;
-        $scope.orgModel.name = $scope.userData.slackTeamName;
-        $scope.orgModel.slack_teamid = $scope.userData.slackTeamId;
-        $scope.access_token = $scope.userData.access_token;
-        $scope.orgModel.contributers[0].contributer_id = $scope.userData.slackUserId;
-        $scope.orgModel.contributers[0].contributer_name = $scope.userData.displayName;
-        angular.element('#'+$scope.orgModel.contributers[0].contributer_id).trigger('focus');
-        sliderDivElement = angular.element('#slider'+$scope.orgModel.contributers[0].contributer_id+" div");
-        sliderDivElement.removeClass('ui-widget-header-active');
-        sliderDivElement.addClass('ui-widget-header-active');
-        sliderSpanElement = angular.element('#slider'+$scope.orgModel.contributers[0].contributer_id+" span");
-        sliderSpanElement.removeClass('ui-slider-handle-show');
-        sliderSpanElement.addClass('ui-slider-handle-show');
-        $scope.orgModel.contributers[0].className = "media contributer-cell active-contributer";
-        $scope.getOrgUsers();
-        PostMessageService.gesture.showIframe();
-    })
-    .error(function(error) {
-        if (error && error.message) {
-            PostMessageService.gesture.showAlert(error.message, 'error');
-        } else {
-            PostMessageService.gesture.showAlert('Please relogin', 'error');
-        }
-    });
+        Account.getProfile().success(function(user) {
+            Account.setUserData(user);
+            $scope.userData = Account.getUserData();
+            $scope.userId = $scope.userData.userId;
+            $scope.userName = $scope.userData.displayName;
+            $scope.projectModel.name = $scope.userData.slackTeamName;
+            $scope.projectModel.slack_teamid = $scope.userData.slackTeamId;
+            $scope.access_token = $scope.userData.access_token;
+            $scope.projectModel.contributers[0].contributer_id = $scope.userData.slackUserId;
+            $scope.projectModel.contributers[0].contributer_name = $scope.userData.displayName;
+            angular.element('#'+$scope.projectModel.contributers[0].contributer_id).trigger('focus');
+            sliderDivElement = angular.element('#slider'+$scope.projectModel.contributers[0].contributer_id+" div");
+            sliderDivElement.removeClass('ui-widget-header-active');
+            sliderDivElement.addClass('ui-widget-header-active');
+            sliderSpanElement = angular.element('#slider'+$scope.projectModel.contributers[0].contributer_id+" span");
+            sliderSpanElement.removeClass('ui-slider-handle-show');
+            sliderSpanElement.addClass('ui-slider-handle-show');
+            $scope.projectModel.contributers[0].className = "media contributer-cell active-contributer";
+            $scope.getProjectUsers();
+            PostMessageService.gesture.showIframe();
+        })
+        .error(function(error) {
+            if (error && error.message) {
+                PostMessageService.gesture.showAlert(error.message, 'error');
+            } else {
+                PostMessageService.gesture.showAlert('Please relogin', 'error');
+            }
+        });
     };
 
      $scope.userData = Account.getUserData();
@@ -123,108 +120,112 @@ angular.module('MyApp')
          $scope.getProfile();
      } else {
          $scope.userId = $scope.userData.userId;
-         $scope.orgModel.name = $scope.userData.slackTeamName;
-         $scope.orgModel.slack_teamid = $scope.userData.slackTeamId;
-         $scope.orgModel.contributers[0].contributer_id = $scope.userData.slackUserId;
-         $scope.orgModel.contributers[0].contributer_name = $scope.userData.displayName;
-         angular.element('#'+$scope.orgModel.contributers[0].contributer_id).trigger('focus');
-         sliderDivElement = angular.element('#slider'+$scope.orgModel.contributers[0].contributer_id+" div");
+         $scope.projectModel.name = $scope.userData.slackTeamName;
+         $scope.projectModel.slack_teamid = $scope.userData.slackTeamId;
+         $scope.projectModel.contributers[0].contributer_id = $scope.userData.slackUserId;
+         $scope.projectModel.contributers[0].contributer_name = $scope.userData.displayName;
+         angular.element('#'+$scope.projectModel.contributers[0].contributer_id).trigger('focus');
+         var sliderDivElement = angular.element('#slider'+$scope.projectModel.contributers[0].contributer_id+" div");
          sliderDivElement.removeClass('ui-widget-header-active');
          sliderDivElement.addClass('ui-widget-header-active');
-         sliderSpanElement = angular.element('#slider'+$scope.orgModel.contributers[0].contributer_id+" span");
+         var sliderSpanElement = angular.element('#slider'+$scope.projectModel.contributers[0].contributer_id+" span");
          sliderSpanElement.removeClass('ui-slider-handle-show');
          sliderSpanElement.addClass('ui-slider-handle-show');
-         $scope.orgModel.contributers[0].className = "media contributer-cell active-contributer";
+         $scope.projectModel.contributers[0].className = "media contributer-cell active-contributer";
          $scope.access_token = $scope.userData.access_token;
-         $scope.getOrgUsers();
+         $scope.getProjectUsers();
          PostMessageService.gesture.showIframe();
      }
 
-     $scope.getOrgUsers();
+     $scope.getProjectUsers();
 
      $scope.updateContributer = function(selectedUserId) {
          if(selectedUserId == ''){
              return;
          }
          $scope.addCollaborator(selectedUserId);
-         urlImage = '';
-         userName = '';
+         var urlImage = '';
+         var userName = '';
          for(i = 0 ; i<$scope.users.length ; i++){
-             if($scope.users[i].id == selectedUserId ){
+             if($scope.users[i].id == selectedUserId) {
                  urlImage =  $scope.users[i].url;
                  userName = $scope.users[i].name;
                  break;
              }
          }
 
-         allcontributers = $scope.orgModel.contributers;
+         var allcontributers = $scope.projectModel.contributers;
 
-         for(i=0;i<allcontributers.length;i++){
+         for(var i=0; i<allcontributers.length; i++){
              if(allcontributers[i].contributer_id == 0 && allcontributers[i].contributer_percentage == ''){
                  allcontributers[i].contributer_id = selectedUserId;
                  allcontributers[i].img = urlImage;
 
              }
          }
+
          $scope.changeContribution(selectedUserId,userName);
+
          setTimeout(function(){
             angular.element('#'+selectedUserId).trigger('focus');
-             sliderDivElement = angular.element('#slider'+selectedUserId+" div");
-              sliderDivElement.removeClass('ui-widget-header-active');
-                sliderDivElement.addClass('ui-widget-header-active');
-                sliderSpanElement = angular.element('#slider'+selectedUserId+" span");
-                sliderSpanElement.removeClass('ui-slider-handle-show');
-                sliderSpanElement.addClass('ui-slider-handle-show');
-                $scope.orgModel.contributers[0].className = "media contributer-cell active-contributer";
-
+            var sliderDivElement = angular.element('#slider'+selectedUserId+" div");
+            sliderDivElement.removeClass('ui-widget-header-active');
+            sliderDivElement.addClass('ui-widget-header-active');
+            var sliderSpanElement = angular.element('#slider'+selectedUserId+" span");
+            sliderSpanElement.removeClass('ui-slider-handle-show');
+            sliderSpanElement.addClass('ui-slider-handle-show');
+            $scope.projectModel.contributers[0].className = "media contributer-cell active-contributer";
          }, 100);
-
-
      };
 
      $scope.clickContributer = function(contributerId) {
         angular.element('#'+contributerId).trigger('focus');
         console.log('contributerId is '+contributerId);
-        allcontributers = $scope.orgModel.contributers;
-        var sliderDivElement;
-        var sliderSpanElement;
-         for(i=0;i<allcontributers.length;i++){
-                     if(allcontributers[i].contributer_id != contributerId){
-                            sliderDivElement = angular.element('#slider'+allcontributers[i].contributer_id+" div");
-                            sliderDivElement.removeClass('ui-widget-header-active');
-                            allcontributers[i].className = "media contributer-cell";
-                            sliderSpanElement = angular.element('#slider'+allcontributers[i].contributer_id+" span");
-                            sliderSpanElement.removeClass('ui-slider-handle-show');
-                            allcontributers[i].className = "media contributer-cell";
-                        }else{
-                            angular.element('#'+allcontributers[i].contributer_id).trigger('focus');
-                            sliderDivElement = angular.element('#slider'+allcontributers[i].contributer_id+" div");
-                            sliderDivElement.removeClass('ui-widget-header-active');
-                            sliderDivElement.addClass('ui-widget-header-active');
-                            sliderSpanElement = angular.element('#slider'+allcontributers[i].contributer_id+" span");
-                            sliderSpanElement.removeClass('ui-slider-handle-show');
-                            sliderSpanElement.addClass('ui-slider-handle-show');
-                            allcontributers[i].className = "media contributer-cell active-contributer";
-                        }
-            }
+
+        var allcontributers = $scope.projectModel.contributers,
+            sliderDivElement,
+            sliderSpanElement;
+
+        for(var i=0; i<allcontributers.length; i++) {
+                 if (allcontributers[i].contributer_id != contributerId) {
+                        sliderDivElement = angular.element('#slider'+allcontributers[i].contributer_id+" div");
+                        sliderDivElement.removeClass('ui-widget-header-active');
+                        allcontributers[i].className = "media contributer-cell";
+                        sliderSpanElement = angular.element('#slider'+allcontributers[i].contributer_id+" span");
+                        sliderSpanElement.removeClass('ui-slider-handle-show');
+                        allcontributers[i].className = "media contributer-cell";
+                    } else {
+                        angular.element('#'+allcontributers[i].contributer_id).trigger('focus');
+                        sliderDivElement = angular.element('#slider'+allcontributers[i].contributer_id+" div");
+                        sliderDivElement.removeClass('ui-widget-header-active');
+                        sliderDivElement.addClass('ui-widget-header-active');
+                        sliderSpanElement = angular.element('#slider'+allcontributers[i].contributer_id+" span");
+                        sliderSpanElement.removeClass('ui-slider-handle-show');
+                        sliderSpanElement.addClass('ui-slider-handle-show');
+                        allcontributers[i].className = "media contributer-cell active-contributer";
+                    }
+        }
      };
 
      $scope.changeContribution = function(contributerId,userName) {
-         totalContribution = 0;
-         allcontributers = $scope.orgModel.contributers;
-         valid = true;
+         var totalContribution = 0,
+             allcontributers = $scope.projectModel.contributers,
+             valid = true;
+
          console.log('userName is '+userName);
+
          if(allcontributers.length){
              valid = false;
          }
          var sliderDivElement;
-         for(i=0;i<allcontributers.length;i++){
+
+         for(var i=0;i<allcontributers.length;i++){
                 if(allcontributers[i].contributer_id != 0){
                      if(allcontributers[i].contributer_id != contributerId){
                             allcontributers[i].className = "media contributer-cell";
                             sliderDivElement = angular.element('#slider'+allcontributers[i].contributer_id+" div");
                             sliderDivElement.removeClass('ui-widget-header-active');
-                            sliderSpanElement = angular.element('#slider'+allcontributers[i].contributer_id+" span");
+                            var sliderSpanElement = angular.element('#slider'+allcontributers[i].contributer_id+" span");
                             sliderSpanElement.removeClass('ui-slider-handle-show');
                         }else{
                             if(userName != ''){
@@ -266,14 +267,14 @@ angular.module('MyApp')
      };
 
      $scope.removeCollaboratorItem = function(contributerId,index) {
-         $scope.orgModel.contributers.splice(index, 1);
+         $scope.projectModel.contributers.splice(index, 1);
          $scope.changeContribution(contributerId,'');
-         allcontributers = $scope.orgModel.contributers;
+         var allcontributers = $scope.projectModel.contributers;
          $scope.updatedUsersList = [];
          $scope.selectedContributerId = '';
-         for(i = 0 ; i<$scope.users.length ; i++){
-             userExist = false;
-             for(j=0;j<allcontributers.length;j++){
+         for(var i = 0; i<$scope.users.length; i++){
+             var userExist = false;
+             for(var j=0;j<allcontributers.length;j++){
                  if($scope.users[i].id == allcontributers[j].contributer_id ){
                      userExist = true;
                      break;
@@ -287,15 +288,15 @@ angular.module('MyApp')
 
      $scope.addCollaborator = function(selectedUserId) {
          console.log('comes here in add'+selectedUserId);
-         allcontributers = $scope.orgModel.contributers;
+         var allcontributers = $scope.projectModel.contributers;
          $scope.updatedUsersList = [];
          $scope.selectedContributerId = '';
-         for(i = 0 ; i<$scope.users.length ; i++){
+         for(var i = 0 ; i<$scope.users.length ; i++){
              if($scope.users[i].id == selectedUserId){
                  continue;
              }
-             userExist = false;
-             for(j=0;j<allcontributers.length;j++){
+             var userExist = false;
+             for(var j=0; j<allcontributers.length; j++){
                  if($scope.users[i].id == allcontributers[j].contributer_id){
                      userExist = true;
                      break;
@@ -305,7 +306,7 @@ angular.module('MyApp')
                  $scope.updatedUsersList.push($scope.users[i]);
              }
          }
-         $scope.orgModel.contributers.push({
+         $scope.projectModel.contributers.push({
              contributer_id:'0',
              contributer_percentage:'',
              contributer_name:'',
@@ -317,7 +318,7 @@ angular.module('MyApp')
      };
 
      $scope.changePercentage = function(contributerId, contributerPercentage) {
-        allcontributers = $scope.orgModel.contributers;
+        var allcontributers = $scope.projectModel.contributers;
         var find = '<br>';
     	var re = new RegExp(find, 'g');
     	contributerPercentage = contributerPercentage.replace(re, '');
@@ -331,7 +332,7 @@ angular.module('MyApp')
             $scope.buttonDisabled = true;
             return;
         }
-         totalContributionWithoutCurrent = 0;
+         var totalContributionWithoutCurrent = 0;
          for(i=0;i<allcontributers.length;i++){
                 if(allcontributers[i].contributer_id != 0){
                      if(allcontributers[i].contributer_id != contributerId){
@@ -340,9 +341,9 @@ angular.module('MyApp')
                 }
             }
 
-         remainingPercentage = 100 - +contributerPercentage;
+         var remainingPercentage = 100 - +contributerPercentage;
 
-         for(i=0;i<allcontributers.length;i++){
+         for(var i=0;i<allcontributers.length;i++){
                 if(allcontributers[i].contributer_id != 0){
                      if(allcontributers[i].contributer_id == contributerId){
                          allcontributers[i].contribution1 = totalContributionWithoutCurrent * contributerPercentage / remainingPercentage ;
@@ -362,7 +363,7 @@ angular.module('MyApp')
     //$scope.slackUsers = Users.getUsers();
 
    $scope.changeTeam = function(){
-	   console.log('comes here in logout')
+	   console.log('comes here in logout');
 	   $state.go("logout");
 	   
    };
@@ -390,7 +391,7 @@ angular.module('MyApp')
        };
 
        // TODO: move to use angularJS instead of Jquery and get rid of need to change  Host when we deploy...
-       // TODO: which API ? do we get 'my borads or boards of orgenziation'.
+       // TODO: which API ? do we get 'my boards or boards of project'.
        //$http.get(url, data).success(function(response) {
        //    console.log('message posted successfully!');
        //}).error(function(response) {
@@ -409,26 +410,26 @@ angular.module('MyApp')
    };
 
    $scope.gotChannels = function(data) {
-       console.log('recieved Channels:');
+       console.log('received Channels:');
        //console.dir(data);
 
        // get specific channel:
-       var chnls = data.channels;
-       var message = 'Organization '+$scope.currentOrgName+' is created. https://chrome.google.com/webstore/detail/backfeed-slack-extension/feglgahjbjnabofomkpmoacillfnpjpb';
-       for (chnIndx in chnls){
-           var chnl = chnls[chnIndx];
-           console.log('chnl.name:'+chnl.name);
+       var channels = data.channels;
+       var message = 'Project '+$scope.currentProjectName+' is created. https://chrome.google.com/webstore/detail/backfeed-slack-extension/feglgahjbjnabofomkpmoacillfnpjpb';
+       for (var channelIndex in channels){
+           var channel = channels[channelIndex];
+           console.log('channel.name:'+channel.name);
 
-           if(chnl.name == 'general'){
-               var channelId = chnl.id;
+           if(channel.name == 'general'){
+               var channelId = channel.id;
                $scope.sendTestMessage(channelId, message);
            }
        }
        $scope.sendTestMessage($scope.channelId, message);
        //sending message to each users
        /*var slackUsers = $scope.users;
-       for (userIndx in slackUsers){
-    	   var slackUser = slackUsers[userIndx];
+       for (userIndex in slackUsers){
+    	   var slackUser = slackUsers[userIndex];
            var slackUserId = slackUser.id;
            
         	$scope.sendTestMessage(slackUserId, message);
@@ -453,7 +454,7 @@ angular.module('MyApp')
        };
 
        // TBD: move to use angularJS instead of Jquery and get rid of need to change  Host when we deploy...
-       // TBD: which API ? do we get 'my borads or boards of orgenziation'
+       // TBD: which API ? do we get 'my boards or boards of project'
        $.ajax({
            type: "GET",
            url: url,
@@ -466,40 +467,40 @@ angular.module('MyApp')
    };
    
    
-   $scope.gotChannelsForOrgCreation = function(data) {
-       console.log('recieved Channels:');
+   $scope.gotChannelsForProjectCreation = function(data) {
+       console.log('received Channels:');
        //console.dir(data);
 
        // get specific channel:
-       var chnls = data.channels;
-       for (chnIndx in chnls){
-           var chnl = chnls[chnIndx];
-           if(chnl.id == $scope.channelId){
-        	   $scope.orgModel.channelName = chnl.name;
+       var channels = data.channels;
+       for (var channelIndex in channels){
+           var channel = channels[channelIndex];
+           if(channel.id == $scope.channelId){
+        	   $scope.projectModel.channelName = channel.name;
         	   break;
            }
        }
-	   	$scope.data = SaveOrg.save({},$scope.orgModel);
-		$scope.data.$promise.then(function (result) {		
-			console.log('channels Ids are'+result.channelId)
+	   	$scope.data = SaveProject.save({},$scope.projectModel);
+		$scope.data.$promise.then(function(result) {
+			console.log('channels Ids are'+result.channelId);
 			PostMessageService.gesture.setChannelId(result.channelId);
 			$scope.userData.orgId = result.organization_id;
 			$scope.userData.userOrgId = result.id;
-			$scope.userData.orgexists = "true";
-			console.log('Inserted org id : '+result.organization_id)
-			console.log('Inserted userorg id : '+result.id)
+			$scope.userData.projectExists = "true";
+			console.log('Inserted project id : '+result.organization_id);
+			console.log('Inserted user project id : '+result.id);
 		 	Account.setUserData($scope.userData);
-			$scope.slackPlay($scope.orgModel.name);
-			PostMessageService.gesture.showAlert('Successfully created organization', 'success');
+			$scope.slackPlay($scope.projectModel.name);
+			PostMessageService.gesture.showAlert('Successfully created project', 'success');
 			$modalInstance.close('submit');
 			$state.go('createContribution', {'channelId': $scope.channelId}, {reload: true});
 		}, function(error) {
-	    	console.log('Error in creating Organization');
-	    	PostMessageService.gesture.showAlert('Your Organization was not created. Please use english', 'error');	
+	    	console.log('Error in creating project');
+	    	PostMessageService.gesture.showAlert('Your project was not created. Please use english', 'error');
 		});
    };
 
-   $scope.getChannelsForOrgCreation = function() {
+   $scope.getChannelsForProjectCreation = function() {
 
        console.log('getting channels using access Token:'+$scope.access_token);
 
@@ -517,23 +518,23 @@ angular.module('MyApp')
        };
 
        // TBD: move to use angularJS instead of Jquery and get rid of need to change  Host when we deploy...
-       // TBD: which API ? do we get 'my borads or boards of orgenziation'
+       // TBD: which API ? do we get 'my boards or boards of project'
        $.ajax({
            type: "GET",
            url: url,
            data: data,
-           success: $scope.gotChannelsForOrgCreation,
+           success: $scope.gotChannelsForProjectCreation,
            persist:true,
            dataType:'JSON'
        });
 
    };
 
-   $scope.slackPlay = function(orgName) {
-       console.dir(orgName);
-       $scope.currentOrgName = orgName;
+   $scope.slackPlay = function(projectName) {
+       console.dir(projectName);
+       $scope.currentProjectName = projectName;
 
-       console.log('sending to slack, orgName:'+$scope.currentOrgName);
+       console.log('sending to slack, projectName: ' + $scope.currentProjectName);
        $scope.getChannels()
 
    };
@@ -544,34 +545,32 @@ angular.module('MyApp')
    
    $scope.orderProp = "name";
 	$scope.submit = function() {
-		 if($scope.orgModel.token_name != ''){
-			   $scope.data1 = CheckOrgTokenName.checkOrgTokenName({
-				   tokenName : $scope.orgModel.token_name
+		 if($scope.projectModel.token_name != ''){
+			   $scope.data1 = CheckProjectTokenName.CheckProjectTokenName({
+				   tokenName : $scope.projectModel.token_name
 				});
 				$scope.data1.$promise.then(function(result) {
 					if(result.tokenAlreadyExist == 'true'){
 						 console.log('comes here in true for token');
 						$scope.validationFailureForTokenName = true;
 						PostMessageService.gesture.showAlert('This name is already taken. Please use a different one', 'error');
-						return;
 					}else{
 						console.log('comes here in false for token');
 						$scope.validationFailureForTokenName = false;
-						 if($scope.orgModel.code != ''){
-							   $scope.data1 = CheckOrgCode.checkOrgCode({
-								   code : $scope.orgModel.code
+						 if($scope.projectModel.code != ''){
+							   $scope.data1 = CheckProjectCode.CheckProjectCode({
+								   code : $scope.projectModel.code
 								});
 								$scope.data1.$promise.then(function(result) {
 									if(result.codeAlreadyExist == 'true'){
 										$scope.validationFailureForCode = true;
 										PostMessageService.gesture.showAlert('This code is already taken. Please use a different one', 'error');
-										return;
 									}else{
 										console.log('comes here in false for token');
 										$scope.validationFailureForCode = false;
 										console.log("In Submit method");
-										console.log($scope.orgModel)
-										$scope.getChannelsForOrgCreation();
+										console.log($scope.projectModel);
+										$scope.getChannelsForProjectCreation();
 									
 									}
 								});

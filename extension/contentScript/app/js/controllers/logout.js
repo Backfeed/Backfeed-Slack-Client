@@ -1,7 +1,7 @@
 angular.module('MyApp')
   .controller('LogoutCtrl', function($auth, PostMessageService, $location, Account, Users) {
 	Account.setUserData(undefined); 
-	Users.setAllOrgUsersData(undefined);
+	Users.setAllProjectUsersData(undefined);
 
     if (!$auth.isAuthenticated()) {
         return;

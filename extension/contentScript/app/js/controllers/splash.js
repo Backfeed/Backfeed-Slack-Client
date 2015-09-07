@@ -2,7 +2,7 @@ angular.module('MyApp')
   .controller('SplashCtrl', function($scope, PostMessageService, $auth,$location,Account) {
 		var body = document.getElementsByTagName('body')[0];
 		var element = angular.element(body);
-		element.addClass('splash-background')
+		element.addClass('splash-background');
     $scope.changeView = function(view){
         $location.path(view); // path not hash
 
@@ -10,7 +10,7 @@ angular.module('MyApp')
 		var body = document.getElementsByTagName('body')[0];
 		var element = angular.element(body);
 		element.removeClass('splash-background')
-	 }
+	 };
 	
 		$scope.getProfile = function() {
 		      Account.getProfile()
@@ -22,8 +22,8 @@ angular.module('MyApp')
 		          						console.log('fpr contribution :');
 		          		$scope.changeView('/contributions')
 		          	}else{
-		          	console.log('for create org');
-		          		$scope.changeView('/organization')
+		          	console.log('for create project');
+		          		$scope.changeView('/project')
 		          	}
 		          	
 					Account.setUserData(data);
@@ -39,7 +39,7 @@ angular.module('MyApp')
 			  PostMessageService.gesture.showAlert('You have successfully logged in', 'success');
 
 			  if(Account.getUserData() == undefined){
-				console.log('this is empty')
+				console.log('this is empty');
 				$scope.getProfile();
 			  }
         })

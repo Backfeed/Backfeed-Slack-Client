@@ -1,28 +1,23 @@
-
-
 <div id='content-header'>
   <div class='text'><h1>User Page</h1></div>
 </div>
-<form  ng-controller="UsersCtrl" role="form">
 
-  <div class='title'>User</div>
-  <div class='content' style="margin: 0px;width: 985px;" >
-		<label> Name</label>
-	  	 <input type="text" ng-model="UserModel.name" class="customText"/>
-		<label>Slack Id</label>	
-	    <input  type="text" ng-model="UserModel.slack_id" /> 
-	    <label>Tokens</label>	
-	    <input  type="text" ng-model="UserModel.tokens" />
-	    <label>Reputation</label>	
-	    <input  type="text" ng-model="UserModel.reputation" />
-<section>
+<form ng-controller="UsersCtrl" role="form">
 
+    <div class='title'>User</div>
 
+    <div class='content' style="margin: 0;width: 985px;" >
+        <label> Name</label>
+         <input type="text" ng-model="UserModel.name" class="customText"/>
+        <label>Slack Id</label>
+        <input  type="text" ng-model="UserModel.slack_id" />
+        <label>Tokens</label>
+        <input  type="text" ng-model="UserModel.tokens" />
+        <label>Reputation</label>
+        <input  type="text" ng-model="UserModel.reputation" />
+    </div>
 
-  
-
-
-<section class='creation'>
-  <button  ng:click='submit()'>Save User</button>
-</section>
+    <section class='creation'>
+      <button ng-click='submit()'>Save User</button>
+    </section>
 </form>

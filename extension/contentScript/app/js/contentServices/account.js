@@ -26,7 +26,7 @@ angular.module('MyApp')
 	  };
 	})
 
-.factory('Query', function ($http,$state) {
+.factory('Query', function ($http) {
   var extractedHTags = [];
   var query = '';
   var hTags = []; 
@@ -92,16 +92,15 @@ angular.module('MyApp')
 			
 		}
 		console.log('auticomplete values:'+autocompleteValues);
-		var p5 = new Promise(function(resolve, reject) { resolve(autocompleteValues) ;});
-		return p5;
+		return new Promise(function (resolve, reject) {
+			resolve(autocompleteValues);
+		});
 		
     },
 
 	resetCTag: function () {
   		// reset tags:
-		var extractedHTags = [];
+		//var extractedHTags = [];
     }
   };
 });
-
-;

@@ -1,11 +1,11 @@
 angular.module('MyApp').controller(
 		'MemberStatusModalCtrl',
 		function($scope, $auth, $location, $stateParams, MemberStatus,
-				Account, Users,$modalInstance,PostMessageService,$state,Member,MemberStatusForAllOrgs) {
-			$scope.selectedOrgId = -1
+				Account, Users,$modalInstance,PostMessageService,$state,Member,MemberStatusForAllProjects) {
+			$scope.selectedProjectId = -1;
 			$scope.memberStatusModel = {
-				org_tokens:'',
-				org_reputation:'',
+				project_tokens:'',
+				project_reputation:'',
 				contributionLength : '',
 				url : '',
 				fullName : '',
@@ -31,10 +31,10 @@ angular.module('MyApp').controller(
 	        
 	        $scope.getMemberStatus = function(){
 	        	if ($scope.memberId && $scope.memberId != 0) {
-	        		$scope.memberOrgs = Member.getOrgs({
+	        		$scope.memberProjects = Member.getProjects({
 						slackTeamId: $scope.slackTeamId
 					});
-					$scope.memberStatus = MemberStatusForAllOrgs.getDetail({
+					$scope.memberStatus = MemberStatusForAllProjects.getDetail({
 						slackTeamId: $scope.slackTeamId,
 						userId: $scope.memberId
 					});
@@ -49,7 +49,7 @@ angular.module('MyApp').controller(
 						var allcontributions = $scope.memberStatusModel.contributions;
 		                //contPercentage = 100/allcontributers.length;
 
-		                for(i=0;i<allcontributions.length;i++){
+		                for(var i=0;i<allcontributions.length;i++){
 		                	allcontributions[i].myWeight = allcontributions[i].myWeight.toFixed(2);
 		                }
 					});
@@ -58,9 +58,9 @@ angular.module('MyApp').controller(
 	        };
 	        
 	        $scope.updateTable = function(){
-	        	if ($scope.selectedOrgId && $scope.selectedOrgId != -1) {
+	        	if ($scope.selectedProjectId && $scope.selectedProjectId != -1) {
 					$scope.memberStatus = MemberStatus.getDetail({
-						orgId: $scope.selectedOrgId,
+						projectId: $scope.selectedProjectId,
 						userId: $scope.memberId
 					});
 					$scope.memberStatus.$promise.then(function(result) {
@@ -74,7 +74,7 @@ angular.module('MyApp').controller(
 						var allcontributions = $scope.memberStatusModel.contributions;
 		                //contPercentage = 100/allcontributers.length;
 
-		                for(i=0;i<allcontributions.length;i++){
+		                for(var i=0;i<allcontributions.length;i++){
 		                	allcontributions[i].myWeight = allcontributions[i].myWeight.toFixed(2);
 		                }
 					});

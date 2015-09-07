@@ -65,7 +65,6 @@ angular.module('MyApp')
 	
 	   //	*************  currently not supported :
         PostMessageService.gesture.showAlert('Under construction.', 'warning');
-        return;
 		
 		/*
         $auth.unlink(provider)
@@ -107,7 +106,7 @@ angular.module('MyApp')
 			display_name: $scope.user.displayName,
 			id: $scope.user.id,
 			email: $scope.user.email
-		}
+		};
 
 		// TBD: move to use angularJS instead of Jquery and get rid of need to change  Host when we deploy...
 		$.ajax({
@@ -118,7 +117,7 @@ angular.module('MyApp')
 			persist:true,
 			dataType:'JSON'
 		});
-	}
+	};
 
 	var tokenSaved = function(data) {
 		console.log('tokenSaved. data:');
@@ -126,7 +125,7 @@ angular.module('MyApp')
 		
 
 	
-	}
+	};
 
 	var onTrelloAuthorized = function() {
 
@@ -143,7 +142,7 @@ angular.module('MyApp')
 
 
 	    Trello.members.get("me", function(member){
-	        console.log('trello User fullname:'+member.fullname);
+	        console.log('trello User full name:'+member.fullname);
 			saveToken(member,$scope.user.trello,'trello');
 	    });
 

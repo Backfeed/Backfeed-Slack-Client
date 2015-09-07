@@ -58,7 +58,7 @@ angular.module('MyApp').controller(
 						PostMessageService.gesture.showAlert(error.message, 'error');
 					});
 				};
-				userData = Account.getUserData();
+				var userData = Account.getUserData();
 				console.log("userData is" + userData);
 				if (userData == undefined) {
 					$scope.getProfile();

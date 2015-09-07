@@ -4,7 +4,7 @@ angular.module('MyApp').controller('EvaluationsModalCtrl',
 				 PostMessageService, $state) {
 	  $scope.contributionId = $stateParams.contributionId;
 	  $scope.evaluationId = $stateParams.evaluationId;
-	  $scope.organizationId = $stateParams.organizationId;
+	  $scope.projectId = $stateParams.projectId;
 	  PostMessageService.sendGesture('hideIframe');
 	  
 	  $scope.closeModal = function() {
@@ -25,7 +25,7 @@ angular.module('MyApp').controller('EvaluationsModalCtrl',
 				getContributionForEvaluation();
                 /*if (orgExists != 'true') {
                 	//navigate to create org screen
-                	$state.go('createOrg', {}, {reload: true});
+                	$state.go('addProject', {}, {reload: true});
                 }else{
                 	getContributionForEvaluation();
                 }*/
@@ -55,10 +55,10 @@ angular.module('MyApp').controller('EvaluationsModalCtrl',
 			 $scope.evaluation.owner = userData.userId;
 			 $scope.userId = userData.userId;
 			 getContributionForEvaluation();
-			 /*orgExists = userData.orgexists;
+			 /*orgExists = userData.projectExists;
              if (orgExists != 'true') {
              	//navigate to create org screen
-             	$state.go('createOrg', {}, {reload: true});
+             	$state.go('addProject', {}, {reload: true});
              }else{
              	getContributionForEvaluation();
              }*/
@@ -85,11 +85,12 @@ angular.module('MyApp').controller('EvaluationsModalCtrl',
 					 $state.go('contributionStatus', {'contributionId': $scope.contributionId}, {reload: true});
 				 }else{
 					 console.log('comes here'+$scope.contributionId);
-					 $scope.organizationId = result1.organizationId;
-						console.log('userData.userId'+ $scope.userId);
-						console.log('userData.orgId'+$scope.organizationId);
+					 $scope.projectId = result1.organizationId;
+						console.log('userData.userId: '+ $scope.userId);
+						console.log('userData.projectId: '+$scope.projectId);
 						$scope.data2 = UserDetail.getDetail({
-							'userId' :  $scope.userId,'organizationId':$scope.organizationId
+							userId: $scope.userId,
+							projectId: $scope.projectId
 						});
 						$scope.data2.$promise.then(function(result1) {
 							console.log('result.reputation'+result1.reputation);

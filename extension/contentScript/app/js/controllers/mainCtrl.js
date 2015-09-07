@@ -1,10 +1,11 @@
-angular.module('MyApp').controller('MainCtrl', ["$scope", "$state","PostMessageService", function($scope, $state, PostMessageService) {
+angular.module('MyApp').controller('MainCtrl', ["$scope", "$state","PostMessageService",
+	function($scope, $state, PostMessageService) {
 	
 	//************    Listen to incoming messages in order to open modal and navigate the App       ************
-	function goToAddOrganization() {
-		console.log('Creating Org');
-		PostMessageService.navigateToCreateOrg();
-		//$state.go('createOrg', {}, {reload: true});
+	function goToAddProject() {
+		console.log('Creating Project');
+		PostMessageService.navigateToAddProject();
+		//$state.go('addProject', {}, {reload: true});
 	}
 
 	function goToAddContribution(channelId) {
@@ -43,7 +44,7 @@ angular.module('MyApp').controller('MainCtrl', ["$scope", "$state","PostMessageS
 	}
 
 	var GESTURES = {
-		"openAddOrganization": goToAddOrganization,
+		"openAddProject": goToAddProject,
 		"openAddContributionPage": goToAddContribution,
 		"openAddEvaluationPage": goToAddEvaluation,
 		"showAlertFromMainCtr": showAlert,

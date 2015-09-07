@@ -11,17 +11,16 @@ angular.module('MyApp')
 			name : '',
 			tokens : '',
 			reputation : ''
-					
 	};  
 	
-	userData = Account.getUserData();
+	var userData = Account.getUserData();
 	
-	$scope.users = Users.getOrg.getUsers({
-		organizationId : userData.orgId
+	$scope.users = Users.getProject.getUsers({
+		projectId: userData.orgId
 	});
 	
-	console.log('$scope.users:'+$scope.users)
-	console.log($scope.users)
+	console.log('$scope.users:'+$scope.users);
+	console.log($scope.users);
 	
 	//$scope.users = User.query();
   	$scope.orderProp = "name"; // set initial order criteria
@@ -44,7 +43,7 @@ angular.module('MyApp')
 	
 	if($scope.userId && $scope.userId != 0){
 		console.log('comes here');
-		$scope.data1 = UserDetail.getDetail({userId:$scope.userId,organizationId:userData.orgId});	
+		$scope.data1 = UserDetail.getDetail({userId:$scope.userId, projectId:userData.orgId});
 		$scope.data1.$promise.then(function (result) {
 				$scope.UserModel = result;				
 			});	
@@ -52,9 +51,9 @@ angular.module('MyApp')
 	
 	$scope.submit = function(){
 		console.log("In Submit method");
-		console.log($scope.UserModel)
+		console.log($scope.UserModel);
 		$scope.data = SaveUser.save({},$scope.UserModel);
-		$scope.data.$promise.then(function (result) {
+		$scope.data.$promise.then(function() {
 			PostMessageService.gesture.showAlert('Successfully saved', 'success');
 			$location.path("/users");
 		});

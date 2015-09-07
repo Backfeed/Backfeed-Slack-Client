@@ -32,10 +32,10 @@
 		</div>
 		<div class="row">
 			<div class="col-sm-12">
-				<div> Select Org: 
-    				<select  name="orgSelection" ng-model="selectedOrgId" ng-change="updateTable();">
-						<option value="-1">All Orgs</option>
-      					<option ng-repeat="memberOrg in memberOrgs" value="{{memberOrg.id}}">{{memberOrg.channelName}}</option>
+				<div> Select Project:
+    				<select  name="projectSelection" ng-model="selectedProjectId" ng-change="updateTable();">
+						<option value="-1">All Projects</option>
+      					<option ng-repeat="memberProject in memberProjects" value="{{memberProject.id}}">{{memberProject.channelName}}</option>
     				</select></div>
 			</div>
 		</div>
@@ -50,14 +50,14 @@
 			<div class="member-stat">
 				<img class="member-stat-icon" alt="Tokens" src="/extension/contentScript/app/images/tokens.png" />
 				<div class="member-stat-item">
-					<div class="member-stat-data">{{memberStatusModel.org_tokens | number:0}}</div>
+					<div class="member-stat-data">{{memberStatusModel.project_tokens | number:0}}</div>
 					<div class="member-stat-label">Tokens&nbsp;<img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png"/></div>
 				</div>
 			</div>
 			<div class="member-stat">
 				<img class="member-stat-icon" alt="Reputation" src="/extension/contentScript/app/images/rep.png" />
 				<div class="member-stat-item">
-					<div class="member-stat-data">{{memberStatusModel.org_reputation | number:0}}&nbsp;<small>{{memberStatusModel.reputationPercentage | number:0}}%</small></div>
+					<div class="member-stat-data">{{memberStatusModel.project_reputation | number:0}}&nbsp;<small>{{memberStatusModel.reputationPercentage | number:0}}%</small></div>
 					<div class="member-stat-label">Reputation&nbsp;<img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png"/></div>
 				</div>
 			</div>

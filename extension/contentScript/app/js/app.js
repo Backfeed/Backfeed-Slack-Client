@@ -16,10 +16,10 @@ myApp.config(function($stateProvider, $urlRouterProvider, $authProvider, $compil
             templateUrl: chrome.extension.getURL("extension/contentScript/app/components/contribution/createContribution.html"),
             controller: 'ContributionsCtrl'
         })
-        .state('createOrg', {
-            url: '/organization/:channelId',
-            templateUrl: chrome.extension.getURL("extension/contentScript/app/components/organization/createOrganization.html"),
-            controller: 'OrganizationsCtrl'
+        .state('addProject', {
+            url: '/project/:channelId',
+            templateUrl: chrome.extension.getURL("extension/contentScript/app/components/project/addProject.html"),
+            controller: 'ProjectsCtrl'
         })
         .state('contributionStatus', {
             url: '/contributionStatus/:contributionId',
@@ -37,23 +37,13 @@ myApp.config(function($stateProvider, $urlRouterProvider, $authProvider, $compil
             controller: 'ContributionsCtrl'
         })
         .state('evaluations', {
-            url: '/evaluations/:contributionId/:organizationId',
+            url: '/evaluations/:contributionId/:projectId',
             templateUrl: chrome.extension.getURL("extension/contentScript/app/components/evaluation/addEvaluation.html"),
             controller: 'evaluationsCtrl'
         })
         .state('users', {
             url: '/users',
             templateUrl: 'app/partials/users.html',
-            controller: 'UsersCtrl'
-        })
-        .state('orgs', {
-            url: '/orgs',
-            templateUrl: 'app/partials/orgs.html',
-            controller: 'OrganizationCtrl'
-        })
-        .state('userDetail', {
-            url: '/user/:userId',
-            templateUrl: 'app/partials/userDetail.html',
             controller: 'UsersCtrl'
         })
         .state('createUser', {
@@ -82,16 +72,16 @@ myApp.config(function($stateProvider, $urlRouterProvider, $authProvider, $compil
             templateUrl: 'app/partials/profile.html',
             controller: 'ProfileCtrl',
             resolve: {
-                authenticated: function($q, $location, $auth) {
-                    var deferred = $q.defer();
-
-                    if (!$auth.isAuthenticated()) {
-                        $location.path('/splash');
-                    } else {
-                        deferred.resolve();
-                    }
-                    return deferred.promise;
-                }
+                //authenticated: function($q, $location, $auth) {
+                //    var deferred = $q.defer();
+                //
+                //    if (!$auth.isAuthenticated()) {
+                //        $location.path('/splash');
+                //    } else {
+                //        deferred.resolve();
+                //    }
+                //    return deferred.promise;
+                //}
             }
         });
 

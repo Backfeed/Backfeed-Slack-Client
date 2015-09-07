@@ -2,7 +2,7 @@
 var bfAPIServices = angular.module('BFAPIServices', [ 'ngResource' ]);
 
 bfAPIServices.factory('Contributions', [ '$resource','environmentURL', function($resource,environmentURL) {
-	return $resource(environmentURL+'contribution/all/:organizationId', {}, {
+	return $resource(environmentURL+'contribution/all/:projectId', {}, {
 		getAllContributions : {
 			method : 'GET',
 			params : {},
@@ -58,21 +58,26 @@ bfAPIServices.factory('GetEvaluationOfContribution', [ '$resource','environmentU
 	});
 } ]);
 bfAPIServices.factory('Users', [ '$resource','environmentURL', function($resource,environmentURL) {
-	var allOrgUsersData;		 
-			return {getOrg :$resource(environmentURL+'users/all/:organizationId', {}, {
-			getUsers: {
-				method : 'GET',
-				params : {},
-				isArray : true
-		}
-	}),getAllOrgUsersData: function() {return allOrgUsersData},
-	 setAllOrgUsersData: function(data) {		
-		allOrgUsersData = data;
-    },};
+	var allProjectUsersData;
+			return {
+				getProject: $resource(environmentURL+'users/all/:projectId',
+				{},
+				{
+					getUsers: {
+						method : 'GET',
+						params : {},
+						isArray : true
+					}
+				}),
+				getAllProjectUsersData: function() {return allProjectUsersData},
+				setAllProjectUsersData: function(data) {
+					allProjectUsersData = data;
+				}
+			};
 } ]);
 	
 bfAPIServices.factory('UserDetail', [ '$resource','environmentURL', function($resource,environmentURL) {
-	return $resource(environmentURL+'users/:userId/:organizationId', {}, {
+	return $resource(environmentURL+'users/:userId/:projectId', {}, {
 		getDetail : {
 			method : 'GET',
 			params : {},
@@ -83,7 +88,7 @@ bfAPIServices.factory('UserDetail', [ '$resource','environmentURL', function($re
 
 bfAPIServices.factory('Member', [ '$resource','environmentURL', function($resource,environmentURL) {
 	return $resource(environmentURL+'organization/member/:slackTeamId', {}, {
-		getOrgs : {
+		getProjects : {
 			method : 'GET',
 			params : {},
 			isArray : true
@@ -102,7 +107,7 @@ bfAPIServices.factory('MemberStatus', [ '$resource','environmentURL', function($
 	});
 } ]);
 
-bfAPIServices.factory('MemberStatusForAllOrgs', [ '$resource','environmentURL', function($resource,environmentURL) {
+bfAPIServices.factory('MemberStatusForAllProjects', [ '$resource','environmentURL', function($resource,environmentURL) {
 	return $resource(environmentURL+'member/statusallOrgs/:slackTeamId/:userId', {}, {
 		getDetail : {
 			method : 'GET',
@@ -112,9 +117,9 @@ bfAPIServices.factory('MemberStatusForAllOrgs', [ '$resource','environmentURL', 
 	});
 } ]);
 
-bfAPIServices.factory('ChannelOrg', [ '$resource','environmentURL', function($resource,environmentURL) {
+bfAPIServices.factory('ChannelProject', [ '$resource','environmentURL', function($resource,environmentURL) {
 	return $resource(environmentURL+'organization/channel/:channelId/:slackTeamId/:userId', {}, {
-		exits : {
+		exists : {
 			method : 'GET',
 			params : {},
 			isArray : false
@@ -143,7 +148,7 @@ bfAPIServices.factory('ContributionStatus', [ '$resource','environmentURL', func
 	});
 } ]);
 
-bfAPIServices.factory('SaveOrg', [ '$resource','environmentURL', function($resource,environmentURL) {
+bfAPIServices.factory('SaveProject', [ '$resource','environmentURL', function($resource,environmentURL) {
 	return $resource(environmentURL+'organization', {}, {
 		save : {
 			method : 'POST',
@@ -153,9 +158,9 @@ bfAPIServices.factory('SaveOrg', [ '$resource','environmentURL', function($resou
 	});
 } ]);
 
-bfAPIServices.factory('CheckOrgTokenName', [ '$resource','environmentURL', function($resource,environmentURL) {
+bfAPIServices.factory('CheckProjectTokenName', [ '$resource','environmentURL', function($resource,environmentURL) {
 	return $resource(environmentURL+'organization/checkTokenName/:tokenName', {}, {
-		checkOrgTokenName : {
+		CheckProjectTokenName : {
 			method : 'GET',
 			params : {},
 			isArray : false
@@ -173,9 +178,9 @@ bfAPIServices.factory('AllSlackUsers', [ '$resource','environmentURL', function(
 	});
 } ]);
 
-bfAPIServices.factory('AllOrgs', [ '$resource','environmentURL', function($resource,environmentURL) {
+bfAPIServices.factory('AllProjects', [ '$resource','environmentURL', function($resource,environmentURL) {
 	return $resource(environmentURL+'organization/all', {}, {
-		allOrgs : {
+		allProjects : {
 			method : 'GET',
 			params : {},
 			isArray : true
@@ -183,9 +188,9 @@ bfAPIServices.factory('AllOrgs', [ '$resource','environmentURL', function($resou
 	});
 } ]);
 
-bfAPIServices.factory('CheckOrgCode', [ '$resource','environmentURL', function($resource,environmentURL) {
+bfAPIServices.factory('CheckProjectCode', [ '$resource','environmentURL', function($resource,environmentURL) {
 	return $resource(environmentURL+'organization/checkCode/:code', {}, {
-		checkOrgCode : {
+		CheckProjectCode : {
 			method : 'GET',
 			params : {},
 			isArray : false

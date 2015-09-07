@@ -34,9 +34,9 @@ angular.module('MyApp').service('PostMessageService', function(Account,$state) {
 
    	this.getProfile = function() {
 		Account.getProfile().success(function(data) {
-			orgExists = data.orgexists;
-			if (orgExists == 'false') {
-				$state.go('createOrg', {}, {reload: true});
+			var projectExists = data.orgexists;
+			if (projectExists == 'false') {
+				$state.go('addProject', {}, {reload: true});
 			}else{
 				self.gesture.windowRefresh();
 			}			
@@ -46,13 +46,13 @@ angular.module('MyApp').service('PostMessageService', function(Account,$state) {
 		});
 	};
 	
-   	this.navigateToCreateOrg = function() {
-   		userData = Account.getUserData();
+   	this.navigateToAddProject = function() {
+   		var userData = Account.getUserData();
    		if(userData == undefined){
    			this.getProfile();
    		}else{
-   			if (userData.orgexists == 'false') {
-   				$state.go('createOrg', {}, {reload: true}); 				
+   			if (userData.projectExists == 'false') {
+   				$state.go('addProject', {}, {reload: true});
 			}else{
 				self.gesture.windowRefresh();
 			}
