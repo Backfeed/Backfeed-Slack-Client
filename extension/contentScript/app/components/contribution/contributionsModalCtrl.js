@@ -75,13 +75,15 @@ angular.module('MyApp').controller(
                      } else {
 
                          $scope.users = allOrgUsersData;
+                         $scope.updatedUsersList = [];
                          for(i = 0 ; i<$scope.users.length ; i++){
      						slackUsersMap[$scope.users[i].id] = $scope.users[i].name;
                              if($scope.users[i].id == $scope.model.owner ){
                                  $scope.model.contributers[0].img =  $scope.users[i].url;
+                                 continue;
                              }
+                             $scope.updatedUsersList.push($scope.users[i]);
                          }
-                         $scope.updatedUsersList = $scope.users;
                      }
 				}else{
 					console.log('comes here');

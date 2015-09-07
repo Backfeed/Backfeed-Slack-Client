@@ -49,7 +49,7 @@ angular.module('MyApp')
       $scope.data = AllSlackUsers.allSlackUsers();
       $scope.data.$promise.then(function(result) {
           $scope.users = result;
-          $scope.updatedUsersList = $scope.users;
+          $scope.updatedUsersList = [];
           sliderDivElement = angular.element('#sliderPassingResponsbility div');
           sliderDivElement.removeClass('ui-widget-header-active');
           sliderDivElement.addClass('ui-widget-header-active');
@@ -78,7 +78,8 @@ angular.module('MyApp')
                   sliderSpanElement.removeClass('ui-slider-handle-show');
                   sliderSpanElement.addClass('ui-slider-handle-show');
                   $scope.orgModel.contributers[0].className = "media contributer-cell active-contributer";
-                  break;
+              }else{
+            	  $scope.updatedUsersList.push($scope.users[i]);
               }
           }
       });
