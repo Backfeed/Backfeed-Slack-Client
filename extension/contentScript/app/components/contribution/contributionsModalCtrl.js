@@ -27,10 +27,6 @@ angular.module('MyApp').controller(
                 contribution1: '50',
                 className:'media contributer-cell',
                 img:'/extension/contentScript/app/images/icon-dude.png'
-            } ],
-            intialBid : [ {
-                tokens : '',
-                reputation : ''
             } ]
         };
         $scope.rangeSlider = {
@@ -228,7 +224,7 @@ angular.module('MyApp').controller(
 
             $scope.contributionId = $stateParams.contributionId;
 
-            $scope.ContributionModelForView = {
+            $scope.ContributionModel = {
                 title : '',
                 file : '',
                 owner : '',
@@ -561,7 +557,7 @@ angular.module('MyApp').controller(
                     $modalInstance.close('submit');
                     PostMessageService.sendGesture('hideIframe');
                     console.log('orgid is'+orgId);
-                    $state.go('bids', {'contributionId': result.id,'organizationId':orgId});
+                    $state.go('evaluations', {'contributionId': result.id,'organizationId':orgId});
 
                 }, function(error) {
                 	console.log('Error in sumbmitting Contribution');
@@ -593,17 +589,17 @@ angular.module('MyApp').controller(
                 console.log($scope.model);
                 $location.path("/contribution");
             };
-            $scope.addBid = function() {
-                console.log("Create Bid");
-                console.log($scope.ContributionModelForView.id);
-                $location.path("/bids/"
-                    + $scope.ContributionModelForView.id);
+            $scope.addEvaluation = function() {
+                console.log("Create Evaluation");
+                console.log($scope.ContributionModel.id);
+                $location.path("/evaluations/"
+                    + $scope.ContributionModel.id);
             };
             $scope.showStatus = function() {
                 console.log("Show Status");
-                console.log($scope.ContributionModelForView.id);
+                console.log($scope.ContributionModel.id);
                 $location.path("/contributionStatus/"
-                    + $scope.ContributionModelForView.id);
+                    + $scope.ContributionModel.id);
             };
 
 
@@ -612,7 +608,7 @@ angular.module('MyApp').controller(
                     contributionId : $scope.contributionId
                 });
                 $scope.data1.$promise.then(function(result) {
-                    $scope.ContributionModelForView = result;
+                    $scope.ContributionModel = result;
                 });
             }
 
@@ -652,9 +648,9 @@ angular.module('MyApp').controller(
 
             $scope.closeContribution = function() {
                 console.log("In closeContribution method");
-                console.log($scope.ContributionModelForView.id);
+                console.log($scope.ContributionModel.id);
                 $scope.data = CloseContribution.save({},
-                    $scope.ContributionModelForView);
+                    $scope.ContributionModel);
                 $scope.data.$promise.then(function(result) {
                     PostMessageService.gesture.showAlert('Contribution closed', 'information');
 

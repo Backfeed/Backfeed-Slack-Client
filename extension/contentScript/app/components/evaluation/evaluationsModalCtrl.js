@@ -1,15 +1,16 @@
-angular.module('MyApp')
-  .controller('BidsModalCtrl', function($scope,$auth,$location,$stateParams,Users,
-		  GetBidTOContribution,SaveBidTOContribution,Account,ContributionDetail,UserDetail,$modalInstance,PostMessageService,$state) {
+angular.module('MyApp').controller('EvaluationsModalCtrl',
+		function($scope, $auth, $location, $stateParams, Users, GetEvaluationOfContribution,
+				 SaveEvaluationToContribution, Account, ContributionDetail, UserDetail, $modalInstance,
+				 PostMessageService, $state) {
 	  $scope.contributionId = $stateParams.contributionId;
-	  $scope.bidId = $stateParams.bidId;
+	  $scope.evaluationId = $stateParams.evaluationId;
 	  $scope.organizationId = $stateParams.organizationId;
 	  PostMessageService.sendGesture('hideIframe');
 	  
 	  $scope.closeModal = function() {
 		  $modalInstance.dismiss('cancel');
       };
-      $scope.checkNumber = function(num) {		 
+      $scope.checkNumber = function(num) {
 		  $scope.validationPass = !isNaN(parseFloat(num)) && isFinite(num);		  		  
       };
 	 
@@ -17,16 +18,16 @@ angular.module('MyApp')
 	      Account.getProfile()
 	        .success(function(data) {
 				Account.setUserData(data);
-				userData = Account.getUserData();
+				var userData = Account.getUserData();
 				$scope.userId = userData.userId;
 				//orgExists = data.orgexists;
                 //console.log('userData is not defined comes 1 orgExists'+orgExists);
-				getContributionForBid();
+				getContributionForEvaluation();
                 /*if (orgExists != 'true') {
                 	//navigate to create org screen
                 	$state.go('createOrg', {}, {reload: true});
                 }else{
-                	getContributionForBid();
+                	getContributionForEvaluation();
                 }*/
 				
 	        })
@@ -38,7 +39,7 @@ angular.module('MyApp')
                 }
 	        });
 	    };
-	    $scope.bid = {			
+	    $scope.evaluation = {
 			    tokens : '',
 				owner : '',
 				reputation : '',
@@ -46,20 +47,20 @@ angular.module('MyApp')
 				stake :''
 		};
 	  
-	     userData = Account.getUserData();
+	     var userData = Account.getUserData();
 		 console.log("userData is"+userData);
-		 if(userData == undefined){
+		 if(userData == undefined) {
 			 $scope.getProfile();
-		 }else{
-			 $scope.bid.owner = userData.userId;
+		 } else {
+			 $scope.evaluation.owner = userData.userId;
 			 $scope.userId = userData.userId;
-			 getContributionForBid();
+			 getContributionForEvaluation();
 			 /*orgExists = userData.orgexists;
              if (orgExists != 'true') {
              	//navigate to create org screen
              	$state.go('createOrg', {}, {reload: true});
              }else{
-             	getContributionForBid();
+             	getContributionForEvaluation();
              }*/
 		 }
 		 
@@ -71,16 +72,16 @@ angular.module('MyApp')
 	//$scope.slackUsers = Users.getUsers();
   
    
-	function getContributionForBid(){
+	function getContributionForEvaluation(){
 		if ($scope.contributionId && $scope.contributionId != 0) {
 			//check for exsting contribution
-			$scope.data3 = GetBidTOContribution.Bid({
+			$scope.data3 = GetEvaluationOfContribution.Evaluation({
 				'contributionId':$scope.contributionId,
 				'userId' :  $scope.userId
 			});
 			$scope.data3.$promise.then(function(result1) {
 				 if(result1.bidExists == 'true'){
-					 PostMessageService.gesture.showAlert('You already bidded on this contribution.', 'error');
+					 PostMessageService.gesture.showAlert('You already evaluated on this contribution.', 'error');
 					 $state.go('contributionStatus', {'contributionId': $scope.contributionId}, {reload: true});
 				 }else{
 					 console.log('comes here'+$scope.contributionId);
@@ -91,9 +92,9 @@ angular.module('MyApp')
 							'userId' :  $scope.userId,'organizationId':$scope.organizationId
 						});
 						$scope.data2.$promise.then(function(result1) {
-							console.log('result.reputaion'+result1.reputaion);
-							$scope.bid.reputation = result1.reputation;
-							$scope.bid.stake = (parseInt(result1.reputation)*18)/100;
+							console.log('result.reputation'+result1.reputation);
+							$scope.evaluation.reputation = result1.reputation;
+							$scope.evaluation.stake = (parseInt(result1.reputation)*18)/100;
 						});
 						$scope.data1 = ContributionDetail.getDetail({
 							contributionId : $scope.contributionId
@@ -114,7 +115,7 @@ angular.module('MyApp')
 	}
 
 	if($scope.contributionId && $scope.contributionId != 0){
-		$scope.bid.contribution_id =$scope.contributionId ;
+		$scope.evaluation.contribution_id =$scope.contributionId ;
 	}
 	
 	
@@ -122,9 +123,9 @@ angular.module('MyApp')
 
 	$scope.submit = function(){
 		console.log("In Submit method");
-		console.log($scope.bid);
+		console.log($scope.evaluation);
 
-		$scope.data = SaveBidTOContribution.save({},$scope.bid);
+		$scope.data = SaveEvaluationToContribution.save({},$scope.evaluation);
 		$scope.data.$promise.then(function(result) {
 			$modalInstance.close('submit');
 			PostMessageService.gesture.showAlert('Evaluation submitted', 'success');
@@ -138,6 +139,4 @@ angular.module('MyApp')
 		});
 
 	};
-	
-	
 });

@@ -8,7 +8,7 @@ iframe {
 	z-index: 1000;
 }
 
-#COMPOSE_ACTION_BID_BUTTON {
+#COMPOSE_ACTION_EVALUATION_BUTTON {
 	display: inline;
 	padding: .2em .6em .3em;
 	font-size: 75%;

@@ -17,16 +17,16 @@ function openAddContributionPage(channelId) {
 }
 
 
-function openAddBidPage(contributionId) {
+function openAddEvaluationPage(contributionId) {
 	
 	console.log('contributionId is: ' + contributionId);
 	chrome.runtime.sendMessage({        
         message : {
-            "gesture": 'openAddBidPage',
+            "gesture": 'openAddEvaluationPage',
             "options": contributionId
         }
     }, function(response) {
-    	console.log('Here in the callback from add bid page');
+    	console.log('Here in the callback from add evaluation page');
 	});
 
 }
@@ -56,13 +56,13 @@ function openMemberStatusPage(memberId) {
 	});
 }
 
-$(document).on('click', "#COMPOSE_ACTION_BID_BUTTON", function() {
-	var contributionIdForThisBid = $(this).attr('data-contributionId');
+$(document).on('click', "#COMPOSE_ACTION_EVALUATION_BUTTON", function() {
+	var contributionIdForThisEvaluation = $(this).attr('data-contributionId');
 	var textContent = $(this).text();
 	if (textContent == 'EVALUATE') {
-		openAddBidPage(contributionIdForThisBid);
+		openAddEvaluationPage(contributionIdForThisEvaluation);
 	} else {
-		openContributionStatusPage(contributionIdForThisBid);
+		openContributionStatusPage(contributionIdForThisEvaluation);
 	}
 });
 
@@ -167,8 +167,8 @@ function addContributionButton() {
 	var menuItemsList = $(this).find('#menu_items');
 	var channelId = $('#channel-list').find('.active').find('.channel_name').attr('data-channel-id');
 	console.log('channelId is '+channelId);
-	menuItems = menuItemsList.children();
 
+	var menuItems = menuItemsList.children();
 	var addContributionButton = menuItems.last().clone().prependTo(menuItemsList);
 	addContributionButton.removeAttr('data-which');
 
@@ -192,7 +192,7 @@ function memberStatusButton() {
 
 }
 
-function onAddBidObservation(mutations) {
+function onAddEvaluationObservation(mutations) {
 	var channelIds = '';
 	chrome.storage.sync.get('channelId', function (response) {
 		channelIds = response.channelId;
@@ -200,7 +200,7 @@ function onAddBidObservation(mutations) {
 		if(channelIds != undefined) {
 			var channelIdsVarArray = channelIds.split(",");
 			for (i = 0; i < channelIdsVarArray.length; i++) { 
-			    bidObservationOnChannelId(channelIdsVarArray[i],mutations);
+			    evaluationObservationOnChannelId(channelIdsVarArray[i],mutations);
 			}
 			
 		}
@@ -210,7 +210,7 @@ function onAddBidObservation(mutations) {
 /**
  * END: DOM Mutation Observers Callbacks :END
  */
-function bidObservationOnChannelId(channelId,mutations){
+function evaluationObservationOnChannelId(channelId,mutations){
 
   	
 	var channelNode = document.getElementsByClassName('channel_'+channelId);
@@ -237,7 +237,7 @@ function bidObservationOnChannelId(channelId,mutations){
 					var imageElement = $('img', $(message));
 					var contributionIcon = chrome.extension.getURL('/extension/contentScript/app/images/icon_contribution.png');
 					imageElement.attr('src', contributionIcon);
-					var spanChildren = spanElement.children('#COMPOSE_ACTION_BID_BUTTON');
+					var spanChildren = spanElement.children('#COMPOSE_ACTION_EVALUATION_BUTTON');
 					if (spanChildren.length == 0){
 						var spanText = spanElement.html();
 						var originalText = spanText;
@@ -251,7 +251,7 @@ function bidObservationOnChannelId(channelId,mutations){
 							$( '.message_content', $(message)).html (originalText);
 							var openComposeButton = document.createElement("span");
 							openComposeButton.setAttribute("data-contributionId", contributionId);
-							openComposeButton.setAttribute("id", "COMPOSE_ACTION_BID_BUTTON");
+							openComposeButton.setAttribute("id", "COMPOSE_ACTION_EVALUATION_BUTTON");
 							openComposeButton.textContent = "EVALUATE";
 							var contributionIdsVar = response.contributionIds;
 							contributionIdsVar = contributionIdsVar.substring(1, contributionIdsVar.length-1);
@@ -269,7 +269,7 @@ function bidObservationOnChannelId(channelId,mutations){
 			} else {
 				messagesFromBot.forEach(function(message) {
 					var spanElement = $( '.message_content', $(message));
-					var spanChildren = spanElement.children('#COMPOSE_ACTION_BID_BUTTON');
+					var spanChildren = spanElement.children('#COMPOSE_ACTION_EVALUATION_BUTTON');
 					if (spanChildren.length == 0){
 						var spanText = spanElement.html();
 						var originalText = spanText;
@@ -297,14 +297,14 @@ var teamMembersListObserver = new MutationObserver(onTeamMembersListObservation)
 var singleTeamMemberObserver = new MutationObserver(onSingleTeamMemberObservation);
 
 var floatingMenuObserver = new MutationObserver(onFloatingMenuOpened);
-var addBidObserver = new MutationObserver(onAddBidObservation);
+var addEvaluationObserver = new MutationObserver(onAddEvaluationObservation);
 
 
 $(function() {
     document.body.appendChild(iframe);
 
 	floatingMenuObserver.observe(document.getElementById('client-ui'), {childList: true});
-	addBidObserver.observe(document.getElementById('msgs_div'), {childList: true});
+	addEvaluationObserver.observe(document.getElementById('msgs_div'), {childList: true});
 	teamMembersListObserver.observe(document.getElementById('team_tab'), {attributes: true});
 
 

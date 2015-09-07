@@ -1,9 +1,9 @@
-angular.module('MyApp').controller('BidsCtrl',
+angular.module('MyApp').controller('evaluationsCtrl',
     function(PostMessageService, $modal,$scope) {       
         
         var modal = $modal.open({
-            templateUrl: 'BidsModalTmpl',
-            controller: 'BidsModalCtrl',
+            templateUrl: 'EvaluationsModalTmpl',
+            controller: 'EvaluationsModalCtrl',
             scope: $scope,
             size: 'md'
         });

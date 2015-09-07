@@ -2,7 +2,7 @@
 
 var myApp = angular.module('MyApp', ['ui.slider', 'ngResource', 'ngTouch', 'ngMessages', 'ui.router', 'ui.bootstrap', 'satellizer','BFAPIServices','ngSanitize','ui.select']);
 
-myApp.constant('enviornmentURL', 'https://stagingenviornment.elasticbeanstalk.com/');
+myApp.constant('environmentURL', 'https://stagingenviornment.elasticbeanstalk.com/');
 
 myApp.config(function($stateProvider, $urlRouterProvider, $authProvider, $compileProvider) {
     $stateProvider
@@ -10,11 +10,6 @@ myApp.config(function($stateProvider, $urlRouterProvider, $authProvider, $compil
             url: '/splash',
             templateUrl: chrome.extension.getURL("extension/contentScript/app/partials/splash.html"),
             controller: 'SplashCtrl'
-        })
-        .state('contributionDetail', {
-            url: '/contribution/:contributionId',
-            templateUrl: chrome.extension.getURL("extension/contentScript/app/components/contribution/contributionDetail.html"),
-            controller: 'ContributionsCtrl'
         })
         .state('createContribution', {
             url: '/contribution/:channelId',
@@ -41,10 +36,10 @@ myApp.config(function($stateProvider, $urlRouterProvider, $authProvider, $compil
             templateUrl: 'app/partials/contributions.html',
             controller: 'ContributionsCtrl'
         })
-        .state('bids', {
-            url: '/bids/:contributionId/:organizationId',
-            templateUrl: chrome.extension.getURL("extension/contentScript/app/components/bid/createBid.html"),
-            controller: 'BidsCtrl'
+        .state('evaluations', {
+            url: '/evaluations/:contributionId/:organizationId',
+            templateUrl: chrome.extension.getURL("extension/contentScript/app/components/evaluation/addEvaluation.html"),
+            controller: 'evaluationsCtrl'
         })
         .state('users', {
             url: '/users',

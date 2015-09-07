@@ -12,9 +12,9 @@ angular.module('MyApp').controller('MainCtrl', ["$scope", "$state","PostMessageS
 		$state.go('createContribution', {'channelId': channelId}, {reload: true});
 	}
 	
-	function goToAddBid(contributionId) {
-		console.log('Starting bids for contributionID: '+contributionId);
-		$state.go('bids', {'contributionId': contributionId}, {reload: true});
+	function goToAddEvaluation(contributionId) {
+		console.log('Starting evaluations for contributionID: '+contributionId);
+		$state.go('evaluations', {'contributionId': contributionId}, {reload: true});
 	}
 	
 	function goToContributionStatus(contributionId) {
@@ -45,7 +45,7 @@ angular.module('MyApp').controller('MainCtrl', ["$scope", "$state","PostMessageS
 	var GESTURES = {
 		"openAddOrganization": goToAddOrganization,
 		"openAddContributionPage": goToAddContribution,
-		"openAddBidPage": goToAddBid,
+		"openAddEvaluationPage": goToAddEvaluation,
 		"showAlertFromMainCtr": showAlert,
 		"openContributionStatusPage": goToContributionStatus,
 		"openMemberStatusPage": goToMemberStatus,
