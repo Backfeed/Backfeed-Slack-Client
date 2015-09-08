@@ -18,7 +18,7 @@ angular.module('MyApp').controller(
             file : '',
             owner : '',
             min_reputation_to_close : '',
-            users_projects_id : '',
+            users_organizations_id : '',
             contributers : [ {
                 contributer_id : '0',
                 contributer_percentage : '100',
@@ -50,7 +50,7 @@ angular.module('MyApp').controller(
 					 $scope.users_projects_id = result.userOrgId;
                      $scope.projectId = result.orgId;
                      projectId = $scope.projectId;
-                     $scope.model.users_projects_id = result.userOrgId;
+                     $scope.model.users_organizations_id = result.userOrgId;
                      $scope.model.owner = $scope.userId;
                      $scope.model.contributers[0].contributer_id = $scope.userId;
                      $scope.model.contributers[0].contributer_name = $scope.displayName;

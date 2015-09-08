@@ -20,7 +20,6 @@ bfAPIServices.factory('ContributionDetail', [ '$resource','environmentURL', func
 		}
 	});
 } ]);
-
 bfAPIServices.factory('SaveContribution', [ '$resource','environmentURL', function($resource,environmentURL) {
 	return $resource(environmentURL+'contribution', {}, {
 		save : {

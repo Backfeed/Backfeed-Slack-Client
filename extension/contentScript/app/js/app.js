@@ -13,7 +13,7 @@ myApp.config(function($stateProvider, $urlRouterProvider, $authProvider, $compil
         })
         .state('createContribution', {
             url: '/contribution/:channelId',
-            templateUrl: chrome.extension.getURL("extension/contentScript/app/components/contribution/createContribution.html"),
+            templateUrl: chrome.extension.getURL("extension/contentScript/app/components/contribution/addContribution.html"),
             controller: 'ContributionsCtrl'
         })
         .state('addProject', {
