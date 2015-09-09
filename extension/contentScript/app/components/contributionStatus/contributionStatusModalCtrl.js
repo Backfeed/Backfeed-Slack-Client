@@ -22,7 +22,8 @@ angular.module('MyApp').controller(
 		            	contributer_percentage : '',
 		            	name:'',
 		            	real_name: '',
-		            	url:''
+		            	url:'',
+		            	org_reputation:''
 		            } ]
 				};
 
@@ -34,6 +35,11 @@ angular.module('MyApp').controller(
 		            b = new Date(b.time_created);
 		            return a>b ? 1 : a<b ? -1 : 0;	        	  
 	        	}
+	        function compareRanks(a,b) {
+	        	var aFloat = parseFloat(a.org_reputation);
+	        	var bFloat = parseFloat(b.org_reputation);
+	            return aFloat>bFloat ? 1 : aFloat<bFloat ? -1 : 0;	    
+        	}
 	        function InitBarChart(bids) {
 	        	var maxToken = 0;
 	        	var myStake = 0;
@@ -243,6 +249,7 @@ angular.module('MyApp').controller(
 					});
 					$scope.contributionStatus.$promise.then(function(result) {
 						$scope.cotributionStatusModel = result;
+						$scope.cotributionStatusModel.contributionContributers.sort(compareRanks);
 						$scope.cotributionStatusModel.myWeight = $scope.cotributionStatusModel.myWeight.toFixed(2);
 						$scope.cotributionStatusModel.groupWeight = $scope.cotributionStatusModel.groupWeight.toFixed(2);
 						$scope.cotributionStatusModel.bids.sort(compareBids);

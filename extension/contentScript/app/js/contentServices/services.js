@@ -97,7 +97,7 @@ bfAPIServices.factory('Member', [ '$resource','environmentURL', function($resour
 
 
 bfAPIServices.factory('MemberStatus', [ '$resource','environmentURL', function($resource,environmentURL) {
-	return $resource(environmentURL+'member/status/:orgId/:userId', {}, {
+	return $resource(environmentURL+'member/status/:projectId/:userId', {}, {
 		getDetail : {
 			method : 'GET',
 			params : {},
