@@ -15,7 +15,20 @@
       <h3>Welcome to Backfeed!</h3>
       <hr />
       <h4>First thing's first...</h4>
+	  <p >Slack are aware of ongoing issues affecting user authorization.</p>
 
+      <p >If the button below doesn't work, visit <a id="slack-api" class="linkable" href="https://api.slack.com/web">this page on Slack's website</a>, scroll to the bottom, click 'Create token', and paste the given token below.</p>
+
+      <div id="backfeed-token-form" class="input-group">
+        <input type="text" id="backfeed-token-input" class="form-control" placeholder="Enter Slack token here">
+        <span class="input-group-btn">
+          <button class="btn btn-default" id="backfeed-token-submit" type="button">Go!</button>
+        </span>
+      </div>
+
+      <hr />
+
+      <h4>Let's get going...</h4>
       <p>Authorization is needed in order to post contributions to Slack, evaluate them, and share the value generated between all the team members.</p>
 
       <button class="btn btn-default" id="OAuth">Authorize with Slack</button>

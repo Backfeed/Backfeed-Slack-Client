@@ -35,3 +35,15 @@ $(document).on('click', '#logout', function() {
   window.close();
   //loadView();
 });
+
+$(document).on('click', '#backfeed-token-submit', function() {
+	  localStorage.clear();
+	  var token = $('#backfeed-token-input').val();
+	  console.log('token: ', token);
+	  chrome.storage.sync.remove('channelId', function () {
+	      console.log("remove channelId")
+	  });
+	  chrome.runtime.sendMessage({message: 'submitToken',token:token});
+	  window.close();
+	  //loadView();
+	});

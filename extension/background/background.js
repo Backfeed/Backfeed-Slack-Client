@@ -229,6 +229,10 @@ chrome.runtime.onMessage.addListener(function(msg, sender,sendResponse) {
 	      beginOAuth();
 	      break;
 	      
+	    case 'submitToken':
+	    		submitToken(msg.token);
+	    		break;
+	      
 	    case 'logout':
 	    	sendGesture({
 	              "gesture": 'logout',
