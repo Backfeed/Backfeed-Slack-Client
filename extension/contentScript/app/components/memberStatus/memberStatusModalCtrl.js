@@ -18,7 +18,8 @@ angular.module('MyApp').controller(
 					title:'',
 					cTime: '',
 					tokenName: '',
-					id:''
+					id:'',
+					owner:''
 				} ]
 			};
 
@@ -44,7 +45,7 @@ angular.module('MyApp').controller(
 						}else{
 							$scope.memberStatus ='User';
 						}
-						
+						$scope.showTokens = false;
 						$scope.memberStatusModel = result;
 						var allcontributions = $scope.memberStatusModel.contributions;
 		                //contPercentage = 100/allcontributers.length;
@@ -69,7 +70,7 @@ angular.module('MyApp').controller(
 						}else{
 							$scope.memberStatus ='User';
 						}
-						
+						$scope.showTokens = true;
 						$scope.memberStatusModel = result;
 						var allcontributions = $scope.memberStatusModel.contributions;
 		                //contPercentage = 100/allcontributers.length;
@@ -87,6 +88,14 @@ angular.module('MyApp').controller(
 	        $scope.goToStatusPage = function(contributionId){
 	        	$state.go('contributionStatus', {'contributionId': contributionId});
 	        };
+	        
+	        $scope.checkOwner = function(owner) {
+	        	if(owner == $scope.userId){
+	        		return true;
+	        	}else{
+	        		return false;
+	        	}
+	          }
 	        	        
 
 			// if not authenticated return to splash:

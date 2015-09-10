@@ -39,7 +39,7 @@
     				</select></div>
 			</div>
 		</div>
-		<div class="member-stats">
+		<div class="member-stats" ng-show="showTokens">
 			<div class="member-stat">
 				<img class="member-stat-icon" alt="Contribution" src="/extension/contentScript/app/images/contribution.png" />
 				<div class="member-stat-item">
@@ -47,7 +47,7 @@
 					<div class="member-stat-label">Contributions&nbsp;<img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png"/></div>
 				</div>
 			</div>
-			<div class="member-stat">
+			<div class="member-stat" >
 				<img class="member-stat-icon" alt="Tokens" src="/extension/contentScript/app/images/tokens.png" />
 				<div class="member-stat-item">
 					<div class="member-stat-data">{{memberStatusModel.project_tokens | number:0}}</div>
@@ -61,6 +61,16 @@
 					<div class="member-stat-label">Reputation&nbsp;<img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png"/></div>
 				</div>
 			</div>
+		</div>
+
+		<div class="member-stats" ng-hide="showTokens">
+			<div class="member-stat">
+				<img class="member-stat-icon" alt="Contribution" src="/extension/contentScript/app/images/contribution.png" />
+				<div class="member-stat-item">
+					<div class="member-stat-data">{{memberStatusModel.contributionLength | number:0}}</div>
+					<div class="member-stat-label">Total Contributions&nbsp;<img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png"/></div>
+				</div>
+			</div>			
 		</div>
 
 		<div class="row">
@@ -114,7 +124,7 @@
 					</thead>
 
 					<tbody>
-						<tr ng-repeat="contribution in memberStatusModel.contributions | orderBy:sortType:sortReverse">
+						<tr ng-class="{'my-contribution-row': checkOwner(contribution.owner)}" ng-repeat="contribution in memberStatusModel.contributions | orderBy:sortType:sortReverse">
 							<td><a href="" ng-click="goToStatusPage(contribution.id)">{{contribution.title}}</a></td>
 							<td>{{contribution.cTime}}</td>
 							<td>{{contribution.myWeight}}</td>

@@ -35,6 +35,7 @@ angular.module('MyApp').controller('MainCtrl', ["$scope", "$state","PostMessageS
 	
 	function refreshWindows() {
 		console.log('Refresh Windows');
+		PostMessageService.gesture.showAlert('Successful authorized. Please continue', 'success');
 		PostMessageService.gesture.windowRefresh();
 	}
 	

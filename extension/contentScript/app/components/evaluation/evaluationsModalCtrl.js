@@ -131,7 +131,7 @@ angular.module('MyApp').controller('EvaluationsModalCtrl',
 			$modalInstance.close('submit');
 			PostMessageService.gesture.showAlert('Evaluation submitted', 'success');
 			PostMessageService.gesture.hideIframe($scope.contributionId);
-			$state.go('contributionStatus', {'contributionId': $scope.contributionId}, {reload: true});
+			//$state.go('contributionStatus', {'contributionId': $scope.contributionId}, {reload: true});
 		}, function(result) {
 			$modalInstance.close('submit');
 			PostMessageService.gesture.showAlert('You have no reputation! Submit a contribution to gain some.', 'error');

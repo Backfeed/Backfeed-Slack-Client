@@ -419,8 +419,8 @@ angular.module('MyApp').controller('ProjectsModalCtrl',
        for (var channelIndex in channels){
            var channel = channels[channelIndex];
            console.log('channel.name:'+channel.name);
-
-           if(channel.name == 'general'){
+           if(channel.name == 'test'){
+           //if(channel.name == 'general'){
                var channelId = channel.id;
                $scope.sendTestMessage(channelId, message);
            }
@@ -493,7 +493,7 @@ angular.module('MyApp').controller('ProjectsModalCtrl',
 			$scope.slackPlay($scope.projectModel.name);
 			PostMessageService.gesture.showAlert('Successfully created project', 'success');
 			$modalInstance.close('submit');
-			$state.go('createContribution', {'channelId': $scope.channelId}, {reload: true});
+			//$state.go('createContribution', {'channelId': $scope.channelId}, {reload: true});
 		}, function(error) {
 	    	console.log('Error in creating project');
 	    	PostMessageService.gesture.showAlert('Your project was not created. Please use english', 'error');
