@@ -419,7 +419,7 @@ angular.module('MyApp').controller('ProjectsModalCtrl',
        for (var channelIndex in channels){
            var channel = channels[channelIndex];
            console.log('channel.name:'+channel.name);
-           if(channel.name == 'test'){
+           if(channel.name == 'testextenstion'){
            //if(channel.name == 'general'){
                var channelId = channel.id;
                $scope.sendTestMessage(channelId, message);
