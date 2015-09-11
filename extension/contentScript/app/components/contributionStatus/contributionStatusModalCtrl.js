@@ -23,7 +23,7 @@ angular.module('MyApp').controller(
 		            	name:'',
 		            	real_name: '',
 		            	url:'',
-		            	org_reputation:''
+		            	project_reputation:''
 		            } ]
 				};
 
@@ -36,14 +36,14 @@ angular.module('MyApp').controller(
 		            return a>b ? 1 : a<b ? -1 : 0;	        	  
 	        	}
 	        function compareRanks(a,b) {
-	        	var aFloat = parseFloat(a.org_reputation);
-	        	var bFloat = parseFloat(b.org_reputation);
-	            return aFloat>bFloat ? 1 : aFloat<bFloat ? -1 : 0;	    
+	        	var aFloat = parseFloat(a.project_reputation);
+	        	var bFloat = parseFloat(b.project_reputation);
+	            return aFloat>bFloat ? 1 : aFloat<bFloat ? -1 : 0;
         	}
 	        function InitBarChart(bids) {
 	        	var maxToken = 0;
 	        	var myStake = 0;
-	        	for(i = 0;i<bids.length; i++){
+	        	for (var i = 0; i<bids.length; i++){
 	        		if(bids[i].tokens > maxToken){
 	        			maxToken = bids[i].tokens;
 	        		}
@@ -55,31 +55,31 @@ angular.module('MyApp').controller(
 	        	var eachBucketSize = maxToken/bin;
 	        	var barData = [];
 	        	var binData=[];
-	        	for (i=1;i<=bin;i++){
+	        	for (var i=1; i<=bin; i++) {
 	        		binData.push(0);
 	        	}
 	        	var totalStake = 0;
-	        	var mybidIndex  = 0;
-	        	for(i = 0;i<bids.length; i++){
+	        	var myBidIndex  = 0;
+	        	for (var i = 0;i<bids.length; i++){
 	        		totalStake = totalStake + bids[i].stake;
 	        		
-	        		for (j=1;j<=bin;j++){
+	        		for (var j=1;j<=bin;j++){
 	        			
 	        			if(bids[i].tokens <= j*eachBucketSize && bids[i].tokens > (j-1)*eachBucketSize){
 	        				if(bids[i].owner == $scope.userId){
-	        					mybidIndex = j-1;
+	        					myBidIndex = j-1;
 	        				}
 	        				binData[j-1] = binData[j-1] + bids[i].stake;
 	        				break;
 	        			}
 	        		}
 	        	}
-	        	for (i=0;i<bin;i++){
+	        	for (var i=0;i<bin;i++){
 	        		var counter = (i+1)*eachBucketSize;
 	        		var stakePer = (binData[i]/totalStake)*100;
 	        		
 	        		barData.push({"token":counter,"stake":stakePer,"color":"blue"});
-	        		if(i == mybidIndex){
+	        		if(i == myBidIndex){
 	        			barData.push({"token":counter,"stake":(myStake/totalStake)*100,"color":"brown"});
 	        		}
 	        	}
@@ -158,10 +158,10 @@ angular.module('MyApp').controller(
 	        }
 	        function InitLineChart(bids) {
 	        	var myBidValue = 0;
-	        	maxContributionValueAfterBid = 0;
+	        	var maxContributionValueAfterBid = 0;
 	        	var data = [];
 	        	data.push({"contribution_value_after_bid":0,"num":0});
-	        	for(i = 0;i<bids.length; i++){
+	        	for (var i = 0;i<bids.length; i++){
 	        		bids[i].num = i+1;
 	        		if(bids[i].contribution_value_after_bid > maxContributionValueAfterBid){
 	        			maxContributionValueAfterBid = bids[i].contribution_value_after_bid;
@@ -255,13 +255,16 @@ angular.module('MyApp').controller(
 						$scope.cotributionStatusModel.bids.sort(compareBids);
 						InitLineChart($scope.cotributionStatusModel.bids);
 						InitBarChart($scope.cotributionStatusModel.bids);
-						myWeight = $scope.cotributionStatusModel.myWeight;
-						myWeightTooltip = myWeight;
-						groupWeight = $scope.cotributionStatusModel.groupWeight;
-						groupWeightTooltip = groupWeight;
-						remainingWeight = 100 - groupWeight;
-						remainingWeightTooltip = remainingWeight;
+
+						var myWeight = $scope.cotributionStatusModel.myWeight,
+							myWeightTooltip = myWeight,
+							groupWeight = $scope.cotributionStatusModel.groupWeight,
+							groupWeightTooltip = groupWeight,
+							remainingWeight = 100 - groupWeight,
+							remainingWeightTooltip = remainingWeight;
+
 						groupWeight = groupWeight - myWeight;
+
 						(function(d3) {
 					        'use strict';
 					        var width = 360;

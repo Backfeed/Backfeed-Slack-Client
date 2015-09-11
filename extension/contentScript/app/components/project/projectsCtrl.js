@@ -3,7 +3,8 @@ angular.module('MyApp').controller('ProjectsCtrl',
         var modal = $modal.open({
             templateUrl: "ProjectsModalTmpl",
             controller: 'ProjectsModalCtrl',
-            scope: $scope
+            scope: $scope,
+            size: 'lg'
         });
 
         modal.result.then(function() {

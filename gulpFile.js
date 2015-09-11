@@ -25,7 +25,7 @@ gulp.task('autoprefix', ['compileLess'], function () {
 });
 
 gulp.task('watch', function() {
-    gulp.watch('less/**/*.less', ['less']);
+    gulp.watch(angularPath+'less/**/*.less', ['less']);
 });
 
 gulp.task('less', ['compileLess', 'autoprefix']);

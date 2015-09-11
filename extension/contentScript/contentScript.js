@@ -5,6 +5,17 @@ iframe.setAttribute("frameborder", "0");
 
 $(window).resize(setIframeHeight);
 
+function openAddProjectPage(channelId) {
+	chrome.runtime.sendMessage({
+		message : {
+			"gesture": 'openAddProjectPage',
+			"options": channelId
+		}
+	}, function(response) {
+		console.log('Here in the callback from add contribution page');
+	});
+}
+
 function openAddContributionPage(channelId) {
 	chrome.runtime.sendMessage({
         message : {
@@ -32,7 +43,6 @@ function openAddEvaluationPage(contributionId) {
 }
 
 function openContributionStatusPage(contributionId) {
-	
 	console.log('contributionId is: ' + contributionId);
 	chrome.runtime.sendMessage({        
         message : {
@@ -103,7 +113,7 @@ function hideIframe(options) {
 
 function setChannelId(channelId) {
 	console.log("set channelId: "+channelId);
-	chrome.storage.sync.set({'channelId':channelId}, function () {
+	chrome.storage.sync.set({'channelId':channelId}, function() {
         console.log("set channelId");
     });
 }
@@ -151,15 +161,33 @@ function onFloatingMenuOpened(nodes) {
 	if (addedNodes.length > 0) {
 		addedNodes.each(function() {
 			if (this.id == 'menu') {
+				var menuItems = $(this).find('#menu_items');
+				var firstMenuItem = menuItems.children(':first-child');
 				if (this.classList.contains('file_menu')) {
 					addContributionButton.bind(this)();
-				} else if ($(this).find('.menu_member_header').length !== 0) {
+				} else if (firstMenuItem.is('#member_profile_item') || firstMenuItem.is('#member_prefs_item')) {
 					memberStatusButton.bind(this)();
+				} else if (firstMenuItem.is('#channel_archives_item')) {
+					addProjectButton.bind(this)();
 				}
 
 			}
 		});
 	}
+}
+
+function addProjectButton() {
+	var menuItemsList = $(this).find('#menu_items');
+	var menuItems = menuItemsList.children();
+	var channelId = $('#channel-list').find('.active').find('.channel_name').attr('data-channel-id');
+
+	var addProjectButton = menuItems.last().clone().prependTo(menuItemsList);
+	var buttonLabel = 'Add Backfeed Integration';
+	addProjectButton.find('a').html(buttonLabel);
+	addProjectButton.on('click', function() {
+		openAddProjectPage(channelId);
+	});
+
 }
 
 function addContributionButton() {

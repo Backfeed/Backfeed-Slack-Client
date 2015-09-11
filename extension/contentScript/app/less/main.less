@@ -16,6 +16,48 @@ td a {
   }
 }
 
+.btn {
+  font-weight: bold;
+  border-radius: 2px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
+}
+
+.btn-success:hover {
+  background-color: #196c4a;
+}
+
+.btn-danger:hover {
+  background-color: #b04c3b;
+}
+
+.btn-group-vertical .btn {
+  margin-bottom: 10px;
+}
+
+.btn-group-vertical > .btn:first-child:not(:last-child) {
+  border-radius: 2px;
+}
+
+.btn-group-vertical > .btn:not(:first-child):not(:last-child) {
+  border-radius: 2px;
+}
+
+.btn-group-vertical > .btn:last-child:not(:first-child) {
+  border-radius: 2px;
+}
+
+.btn-lg {
+  font-size: 14px;
+}
+
+.btn [class^='ion-'] {
+  margin-right: 5px;
+}
+
+.btn .fa {
+  margin-right: 5px;
+}
+
 .ui-widget-header {
   height: 3px;
   background: rgba(160, 182, 228,0.78);
@@ -189,29 +231,48 @@ td a {
 }
 
 
-
 .close-modal {
   cursor: pointer;
+  display: block;
+  margin-left: auto;
 }
 
-.modal-header .close {
-  margin-top: 5px;
-  opacity: 1;
+.modal-dialog.modal-lg {
+  @media (min-width: 1200px) {
+    .modal-lg {
+      width: 1160px;
+    }
+  }
 }
-
 
 .modal-header {
   background-color: #eeecec;
+  border-bottom: 0;
+
+  .close {
+    margin-top: 5px;
+    opacity: 1;
+  }
+}
+
+.modal-title {
+  text-transform: uppercase;
+  font-variant: normal;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.modal-content {
+  border-radius: 0;
+  outline: solid #07beb8 4px;
+  border: 0;
+  .box-shadow(none);
 }
 
 .modal-body {
   padding-top: 40px;
   padding-right: 50px;
   padding-left: 50px;
-}
-
-.flex {
-  display: flex;
 }
 
 .modal-footer.flex {
@@ -222,15 +283,6 @@ td a {
     margin-bottom: 0;
     text-align: left;
   }
-}
-
-.modal-title {
-  font-size: 14px;
-  font-variant: small-caps;
-}
-
-.modal-content {
-  border-radius: 0;
 }
 
 .node-tooltip-plus{
@@ -332,6 +384,9 @@ textarea.ng-valid {
 
 .form-control {
   border-radius: 0;
+  height: 37px;
+  color: #cccccc;
+  padding: 0 11px;
   
   &:focus+label{
     opacity: 1;
@@ -414,11 +469,11 @@ textarea.ng-valid {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
 }
 
-.btn {
-  font-weight: bold;
-  border-radius: 2px;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
-}
+
+
+
+
+
 
 .btn-backfeed {
   background-color: #fa2a91;
@@ -435,40 +490,10 @@ textarea.ng-valid {
   background-color: #ff2a91;
 }
 
-.btn-success:hover {
-  background-color: #196c4a;
-}
 
-.btn-danger:hover {
-  background-color: #b04c3b;
-}
 
-.btn-group-vertical .btn {
-  margin-bottom: 10px;
-}
-
-.btn-group-vertical > .btn:first-child:not(:last-child) {
-  border-radius: 2px;
-}
-
-.btn-group-vertical > .btn:not(:first-child):not(:last-child) {
-  border-radius: 2px;
-}
-
-.btn-group-vertical > .btn:last-child:not(:first-child) {
-  border-radius: 2px;
-}
-
-.btn-lg {
-  font-size: 14px;
-}
-
-.btn [class^='ion-'] {
-  margin-right: 5px;
-}
-
-.btn .fa {
-  margin-right: 5px;
+.flex {
+  display: flex;
 }
 
 /*********************
@@ -499,28 +524,30 @@ textarea.ng-valid {
     opacity: 1;
   }
 }
+
+
 #chart {                                                          
-        height: 360px;                                                  
-        position: relative;                                             
-        width: 360px;                                                   
-      }                                                                 
-      .tooltipChart {                                                   
-        background: #eee;                                               
-        box-shadow: 0 0 5px #999999;                                    
-        color: #333;                                                    
-        display: none;                                                  
-        font-size: 12px;                                                
-        left: 130px;                                                    
-        padding: 10px;                                                  
-        position: absolute;                                             
-        text-align: center;                                             
-        top: 95px;                                                      
-        width: 80px;                                                   
-        z-index: 10;                                                   
-      }                                                                 
-      .legend {
-        font-size: 12px;
-      }
-      rect {
-        stroke-width: 2;
-      }
+  height: 360px;
+  position: relative;
+  width: 360px;
+}
+.tooltipChart {
+  background: #eee;
+  box-shadow: 0 0 5px #999999;
+  color: #333;
+  display: none;
+  font-size: 12px;
+  left: 130px;
+  padding: 10px;
+  position: absolute;
+  text-align: center;
+  top: 95px;
+  width: 80px;
+  z-index: 10;
+}
+.legend {
+  font-size: 12px;
+}
+rect {
+  stroke-width: 2;
+}
