@@ -8,11 +8,11 @@ $(window).resize(setIframeHeight);
 function openAddProjectPage(channelId) {
 	chrome.runtime.sendMessage({
 		message : {
-			"gesture": 'openAddProjectPage',
+			"gesture": 'openAddProject',
 			"options": channelId
 		}
 	}, function(response) {
-		console.log('Here in the callback from add contribution page');
+		console.log('Here in the callback from add project page');
 	});
 }
 
@@ -168,6 +168,7 @@ function onFloatingMenuOpened(nodes) {
 				} else if (firstMenuItem.is('#member_profile_item') || firstMenuItem.is('#member_prefs_item')) {
 					memberStatusButton.bind(this)();
 				} else if (firstMenuItem.is('#channel_archives_item')) {
+					console.log('comes here');
 					addProjectButton.bind(this)();
 				}
 
@@ -182,6 +183,7 @@ function addProjectButton() {
 	var channelId = $('#channel-list').find('.active').find('.channel_name').attr('data-channel-id');
 
 	var addProjectButton = menuItems.last().clone().prependTo(menuItemsList);
+	addProjectButton.removeAttr('id');
 	var buttonLabel = 'Add Backfeed Integration';
 	addProjectButton.find('a').html(buttonLabel);
 	addProjectButton.on('click', function() {

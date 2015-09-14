@@ -2,10 +2,10 @@ angular.module('MyApp').controller('MainCtrl', ["$scope", "$state","PostMessageS
 	function($scope, $state, PostMessageService) {
 	
 	//************    Listen to incoming messages in order to open modal and navigate the App       ************
-	function goToAddProject() {
+	function goToAddProject(channelId) {
 		console.log('Creating Project');
-		PostMessageService.navigateToAddProject();
-		//$state.go('addProject', {}, {reload: true});
+		//PostMessageService.navigateToAddProject();
+		$state.go('addProject', {'channelId': channelId}, {reload: true});
 	}
 
 	function goToAddContribution(channelId) {

@@ -84,9 +84,9 @@ angular.module('MyApp').controller(
 					console.log('comes here');
 					 $modalInstance.close('submit');
 	                 PostMessageService.sendGesture('hideIframe');
-	                 //PostMessageService.gesture.showAlert('In order to submit a contribution to this channel, click on the channel name above and "Add Backfeed Integration"', 'error');
+	                 PostMessageService.gesture.showAlert('In order to submit a contribution to this channel, click on the channel name above and "Add Backfeed Integration"', 'error');
 					//navigate to create org screen
-                	$state.go('addProject', {'channelId': $scope.channelId}, {reload: true});
+                	//$state.go('addProject', {'channelId': $scope.channelId}, {reload: true});
 				}
 				
 			});
