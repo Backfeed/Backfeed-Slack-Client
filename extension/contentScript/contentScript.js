@@ -197,7 +197,7 @@ function addProjectButton() {
 
 	var addProjectButton = menuItems.last().clone().prependTo(menuItemsList);
 	addProjectButton.removeAttr('id');
-	var buttonLabel = 'Add Backfeed Integration';
+	var buttonLabel = 'Add a Collaborative Project';
 	addProjectButton.find('a').html(buttonLabel);
 	addProjectButton.on('click', function() {
 		openAddProjectPage(channelId);

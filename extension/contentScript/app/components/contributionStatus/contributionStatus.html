@@ -1,81 +1,99 @@
 <script type="text/ng-template" id="ContributionStatusModalTmpl">
+
 <div class="modal-header">
 	<img alt="Close modal" class="close-modal" src="/extension/contentScript/app/images/close_x.png" ng-click="closeModal()" />
 </div>
-<div class="modal-body">
-	<form>
-		<div class="row">
-			<div class="col-sm-12">
-				<h2>{{cotributionStatusModel.title}}</h2>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm-4">
-				<legend>
-					<i class="ion-ribbon-b"></i> Current Valuation:
-					{{cotributionStatusModel.currentValuation}}
-				</legend>
-				<legend>
-					<i class="ion-chatbox-working"></i> My estimate:
-					{{cotributionStatusModel.myValuation}}
-				</legend>
-				<legend>
-					<i class="ion-arrow-graph-up-right"></i> My Rep profit/loss: {{cotributionStatusModel.reputationDelta}}
-				</legend>
-				<legend>
-					<i class="ion-mic-a"></i> My weight in the team: {{cotributionStatusModel.myWeight}}
-				</legend>
-				<legend>
-					<i class="ion-speakerphone"></i> {{cotributionStatusModel.groupWeight}}% of the team evaluated this contribution
-				</legend>
-				<svg id="visualisation" width="500" height="300"></svg>
-				<div id="chart"></div>
-				<svg id="visualisation_bar" width="500" height="300"></svg>
-				<h3>{{cotributionStatusModel.file}}</h3>	
-				<table class="table table-bordered table-hover text-center">
-					<thead>
-						<tr>
-							<th>URL</th>
-							<th>Contributer Name</th>
-							<th>Contributer Full Name</th>
-							<th>Contributer Percentage</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="contributionContributer in cotributionStatusModel.contributionContributers">
-							<td><img ng-src="{{contributionContributer.url}}" /></td>
-							<td>{{contributionContributer.name}}</td>
-							<td>{{contributionContributer.real_name}}</td>
-							<td>{{contributionContributer.contributer_percentage}}%</td>
-						</tr>
-					</tbody>
-				</table>			
-			</div>
-			<div class="col-sm-8">
-				<table class="table table-bordered table-hover text-center">
-					<thead>
-						<tr>
-							<th><img tooltip="Time at which the contribution was submitted" alt="help" src="/extension/contentScript/app/images/star.png"/></th>
-							<th><img tooltip="Evaluation" alt="help" src="/extension/contentScript/app/images/tokens.png"/></th>
-							<th><img tooltip="Weight" alt="help" src="/extension/contentScript/app/images/rep.png"/></th>
-							<th><img tooltip="Value After Evaluation" alt="help" src="/extension/contentScript/app/images/heart.png"/></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="bid in cotributionStatusModel.bids">
-							<td>{{bid.time_created | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-							<td>{{bid.tokens | number:0}}</td>
-							<td>{{bid.reputation | number:0}}</td>
-							<td>{{bid.contribution_value_after_bid}}</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</form>
 
-	<div class="modal-footer">
-		<div class="row"></div>		
+<div class="modal-body">
+	<div class="row">
+		<div class="col-sm-4">
+			<h2>{{contributionStatusModel.title}}</h2>
+			<h3>Contribution Description:</h3>
+			<div>
+				{{contributionStatusModel.file}}
+			</div>
+		</div>
+
+		<div class="col-sm-5">
+			<div class="box-with-shadow big-data-items">
+				<div class="big-data-item">
+					<div class="big-data-value">{{contributionStatusModel.currentValuation}}</div>
+					<div class="big-data-label">Current Value</div>
+				</div>
+				<div class="big-data-item">
+					<div class="big-data-value">{{contributionStatusModel.myValuation}}</div>
+					<div class="big-data-label">My Evaluation</div>
+				</div>
+				<div class="big-data-item">
+					<div class="big-data-value">{{contributionStatusModel.reputationDelta}}</div>
+					<div class="big-data-label">My Reputation Profit/Loss</div>
+				</div>
+			</div>
+			<div class="box-with-shadow">
+				<div class="donut-chart">
+					{{contributionStatusModel.myWeight}}
+					My reputation in the project
+				</div>
+				<div class="donut-chart">
+					{{contributionStatusModel.groupWeight}}
+					Total reputation invested in evaluating this contribution
+				</div>
+			</div>
+			<div class="box-with-shadow">
+				<h4 class="box-with-shadow-title">Contribution Value in Chronological Order</h4>
+				<svg id="visualisation" width="500" height="300"></svg>
+			</div>
+			<div class="box-with-shadow">
+				<h4 class="box-with-shadow-title">Donuts</h4>
+				<single-value-donut-chart donut-value="50" donut-color="#f9ac51" />
+				<single-value-donut-chart donut-value="70" donut-color="#6991bf" />
+			</div>
+			<div class="box-with-shadow">
+				<h4 class="box-with-shadow-title">Distribution of Reputation</h4>
+				<svg id="visualisation_bar" width="500" height="300"></svg>
+			</div>
+		</div>
+
+		<div class="col-sm-3">
+			<div class="box-with-shadow">
+				<h4 class="box-with-shadow-title">Contributors</h4>
+				<ul class="contributors-list">
+					<li class="contributor" ng-repeat="contributionContributer in contributionStatusModel.contributionContributers">
+						<img ng-src="{{contributionContributer.url}}" />
+						{{contributionContributer.name}}
+						{{contributionContributer.real_name}}
+						{{contributionContributer.contributer_percentage}}%
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-8">
+			<table class="table table-bordered table-hover text-center">
+				<thead>
+					<tr>
+						<th><img tooltip="Time at which the contribution was submitted" alt="help" src="/extension/contentScript/app/images/star.png"/></th>
+						<th><img tooltip="Evaluation" alt="help" src="/extension/contentScript/app/images/tokens.png"/></th>
+						<th><img tooltip="Weight" alt="help" src="/extension/contentScript/app/images/rep.png"/></th>
+						<th><img tooltip="Value After Evaluation" alt="help" src="/extension/contentScript/app/images/heart.png"/></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="bid in contributionStatusModel.bids">
+						<td>{{bid.time_created | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+						<td>{{bid.tokens | number:0}}</td>
+						<td>{{bid.reputation | number:0}}</td>
+						<td>{{bid.contribution_value_after_bid}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>
-		</script>
+
+<div class="modal-footer">
+	<div class="row"></div>
+</div>
+
+</script>
