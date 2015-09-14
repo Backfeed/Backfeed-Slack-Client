@@ -16,6 +16,17 @@ function openAddProjectPage(channelId) {
 	});
 }
 
+function openAddMilestonePage(channelId) {
+	chrome.runtime.sendMessage({
+		message : {
+			"gesture": 'openAddMilestone',
+			"options": channelId
+		}
+	}, function(response) {
+		console.log('Here in the callback from add milestone page');
+	});
+}
+
 function openAddContributionPage(channelId) {
 	chrome.runtime.sendMessage({
         message : {
@@ -170,6 +181,8 @@ function onFloatingMenuOpened(nodes) {
 				} else if (firstMenuItem.is('#channel_archives_item')) {
 					console.log('comes here');
 					addProjectButton.bind(this)();
+					console.log('new code changes!');
+					addMilestoneButton.bind(this)();
 				}
 
 			}
@@ -188,6 +201,21 @@ function addProjectButton() {
 	addProjectButton.find('a').html(buttonLabel);
 	addProjectButton.on('click', function() {
 		openAddProjectPage(channelId);
+	});
+
+}
+
+function addMilestoneButton() {
+	var menuItemsList = $(this).find('#menu_items');
+	var menuItems = menuItemsList.children();
+	var channelId = $('#channel-list').find('.active').find('.channel_name').attr('data-channel-id');
+
+	var addMilestoneButton = menuItems.last().clone().prependTo(menuItemsList);
+	addMilestoneButton.removeAttr('id');
+	var buttonLabel = 'Submit milestone';
+	addMilestoneButton.find('a').html(buttonLabel);
+	addMilestoneButton.on('click', function() {
+		openAddMilestonePage(channelId);
 	});
 
 }

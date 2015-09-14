@@ -8,6 +8,12 @@ angular.module('MyApp').controller('MainCtrl', ["$scope", "$state","PostMessageS
 		$state.go('addProject', {'channelId': channelId}, {reload: true});
 	}
 
+	function goToAddMilestone(channelId) {
+		console.log('Creating Milestone');
+		//PostMessageService.navigateToAddMilestone(); // NOT IMPLEMENTED
+		$state.go('addMilestone', {'channelId': channelId}, {reload: true});
+	}
+
 	function goToAddContribution(channelId) {
 		console.log('Starting contributions'+channelId);
 		$state.go('createContribution', {'channelId': channelId}, {reload: true});
@@ -46,6 +52,7 @@ angular.module('MyApp').controller('MainCtrl', ["$scope", "$state","PostMessageS
 
 	var GESTURES = {
 		"openAddProject": goToAddProject,
+		"openAddMilestone": goToAddMilestone,
 		"openAddContributionPage": goToAddContribution,
 		"openAddEvaluationPage": goToAddEvaluation,
 		"showAlertFromMainCtr": showAlert,
