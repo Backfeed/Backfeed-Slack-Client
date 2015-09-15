@@ -322,19 +322,20 @@ td a {
 
 .member-name {
   font-weight: normal;
+  font-size: 35px;
+  margin-bottom: 0;
 }
 
 .member-username {
-  font-size: 24px;
-  font-weight: lighter;
+  font-size: 23px;
+  font-weight: 300;
 }
 
 .member-stats {
   display: flex;
   justify-content: space-around;
 
-  margin-top: 2rem;
-  margin-bottom: 5rem;
+  margin: 4rem auto;
   padding: 20px;
 
   border: 1px solid #ddd;
@@ -343,14 +344,16 @@ td a {
 
 .member-stat {
   display: flex;
-  align-items: baseline;
+  align-items: center;
+  flex-direction: column;
 
   .member-stat-icon {
     .size(40px, 40px);
   }
 
   .member-stat-item {
-    margin-left: 5px;
+    display: flex;
+    align-items: center;
   }
 
   .member-stat-label {
@@ -359,18 +362,35 @@ td a {
 
   .member-stat-data {
     font-size: 48px;
-    font-weight: lighter;
+    font-weight: normal;
+    margin-left: 5px;
     line-height: 1;
 
     small {
       font-size: 60%;
-      color: darkgray;
+      font-weight: 100;
     }
   }
 }
 
 .table-column-title {
   color: #8c8989;
+}
+
+.contributions-table {
+  tbody {
+    tr {
+      border-top: 3px solid #8c8989;
+      height: 50px;
+
+      &:last-child {
+        border-bottom: 3px solid #8c8989;
+      }
+    }
+    td {
+      padding: 12px 5px !important;
+    }
+  }
 }
 
 .ng-hide {
@@ -417,6 +437,24 @@ td a {
     width: 100%;
   }
 }
+
+.modal[size="member-status"] {
+  &>.modal-dialog {
+    width: 888px;
+  }
+}
+
+select[name="projectSelection"] {
+  padding: 10px;
+  border-radius: 20px;
+  font-size: x-large;
+  border: solid 2px #e2e9f7;
+  cursor: pointer;
+  background: url('../images/icon-sort.png') no-repeat 92% 50%;
+  -webkit-appearance: none;
+  width: 245px;
+}
+
 
 
     /**

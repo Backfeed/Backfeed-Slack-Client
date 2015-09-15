@@ -11,7 +11,7 @@
 				<div class="media pull-left">
 					<div class="media-left">
 						<a href="#">
-							<img class="media-object img-circle" ng-src="{{memberStatusModel.url}}"  alt="" style="width: 50px;" />
+							<img class="media-object img-circle" ng-src="{{memberStatusModel.url}}"  alt="" />
 						</a>
 					</div>
 					<div class="media-body">
@@ -28,53 +28,52 @@
 						</svg><span class="member-username">&nbsp;{{memberStatusModel.name}}</span>
 					</div>
 				</div>
-				<div class="pull-right"> 
-					Select Project:
-  				<select  name="projectSelection" ng-model="selectedProjectId" ng-change="updateTable();">
-					<option value="-1">All Projects</option>
-    					<option ng-repeat="memberProject in memberProjects" value="{{memberProject.id}}">{{memberProject.channelName}}</option>
-  				</select>
-  			</div>
+				<div class="pull-right">
+                    <select  name="projectSelection" ng-model="selectedProjectId" ng-change="updateTable();">
+                        <option value="-1" selected>Choose Project</option>
+                        <option ng-repeat="memberProject in memberProjects" value="{{memberProject.id}}">{{memberProject.channelName}}</option>
+                    </select>
+                </div>
 			</div>
 		</div>
 
 		<div class="member-stats" ng-show="showTokens">
 			<div class="member-stat">
-				<img class="member-stat-icon" alt="Contribution" src="/extension/contentScript/app/images/contribution.png" />
 				<div class="member-stat-item">
-					<div class="member-stat-data">{{memberStatusModel.contributionLength | number:0}}</div>
-					<div class="member-stat-label">Contributions&nbsp;<img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png"/></div>
+                    <img class="member-stat-icon" alt="Contribution" src="/extension/contentScript/app/images/contribution.png" />
+                    <div class="member-stat-data">{{memberStatusModel.contributionLength | number:0}}</div>
 				</div>
-			</div>
+                <div class="member-stat-label">Contributions&nbsp;<img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png"/></div>
+            </div>
 			<div class="member-stat" >
-				<img class="member-stat-icon" alt="Tokens" src="/extension/contentScript/app/images/tokens.png" />
 				<div class="member-stat-item">
-					<div class="member-stat-data">{{memberStatusModel.project_tokens | number:0}}</div>
-					<div class="member-stat-label">Tokens&nbsp;<img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png"/></div>
+                    <img class="member-stat-icon" alt="Tokens" src="/extension/contentScript/app/images/tokens.png" />
+                    <div class="member-stat-data">{{memberStatusModel.project_tokens | number:0}}</div>
 				</div>
-			</div>
+                <div class="member-stat-label">Tokens&nbsp;<img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png"/></div>
+            </div>
 			<div class="member-stat">
-				<img class="member-stat-icon" alt="Reputation" src="/extension/contentScript/app/images/rep.png" />
 				<div class="member-stat-item">
-					<div class="member-stat-data">{{memberStatusModel.project_reputation | number:0}}&nbsp;<small>{{memberStatusModel.reputationPercentage | number:0}}%</small></div>
-					<div class="member-stat-label">Reputation&nbsp;<img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png"/></div>
+                    <img class="member-stat-icon" alt="Reputation" src="/extension/contentScript/app/images/rep.png" />
+                    <div class="member-stat-data">{{memberStatusModel.project_reputation | number:0}}&nbsp;<small>{{memberStatusModel.reputationPercentage | number:0}}%</small></div>
 				</div>
-			</div>
+                <div class="member-stat-label">Reputation&nbsp;<img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png"/></div>
+            </div>
 		</div>
 
 		<div class="member-stats" ng-hide="showTokens">
 			<div class="member-stat">
-				<img class="member-stat-icon" alt="Contribution" src="/extension/contentScript/app/images/contribution.png" />
-				<div class="member-stat-item">
-					<div class="member-stat-data">{{memberStatusModel.contributionLength | number:0}}</div>
-					<div class="member-stat-label">Total Contributions&nbsp;<img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png"/></div>
-				</div>
-			</div>			
+                <div class="member-stat-item">
+                    <img class="member-stat-icon" alt="Contribution" src="/extension/contentScript/app/images/contribution.png" />
+                    <div class="member-stat-data">{{memberStatusModel.contributionLength | number:0}}</div>
+                </div>
+                <div class="member-stat-label">Total Contributions&nbsp;<img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png"/></div>
+            </div>
 		</div>
 
 		<div class="row">
 			<div class="col-sm-12">
-				<table class="table table-condensed table-hover">
+				<table class="table table-condensed table-hover contributions-table">
 					<thead>
 					<tr>
 						<td nowrap>

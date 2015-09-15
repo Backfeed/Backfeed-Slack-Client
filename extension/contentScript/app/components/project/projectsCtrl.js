@@ -5,7 +5,6 @@ angular.module('MyApp').controller('ProjectsCtrl',
             controller: 'ProjectsModalCtrl',
             scope: $scope,
             size: 'lg',
-            openedClass: 'add-project-modal'
         });
 
         modal.result.then(function() {
