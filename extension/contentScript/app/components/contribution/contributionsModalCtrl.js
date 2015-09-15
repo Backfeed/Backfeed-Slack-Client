@@ -56,12 +56,6 @@ angular.module('MyApp').controller(
                      $scope.model.contributers[0].contributer_name = $scope.displayName;
                      $scope.model.contributers[0].className = "media contributer-cell";
                      angular.element('#'+$scope.model.contributers[0].contributer_id).trigger('focus');
-                    var sliderDivElement = angular.element('#slider'+$scope.model.contributers[0].contributer_id+" div");
-                     sliderDivElement.removeClass('ui-widget-header-active');
- 					sliderDivElement.addClass('ui-widget-header-active');
-                    var sliderSpanElement = angular.element('#slider'+$scope.model.contributers[0].contributer_id+" span");
- 					sliderSpanElement.removeClass('ui-slider-handle-show');
- 					sliderSpanElement.addClass('ui-slider-handle-show');
  					$scope.model.contributers[0].className = "media contributer-cell active-contributer";
                      PostMessageService.gesture.showIframe();
                      var allProjectUsersData = Users.getAllProjectUsersData();
@@ -154,12 +148,6 @@ angular.module('MyApp').controller(
                             $scope.model.contributers[0].img =  $scope.users[i].url;
                             $scope.model.contributers[0].contributer_name =  $scope.users[i].name;  
                             angular.element('#'+$scope.model.contributers[0].contributer_id).trigger('focus');
-	                        //sliderDivElement = angular.element('#slider'+$scope.model.contributers[0].contributer_id+" div");
-	                        //sliderDivElement.removeClass('ui-widget-header-active');
- 							//sliderDivElement.addClass('ui-widget-header-active');
- 							//sliderSpanElement = angular.element('#slider'+$scope.model.contributers[0].contributer_id+" span");
- 							//sliderSpanElement.removeClass('ui-slider-handle-show');
- 							//sliderSpanElement.addClass('ui-slider-handle-show');
  							$scope.model.contributers[0].className = "media contributer-cell active-contributer";
                             
                             continue;
@@ -170,57 +158,6 @@ angular.module('MyApp').controller(
                     //$location.path("/contribution/" + result.id);
                 });
             };
-            
-
-           
-
-            
-
-            $scope.updateContributer = function(selectedUserId) {
-                if(selectedUserId == ''){
-                    return;
-                }
-                console.log('comes here firt');
-                $scope.addCollaborator(selectedUserId);
-                var urlImage = '';
-                var userName = '';
-                for(i = 0 ; i<$scope.users.length ; i++){
-                    if($scope.users[i].id == selectedUserId ){
-                        urlImage =  $scope.users[i].url;
-                        userName = $scope.users[i].name;
-                        break;
-                    }
-                }
-
-                var allcontributers = $scope.model.contributers;
-                //contPercentage = 100/allcontributers.length;
-
-                for (var i=0; i<allcontributers.length; i++) {
-                    if (allcontributers[i].contributer_id == 0 && allcontributers[i].contributer_percentage == ''){
-                    	console.log('comes here firt');
-                        allcontributers[i].contributer_id = selectedUserId;
-                        
-                        //allcontributers[i].contributer_percentage = contPercentage;
-                        allcontributers[i].img = urlImage;
-
-                    }
-                    
-                }
-                $scope.changeContribution(selectedUserId,userName);
-                setTimeout(function(){ 
-                	angular.element('#'+selectedUserId).trigger('focus');
-                    var sliderDivElement = angular.element('#slider'+selectedUserId+" div");
-                     sliderDivElement.removeClass('ui-widget-header-active');
- 					sliderDivElement.addClass('ui-widget-header-active');
-                    var sliderSpanElement = angular.element('#slider'+selectedUserId+" span");
- 					sliderSpanElement.removeClass('ui-slider-handle-show');
- 					sliderSpanElement.addClass('ui-slider-handle-show');
- 					$scope.model.contributers[0].className = "media contributer-cell active-contributer";
-                	
-                }, 100);
-
-            };
-
 
             $scope.contributionId = $stateParams.contributionId;
 
@@ -253,162 +190,6 @@ angular.module('MyApp').controller(
 
             };
             
-            $scope.clickContributer = function(contributerId) {
-            	angular.element('#'+contributerId).trigger('focus');
-            	console.log('contributerId is '+contributerId);
-                var allcontributers = $scope.model.contributers;
-            	var sliderDivElement;
-            	var sliderSpanElement;
-            	 for(var i=0;i<allcontributers.length;i++){
- 						 if(allcontributers[i].contributer_id != contributerId){
-	 							sliderDivElement = angular.element('#slider'+allcontributers[i].contributer_id+" div");
-	 							sliderDivElement.removeClass('ui-widget-header-active');
-	 							allcontributers[i].className = "media contributer-cell";
-	 							sliderSpanElement = angular.element('#slider'+allcontributers[i].contributer_id+" span");
-	 							sliderSpanElement.removeClass('ui-slider-handle-show');
-	 							allcontributers[i].className = "media contributer-cell";
- 	                        }else{
- 	                        	angular.element('#'+allcontributers[i].contributer_id).trigger('focus');
- 	                        	sliderDivElement = angular.element('#slider'+allcontributers[i].contributer_id+" div");
- 	                        	sliderDivElement.removeClass('ui-widget-header-active');
-	 							sliderDivElement.addClass('ui-widget-header-active');
-	 							sliderSpanElement = angular.element('#slider'+allcontributers[i].contributer_id+" span");
-	 							sliderSpanElement.removeClass('ui-slider-handle-show');
-	 							sliderSpanElement.addClass('ui-slider-handle-show');
- 	                        	allcontributers[i].className = "media contributer-cell active-contributer";
- 	                        } 					
- 				}
-            };
-            $scope.changeContribution = function(contributerId,userName) {
-                var totalContribution = 0,
-                    allContributers = $scope.model.contributers,
-                    valid = true;
-                console.log('userName is '+userName);
-                if (allContributers.length) {
-                    valid = false;
-                }
-                var sliderDivElement;
-                var sliderSpanElement;
-                for(i=0;i<allContributers.length;i++){
-					if(allContributers[i].contributer_id != 0){
-						 if(allContributers[i].contributer_id != contributerId){
-                            allContributers[i].className = "media contributer-cell";
-                            sliderDivElement = angular.element('#slider'+allContributers[i].contributer_id+" div");
-                            sliderDivElement.removeClass('ui-widget-header-active');
-                            sliderSpanElement = angular.element('#slider'+allContributers[i].contributer_id+" span");
-                            sliderSpanElement.removeClass('ui-slider-handle-show');
-                            //totalEarlierRemaining = totalEarlierRemaining + +allContributers[i].contributer_percentage
-                        }else{
-
-                            if(userName != ''){
-                                console.log('comes inside is '+userName+allContributers[i].contributer_id);
-                                allContributers[i].contributer_name = userName;
-
-                            }else{
-                                angular.element('#'+allContributers[i].contributer_id).trigger('focus');
-                                sliderDivElement = angular.element('#slider'+allContributers[i].contributer_id+" div");
-                                sliderDivElement.removeClass('ui-widget-header-active');
-                                sliderDivElement.addClass('ui-widget-header-active');
-                                sliderSpanElement = angular.element('#slider'+allContributers[i].contributer_id+" span");
-                                sliderSpanElement.removeClass('ui-slider-handle-show');
-                                sliderSpanElement.addClass('ui-slider-handle-show');
-                                allContributers[i].className = "media contributer-cell active-contributer";
-                            }
-
-
-                        }
-						totalContribution = totalContribution + +allContributers[i].contribution1;
-					}else{
-						valid = false;
-					}
-				}
-
-                for(var i=0; i<allContributers.length; i++){
-					if(allContributers[i].contributer_id != 0){
-						allContributers[i].contributer_percentage = ((allContributers[i].contribution1/totalContribution)*100).toFixed(1);
-					}
-				}
-                
-
-                /*console.log('coming percentage is '+contributerPercentage);
-                remainingPercentage = 100 - +contributerPercentage;
-                console.log('remaining percentage is '+remainingPercentage);
-                totalEarlierRemaining = 0;
-                for(i=0;i<allcontributers.length;i++){
-                    if(allcontributers[i].contributer_id != 0){
-                        if(allcontributers[i].contributer_id != contributerId){
-                            totalEarlierRemaining = totalEarlierRemaining + +allcontributers[i].contributer_percentage
-                        }else{
-                            if(userName != ''){
-                                console.log('comes inside is '+userName);
-                                allcontributers[i].contributer_name = userName;
-                            }
-
-
-                        }
-
-                    }
-                }
-                for(i=0;i<allcontributers.length;i++){
-                    if(allcontributers[i].contributer_id != 0){
-                        if(allcontributers[i].contributer_id != contributerId){
-                            console.log('old percentage is'+allcontributers[i].contributer_percentage);
-                            allcontributers[i].contributer_percentage = (remainingPercentage * allcontributers[i].contributer_percentage)/totalEarlierRemaining;
-                            console.log('new percentage is  is '+allcontributers[i].contributer_percentage);
-                        }else{
-                            allcontributers[i].contributer_percentage = contributerPercentage;
-                        }
-
-                    }else{
-                        valid = false;
-                    }
-
-
-
-                }*/
-
-                $scope.buttonDisabled = valid;
-
-            };
-            
-           
-            $scope.changePercentage = function(contributerId, contributerPercentage) {
-                var allcontributers = $scope.model.contributers;
-            	var find = '<br>';
-            	var re = new RegExp(find, 'g');
-            	contributerPercentage = contributerPercentage.replace(re, '');
-            	contributerPercentage = contributerPercentage.trim();
-            	if(allcontributers.length <= 1){
-            		allcontributers[0].contributer_percentage = 100;
-            		return;
-            	}
-            	if(contributerPercentage >= 100){
-            		alert("Contribution Percentage can not  be greater or equal to 100");
-            		$scope.buttonDisabled = true;
-            		return;
-            	}
-                var totalContributionWithoutCurrent = 0;
-                for(var i=0;i<allcontributers.length;i++){
-					if(allcontributers[i].contributer_id != 0){
-						 if(allcontributers[i].contributer_id != contributerId){
-							 totalContributionWithoutCurrent = totalContributionWithoutCurrent + +allcontributers[i].contribution1;
-	                        }
-					}
-				}
-
-                var remainingPercentage = 100 - +contributerPercentage;
-                
-                for(var i=0; i<allcontributers.length; i++){
-					if(allcontributers[i].contributer_id != 0){
-						 if(allcontributers[i].contributer_id == contributerId){
-							 allcontributers[i].contribution1 = totalContributionWithoutCurrent * contributerPercentage / remainingPercentage ;
-	                        }
-					}
-				}
-                
-                $scope.changeContribution(contributerId,'');
-                
-            };
 
             // ******************************* SLACK PLAY ***********************
 
@@ -616,13 +397,13 @@ angular.module('MyApp').controller(
             //$scope.users = User.query();
             $scope.orderProp = "time_created"; // set initial order criteria
 
-            $scope.addCollaborator = function(selectedUserId) {
-                console.log('comes here in add'+selectedUserId);
+            $scope.addCollaborator = function(selectedUser) {
+                console.log('addCollaborator: ', selectedUser);
                 var allcontributers = $scope.model.contributers;
                 $scope.updatedUsersList = [];
                 $scope.selectedContributerId = '';
                 for(var i = 0 ; i<$scope.users.length ; i++){
-                    if($scope.users[i].id == selectedUserId){
+                    if($scope.users[i].id == selectedUser.contributer_id){
                         continue;
                     }
                     var userExist = false;
@@ -637,12 +418,12 @@ angular.module('MyApp').controller(
                     }
                 }
                 $scope.model.contributers.push({
-                    contributer_id:'0',
-                    contributer_percentage:'',
-                    contributer_name:'',
+                    contributer_id: selectedUser.id,
+                    contributer_percentage: '',
+                    contributer_name: selectedUser.name,
                     contribution1:'50',
                     className:'media contributer-cell',
-                    img:'/extension/contentScript/app/images/avatar.png'
+                    img: selectedUser.url
                 }) ;
                 //$scope.buttonDisabled = true;
             };
@@ -666,6 +447,59 @@ angular.module('MyApp').controller(
                 });
             }
         }
+
+        $scope.updateContributer = function(selectedUser) {
+
+                if(selectedUser.id == ''){
+                    return;
+                }
+                console.log('update contributer: ', selectedUser);
+                $scope.addCollaborator(selectedUser);
+                var urlImage = '';
+                var userName = '';
+                for(i = 0 ; i<$scope.users.length ; i++){
+                    if($scope.users[i].id == selectedUser.id ){
+                        urlImage =  $scope.users[i].url;
+                        userName = $scope.users[i].name;
+                        break;
+                    }
+                }
+
+                var allcontributers = $scope.model.contributers;
+                //contPercentage = 100/allcontributers.length;
+
+                for (var i=0; i<allcontributers.length; i++) {
+                 if (allcontributers[i].id == 0 && allcontributers[i].contributer_percentage == ''){
+                    console.log('comes here firt');
+                     allcontributers[i].id = selectedUser.id;
+                     
+                     //allcontributers[i].contributer_percentage = contPercentage;
+                     allcontributers[i].img = urlImage;
+
+                 }
+                 
+             }
+
+             setTimeout(function(){ 
+                angular.element('#'+selectedUser.id).trigger('focus');
+                $scope.model.contributers[0].className = "media contributer-cell active-contributer";
+                
+             }, 100);
+
+         };
+
+         $scope.getTotalSum = function() {
+            var total = 0;
+            
+            $.each($scope.model.contributers, function(i, contributer) {
+                if ( contributer.contributer_percentage === '' )
+                    return;
+
+                total += parseFloat(contributer.contributer_percentage);
+            });
+
+            return total;
+         }
 
         $scope.formatSelectUser = function (data) {
             if (!data) return;

@@ -35,6 +35,7 @@
 				</div>
 
 				<div class="col-sm-6">
+					<div class="error" ng-hide="getTotalSum() == 100">Total value must be 100!</div>
 					<h2>Contributors <img tooltip="This is the list of people who worked together on this new effort. Their part in it will be used to distribute among them the tokens rewarded to them by the team." alt="help" src="/extension/contentScript/app/images/icon_help.png"/></h2>
 
 					<ul class="media-list">
@@ -61,17 +62,12 @@
 								</button>
 							</div>
 
-							<div id="slider{{contributer.contributer_id}}" ui-slider="rangeSlider.options"
-								 class="contribution-slider"
-								 ng-disabled ="contributer.contributer_id == '0'"
-								 ng-model="contributer.contribution1"
-								 ng-change="changeContribution(contributer.contributer_id,'')"></div>
 						</li>
 					</ul>
 
 					<ui-select style="width:96%" search-enabled="false"
 							   ng-model='selectedContributerId'
-							   on-select="updateContributer($select.selected.id)">
+							   on-select="updateContributer($select.selected)">
 						<ui-select-match placeholder="Add Contributor"></ui-select-match>
 						<ui-select-choices repeat="user in updatedUsersList">
 							<div ng-bind-html="formatSelectUser(user)"></div>
@@ -89,7 +85,7 @@
 		<p class="lead">Contributions are the only way to generate new tokens and reputation.</p>
 		<button type="submit"
 				class="btn btn-backfeed submit-button"
-				ng-disabled="!model.title || !model.file || buttonDisabled"
+				ng-disabled="!model.title || !model.file || buttonDisabled || !(getTotalSum() === 100)"
 				ng-click="onSubmit()">Add Contribution</button>
 	</div>
 </script>
