@@ -36,43 +36,39 @@
 				</div>
 
 				<div class="col-sm-6">
+					<div class="error" ng-hide="getTotalSum() == 100">Total value must be 100!</div>
 					<h2>Contributors <img tooltip="This is the list of people who worked together on this new effort. Their part in it will be used to distribute among them the tokens rewarded to them by the team." alt="help" src="/extension/contentScript/app/images/icon_help.png"/></h2>
 
-                    <ul class="media-list">
-                        <li ng-repeat="contributer in model.contributers" class="{{contributer.className}}" ng-click="clickContributer(contributer.contributer_id)">
-                            <div class="contributer-cell-wrapper">
-                                <div class="contributer-cell">
-                                    <div class="contributor-info">
-                                        <img class="contributor-image" ng-src="{{contributer.img}}" alt="">
-                                        <div>
-                                            <p class="contributor-name">{{contributer.contributer_name}}</p>
-                                            <p class="contributor-fullname">{{contributer.contributer_fullname}}</p>
-                                        </div>
-                                    </div>
-                                    <div class="contributor-percentage">
-                                    <span id="{{contributer.contributer_id}}"
-                                          ng-change="changePercentage(contributer.contributer_id,contributer.contributer_percentage)"
-                                          ng-model="contributer.contributer_percentage"
-                                          class="contributor-percentage-number"
-                                          contenteditable>{{contributer.contributer_percentage | number:0}}</span>%
-                                    </div>
-                                </div>
+					<ul class="media-list">
+						<li ng-repeat="contributer in model.contributers" class="{{contributer.className}}" ng-click="clickContributer(contributer.contributer_id)">
+							<div class="media-left media-middle">
+								<a href="#">
+									<img class="media-object" ng-src="{{contributer.img}}" alt=""/>
+								</a>
+							</div>
 
-                                <img class="icon-remove-contributer" ng-click='removeCollaboratorItem(contributer.contributer_id,$index)' src="/extension/contentScript/app/images/icon_remove.png" />
+							<div class="media-body">
+								<h4 class="media-heading">{{contributer.contributer_name}}</h4>
+								<p>{{contributer.contributer_fullname}}</p>
+							</div>
 
-                                <div id="slider{{contributer.contributer_id}}" ui-slider="rangeSlider.options"
-                                     class="contributor-slider"
-                                     ng-disabled ="contributer.contributer_id == '0'"
-                                     ng-model="contributer.contribution1"
-                                     ng-change="changeContribution(contributer.contributer_id,'')"></div>
-                            </div>
-                        </li>
+							<div class="media-right media-middle">
+								<span id="{{contributer.contributer_id}}"
+									  ng-change="changePercentage(contributer.contributer_id,contributer.contributer_percentage)"
+									  ng-model="contributer.contributer_percentage"
+									  class="contribution-percentage"
+									  contenteditable>{{contributer.contributer_percentage | number:0}}</span>%
+								<button type="submit" class="icon-button" aria-label="Left Align" ng-click='removeCollaboratorItem(contributer.contributer_id,$index)'>
+									<img src="/extension/contentScript/app/images/trash-bin.png"/>
+								</button>
+							</div>
 
-                    </ul>
+						</li>
+					</ul>
 
-					<ui-select class="add-contributer-dropdown" style="width:96%" search-enabled="false"
+					<ui-select style="width:96%" search-enabled="false"
 							   ng-model='selectedContributerId'
-							   on-select="updateContributer($select.selected.id)">
+							   on-select="updateContributer($select.selected)">
 						<ui-select-match placeholder="Add Contributor"></ui-select-match>
 						<ui-select-choices repeat="user in updatedUsersList">
 							<div ng-bind-html="formatSelectUser(user)"></div>
@@ -92,7 +88,7 @@
 		<p class="lead">Contributions are the only way to generate new tokens and reputation.</p>
 		<button type="submit"
 				class="btn btn-backfeed submit-button"
-				ng-disabled="!model.title || !model.file || buttonDisabled"
+				ng-disabled="!model.title || !model.file || buttonDisabled || !(getTotalSum() === 100)"
 				ng-click="onSubmit()">Add Contribution</button>
 	</div>
 </script>
