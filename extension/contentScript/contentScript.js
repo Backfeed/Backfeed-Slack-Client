@@ -193,10 +193,7 @@ function onFloatingMenuOpened(nodes) {
 				} else if (firstMenuItem.is('#member_profile_item') || firstMenuItem.is('#member_prefs_item')) {
 					memberStatusButton.bind(this)();
 				} else if (firstMenuItem.is('#channel_archives_item')) {
-					console.log('comes here');
 					addProjectButton.bind(this)();
-					console.log('new code changes!');
-					addMilestoneButton.bind(this)();
 				}
 
 			}
@@ -207,7 +204,9 @@ function onFloatingMenuOpened(nodes) {
 function addProjectButton() {
 	var menuItemsList = $(this).find('#menu_items');
 	var menuItems = menuItemsList.children();
-	var channelId = $('#channel-list').find('.active').find('.channel_name').attr('data-channel-id');	
+	var channelId = $('#channel-list').find('.active').find('.channel_name').attr('data-channel-id');
+	var addMilestoneButton = menuItems.last().clone().prependTo(menuItemsList);
+	addMilestoneButton.removeAttr('id');
 	var addProjectButton = menuItems.last().clone().prependTo(menuItemsList);
 	addProjectButton.removeAttr('id');
 	var channelIds = '';
@@ -230,6 +229,12 @@ function addProjectButton() {
 			addProjectButton.find('a').html(buttonLabel);
 			addProjectButton.on('click', function() {
 				openProjectStatusPage(channelId);
+			});
+			
+			buttonLabel = 'Submit milestone';
+			addMilestoneButton.find('a').html(buttonLabel);
+			addMilestoneButton.on('click', function() {
+				openAddMilestonePage(channelId);
 			});
 		}else{
 			buttonLabel = 'Add Backfeed Integration';
