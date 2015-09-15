@@ -20,6 +20,27 @@ bfAPIServices.factory('ContributionDetail', [ '$resource','environmentURL', func
 		}
 	});
 } ]);
+
+bfAPIServices.factory('EvaluatingTeam', [ '$resource','environmentURL', function($resource,environmentURL) {
+	return $resource(environmentURL+'organization/all/team/:slackTeamId', {}, {
+		getDetail : {
+			method : 'GET',
+			params : {},
+			isArray : false
+		}
+	});
+} ]);
+
+bfAPIServices.factory('MileStoneCurrent', [ '$resource','environmentURL', function($resource,environmentURL) {
+	return $resource(environmentURL+'organization/currentStatus/:orgId', {}, {
+		getDetail : {
+			method : 'GET',
+			params : {},
+			isArray : false
+		}
+	});
+} ]);
+
 bfAPIServices.factory('SaveContribution', [ '$resource','environmentURL', function($resource,environmentURL) {
 	return $resource(environmentURL+'contribution', {}, {
 		save : {
@@ -29,6 +50,17 @@ bfAPIServices.factory('SaveContribution', [ '$resource','environmentURL', functi
 		}
 	});
 } ]);
+
+bfAPIServices.factory('SaveMileStone', [ '$resource','environmentURL', function($resource,environmentURL) {
+	return $resource(environmentURL+'milestone', {}, {
+		save : {
+			method : 'POST',
+			params : {},
+			isArray : false
+		}
+	});
+} ]);
+
 bfAPIServices.factory('CloseContribution', [ '$resource','environmentURL', function($resource,environmentURL) {
 	return $resource(environmentURL+'contribution/close', {}, {
 		save : {
