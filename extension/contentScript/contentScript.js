@@ -16,6 +16,19 @@ function openAddProjectPage(channelId) {
 	});
 }
 
+function openProjectStatusPage(channelId) {
+	chrome.runtime.sendMessage({
+		message : {
+			"gesture": 'openProjectStatus',
+			"options": channelId
+		}
+	}, function(response) {
+		console.log('Here in the callback from project status page');
+	});	
+	
+}
+
+
 function openAddMilestonePage(channelId) {
 	chrome.runtime.sendMessage({
 		message : {
@@ -172,6 +185,7 @@ function onFloatingMenuOpened(nodes) {
 	if (addedNodes.length > 0) {
 		addedNodes.each(function() {
 			if (this.id == 'menu') {
+				
 				var menuItems = $(this).find('#menu_items');
 				var firstMenuItem = menuItems.children(':first-child');
 				if (this.classList.contains('file_menu')) {
@@ -193,15 +207,39 @@ function onFloatingMenuOpened(nodes) {
 function addProjectButton() {
 	var menuItemsList = $(this).find('#menu_items');
 	var menuItems = menuItemsList.children();
-	var channelId = $('#channel-list').find('.active').find('.channel_name').attr('data-channel-id');
-
+	var channelId = $('#channel-list').find('.active').find('.channel_name').attr('data-channel-id');	
 	var addProjectButton = menuItems.last().clone().prependTo(menuItemsList);
 	addProjectButton.removeAttr('id');
-	var buttonLabel = 'Add a Collaborative Project';
-	addProjectButton.find('a').html(buttonLabel);
-	addProjectButton.on('click', function() {
-		openAddProjectPage(channelId);
-	});
+	var channelIds = '';
+	var channelOrganizationFound = false;
+	chrome.storage.sync.get('channelId', function (response) {
+		channelIds = response.channelId;
+		console.log('channelIds are '+channelIds);
+		if(channelIds != undefined) {
+			var channelIdsVarArray = channelIds.split(",");
+			for (i = 0; i < channelIdsVarArray.length; i++) { 
+				if(channelIdsVarArray[i] == channelId){
+					channelOrganizationFound = true;
+					break;
+				}
+			}
+		}
+		var buttonLabel = 'Add Backfeed Integration';
+		if(channelOrganizationFound){
+			buttonLabel = 'Project Status';
+			addProjectButton.find('a').html(buttonLabel);
+			addProjectButton.on('click', function() {
+				openProjectStatusPage(channelId);
+			});
+		}else{
+			buttonLabel = 'Add Backfeed Integration';
+			addProjectButton.find('a').html(buttonLabel);
+			addProjectButton.on('click', function() {
+				openAddProjectPage(channelId);
+			});
+		}
+    });
+
 
 }
 

@@ -7,6 +7,11 @@ angular.module('MyApp').controller('MainCtrl', ["$scope", "$state","PostMessageS
 		//PostMessageService.navigateToAddProject();
 		$state.go('addProject', {'channelId': channelId}, {reload: true});
 	}
+	
+	function goToProjectStatus(channelId) {
+		console.log('Project Status');
+		$state.go('projectStatus', {'channelId': channelId}, {reload: true});
+	}
 
 	function goToAddMilestone(channelId) {
 		console.log('Creating Milestone');
@@ -59,6 +64,7 @@ angular.module('MyApp').controller('MainCtrl', ["$scope", "$state","PostMessageS
 		"openContributionStatusPage": goToContributionStatus,
 		"openMemberStatusPage": goToMemberStatus,
 		"refreshWindows": refreshWindows,
+		"openProjectStatus":goToProjectStatus,
 		"logout": logout
 	};
 
