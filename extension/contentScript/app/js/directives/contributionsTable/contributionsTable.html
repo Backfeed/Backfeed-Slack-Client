@@ -1,0 +1,39 @@
+<div class="contributions-table">
+  
+  <div class="row list-row list-header">
+    <div class="col-sm-4">
+      Contribution
+    </div>
+    <div class="col-sm-4">
+      Date
+    </div>
+    <div class="col-sm-4">
+      Value
+    </div>
+  
+  </div>
+  
+  <div ng-repeat="contribution in contributions" 
+       ng-onmouseenter="activeContribution = contribution"
+       ng-onmouseleave="activeContribution = null">
+    <div class="row list-row" ng-class="{ 'active': contribution === activeContribution }">
+      <div class="col-sm-4">
+        {{ ::contribution.title }}
+      </div>
+      <div class="col-sm-4">
+        {{ ::contribution.date }}
+      </div>
+      <div class="col-sm-4">
+        {{ ::contribution.value }}
+      </div>
+    </div>
+  
+    <div class="row list-row-toggle" ng-show="contribution === activeContribution">
+      <div class="col-sm-12">
+        {{ ::contribution.description }}
+      </div>
+      <users-list users="contribution.contributors"></users-list>
+    </div>
+  
+  </div>
+</div>
