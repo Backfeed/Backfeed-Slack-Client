@@ -23,6 +23,7 @@ angular.module('MyApp').controller(
                 contributer_id : '0',
                 contributer_percentage : '100',
                 contributer_name:'',
+                contributer_fullname:'',
                 contribution1: '50',
                 className:'media contributer-cell',
                 img:'/extension/contentScript/app/images/icon-dude.png'
@@ -54,6 +55,7 @@ angular.module('MyApp').controller(
                      $scope.model.owner = $scope.userId;
                      $scope.model.contributers[0].contributer_id = $scope.userId;
                      $scope.model.contributers[0].contributer_name = $scope.displayName;
+                     //$scope.model.contributers[0].contributer_fullname =  $scope.users[i].real_name;
                      $scope.model.contributers[0].className = "media contributer-cell";
                      angular.element('#'+$scope.model.contributers[0].contributer_id).trigger('focus');
                     var sliderDivElement = angular.element('#slider'+$scope.model.contributers[0].contributer_id+" div");

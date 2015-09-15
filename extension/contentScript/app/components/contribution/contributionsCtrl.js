@@ -3,7 +3,8 @@ angular.module('MyApp').controller('ContributionsCtrl',
         var modal = $modal.open({
             templateUrl: "ContributionsModalTmpl",
             controller: 'ContributionsModalCtrl',
-            scope: $scope
+            scope: $scope,
+            size: 'add-contribution'
         });
 
         modal.result.then(function() {
