@@ -3,8 +3,8 @@ angular.module('MyApp').controller('MemberStatusCtrl',
         var modal = $modal.open({
             templateUrl: "MemberStatusModalTmpl",
             controller: 'MemberStatusModalCtrl',
-            scope: $scope
-            //size: ''
+            scope: $scope,
+            size: 'member-status'
         });
 
         modal.result.then(function() {
