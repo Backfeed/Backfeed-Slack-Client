@@ -2,7 +2,7 @@ angular.module('MyApp').controller(
 		'MemberStatusModalCtrl',
 		function($scope, $auth, $location, $stateParams, MemberStatus,
 				Account, Users,$modalInstance,PostMessageService,$state,Member,MemberStatusForAllProjects) {
-			$scope.selectedProjectId = -1;
+			$scope.selectedProjectId = '';
 			$scope.memberStatusModel = {
 				project_tokens:'',
 				project_reputation:'',

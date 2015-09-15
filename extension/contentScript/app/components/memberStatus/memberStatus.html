@@ -30,7 +30,7 @@
 				</div>
 				<div class="pull-right">
                     <select  name="projectSelection" ng-model="selectedProjectId" ng-change="updateTable();">
-                        <option value="-1" selected>Choose Project</option>
+                        <option value="">Choose Project</option>
                         <option ng-repeat="memberProject in memberProjects" value="{{memberProject.id}}">{{memberProject.channelName}}</option>
                     </select>
                 </div>
