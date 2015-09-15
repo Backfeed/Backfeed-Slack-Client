@@ -1,6 +1,6 @@
 angular.module('MyApp').controller('ProjectsModalCtrl',
     function($scope, $auth, $location, $stateParams, SaveProject, Account, Users, AllSlackUsers, CheckProjectTokenName,
-             $modalInstance, $state, CheckProjectCode, PostMessageService) {
+             $modalInstance, $state, CheckProjectCode, PostMessageService,ChannelProject) {
 
     $scope.userData= '';
     $scope.validationFailureForTokenName = false;
@@ -104,7 +104,19 @@ angular.module('MyApp').controller('ProjectsModalCtrl',
             sliderSpanElement.addClass('ui-slider-handle-show');
             $scope.projectModel.contributers[0].className = "contributer-cell-wrapper active-contributer";
             $scope.getProjectUsers();
-            PostMessageService.gesture.showIframe();
+            $scope.ChannelProjectExistsData = ChannelProject.exists({
+             	channelId: $scope.channelId,
+             	slackTeamId: $scope.projectModel.slack_teamid,
+             	userId:$scope.userId
+    			});
+             $scope.ChannelProjectExistsData.$promise.then(function(result) {
+    				if(result.channleOrgExists == 'true'){
+    					PostMessageService.gesture.showAlert('Organization already exists for this channel', 'error');
+    				}else{
+    					PostMessageService.gesture.showIframe();
+    				}
+             });
+            
         })
         .error(function(error) {
             if (error && error.message) {
@@ -136,7 +148,18 @@ angular.module('MyApp').controller('ProjectsModalCtrl',
          $scope.projectModel.contributers[0].className = "contributer-cell-wrapper active-contributer";
          $scope.access_token = $scope.userData.access_token;
          $scope.getProjectUsers();
-         PostMessageService.gesture.showIframe();
+         $scope.ChannelProjectExistsData = ChannelProject.exists({
+          	channelId: $scope.channelId,
+          	slackTeamId: $scope.projectModel.slack_teamid,
+          	userId:$scope.userId
+ 			});
+          $scope.ChannelProjectExistsData.$promise.then(function(result) {
+ 				if(result.channleOrgExists == 'true'){
+ 					PostMessageService.gesture.showAlert('Organization already exists for this channel', 'error');
+ 				}else{
+ 					PostMessageService.gesture.showIframe();
+ 				}
+          });
      }
 
      $scope.getProjectUsers();
@@ -319,6 +342,7 @@ angular.module('MyApp').controller('ProjectsModalCtrl',
          //$scope.buttonDisabled = true;
      };
 
+    
      $scope.changePercentage = function(contributerId, contributerPercentage) {
         var allcontributers = $scope.projectModel.contributers;
         var find = '<br>';
