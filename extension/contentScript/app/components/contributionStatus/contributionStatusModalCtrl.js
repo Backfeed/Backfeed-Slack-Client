@@ -2,7 +2,7 @@ angular.module('MyApp').controller(
 		'ContributionStatusModalCtrl',
 		function($scope, $auth, $location, $stateParams, ContributionStatus,
 				Account, Users,$modalInstance,PostMessageService) {
-			$scope.cotributionStatusModel = {
+			$scope.contributionStatusModel = {
 					file:'',
 					title:'',
 					currentValuation : '',
@@ -248,103 +248,15 @@ angular.module('MyApp').controller(
 						id : $scope.contributionId,userId : $scope.userId
 					});
 					$scope.contributionStatus.$promise.then(function(result) {
-						$scope.cotributionStatusModel = result;
-						$scope.cotributionStatusModel.contributionContributers.sort(compareRanks);
-						$scope.cotributionStatusModel.myWeight = $scope.cotributionStatusModel.myWeight.toFixed(2);
-						$scope.cotributionStatusModel.groupWeight = $scope.cotributionStatusModel.groupWeight.toFixed(2);
-						$scope.cotributionStatusModel.bids.sort(compareBids);
-						InitLineChart($scope.cotributionStatusModel.bids);
-						InitBarChart($scope.cotributionStatusModel.bids);
+						$scope.contributionStatusModel = result;
+						$scope.contributionStatusModel.contributionContributers.sort(compareRanks);
+						$scope.contributionStatusModel.myWeight = $scope.contributionStatusModel.myWeight.toFixed(2);
+						$scope.contributionStatusModel.groupWeight = $scope.contributionStatusModel.groupWeight.toFixed(2);
+						$scope.contributionStatusModel.bids.sort(compareBids);
+						InitLineChart($scope.contributionStatusModel.bids);
+						InitBarChart($scope.contributionStatusModel.bids);
 
-						var myWeight = $scope.cotributionStatusModel.myWeight,
-							myWeightTooltip = myWeight,
-							groupWeight = $scope.cotributionStatusModel.groupWeight,
-							groupWeightTooltip = groupWeight,
-							remainingWeight = 100 - groupWeight,
-							remainingWeightTooltip = remainingWeight;
 
-						groupWeight = groupWeight - myWeight;
-
-						(function(d3) {
-					        'use strict';
-					        var width = 360;
-					        var height = 360;
-					        var radius = Math.min(width, height) / 2;
-					        var donutWidth = 75;
-					        var legendRectSize = 18;
-					        var legendSpacing = 4;
-					        var color = d3.scale.category20b();
-					        var svg = d3.select('#chart')
-					          .append('svg')
-					          .attr('width', width)
-					          .attr('height', height)
-					          .append('g')
-					          .attr('transform', 'translate(' + (width / 2) + 
-					            ',' + (height / 2) + ')');
-					        var arc = d3.svg.arc()
-					          .innerRadius(radius - donutWidth)
-					          .outerRadius(radius);
-					        var pie = d3.layout.pie()
-					          .value(function(d) { return d.weight; })
-					          .sort(null);
-					        var tooltip = d3.select('#chart')                               // NEW
-					          .append('div')                                                // NEW
-					          .attr('class', 'tooltipChart');                                    // NEW
-					        tooltip.append('div')                                           // NEW
-					          .attr('class', 'percent');                                    // NEW
-					        var dataset = [{"label":"Remaining Percentage","weight":groupWeight,"toolTipWeight":groupWeightTooltip,"color":"gray"},
-					                       {"label":"My Weight in the holon","weight":myWeight,"toolTipWeight":myWeightTooltip,"color":"brown"},
-					                       {"label":"% of the holon that backfeed this value","weight":remainingWeight,"toolTipWeight":remainingWeightTooltip,"color":"green"}];  
-					        dataset.forEach(function(d) {
-					            d.count = +d.count;
-					          });
-					          var path = svg.selectAll('path')
-					            .data(pie(dataset))
-					            .enter()
-					            .append('path')
-					            .attr('d', arc)
-					            .attr('fill', function(d) { 
-					              return d.data.color; 
-					            });
-					          path.on('mouseover', function(d) {                            
-					            tooltip.select('.percent').html(d.data.toolTipWeight + '%');             
-					            tooltip.style('display', 'block');                          
-					          });                                                           
-					          
-					          path.on('mouseout', function() {                              
-					            tooltip.style('display', 'none');                           
-					          });                                                           
-					         
-					            
-					          var legend = svg.selectAll('.legend')
-					            .data(dataset)
-					            .enter()
-					            .append('g')
-					            .attr('class', 'legend')
-					            .attr('transform', function(d, i) {
-					              var height = legendRectSize + legendSpacing;
-					              var offset =  height * 3 / 2;
-					              var horz = -2 * legendRectSize-50;
-					              var vert = i * height - offset;
-					              return 'translate(' + horz + ',' + vert + ')';
-					            });
-					          legend.append('rect')
-					            .attr('width', legendRectSize)
-					            .attr('height', legendRectSize)                                   
-					            .style('fill', function(d) { 
-					              return d.color; 
-					            })
-					            .style('stroke', function(d) { 
-					              return d.color; 
-					            });
-					            
-					          legend.append('text')
-					            .attr('x', legendRectSize + legendSpacing)
-					            .attr('y', legendRectSize - legendSpacing)
-					            .text(function(d) { return d.label; });
-					        
-					      })(window.d3);
-					      
 
 					});
 					PostMessageService.sendGesture('showIframe');

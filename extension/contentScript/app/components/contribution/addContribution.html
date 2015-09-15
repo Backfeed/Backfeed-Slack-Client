@@ -1,16 +1,17 @@
 <script type="text/ng-template" id="ContributionsModalTmpl">
 	<div class="modal-header">
 		<img alt="Close modal" class="close-modal" src="/extension/contentScript/app/images/close_x.png" ng-click="closeModal()" />
+        <div class="modal-title">Add a New Contribution</div>
 	</div>
 
-	<div class="modal-body">
+	<div id="contribution-modal" class="modal-body">
 		<form>
 
 			<div class="row">
 
 				<div class="col-sm-6">
 
-					<h2 id="createContributionModalTitle">New Contribution <img tooltip="In this page you submit a new contribution for the team to evaluate. You will be rewarded with tokens based on the evaluation of it." alt="help" src="/extension/contentScript/app/images/icon_help.png"/></h2>
+					<h2 id="createContributionModalTitle">Contribution&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img tooltip="In this page you submit a new contribution for the team to evaluate. You will be rewarded with tokens based on the evaluation of it." alt="help" src="/extension/contentScript/app/images/icon_help.png"/></h2>
 
 					<div class="form-group">
 						<input type="text"
@@ -80,6 +81,8 @@
 
 		</form>
 	</div>
+
+    <hr />
 
 	<div class="modal-footer flex">
 		<p class="lead">Contributions are the only way to generate new tokens and reputation.</p>

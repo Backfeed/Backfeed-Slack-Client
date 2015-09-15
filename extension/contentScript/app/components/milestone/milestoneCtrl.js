@@ -1,10 +1,10 @@
-angular.module('MyApp').controller('ContributionsCtrl',
+angular.module('MyApp').controller('MilestoneCtrl',
     function(PostMessageService, $modal,$scope) {
         var modal = $modal.open({
-            templateUrl: "ContributionsModalTmpl",
-            controller: 'ContributionsModalCtrl',
+            templateUrl: "MilestoneModalTmpl",
+            controller: 'MilestoneModalCtrl',
             scope: $scope,
-            size: 'add-contribution'
+            size: 'lg'
         });
 
         modal.result.then(function() {
