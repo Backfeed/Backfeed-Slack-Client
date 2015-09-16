@@ -220,7 +220,7 @@ function addProjectButton() {
 				}
 			}
 		}
-		var buttonLabel = 'Add Backfeed Integration';
+		var buttonLabel = 'Add a Collaborative Project';
 		if(channelOrganizationFound){
 			var addMilestoneButton = menuItems.last().clone().prependTo(menuItemsList);
 			addMilestoneButton.removeAttr('id');
@@ -240,7 +240,7 @@ function addProjectButton() {
 		}else{			
 			var addProjectButton = menuItems.last().clone().prependTo(menuItemsList);
 			addProjectButton.removeAttr('id');
-			buttonLabel = 'Add Backfeed Integration';
+			buttonLabel = 'Add a Collaborative Project';
 			addProjectButton.find('a').html(buttonLabel);
 			addProjectButton.on('click', function() {
 				openAddProjectPage(channelId);

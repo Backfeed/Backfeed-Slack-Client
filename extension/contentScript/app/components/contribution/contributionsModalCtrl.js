@@ -27,7 +27,7 @@ angular.module('MyApp').controller(
         contributer_name: '',
         contributer_fullname: '',
         contribution1: '50',
-        className: 'media contributer-cell',
+        className: 'contributer-cell-wrapper',
         img: '/extension/contentScript/app/images/icon-dude.png'
       }]
     };
@@ -58,9 +58,9 @@ angular.module('MyApp').controller(
           $scope.model.contributers[0].contributer_id = $scope.userId;
           $scope.model.contributers[0].contributer_name = $scope.displayName;
           //$scope.model.contributers[0].contributer_fullname =  $scope.users[i].real_name;
-          $scope.model.contributers[0].className = "media contributer-cell";
+          $scope.model.contributers[0].className = "contributer-cell-wrapper";
           angular.element('#' + $scope.model.contributers[0].contributer_id).trigger('focus');
-          $scope.model.contributers[0].className = "media contributer-cell active-contributer";
+          $scope.model.contributers[0].className = "contributer-cell-wrapper active-contributer";
           PostMessageService.gesture.showIframe();
           var allProjectUsersData = Users.getAllProjectUsersData();
           if (allProjectUsersData == undefined) {
@@ -152,7 +152,7 @@ angular.module('MyApp').controller(
               $scope.model.contributers[0].img = $scope.users[i].url;
               $scope.model.contributers[0].contributer_name = $scope.users[i].name;
               angular.element('#' + $scope.model.contributers[0].contributer_id).trigger('focus');
-              $scope.model.contributers[0].className = "media contributer-cell active-contributer";
+              $scope.model.contributers[0].className = "contributer-cell-wrapper active-contributer";
 
               continue;
             }
@@ -415,7 +415,7 @@ angular.module('MyApp').controller(
           contributer_percentage: '',
           contributer_name: selectedUser.name,
           contribution1: '50',
-          className: 'media contributer-cell',
+          className: 'contributer-cell-wrapper',
           img: selectedUser.url
         });
         //$scope.buttonDisabled = true;
@@ -475,7 +475,7 @@ angular.module('MyApp').controller(
 
       setTimeout(function() {
         angular.element('#' + selectedUser.id).trigger('focus');
-        $scope.model.contributers[0].className = "media contributer-cell active-contributer";
+        $scope.model.contributers[0].className = "contributer-cell-wrapper active-contributer";
 
       }, 100);
 
