@@ -46,7 +46,7 @@ bfAPIServices.factory('MileStoneForChannel', [ '$resource','environmentURL', fun
 		allDetails : {
 			method : 'GET',
 			params : {},
-			isArray : false
+			isArray : true
 		}
 	});
 } ]);
