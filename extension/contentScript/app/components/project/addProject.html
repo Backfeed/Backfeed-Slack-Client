@@ -118,7 +118,7 @@
 							  ng-model="contributer.contributer_percentage"
 							  class="contribution-percentage"
 							  contenteditable>{{contributer.contributer_percentage | number:0}}</span>%
-						<button type="submit" class="icon-button" aria-label="Left Align" ng-click='removeCollaboratorItem(contributer.contributer_id,$index)'>
+						<button type="button" class="icon-button" aria-label="Left Align" ng-click='removeCollaboratorItem(contributer.contributer_id,$index)'>
 							<img src="/extension/contentScript/app/images/trash-bin.png"/>
 						</button>
 					</div>

@@ -40,6 +40,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
 
   angular.extend($scope, {
 
+    removeCollaboratorItem: removeCollaboratorItem,
     closeModal: closeModal,
     getTotalSum: getTotalSum,
     updateContributer: updateContributer,
