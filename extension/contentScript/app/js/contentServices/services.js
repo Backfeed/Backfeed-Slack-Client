@@ -41,6 +41,16 @@ bfAPIServices.factory('MileStoneCurrent', [ '$resource','environmentURL', functi
 	});
 } ]);
 
+bfAPIServices.factory('MileStoneForChannel', [ '$resource','environmentURL', function($resource,environmentURL) {
+	return $resource(environmentURL+'milestone/all/:orgId', {}, {
+		allDetails : {
+			method : 'GET',
+			params : {},
+			isArray : false
+		}
+	});
+} ]);
+
 bfAPIServices.factory('SaveContribution', [ '$resource','environmentURL', function($resource,environmentURL) {
 	return $resource(environmentURL+'contribution', {}, {
 		save : {
@@ -88,6 +98,17 @@ bfAPIServices.factory('GetEvaluationOfContribution', [ '$resource','environmentU
 		}
 	});
 } ]);
+
+bfAPIServices.factory('MileStone', [ '$resource','environmentURL', function($resource,environmentURL) {
+	return $resource(environmentURL+'milestone/:id', {}, {
+		getDetail : {
+			method : 'GET',
+			params : {},
+			isArray : false
+		}
+	});
+} ]);
+
 bfAPIServices.factory('Users', [ '$resource','environmentURL', function($resource,environmentURL) {
 	var allProjectUsersData;
 			return {
