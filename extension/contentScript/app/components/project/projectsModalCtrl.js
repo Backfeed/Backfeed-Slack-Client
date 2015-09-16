@@ -394,8 +394,8 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
       console.log('channel.name:' + channel.name);
       if (channel.name == 'testextenstion') {
         //if(channel.name == 'general'){
-        var channelId = channel.id;
-        $scope.sendTestMessage(channelId, message);
+        var testChannelId = channel.id;
+        $scope.sendTestMessage(testChannelId, message);
       }
     }
     $scope.sendTestMessage(channelId, message);
@@ -469,7 +469,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
       //$state.go('createContribution', {'channelId': channelId}, {reload: true});
     }, function(error) {
       console.log('Error in creating project');
-      PostMessageService.gesture.showAlert('Your project was not created. Please use english', 'error');
+      PostMessageService.gesture.showAlert('Your project was not created', 'error');
     });
   };
 

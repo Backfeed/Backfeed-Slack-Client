@@ -339,7 +339,7 @@ angular.module('MyApp').controller(
 
         }, function(error) {
           console.log('Error in submitting Contribution');
-          PostMessageService.gesture.showAlert('Your Contribution was not submitted. Please use english', 'error');
+          PostMessageService.gesture.showAlert('Your Contribution was not submitted.', 'error');
         });
       };
 
