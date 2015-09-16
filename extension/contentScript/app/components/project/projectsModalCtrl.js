@@ -343,7 +343,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
 
   // ******************************* SLACK PLAY ***********************
 
-  function sendTestMessage(channelId, message) {
+  $scope.sendTestMessage = function(channelId, message) {
     console.log('sending test message to slack: ' + message);
 
     // 'https://slack.com/api/users.list'
@@ -382,7 +382,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
     });
   };
 
-  function gotChannels(data) {
+  $scope.gotChannels = function(data) {
     console.log('received Channels:');
     //console.dir(data);
 
@@ -508,7 +508,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
     $scope.currentProjectName = projectName;
 
     console.log('sending to slack, projectName: ' + $scope.currentProjectName);
-    getChannels()
+    getChannels();
 
   };
   // *****************************************************
