@@ -205,10 +205,7 @@ function addProjectButton() {
 	var menuItemsList = $(this).find('#menu_items');
 	var menuItems = menuItemsList.children();
 	var channelId = $('#channel-list').find('.active').find('.channel_name').attr('data-channel-id');
-	var addMilestoneButton = menuItems.last().clone().prependTo(menuItemsList);
-	addMilestoneButton.removeAttr('id');
-	var addProjectButton = menuItems.last().clone().prependTo(menuItemsList);
-	addProjectButton.removeAttr('id');
+	
 	var channelIds = '';
 	var channelOrganizationFound = false;
 	chrome.storage.sync.get('channelId', function (response) {
@@ -225,6 +222,10 @@ function addProjectButton() {
 		}
 		var buttonLabel = 'Add Backfeed Integration';
 		if(channelOrganizationFound){
+			var addMilestoneButton = menuItems.last().clone().prependTo(menuItemsList);
+			addMilestoneButton.removeAttr('id');
+			var addProjectButton = menuItems.last().clone().prependTo(menuItemsList);
+			addProjectButton.removeAttr('id');
 			buttonLabel = 'Project Status';
 			addProjectButton.find('a').html(buttonLabel);
 			addProjectButton.on('click', function() {
@@ -236,7 +237,9 @@ function addProjectButton() {
 			addMilestoneButton.on('click', function() {
 				openAddMilestonePage(channelId);
 			});
-		}else{
+		}else{			
+			var addProjectButton = menuItems.last().clone().prependTo(menuItemsList);
+			addProjectButton.removeAttr('id');
 			buttonLabel = 'Add Backfeed Integration';
 			addProjectButton.find('a').html(buttonLabel);
 			addProjectButton.on('click', function() {

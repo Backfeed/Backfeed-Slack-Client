@@ -200,7 +200,7 @@ bfAPIServices.factory('CheckProjectTokenName', [ '$resource','environmentURL', f
 } ]);
 
 bfAPIServices.factory('AllSlackUsers', [ '$resource','environmentURL', function($resource,environmentURL) {
-	return $resource(environmentURL+'allSlackUsers', {}, {
+	return $resource(environmentURL+'allSlackUsers/:access_token', {}, {
 		allSlackUsers : {
 			method : 'GET',
 			params : {},

@@ -17,6 +17,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
     channelName: '',
     a: '50',
     b: '50',
+    access_token: '',
     contributers: [{
       contributer_id: '0',
       contributer_percentage: '100',
@@ -78,7 +79,8 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
       sliderSpanElement.addClass('ui-slider-handle-show');
       $scope.projectModel.contributers[0].className = "contributer-cell-wrapper active-contributer";
       $scope.access_token = $scope.userData.access_token;
-      getProjectUsers();
+      $scope.projectModel.access_token = $scope.access_token;
+      getProjectUsers($scope.access_token);
       $scope.ChannelProjectExistsData = ChannelProject.exists({
         channelId: channelId,
         slackTeamId: $scope.projectModel.slack_teamid,
@@ -94,7 +96,6 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
       });
     }
 
-    getProjectUsers();
 
     $scope.orderProp = "name";
 
@@ -113,8 +114,8 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
     $modalInstance.dismiss('cancel');
   };
 
-  function getProjectUsers() {
-    $scope.data = AllSlackUsers.allSlackUsers();
+  function getProjectUsers(access_token) {
+    $scope.data = AllSlackUsers.allSlackUsers({'access_token':access_token});
     $scope.data.$promise.then(function(result) {
       $scope.users = result;
       $scope.updatedUsersList = [];
@@ -164,6 +165,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
         $scope.projectModel.name = $scope.userData.slackTeamName;
         $scope.projectModel.slack_teamid = $scope.userData.slackTeamId;
         $scope.access_token = $scope.userData.access_token;
+        $scope.projectModel.access_token = $scope.access_token;
         $scope.projectModel.contributers[0].contributer_id = $scope.userData.slackUserId;
         $scope.projectModel.contributers[0].contributer_name = $scope.userData.displayName;
         angular.element('#' + $scope.projectModel.contributers[0].contributer_id).trigger('focus');
@@ -174,7 +176,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
         sliderSpanElement.removeClass('ui-slider-handle-show');
         sliderSpanElement.addClass('ui-slider-handle-show');
         $scope.projectModel.contributers[0].className = "contributer-cell-wrapper active-contributer";
-        getProjectUsers();
+        getProjectUsers($scope.access_token);
         $scope.ChannelProjectExistsData = ChannelProject.exists({
           channelId: channelId,
           slackTeamId: $scope.projectModel.slack_teamid,
@@ -505,7 +507,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
     $scope.currentProjectName = projectName;
 
     console.log('sending to slack, projectName: ' + $scope.currentProjectName);
-    $scope.getChannels()
+    getChannels()
 
   };
   // *****************************************************
@@ -539,7 +541,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
                 validationFailureForCode = false;
                 console.log("In Submit method");
                 console.log($scope.projectModel);
-                $scope.getChannelsForProjectCreation();
+                getChannelsForProjectCreation();
 
               }
             });
