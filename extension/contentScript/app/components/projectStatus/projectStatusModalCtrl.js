@@ -7,6 +7,7 @@ angular.module('MyApp').controller('ProjectStatusModalCtrl',
     $scope.validationFailureForCode = false;
     $scope.buttonDisabled = false;
     $scope.channelId = $stateParams.channelId;
+    $scope.channelName = '';
 
     PostMessageService.gesture.hideIframe();
 
@@ -20,7 +21,9 @@ angular.module('MyApp').controller('ProjectStatusModalCtrl',
     	tokenName : '',
     	code : '',
     	tokens : '',
-    	contributions :'',        
+    	contributions :'',
+    	channelName:'',
+    	contributers :'',
         milestoneContributers : [ {
             contributer_id : '',
             contributer_percentage : '',
@@ -71,6 +74,7 @@ angular.module('MyApp').controller('ProjectStatusModalCtrl',
 				      });
 				 $scope.MileStoneCurrentData.$promise.then(function(result) {
 			    	  $scope.projectStatusModel = result;
+			    	  $scope.projectStatusModel.channelName = $scope.channelName;
 			    	 
 			      });
 			 }else{
@@ -79,6 +83,7 @@ angular.module('MyApp').controller('ProjectStatusModalCtrl',
 				      });
 				 $scope.MileStoneCurrentData.$promise.then(function(result) {
 			    	  $scope.projectStatusModel = result;
+			    	  $scope.projectStatusModel.channelName = $scope.channelName;
 			    	 
 			      });
 			 }
@@ -99,6 +104,8 @@ angular.module('MyApp').controller('ProjectStatusModalCtrl',
 
 				      $scope.ChannelProjectExistsData.$promise.then(function(result) {
 				    	  $scope.orgId = result.orgId;
+				    	  $scope.channelName = result.channelName;
+				    	  $scope.projectStatusModel.channelName = result.channelName;
 				    	  $scope.MileStoneCurrentData = MileStoneCurrent.getDetail({
 				    		  	orgId: $scope.orgId
 						      });
