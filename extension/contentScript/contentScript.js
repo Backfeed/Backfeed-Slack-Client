@@ -224,7 +224,6 @@ function addProjectButton() {
 	var channelOrganizationFound = false;
 	chrome.storage.sync.get('channelId', function (response) {
 		channelIds = response.channelId;
-		console.log('channelIds are '+channelIds);
 		if(channelIds != undefined) {
 			var channelIdsVarArray = channelIds.split(",");
 			for (i = 0; i < channelIdsVarArray.length; i++) { 
@@ -317,7 +316,6 @@ function onAddEvaluationObservation(mutations) {
 		var channelIds = '';
 		chrome.storage.sync.get('channelId', function (response) {
 			channelIds = response.channelId;
-			console.log('channelIds are '+channelIds);
 			if(channelIds != undefined) {
 				var channelIdsVarArray = channelIds.split(",");
 				for (i = 0; i < channelIdsVarArray.length; i++) { 
