@@ -388,7 +388,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
 
     // get specific channel:
     var channels = data.channels;
-    var message = 'Project creating in ' + $scope.currentProjectName + ' team. https://chrome.google.com/webstore/detail/backfeed-slack-extension/feglgahjbjnabofomkpmoacillfnpjpb';
+    var message = 'New Collaborative Project created' + ' https://chrome.google.com/webstore/detail/backfeed-slack-extension/feglgahjbjnabofomkpmoacillfnpjpb';
     for (var channelIndex in channels) {
       var channel = channels[channelIndex];
       console.log('channel.name:' + channel.name);
