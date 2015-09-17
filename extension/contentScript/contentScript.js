@@ -156,49 +156,63 @@ function showAlert(options) {
  */
 
 function onTeamMembersListObservation(mutations) {
-	var teamDirectory = mutations[0].target;
-	if (mutations[0].attributeName == 'class' && teamDirectory.classList.contains('active')) {
-		if (!document.getElementById('member_preview_container').classList.contains('hidden')) {
-			var $memberContainer = $('#member_preview_scroller');
-			$memberContainer.append('<div class="top_margin member_status_button"><a class="member_action_button btn btn_outline">Collaborator Overview</a></div>')
-		} else {
-			$('.team_list_item').each(function(i, teamItem) {
-				singleTeamMemberObserver.observe(teamItem, {attributes: true, attributeFilter: ['class']});
-			});
+	chrome.runtime.sendMessage({
+		message : 'updateChannelIds'
+	}, function(response) {
+		var teamDirectory = mutations[0].target;
+		if (mutations[0].attributeName == 'class' && teamDirectory.classList.contains('active')) {
+			if (!document.getElementById('member_preview_container').classList.contains('hidden')) {
+				var $memberContainer = $('#member_preview_scroller');
+				$memberContainer.append('<div class="top_margin member_status_button"><a class="member_action_button btn btn_outline">Collaborator Overview</a></div>')
+			} else {
+				$('.team_list_item').each(function(i, teamItem) {
+					singleTeamMemberObserver.observe(teamItem, {attributes: true, attributeFilter: ['class']});
+				});
+			}
 		}
-	}
+	});
+	
 }
 
 function onSingleTeamMemberObservation(mutations) {
-	var teamMember = mutations[0].target;
-	if (teamMember.classList.contains('expanded')) {
-		if ($(teamMember).find('.member_status_button').length == 0) {
-			$(teamMember).append('<div class="top_margin member_status_button"><a class="member_action_button btn btn_outline">Collaborator Overview</a></div>')
+	chrome.runtime.sendMessage({
+		message : 'updateChannelIds'
+	}, function(response) {
+		var teamMember = mutations[0].target;
+		if (teamMember.classList.contains('expanded')) {
+			if ($(teamMember).find('.member_status_button').length == 0) {
+				$(teamMember).append('<div class="top_margin member_status_button"><a class="member_action_button btn btn_outline">Collaborator Overview</a></div>')
+			}
+		} else {
+			$(teamMember).find('.member_status_button').remove();
 		}
-	} else {
-		$(teamMember).find('.member_status_button').remove();
-	}
+	});
+	
 }
 
 function onFloatingMenuOpened(nodes) {
-	var addedNodes = $(nodes[0].addedNodes);
-	if (addedNodes.length > 0) {
-		addedNodes.each(function() {
-			if (this.id == 'menu') {
-				
-				var menuItems = $(this).find('#menu_items');
-				var firstMenuItem = menuItems.children(':first-child');
-				if (this.classList.contains('file_menu')) {
-					addContributionButton.bind(this)();
-				} else if (firstMenuItem.is('#member_profile_item') || firstMenuItem.is('#member_prefs_item')) {
-					memberStatusButton.bind(this)();
-				} else if (firstMenuItem.is('#channel_archives_item')) {
-					addProjectButton.bind(this)();
-				}
+	chrome.runtime.sendMessage({
+		message : 'updateChannelIds'
+	}, function(response) {
+		var addedNodes = $(nodes[0].addedNodes);
+		if (addedNodes.length > 0) {
+			addedNodes.each(function() {
+				if (this.id == 'menu') {
+					
+					var menuItems = $(this).find('#menu_items');
+					var firstMenuItem = menuItems.children(':first-child');
+					if (this.classList.contains('file_menu')) {
+						addContributionButton.bind(this)();
+					} else if (firstMenuItem.is('#member_profile_item') || firstMenuItem.is('#member_prefs_item')) {
+						memberStatusButton.bind(this)();
+					} else if (firstMenuItem.is('#channel_archives_item')) {
+						addProjectButton.bind(this)();
+					}
 
-			}
-		});
-	}
+				}
+			});
+		}
+	});
 }
 
 function addProjectButton() {
@@ -297,18 +311,22 @@ function memberStatusButton() {
 }
 
 function onAddEvaluationObservation(mutations) {
-	var channelIds = '';
-	chrome.storage.sync.get('channelId', function (response) {
-		channelIds = response.channelId;
-		console.log('channelIds are '+channelIds);
-		if(channelIds != undefined) {
-			var channelIdsVarArray = channelIds.split(",");
-			for (i = 0; i < channelIdsVarArray.length; i++) { 
-			    evaluationObservationOnChannelId(channelIdsVarArray[i],mutations);
+	chrome.runtime.sendMessage({
+		message : 'updateChannelIds'
+	}, function(response) {
+		var channelIds = '';
+		chrome.storage.sync.get('channelId', function (response) {
+			channelIds = response.channelId;
+			console.log('channelIds are '+channelIds);
+			if(channelIds != undefined) {
+				var channelIdsVarArray = channelIds.split(",");
+				for (i = 0; i < channelIdsVarArray.length; i++) { 
+				    evaluationObservationOnChannelId(channelIdsVarArray[i],mutations);
+				}
 			}
-			
-		}
-    });
+	    });
+	});
+	
 }
 
 /**
@@ -329,6 +347,7 @@ function evaluationObservationOnChannelId(channelId,mutations){
 		var messagesFromBot = Array.from(mutationWithAddedNodes.addedNodes).filter(function(node) {
 			return node.classList && node.classList.contains('bot_message');
 		});
+		
 		chrome.runtime.sendMessage({
 			message : {
 				"gesture": 'checkUserLogin',
@@ -406,7 +425,6 @@ var addEvaluationObserver = new MutationObserver(onAddEvaluationObservation);
 
 $(function() {
     document.body.appendChild(iframe);
-
 	floatingMenuObserver.observe(document.getElementById('client-ui'), {childList: true});
 	addEvaluationObserver.observe(document.getElementById('msgs_div'), {childList: true});
 	teamMembersListObserver.observe(document.getElementById('team_tab'), {attributes: true});
