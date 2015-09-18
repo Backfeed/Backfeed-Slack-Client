@@ -36,6 +36,11 @@ angular.module('MyApp').controller('ProjectStatusModalCtrl',
             date : '',
             valuation:'',
             contribution_id:'',
+            remainingContributers:'',
+            contributers : [ {
+            	memberId : '',
+            	url : '',
+            } ]
         } ]
     };
     
@@ -105,7 +110,7 @@ angular.module('MyApp').controller('ProjectStatusModalCtrl',
 				      $scope.ChannelProjectExistsData.$promise.then(function(result) {
 				    	  $scope.orgId = result.orgId;
 				    	  $scope.channelName = result.channelName;
-				    	  $scope.projectStatusModel.channelName = result.channelName;
+				    	  
 				    	  $scope.MileStoneCurrentData = MileStoneCurrent.getDetail({
 				    		  	orgId: $scope.orgId
 						      });
@@ -114,11 +119,13 @@ angular.module('MyApp').controller('ProjectStatusModalCtrl',
 						      });
 				    	  $scope.MileStoneForChannelData.$promise.then(function(result) {
 					    	  $scope.projectMileStones = result;
+					    	  $scope.projectStatusModel.channelName = $scope.channelName;
 					    	 
 					      });
 				    	  $scope.MileStoneCurrentData.$promise.then(function(result) {
 					    	  $scope.projectStatusModel = result;
-					    	 
+					    	  $scope.projectStatusModel.channelName = $scope.channelName;
+					    	 console.log($scope.projectStatusModel);
 					      });
 				      });
 				      
