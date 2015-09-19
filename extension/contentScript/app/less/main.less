@@ -822,3 +822,22 @@ textarea.form-control {
 rect {
   stroke-width: 2;
 }
+
+.relative { position: relative; }
+
+.media-object-badge {
+  &:extend(.center-absolute);
+  background: teal;
+  color: #fff;
+  text-align: center;
+  padding: 3px;
+  bottom: 0;
+}
+
+.center-absolute {
+  position: absolute;
+  right: 0;
+  left: 0;
+  margin-left: auto;
+  margin-right: auto; 
+}
