@@ -14,8 +14,8 @@
   </div>
   
   <div ng-repeat="contribution in contributions" 
-       ng-onmouseenter="activeContribution = contribution"
-       ng-onmouseleave="activeContribution = null">
+       ng-mouseenter="activeContribution = contribution"
+       ng-mouseleave="activeContribution = null">
     <div class="row list-row" ng-class="{ 'active': contribution === activeContribution }">
       <div class="col-sm-4">
         {{ ::contribution.title }}
@@ -24,7 +24,7 @@
         {{ ::contribution.date }}
       </div>
       <div class="col-sm-4">
-        {{ ::contribution.value }}
+        {{ ::contribution.valuation }}
       </div>
     </div>
   
