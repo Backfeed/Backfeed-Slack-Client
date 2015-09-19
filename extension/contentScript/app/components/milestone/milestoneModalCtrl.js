@@ -1,6 +1,8 @@
 angular.module('MyApp').controller('MilestoneModalCtrl', MilestoneModalCtrl);
 
-function MilestoneModalCtrl($scope, $auth, $location, $stateParams, SaveProject, Account, Users, AllSlackUsers, CheckProjectTokenName, $modalInstance, $state, CheckProjectCode, PostMessageService) {
+function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV, Resource, Account, PostMessageService) {
+
+  var log = _DEV.log('MILESTONE');
 
   var channelId = $stateParams.channelId;
 
@@ -19,7 +21,8 @@ function MilestoneModalCtrl($scope, $auth, $location, $stateParams, SaveProject,
       contribution1: '50',
       className:'media contributer-cell',
       img:'/extension/contentScript/app/images/icon-dude.png'
-    } ]
+    } ],
+    contributions: []
   };
 
   angular.extend($scope, {
@@ -28,8 +31,6 @@ function MilestoneModalCtrl($scope, $auth, $location, $stateParams, SaveProject,
     userData: '',
     activeContribution: {},
     teams: [],
-    validationFailureForTokenName: false,
-    validationFailureForCode: false,
     milestoneModel: milestoneModel
   });
 
@@ -40,7 +41,7 @@ function MilestoneModalCtrl($scope, $auth, $location, $stateParams, SaveProject,
     PostMessageService.gesture.hideIframe();
     
     $scope.userData = Account.getUserData();
-    console.log("userData is"+$scope.userData);
+    log("userData is"+$scope.userData);
 
     if ( $scope.userData == undefined ) {
 
@@ -55,7 +56,25 @@ function MilestoneModalCtrl($scope, $auth, $location, $stateParams, SaveProject,
      PostMessageService.gesture.showIframe();
 
     }
-    
+
+    $timeout(function() {
+      var path = "organization/channel/" + channelId + "/" + $scope.userData.slackTeamId + "/" + $scope.userId;
+      log('init Timeout: path: ', path);
+      
+      Resource.get(path).then(function(result) {
+        var path = 'organization/currentStatus/' + result.orgId
+        log('init Timeout: Get channel : ', result); 
+        Resource.get(path).then(function(result) { 
+          log('init Timeout: Get channel: get milestone ', result); 
+          $scope.milestoneModel.contributions = result.milestoneContributions;
+          $scope.milestoneModel.contributers = result.milestoneContributers;
+          $scope.contributersCount = result.contributers;
+          $scope.tokenCode = result.code;
+          $scope.totalValue = result.totalValue;
+        });
+      });
+    }, 1000);
+
   }
 
   function closeModal() {
@@ -63,10 +82,16 @@ function MilestoneModalCtrl($scope, $auth, $location, $stateParams, SaveProject,
   };
  
   function submit() {
-    console.log('create milestone!');
-    console.log($scope.milestoneModel);
+    log('Create Milestone', $scope.milestoneModel.title, $scope.milestoneModel.desctiption, $scope.milestoneModel.evaluatingTeam, channelId);
+    Resource.post('milestone', {
+      title: $scope.milestoneModel.title,
+      desctiption: $scope.milestoneModel.desctiption,
+      evaluatingTeam: $scope.milestoneModel.evaluatingTeam,
+      channelId: channelId
+    }).then(function(result) {
+      log('Create Milestone CB', result);
+    });
   }
-
 
   function getProfile() {
     Account.getProfile()

@@ -28,7 +28,7 @@
         <label>Content</label>
       </div>
 
-      <contributions-table contributions="contributions" activeContribution="activeContribution"></contributions-table>
+      <contributions-table contributions="milestoneModel.contributions" active-contribution="activeContribution"></contributions-table>
 
     </div>  
 
@@ -36,8 +36,8 @@
       <div class="milestone-total-value text-center">
         <div>
           <img class="milestone-total-value-icon" alt="Tokens" src="/extension/contentScript/app/images/tokens.png" />
-          <span class="milestone-total-value-number">20,577 {{ ::totalValue }}</span>
-          <span class="milestone-total-value-token">BTC {{ ::tokenCode }}</span>
+          <span class="milestone-total-value-number">{{ totalValue }}</span>
+          <span class="milestone-total-value-token">{{ tokenCode }}</span>
         </div>
         <span class="milestone-total-value-text">Value of all contributions</span>
       </div>
@@ -45,7 +45,7 @@
       <div class="milestone-contributers">
         <div class="milestone-contributers-header">
           <span class="milestone-contributers-header-text">
-            Contributors ({{ ::contributersCount }} 124)
+            Contributers ({{ contributersCount }})
           </span>
           <img alt="help" class="pull-right" src="/extension/contentScript/app/images/icon_help.png"
            tooltip="All contributers to current milestone" />
@@ -53,20 +53,17 @@
         <ul class="media-list milestone-contributers-list">
           <li ng-repeat="contributer in milestoneModel.contributers" 
               class="milestone-contributers-list-item">
-            <div class="media-left media-middle">
+            <div class="media-left media-middle relative">
               <a href="#">
-                <img class="media-object" ng-src="{{contributer.img}}" alt=""/>
-                <span class="media-object-badge"> 
-                  {{ ::contributer.relativeValuePercentage }}
+                <img class="media-object" ng-src="{{contributer.url}}" alt=""/>
+                <span class="badge media-object-badge"> 
+                  {{ contributer.contributer_percentage }}
                 </span>
               </a>
             </div>
 
             <div class="media-body">
-              <h4 class="media-heading">{{contributer.contributer_name}}</h4>
-
-              <p>{{contributer.contributer_fullname}}</p>
-
+              <h4 class="media-heading">{{contributer.real_name}}</h4>
             </div>
           </li>
 
@@ -84,7 +81,7 @@
     <div class="col-sm-5">
       <select ng-model="milestoneModel.evaluatingTeam">
         <option value="" selected="selected">Evaluating Team</option>
-        <option ng-repeat="team in teams" value="team.id">{{ ::team.name }}</option>
+        <option ng-repeat="team in teams" value="team.id">{{ team.name }}</option>
       </select>
     </div>
     
