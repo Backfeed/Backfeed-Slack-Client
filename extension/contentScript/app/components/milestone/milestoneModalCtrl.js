@@ -58,10 +58,16 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
     }
 
     $timeout(function() {
-      var path = "organization/channel/" + channelId + "/" + $scope.userData.slackTeamId + "/" + $scope.userId;
-      log('init Timeout: path: ', path);
-      
-      Resource.get(path).then(function(result) {
+      log('Init Timeout');
+
+      Resource.get('organization/all/team/' + $scope.userData.slackTeamId)
+      .then(function(teams) {
+        $scope.teams = teams;
+        log('Teams', $scope.teams);
+      });
+
+      Resource.get("organization/channel/" + channelId + "/" + $scope.userData.slackTeamId + "/" + $scope.userId)
+      .then(function(result) {
         log('init Timeout: Get channel : ', result); 
         Milestone.getCurrent(result.orgId).then(function(result) {
           log('init Timeout: Get channel: get milestone ', result);
