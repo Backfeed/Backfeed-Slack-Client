@@ -21,9 +21,9 @@ bfAPIServices.factory('ContributionDetail', [ '$resource','environmentURL', func
 	});
 } ]);
 
-bfAPIServices.factory('EvaluatingTeam', [ '$resource','environmentURL', function($resource,environmentURL) {
+bfAPIServices.factory('SlackTeam', [ '$resource','environmentURL', function($resource,environmentURL) {
 	return $resource(environmentURL+'organization/all/team/:slackTeamId', {}, {
-		getDetail : {
+		getProjects : {
 			method : 'GET',
 			params : {},
 			isArray : false
