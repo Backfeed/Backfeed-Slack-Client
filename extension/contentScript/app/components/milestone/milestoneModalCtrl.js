@@ -1,6 +1,6 @@
 angular.module('MyApp').controller('MilestoneModalCtrl', MilestoneModalCtrl);
 
-function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV, Resource, Account, PostMessageService) {
+function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV, Resource, Account, Milestone, PostMessageService) {
 
   var log = _DEV.log('MILESTONE');
 
@@ -62,10 +62,9 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
       log('init Timeout: path: ', path);
       
       Resource.get(path).then(function(result) {
-        var path = 'organization/currentStatus/' + result.orgId
         log('init Timeout: Get channel : ', result); 
-        Resource.get(path).then(function(result) { 
-          log('init Timeout: Get channel: get milestone ', result); 
+        Milestone.getCurrent(result.orgId).then(function(result) {
+          log('init Timeout: Get channel: get milestone ', result);
           $scope.milestoneModel.contributions = result.milestoneContributions;
           $scope.milestoneModel.contributers = result.milestoneContributers;
           $scope.contributersCount = result.contributers;
@@ -82,13 +81,9 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
   };
  
   function submit() {
-    log('Create Milestone', $scope.milestoneModel.title, $scope.milestoneModel.desctiption, $scope.milestoneModel.evaluatingTeam, channelId);
-    Resource.post('milestone', {
-      title: $scope.milestoneModel.title,
-      desctiption: $scope.milestoneModel.desctiption,
-      evaluatingTeam: $scope.milestoneModel.evaluatingTeam,
-      channelId: channelId
-    }).then(function(result) {
+    log('Create Milestone', $scope.milestoneModel.title, $scope.milestoneModel.description, $scope.milestoneModel.evaluatingTeam, channelId);
+    Milestone.create($scope.milestoneModel.title, $scope.milestoneModel.description, $scope.milestoneModel.evaluatingTeam, channelId)
+    .then(function(result) {
       log('Create Milestone CB', result);
     });
   }
