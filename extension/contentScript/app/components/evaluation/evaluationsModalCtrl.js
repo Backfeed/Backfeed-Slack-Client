@@ -99,7 +99,7 @@ angular.module('MyApp').controller('EvaluationsModalCtrl',
 						$scope.data2.$promise.then(function(result1) {
 							console.log('result.reputation'+result1.reputation);
 							$scope.evaluation.reputation = result1.reputation;
-							$scope.evaluation.stake = (parseInt(result1.reputation)*18)/100;
+							$scope.evaluation.stake = (parseInt(result1.reputation)*5)/100;
 						});
 						$scope.data1 = ContributionDetail.getDetail({
 							contributionId : $scope.contributionId

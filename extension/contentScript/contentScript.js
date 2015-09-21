@@ -66,6 +66,20 @@ function openAddEvaluationPage(contributionId) {
 
 }
 
+function openAddMileStoneEvaluationPage(milestoneId) {
+	
+	console.log('milestoneId is: ' + contributionId);
+	chrome.runtime.sendMessage({        
+        message : {
+            "gesture": 'openAddMileStoneEvaluationPage',
+            "options": milestoneId
+        }
+    }, function(response) {
+    	console.log('Here in the callback from add milestoneId evaluation page');
+	});
+
+}
+
 function openContributionStatusPage(contributionId) {
 	console.log('contributionId is: ' + contributionId);
 	chrome.runtime.sendMessage({        
@@ -379,6 +393,33 @@ function evaluationObservationOnChannelId(channelId,mutations){
 							var contributionIdsVarArray = contributionIdsVar.split(",");
 							for (var i = 0; i < contributionIdsVarArray.length; i++) {
 								if(contributionIdsVarArray[i].trim() == contributionId){
+									openComposeButton.textContent = "STATUS";
+								}
+							}
+							$(openComposeButton).insertBefore(spanElement);
+						}
+					}
+					var spanChildrenForMileStoneButton = spanElement.children('#COMPOSE_ACTION_MILESTONE_EVALUATION_BUTTON');
+					if (spanChildrenForMileStoneButton.length == 0){
+						var spanText = spanElement.html();
+						var originalText = spanText;
+						var removalText = "New MileStone submitted<br>";
+						var indexOfRemovalContent = spanText.indexOf(removalText);
+						if (indexOfRemovalContent > -1){
+							spanText = spanText.replace(removalText, "");
+							var mileStoneId = spanText.substring(4,spanText.indexOf("<br>"));
+							var lengthOfText = removalText.length;
+							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+mileStoneId.length+4), "");
+							$( '.message_content', $(message)).html (originalText);
+							var openComposeButton = document.createElement("span");
+							openComposeButton.setAttribute("data-mileStoneId", mileStoneId);
+							openComposeButton.setAttribute("id", "COMPOSE_ACTION_MILESTONE_EVALUATION_BUTTON");
+							openComposeButton.textContent = "EVALUATE";
+							var milesStoneIdsVar = response.contributionIds;
+							milesStoneIdsVar = milesStoneIdsVar.substring(1, milesStoneIdsVar.length-1);
+							var milesStoneIdsVarArray = milesStoneIdsVar.split(",");
+							for (var i = 0; i < milesStoneIdsVarArray.length; i++) {
+								if(milesStoneIdsVarArray[i].trim() == mileStoneId){
 									openComposeButton.textContent = "STATUS";
 								}
 							}
