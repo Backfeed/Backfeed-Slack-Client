@@ -1,22 +1,103 @@
 <script type="text/ng-template" id="ProjectStatusModalTmpl">
-		
+
 <div class="modal-header">
-	<img alt="Close modal" class="close-modal" src="/extension/contentScript/app/images/close_x.png" ng-click="closeModal()" />
-	<div class="modal-title">Project Status!</div>
+  <img alt="Close modal" class="close-modal" src="/extension/contentScript/app/images/close_x.png" ng-click="closeModal()" />
+  <div class="modal-title">Project Status!</div>
 </div>
 
-<div id="project-modal" class="modal-body">
-	<form>
-	<div class="row">
+<form name="form">
 
-		
-		
-	</div>
-	</form>
+  <div class="modal-body">
+    <div class="row">
+
+      <div class="col-sm-12">
+				<div class="media pull-left">
+					
+					<div class="media-body">
+						<h1 class="member-name media-heading"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 17.6 17.6" enable-background="new 0 0 17.6 17.6" xml:space="preserve" width="18px">
+							<path fill="#231F20" d="M8.3,17.6c-0.6,0-1.1-0.4-1.3-0.9L2.5,3.7C2.3,3,2.7,2.2,3.4,2c0.7-0.3,1.5,0.1,1.8,0.9l4.5,12.9
+								c0.3,0.7-0.1,1.5-0.9,1.8C8.6,17.6,8.5,17.6,8.3,17.6z"></path>
+							<path fill="#231F20" d="M13.7,15.7c-0.6,0-1.1-0.4-1.3-0.9L8,1.8C7.7,1.1,8.1,0.3,8.8,0.1c0.7-0.3,1.5,0.1,1.8,0.9l4.5,12.9
+								c0.3,0.7-0.1,1.5-0.9,1.8C14.1,15.7,13.9,15.7,13.7,15.7z"></path>
+							<path fill="#231F20" d="M3.3,15.1c-0.6,0-1.1-0.4-1.3-0.9c-0.3-0.7,0.1-1.5,0.9-1.8L15.7,8c0.7-0.3,1.5,0.1,1.8,0.9
+								s-0.1,1.5-0.9,1.8L3.7,15.1C3.6,15.1,3.4,15.1,3.3,15.1z"></path>
+							<path fill="#231F20" d="M1.4,9.7c-0.6,0-1.1-0.4-1.3-0.9C-0.2,8,0.2,7.3,0.9,7l12.9-4.5c0.7-0.3,1.5,0.1,1.8,0.9
+								c0.3,0.7-0.1,1.5-0.9,1.8L1.8,9.6C1.7,9.7,1.5,9.7,1.4,9.7z"></path>
+						</svg>
+						<span class="member-username">&nbsp;{{projectStatusModel.channelName}}</span></h1>
+					</div>
+				</div>
+				<div class="pull-right">
+                    <select  name="milestoneSelection" ng-model="selectedMileStonetId" ng-change="updateViewforMileStone();">
+                        <option value="">On-Going Work</option>
+                        <option ng-repeat="projectMileStone in projectMileStones" value="{{projectMileStone.id}}">{{projectMileStone.title}}</option>
+                    </select>
+                </div>
+			</div>
+		</div>
+<div class="row">
+	<div class="col-sm-12">
+		<div class="member-stats" >
+			<div class="member-stat">
+				<div class="member-stat-item">
+                    <img class="member-stat-icon" alt="Contribution" src="/extension/contentScript/app/images/contribution.png" />
+                    <div class="member-stat-data">{{projectStatusModel.contributions | number:0}}</div>
+				</div>
+                <div class="member-stat-label">Contributions&nbsp;<img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png"/></div>
+            </div>			
+			<div class="member-stat">
+				<div class="member-stat-item">
+                    <img class="member-stat-icon" alt="Tokens" src="/extension/contentScript/app/images/rep.png" />
+                    <div class="member-stat-data">{{projectStatusModel.tokens | number:0}}&nbsp;<small>{{projectStatusModel.code}}</small></div>
+				</div>
+                <div class="member-stat-label">{{projectStatusModel.tokenName}}&nbsp;<img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png"/></div>
+            </div>
+		</div>
 </div>
+</div>
+<div class="row">
+<div class="col-sm-7">
+<contributions-table contributions="projectStatusModel.milestoneContributions" active-contribution="activeContribution"></contributions-table>
+</div>
+      <div class="col-sm-5">
+        
 
+        <div class="milestone-contributers">
+          <div class="milestone-contributers-header">
+            <span class="milestone-contributers-header-text">
+              Contributers ({{ projectStatusModel.contributions }})
+            </span>
+            <img alt="help" class="pull-right" src="/extension/contentScript/app/images/icon_help.png"
+             tooltip="All contributers to current milestone" />
+          </div>
+          <ul class="media-list milestone-contributers-list">
+            <li ng-repeat="contributer in projectStatusModel.milestoneContributers" 
+                class="milestone-contributers-list-item">
+              <div class="media-left media-middle relative">
+                <a href="#">
+                  <img class="media-object" ng-src="{{contributer.url}}" alt=""/>
+                  <span class="badge media-object-badge"> 
+                    {{ contributer.contributer_percentage }}
+                  </span>
+                </a>
+              </div>
 
+              <div class="media-body">
+                <h4 class="media-heading">{{contributer.real_name}}</h4>
+              </div>
+            </li>
 
+          </ul>
+        </div>
+      </div>
+      
+    </div>
+    
+  </div>
+
+ 
+
+</form>
 
 
 </script>

@@ -1,6 +1,6 @@
 angular.module('MyApp').controller('ProjectStatusModalCtrl',
-    function($scope, $auth, $location, $stateParams, SaveProject, Account, Users, AllSlackUsers, CheckProjectTokenName,
-             $modalInstance, $state, CheckProjectCode, PostMessageService,ChannelProject,MileStoneCurrent,MileStoneForChannel,MileStone) {
+    function($scope, $auth, $location, $stateParams, Account,
+             $modalInstance, $state, PostMessageService,ChannelProject,MileStoneCurrent,MileStoneForChannel,MileStone) {
 
     $scope.userData= '';
     $scope.validationFailureForTokenName = false;
@@ -8,12 +8,14 @@ angular.module('MyApp').controller('ProjectStatusModalCtrl',
     $scope.buttonDisabled = false;
     $scope.channelId = $stateParams.channelId;
     $scope.channelName = '';
-
+    $scope.selectedMileStonetId = '';
     PostMessageService.gesture.hideIframe();
 
-    $scope.closeModal = function() {
-      $modalInstance.dismiss('cancel');
-    };
+    function closeModal() {
+        $modalInstance.dismiss('cancel');
+      };
+      
+   
     PostMessageService.gesture.showIframe();
     $scope.projectMileStones = '';
     $scope.projectStatusModel = {
@@ -36,6 +38,7 @@ angular.module('MyApp').controller('ProjectStatusModalCtrl',
             date : '',
             valuation:'',
             contribution_id:'',
+            desciption:'',
             remainingContributers:'',
             contributers : [ {
             	memberId : '',
@@ -43,6 +46,13 @@ angular.module('MyApp').controller('ProjectStatusModalCtrl',
             } ]
         } ]
     };
+    
+    angular.extend($scope, {
+        closeModal: closeModal,
+        userData: '',
+        activeContribution: {},
+        projectStatusModel: $scope.projectStatusModel
+      });
     
     $scope.getProfile = function() {
 	      Account.getProfile()
@@ -72,10 +82,11 @@ angular.module('MyApp').controller('ProjectStatusModalCtrl',
 			$scope.slackTeamId = userData.slackTeamId;
 			getCurrentProjectStatus();      
 		 }
-		 $scope.updateViewforMileStone = function(mileStoneId) {
-			 if(mileStoneId != -1){
+		 $scope.updateViewforMileStone = function() {
+			 
+			 if($scope.selectedMileStonetId && $scope.selectedMileStonetId != -1){
 				 $scope.MileStoneCurrentData = MileStone.getDetail({
-		    		  	id: mileStoneId
+		    		  	id: $scope.selectedMileStonetId
 				      });
 				 $scope.MileStoneCurrentData.$promise.then(function(result) {
 			    	  $scope.projectStatusModel = result;
