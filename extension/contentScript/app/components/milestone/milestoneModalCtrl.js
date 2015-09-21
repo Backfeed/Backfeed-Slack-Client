@@ -24,6 +24,8 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
     } ],
     contributions: []
   };
+  
+ 
 
   angular.extend($scope, {
     submit: submit,
@@ -69,6 +71,7 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
       Resource.get("organization/channel/" + channelId + "/" + $scope.userData.slackTeamId + "/" + $scope.userId)
       .then(function(result) {
         log('init Timeout: Get channel : ', result); 
+        $scope.userOrgId = result.userOrgId
         Milestone.getCurrent(result.orgId).then(function(result) {
           log('init Timeout: Get channel: get milestone ', result);
           $scope.milestoneModel.contributions = result.milestoneContributions;
@@ -76,6 +79,7 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
           $scope.contributersCount = result.contributers;
           $scope.tokenCode = result.code;
           $scope.totalValue = result.totalValue;
+          
         });
       });
     }, 1000);
@@ -87,8 +91,10 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
   };
  
   function submit() {
-    log('Create Milestone', $scope.milestoneModel.title, $scope.milestoneModel.description, $scope.milestoneModel.evaluatingTeam, channelId);
-    Milestone.create($scope.milestoneModel.title, $scope.milestoneModel.description, $scope.milestoneModel.evaluatingTeam, channelId)
+    log('Create Milestone', $scope.milestoneModel.title, $scope.milestoneModel.description, $scope.milestoneModel.evaluatingTeam, $scope.userOrgId);
+    
+    //SaveContribution.create({}, $scope.milestoneCreateModel);
+    Milestone.create({owner:$scope.userId,title:$scope.milestoneModel.title, description:$scope.milestoneModel.description, evaluatingTeam:$scope.milestoneModel.evaluatingTeam, users_organizations_id:$scope.userOrgId})
     .then(function(result) {
       log('Create Milestone CB', result);
     });
