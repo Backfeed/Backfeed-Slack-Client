@@ -66,9 +66,9 @@
 						</li>
 					</ul>
 
-					<ui-select style="width:96%" search-enabled="false"
-							   ng-model='selectedContributerId'
-							   on-select="updateContributer($select.selected)">
+					<ui-select style="width:96%" 
+										 ng-model="selectedContributerId"
+							   		 on-select="updateContributer($select.selected)">
 						<ui-select-match placeholder="Add Contributor"></ui-select-match>
 						<ui-select-choices repeat="user in updatedUsersList">
 							<div ng-bind-html="formatSelectUser(user)"></div>
@@ -86,9 +86,11 @@
 
 	<div class="modal-footer flex">
 		<p class="lead">Contributions are the only way to generate new tokens and reputation.</p>
-		<button type="submit"
-				class="btn btn-backfeed submit-button"
-				ng-disabled="!model.title || !model.file || buttonDisabled || !(getTotalSum() === 100)"
-				ng-click="onSubmit()">Add Contribution</button>
+		<button class="btn btn-backfeed submit-button"
+						ng-click="submit()"
+ 						ng-disabled="!model.title || 
+ 												 !model.file || 
+ 												 buttonDisabled || 
+ 												 !(getTotalSum() === 100)">Add Contribution</button>
 	</div>
 </script>
