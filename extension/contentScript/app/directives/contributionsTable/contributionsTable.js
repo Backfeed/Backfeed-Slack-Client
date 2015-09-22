@@ -5,9 +5,9 @@ function contributionsTable() {
 
   return {
 
-    templateUrl: 'js/directives/contributionsTable/contributionsTable.html',
+    templateUrl: 'directives/contributionsTable/contributionsTable.html',
     controller: contributionsTableController,
-    scope: { contributions: '=', activeContribution: '=' },
+    scope: { contributions: '=' },
     restrict: 'E'
 
   };

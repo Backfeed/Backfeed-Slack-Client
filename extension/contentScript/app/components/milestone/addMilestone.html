@@ -2,13 +2,12 @@
 
 <div class="modal-header">
   <img alt="Close modal" class="close-modal" src="/extension/contentScript/app/images/close_x.png" ng-click="closeModal()" />
-  <div class="modal-title">Lets Submit a New Milestone!</div>
+  <div class="modal-title">Add a New Milestone</div>
 </div>
 
 <form name="form" ng-submit="submit()">
 
-  <div class="modal-body">
-    <div class="row">
+  <div class="modal-body row">
 
       <div class="col-sm-7">
 
@@ -19,7 +18,7 @@
 
         <div class="form-group">
           <input type="text" class="form-control" required
-                 placeholder="Title of milestone" ng-model="milestoneModel.title" />
+                 placeholder="Name of the new milestone" ng-model="milestoneModel.title" />
           <label>Title</label>
         </div>
 
@@ -34,64 +33,52 @@
       </div>  
 
       <div class="col-sm-5">
-        <div class="milestone-total-value text-center">
-          <div>
-            <img class="milestone-total-value-icon" alt="Tokens" src="/extension/contentScript/app/images/tokens.png" />
-            <span class="milestone-total-value-number">{{ totalValue }}</span>
-            <span class="milestone-total-value-token">{{ tokenCode }}</span>
+
+        <div class="stat">
+          <div class="stat-item">
+            <img class="stat-icon" alt="Tokens" src="/extension/contentScript/app/images/tokens.png" />
+            <div class="stat-data">{{totalValue | number:0}} <small>{{tokenCode}}</small></div>
           </div>
-          <span class="milestone-total-value-text">Value of all contributions</span>
+          <div class="stat-label">Value of all contributions</div>
         </div>
 
         <div class="milestone-contributers">
-          <div class="milestone-contributers-header">
-            <span class="milestone-contributers-header-text">
-              Contributers ({{ contributersCount }})
-            </span>
-            <img alt="help" class="pull-right" src="/extension/contentScript/app/images/icon_help.png"
-             tooltip="All contributers to current milestone" />
-          </div>
-          <ul class="media-list milestone-contributers-list">
-            <li ng-repeat="contributer in milestoneModel.contributers" 
-                class="milestone-contributers-list-item">
-              <div class="media-left media-middle relative">
-                <a href="#">
-                  <img class="media-object" ng-src="{{contributer.url}}" alt=""/>
-                  <span class="badge media-object-badge"> 
-                    {{ contributer.contributer_percentage }}
-                  </span>
-                </a>
+          <img alt="help" class="pull-right" src="/extension/contentScript/app/images/icon_help.png"
+               tooltip="All contributers to current milestone" />
+          <h5>Contributers ({{ contributersCount }})</h5>
+
+          <ul class="contributers-list list-unstyled">
+            <li ng-repeat="contributer in milestoneModel.contributers" class="milestone-contributer flex">
+
+              <div class="contributer-image">
+                <img class="img-circle" ng-src="{{contributer.url}}" alt="{contributer.real_name}}" />
+                <span class="contributer-percentage">{{contributer.contributer_percentage | number:0}}%</span>
               </div>
 
-              <div class="media-body">
-                <h4 class="media-heading">{{contributer.real_name}}</h4>
+              <div class="contributer-names">
+                <div class="contributer-realname">{{contributer.real_name}}</div>
+                <div class="contributer-username"><svg-icon icon="slack"></svg-icon>&nbsp;&nbsp;{{contributer.name}}</div>
               </div>
+
             </li>
-
           </ul>
         </div>
+
       </div>
-      
-    </div>
-    
+
   </div>
 
-  <div class="modal-footer">
-    <div class="row">
-
-      <div class="col-sm-5">
-        <select ng-model="milestoneModel.evaluatingTeam">
-          <option value="" selected="selected">Evaluating Team</option>
-          <option ng-repeat="team in teams" value="{{ team.id }}">{{ team.channelName }}</option>
-        </select>
-      </div>
-      
-      <div class="col-sm-5">
-        <button type="submit"
-          class="btn btn-backfeed submit-button center-block"
-          ng-disabled="form.$invalid || milestoneModel.evaluatingTeam === '' ">Submit Milestone</button>
-      </div>
+  <div class="modal-footer flex">
+    <div class="milestone-destination-project">
+      <select class="select-backfeed" ng-model="milestoneModel.evaluatingTeam">
+        <option value="" selected>Destination Project</option>
+        <option ng-repeat="team in teams" value="{{ team.id }}">{{ team.channelName }}</option>
+      </select>
+      <img alt="help" class="pull-right" src="/extension/contentScript/app/images/icon_help.png"
+           tooltip="All contributers to current milestone" style="margin-left: 25px;"/>
     </div>
+    <button type="submit" class="btn btn-backfeed submit-button"
+            ng-disabled="form.$invalid || milestoneModel.evaluatingTeam === ''">Submit Milestone</button>
   </div>
 
 </form>

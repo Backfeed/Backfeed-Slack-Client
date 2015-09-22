@@ -240,8 +240,13 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
     log('Create Milestone', $scope.milestoneModel.title, $scope.milestoneModel.description, $scope.milestoneModel.evaluatingTeam, $scope.userOrgId);
     
     //SaveContribution.create({}, $scope.milestoneCreateModel);
-    Milestone.create({owner:$scope.userId,title:$scope.milestoneModel.title, description:$scope.milestoneModel.description, evaluatingTeam:$scope.milestoneModel.evaluatingTeam, users_organizations_id:$scope.userOrgId})
-    .then(function(result) {
+    Milestone.create({
+        owner: $scope.userId,
+        title: $scope.milestoneModel.title,
+        description: $scope.milestoneModel.description,
+        evaluatingTeam: $scope.milestoneModel.evaluatingTeam,
+        users_organizations_id: $scope.userOrgId
+    }).then(function(result) {
       $scope.slackPlay(result);
 
       $modalInstance.close('submit');

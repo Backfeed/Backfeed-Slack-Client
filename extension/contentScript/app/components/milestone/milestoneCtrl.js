@@ -4,7 +4,7 @@ angular.module('MyApp').controller('MilestoneCtrl',
             templateUrl: "MilestoneModalTmpl",
             controller: 'MilestoneModalCtrl',
             scope: $scope,
-            size: 'lg'
+            size: 'add-milestone'
         });
 
         modal.result.then(function() {

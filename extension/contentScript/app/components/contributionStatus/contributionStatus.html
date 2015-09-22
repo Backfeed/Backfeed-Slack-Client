@@ -17,7 +17,7 @@
 
 		<div class="col-sm-5">
 
-			<div class="big-data-items box-with-shadow">
+			<div class="big-data-items box box-with-shadow">
 				<div class="big-data-item">
 					<div class="big-data-value">{{contributionStatusModel.currentValuation}}</div>
 					<div class="big-data-label">Current Value</div>
@@ -31,34 +31,32 @@
 					<div class="big-data-label">My Reputation Profit/Loss</div>
 				</div>
 			</div>
-<!-- 
-			<div class="donut-charts box-with-shadow">
-				<div class="donut-chart"> -->
-					<!--{{contributionStatusModel.myWeight}}-->
-					<!-- <single-value-donut-chart donut-value="50" donut-color="#f9ac51"></single-value-donut-chart>
+<!--
+			<div class="donut-charts box box-with-shadow">
+				<div class="donut-chart">
+					<single-value-donut-chart donut-value="{{contributionStatusModel.myWeight}}" donut-color="#f9ac51"></single-value-donut-chart>
 					<div>My reputation in the project</div>
 				</div>
-				<div class="donut-chart"> -->
-					<!--{{contributionStatusModel.groupWeight}}-->
-					<!-- <single-value-donut-chart donut-value="70" donut-color="#6991bf"></single-value-donut-chart>
+				<div class="donut-chart">
+					<single-value-donut-chart donut-value="{{contributionStatusModel.groupWeight}}" donut-color="#6991bf"></single-value-donut-chart>
 					<div>Total reputation invested in evaluating this contribution</div>
 				</div>
 			</div>
 
-			<div class="box-with-shadow">
-				<h4 class="box-with-shadow-title">Contribution Value in Chronological Order</h4>
+			<div class="box box-with-shadow">
+				<h4 class="box-title">Contribution Value in Chronological Order</h4>
 				<svg id="visualisation" width="500" height="300"></svg>
 			</div>
 
-			<div class="box-with-shadow">
-				<h4 class="box-with-shadow-title">Distribution of Reputation</h4>
+			<div class="box box-with-shadow">
+				<h4 class="box-title">Distribution of Reputation</h4>
 				<svg id="visualisation_bar" width="500" height="300"></svg>
 			</div> -->
 		</div>
 
 		<div class="col-sm-3">
-			<div class="box-with-shadow">
-				<h4 class="box-with-shadow-title">Contributors</h4>
+			<div class="box box-with-shadow">
+				<h4 class="box-title">Contributors</h4>
 				<ul class="contributors-list">
 					<li class="contributor" ng-repeat="contributionContributer in contributionStatusModel.contributionContributers">
 						<img ng-src="{{contributionContributer.url}}" />

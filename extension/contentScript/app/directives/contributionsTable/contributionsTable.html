@@ -1,0 +1,30 @@
+<!--<script type="text/ng-template" id="contributions-table-row.html">
+  <div class="">
+    <div class="heading">
+      <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" accordion-transclude="heading">
+        <span ng-class="{'text-muted': isDisabled}">{{heading}}</span>
+      </a>
+    </div>
+    <div class="collapse" collapse="!isOpen" ng-transclude></div>
+  </div>
+</script>-->
+
+<div class="flex table-row">
+  <div>Contribution</div>
+  <div>Date</div>
+  <div>Current Value</div>
+</div>
+
+<accordion>
+  <accordion-group ng-repeat="contribution in contributions">
+    <accordion-heading>
+      <div class="flex table-row">
+        <div>{{ ::contribution.title }}</div>
+        <div>{{ ::contribution.date | date:'d/MM/yyyy' }}</div>
+        <div>{{ ::contribution.valuation | number:0 }} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-plus': status.open, 'glyphicon-chevron-minus': !status.open}"></i></div>
+      </div>
+    </accordion-heading>
+    {{ ::contribution.description }}
+    <users-list users="contribution.contributers"></users-list>
+  </accordion-group>
+</accordion>
