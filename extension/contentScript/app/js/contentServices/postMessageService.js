@@ -22,6 +22,9 @@ angular.module('MyApp').service('PostMessageService', function(Account,$state) {
 		hideIframe: function(option) {
 			self.sendGesture("hideIframe",option);
 		},
+		hideIframeMilstone: function(option) {
+			self.sendGesture("hideIframeMilstone",option);
+		},
 		showAlert: function(message, type) {
 			if (!type) type = 'warning';
 			self.sendGesture("showAlert", {message: message, type: type});

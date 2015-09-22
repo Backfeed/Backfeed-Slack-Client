@@ -28,6 +28,18 @@ function openProjectStatusPage(channelId) {
 	
 }
 
+function openProjectStatusPageFromMileStone(mileStoneId) {
+	chrome.runtime.sendMessage({
+		message : {
+			"gesture": 'openProjectStatusPageFromMileStone',
+			"options": mileStoneId
+		}
+	}, function(response) {
+		console.log('Here in the callback from project status page');
+	});	
+	
+}
+
 
 function openAddMilestonePage(channelId) {
 	chrome.runtime.sendMessage({
@@ -68,7 +80,7 @@ function openAddEvaluationPage(contributionId) {
 
 function openAddMileStoneEvaluationPage(milestoneId) {
 	
-	console.log('milestoneId is: ' + contributionId);
+	console.log('milestoneId is: ' + milestoneId);
 	chrome.runtime.sendMessage({        
         message : {
             "gesture": 'openAddMileStoneEvaluationPage',
@@ -114,6 +126,16 @@ $(document).on('click', "#COMPOSE_ACTION_EVALUATION_BUTTON", function() {
 	}
 });
 
+$(document).on('click', "#COMPOSE_ACTION_MILESTONE_EVALUATION_BUTTON", function() {
+	var mileStoneIdForThisEvaluation = $(this).attr('data-mileStoneId');
+	var textContent = $(this).text();
+	if (textContent == 'EVALUATE') {
+		openAddMileStoneEvaluationPage(mileStoneIdForThisEvaluation);
+	} else {
+		openProjectStatusPageFromMileStone(mileStoneIdForThisEvaluation);
+	}
+});
+
 $(document).on('click', ".member_status_button", function() {
 	var memberId = $(this).siblings('.member_details').find('.member_preview_link').data('member-id');
 	openMemberStatusPage(memberId);
@@ -129,6 +151,7 @@ function windowRefresh(){
 
 var GESTURES = {
 	"showIframe": showIframe,
+	"hideIframeMilstone": hideIframeMilstone,
 	"hideIframe": hideIframe,
 	"showAlert": showAlert,
 	"windowRefresh": windowRefresh,
@@ -146,6 +169,14 @@ function hideIframe(options) {
 	iframe.style.display = "none";
 	if (options != undefined && options != '') {
 		$("span[data-contributionId*="+options+"]").text("STATUS");
+	}
+}
+
+function hideIframeMilstone(options) {
+	console.log('hiding iframe'+options);
+	iframe.style.display = "none";
+	if (options != undefined && options != '') {
+		$("span[data-milestoneid*="+options+"]").text("STATUS");
 	}
 }
 
@@ -389,9 +420,9 @@ function evaluationObservationOnChannelId(channelId,mutations){
 							openComposeButton.setAttribute("id", "COMPOSE_ACTION_EVALUATION_BUTTON");
 							openComposeButton.textContent = "EVALUATE";
 							var contributionIdsVar = response.contributionIds;
-							contributionIdsVar = contributionIdsVar.substring(1, contributionIdsVar.length-1);
-							var contributionIdsVarArray = contributionIdsVar.split(",");
-							for (var i = 0; i < contributionIdsVarArray.length; i++) {
+							contributionIdsVar = String(contributionIdsVar);							
+							var contributionIdsVarArray = contributionIdsVar.split(",");							
+							for (var i = 0; i < contributionIdsVarArray.length; i++) {								
 								if(contributionIdsVarArray[i].trim() == contributionId){
 									openComposeButton.textContent = "STATUS";
 								}
@@ -415,8 +446,9 @@ function evaluationObservationOnChannelId(channelId,mutations){
 							openComposeButton.setAttribute("data-mileStoneId", mileStoneId);
 							openComposeButton.setAttribute("id", "COMPOSE_ACTION_MILESTONE_EVALUATION_BUTTON");
 							openComposeButton.textContent = "EVALUATE";
-							var milesStoneIdsVar = response.contributionIds;
-							milesStoneIdsVar = milesStoneIdsVar.substring(1, milesStoneIdsVar.length-1);
+							var milesStoneIdsVar = response.milestonesIds;
+							milesStoneIdsVar = String(milesStoneIdsVar);
+							//milesStoneIdsVar = milesStoneIdsVar.substring(1, milesStoneIdsVar.length-1);
 							var milesStoneIdsVarArray = milesStoneIdsVar.split(",");
 							for (var i = 0; i < milesStoneIdsVarArray.length; i++) {
 								if(milesStoneIdsVarArray[i].trim() == mileStoneId){
@@ -442,6 +474,20 @@ function evaluationObservationOnChannelId(channelId,mutations){
 							var contributionId = spanText.substring(5,spanText.indexOf("<br>"));
 							var lengthOfText = removalText.length;
 							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length+4), "");
+							$( '.message_content', $(message)).html(originalText);
+						}
+					}
+					var spanChildren = spanElement.children('#COMPOSE_ACTION_MILESTONE_EVALUATION_BUTTON');
+					if (spanChildren.length == 0){
+						var spanText = spanElement.html();
+						var originalText = spanText;
+						var removalText = "New MileStone submitted<br>";
+						var indexOfRemovalContent = spanText.indexOf(removalText);
+						if (indexOfRemovalContent > -1){
+							spanText = spanText.replace(removalText, "");
+							var mileStoneId = spanText.substring(5,spanText.indexOf("<br>"));
+							var lengthOfText = removalText.length;
+							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+mileStoneId.length+4), "");
 							$( '.message_content', $(message)).html(originalText);
 						}
 					}

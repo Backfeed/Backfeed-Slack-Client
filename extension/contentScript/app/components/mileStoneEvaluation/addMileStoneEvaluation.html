@@ -1,0 +1,47 @@
+<script type="text/ng-template" id="MileStoneEvaluationsModalTmpl">
+   
+<div class="modal-header">
+		<img alt="Close modal" class="close-modal" src="/extension/contentScript/app/images/close_x.png" ng-click="closeModal()" />
+	</div>
+	<div class="modal-body">
+		<form>
+
+			<div class="row">
+				<div class="col-sm-12">
+					<h2>It's Evaluating Time!</h2>
+					<h6>How many {{tokenName}} does "{{title}}" worth to the team?</h6>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="input-group">
+						<input class="form-control" id="token" placeholder="talk to me in numbers" ng-model="evaluation.tokens" required ng-change="checkNumber(evaluation.tokens)"/>
+						<span class="input-group-addon">{{code}}</span>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="input-group">
+						<div class="invalid-message" ng-hide="validationPass">
+					    		<span class="invalid-mail" ng-hide="validationPass && !evaluation.tokens">Enter Numbers Only</span>
+					    </div>
+					</div>
+				</div>
+			</div>
+
+		</form>
+	</div>
+
+	<div class="modal-footer flex">
+		<p class="lead">Once submitting your evaluation you will not be able to change it.</p>
+		<button type="submit"
+				class="btn btn-backfeed submit-button"
+				ng-disabled="!evaluation.tokens || !validationPass"
+				ng-click="submit()">Evaluate</button>
+	</div>
+
+</script>
+
+

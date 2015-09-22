@@ -10,7 +10,12 @@ angular.module('MyApp').controller('MainCtrl', ["$scope", "$state","PostMessageS
 	
 	function goToProjectStatus(channelId) {
 		console.log('Project Status');
-		$state.go('projectStatus', {'channelId': channelId}, {reload: true});
+		$state.go('projectStatus', {'channelId': channelId,'mileStoneId': ''}, {reload: true});
+	}
+	
+	function goToProjectStatusFromMileStone(mileStoneId) {
+		console.log('Project Status from MileStone');
+		$state.go('projectStatus', {'channelId': '','mileStoneId': mileStoneId}, {reload: true});
 	}
 
 	function goToAddMilestone(channelId) {
@@ -27,6 +32,11 @@ angular.module('MyApp').controller('MainCtrl', ["$scope", "$state","PostMessageS
 	function goToAddEvaluation(contributionId) {
 		console.log('Starting evaluations for contributionID: '+contributionId);
 		$state.go('evaluations', {'contributionId': contributionId}, {reload: true});
+	}
+	
+	function goToAddMileStoneEvaluation(mileStoneId) {
+		console.log('Starting evaluations for mileStoneId: '+mileStoneId);
+		$state.go('mileStoneEvaluations', {'mileStoneId': mileStoneId}, {reload: true});
 	}
 	
 	function goToContributionStatus(contributionId) {
@@ -60,11 +70,13 @@ angular.module('MyApp').controller('MainCtrl', ["$scope", "$state","PostMessageS
 		"openAddMilestone": goToAddMilestone,
 		"openAddContributionPage": goToAddContribution,
 		"openAddEvaluationPage": goToAddEvaluation,
+		"openAddMileStoneEvaluationPage": goToAddMileStoneEvaluation,
 		"showAlertFromMainCtr": showAlert,
 		"openContributionStatusPage": goToContributionStatus,
 		"openMemberStatusPage": goToMemberStatus,
 		"refreshWindows": refreshWindows,
 		"openProjectStatus":goToProjectStatus,
+		"openProjectStatusPageFromMileStone":goToProjectStatusFromMileStone,
 		"logout": logout
 	};
 

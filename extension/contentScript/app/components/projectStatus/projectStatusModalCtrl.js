@@ -7,8 +7,13 @@ angular.module('MyApp').controller('ProjectStatusModalCtrl',
     $scope.validationFailureForCode = false;
     $scope.buttonDisabled = false;
     $scope.channelId = $stateParams.channelId;
+    $scope.mileStoneId = $stateParams.mileStoneId;
     $scope.channelName = '';
     $scope.selectedMileStonetId = '';
+    if($scope.mileStoneId && $scope.mileStoneId != ''){
+    	$scope.selectedMileStonetId = $scope.mileStoneId;
+    }
+    
     PostMessageService.gesture.hideIframe();
 
     function closeModal() {
@@ -72,24 +77,28 @@ angular.module('MyApp').controller('ProjectStatusModalCtrl',
               }
 	        });
 	    };
-	    
-	    var userData = Account.getUserData();
-		 console.log("userData is"+userData);
-		 if(userData == undefined) {
-			 $scope.getProfile();
-		 } else {
-			 $scope.userId = userData.userId;
-			$scope.slackTeamId = userData.slackTeamId;
-			getCurrentProjectStatus();      
-		 }
-		 $scope.updateViewforMileStone = function() {
+	    $scope.updateViewforMileStone = function() {
 			 
 			 if($scope.selectedMileStonetId && $scope.selectedMileStonetId != -1){
+				 
 				 $scope.MileStoneCurrentData = MileStone.getDetail({
 		    		  	id: $scope.selectedMileStonetId
 				      });
 				 $scope.MileStoneCurrentData.$promise.then(function(result) {
 			    	  $scope.projectStatusModel = result;
+			    	  $scope.orgId = result.current_org_id;
+			    	  $scope.channelName = result.channelName;
+			    	  if($scope.projectMileStones == ''){
+			    		  $scope.MileStoneForChannelData = MileStoneForChannel.allDetails({
+				    		  orgId: $scope.orgId
+						      });
+				    	  $scope.MileStoneForChannelData.$promise.then(function(result) {
+					    	  $scope.projectMileStones = result;
+					    	 
+					      });
+			    	  }
+			    	 
+			    	 
 			    	  $scope.projectStatusModel.channelName = $scope.channelName;
 			    	 
 			      });
@@ -105,12 +114,22 @@ angular.module('MyApp').controller('ProjectStatusModalCtrl',
 			 }
 			 
 		    };
+	    var userData = Account.getUserData();
+		 console.log("userData is"+userData);
+		 if(userData == undefined) {
+			 $scope.getProfile();
+		 } else {
+			 $scope.userId = userData.userId;
+			$scope.slackTeamId = userData.slackTeamId;
+			getCurrentProjectStatus();      
+		 }
+		
 	// if not authenticated return to splash:
 	if(!$auth.isAuthenticated()){
 		$location.path('splash'); 
    }  
 	    function getCurrentProjectStatus(){
-			if ($scope.channelId && $scope.channelId != 0) {
+			if ($scope.channelId && $scope.channelId != 0 && $scope.channelId != '') {
 				 $scope.ChannelProjectExistsData = ChannelProject.exists({
 				        channelId: $scope.channelId,
 				        slackTeamId: $scope.slackTeamId,
@@ -141,6 +160,10 @@ angular.module('MyApp').controller('ProjectStatusModalCtrl',
 				      });
 				      
 				}
+			else if ($scope.selectedMileStonetId && $scope.selectedMileStonetId != 0){
+				$scope.selectedMileStonetId = '';
+				$scope.updateViewforMileStone();
+			}
 		}
 
    

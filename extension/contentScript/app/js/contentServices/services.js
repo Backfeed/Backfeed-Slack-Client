@@ -21,6 +21,8 @@ bfAPIServices.factory('ContributionDetail', [ '$resource','environmentURL', func
 	});
 } ]);
 
+
+
 bfAPIServices.factory('SlackTeam', [ '$resource','environmentURL', function($resource,environmentURL) {
 	return $resource(environmentURL+'organization/all/team/:slackTeamId', {}, {
 		getProjects : {
@@ -80,6 +82,7 @@ bfAPIServices.factory('CloseContribution', [ '$resource','environmentURL', funct
 		}
 	});
 } ]);
+
 bfAPIServices.factory('SaveEvaluationToContribution', [ '$resource','environmentURL', function($resource,environmentURL) {
 	return $resource(environmentURL+'bids', {}, {
 		save : {
@@ -89,8 +92,28 @@ bfAPIServices.factory('SaveEvaluationToContribution', [ '$resource','environment
 		}
 	});
 } ]);
+
+bfAPIServices.factory('SaveEvaluationToMileStone', [ '$resource','environmentURL', function($resource,environmentURL) {
+	return $resource(environmentURL+'mileStoneBids', {}, {
+		save : {
+			method : 'POST',
+			params : {},
+			isArray : false
+		}
+	});
+} ]);
 bfAPIServices.factory('GetEvaluationOfContribution', [ '$resource','environmentURL', function($resource,environmentURL) {
 	return $resource(environmentURL+'bid/:contributionId/:userId', {}, {
+		Evaluation : {
+			method : 'GET',
+			params : {},
+			isArray : false
+		}
+	});
+} ]);
+
+bfAPIServices.factory('GetEvaluationOfMileStone', [ '$resource','environmentURL', function($resource,environmentURL) {
+	return $resource(environmentURL+'mileStonebid/:mileStoneId/:userId', {}, {
 		Evaluation : {
 			method : 'GET',
 			params : {},

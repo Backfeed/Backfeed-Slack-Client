@@ -23,7 +23,7 @@ myApp.config(function($stateProvider, $urlRouterProvider, $authProvider, $compil
             controller: 'ProjectsCtrl'
         })
          .state('projectStatus', {
-            url: '/projectStatus/:channelId',
+            url: '/projectStatus/:channelId/:mileStoneId',
             templateUrl: chrome.extension.getURL("extension/contentScript/app/components/projectStatus/projectStatus.html"),
             controller: 'ProjectStatusCtrl'
         })
@@ -51,6 +51,11 @@ myApp.config(function($stateProvider, $urlRouterProvider, $authProvider, $compil
             url: '/evaluations/:contributionId/:projectId',
             templateUrl: chrome.extension.getURL("extension/contentScript/app/components/evaluation/addEvaluation.html"),
             controller: 'evaluationsCtrl'
+        })
+        .state('mileStoneEvaluations', {
+            url: '/mileStoneEvaluations/:mileStoneId/:projectId',
+            templateUrl: chrome.extension.getURL("extension/contentScript/app/components/mileStoneEvaluation/addMileStoneEvaluation.html"),
+            controller: 'mileStoneEvaluationsCtrl'
         })
         .state('users', {
             url: '/users',

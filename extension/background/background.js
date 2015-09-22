@@ -281,7 +281,8 @@ chrome.runtime.onMessage.addListener(function(msg, sender,sendResponse) {
 	    		  data: params,
 	    		  success: function(data) {
 	    		       console.log('server returned, satellizer token:'+data);
-	    		       sendResponse({login: "true",contributionIds:data});
+	    		       console.log('server returned, satellizer token:'+JSON.parse(data).contribitions);
+	    		       sendResponse({login: "true",contributionIds:JSON.parse(data).contribitions,milestonesIds:JSON.parse(data).milestones});
 	    		       sendGesture(msg.message,sendResponse);
 	    		  }
 	    		});
