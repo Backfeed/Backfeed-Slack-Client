@@ -1,8 +1,10 @@
 angular.module('MyApp').controller('ContributionsModalCtrl', ContributionsModalCtrl);
 
-function ContributionsModalCtrl($scope, $auth, $location, $rootScope, $stateParams, Contributions,
+function ContributionsModalCtrl($scope, $auth, $location, $rootScope, $stateParams, _DEV, Contributions,
   ContributionDetail, SaveContribution, CloseContribution, $state,
   Account, Users, $modalInstance, PostMessageService, ChannelProject) {
+
+  var log = _DEV.log('Add Contribution');
 
   var channelId = $stateParams.channelId;
   var contributionId = $stateParams.contributionId;
@@ -47,6 +49,7 @@ function ContributionsModalCtrl($scope, $auth, $location, $rootScope, $statePara
 
   angular.extend($scope, {
 
+    refreshContributers: refreshContributers,
     closeModal: closeModal,
     currencyFormatting: currencyFormatting,
     formatSelectUser: formatSelectUser,
@@ -71,19 +74,19 @@ function ContributionsModalCtrl($scope, $auth, $location, $rootScope, $statePara
     if (!$auth.isAuthenticated()) {
       $location.path('splash');
     } else {
-      console.log(' channelId' + channelId);
+      log(' channelId' + channelId);
       if (channelId && channelId != 0) {
         var userData = Account.getUserData();
         if (userData == undefined) {
-          console.log('userData is not defined' + userData);
+          log('userData is not defined' + userData);
           getProfile();
         } else {
-          console.log('userData is  defined' + userData);
+          log('userData is  defined' + userData);
           $scope.userId = userData.userId;
           $scope.slackTeamId = userData.slackTeamId;
           $scope.access_token = userData.access_token;
           $scope.displayName = userData.displayName;
-          console.log('userData is  defined userId' + $scope.userId);
+          log('userData is  defined userId' + $scope.userId);
           ChannelProjectExists();
         }
       }
@@ -117,7 +120,7 @@ function ContributionsModalCtrl($scope, $auth, $location, $rootScope, $statePara
     if (selectedUser.id == '') {
       return;
     }
-    console.log('update contributer: ', selectedUser);
+    log('update contributer: ', selectedUser);
     addCollaborator(selectedUser);
     var urlImage = '';
     var userName = '';
@@ -134,7 +137,7 @@ function ContributionsModalCtrl($scope, $auth, $location, $rootScope, $statePara
 
     for (var i = 0; i < allcontributers.length; i++) {
       if (allcontributers[i].id == 0 && allcontributers[i].contributer_percentage == '') {
-        console.log('comes here firt');
+        log('comes here firt');
         allcontributers[i].id = selectedUser.id;
 
         //allcontributers[i].contributer_percentage = contPercentage;
@@ -200,7 +203,7 @@ function ContributionsModalCtrl($scope, $auth, $location, $rootScope, $statePara
   };
 
   function ChannelProjectExists() {
-    console.log("In ChannelProjectExists method");
+    log("In ChannelProjectExists method");
     $scope.ChannelProjectExistsData = ChannelProject.exists({
       channelId: channelId,
       slackTeamId: $scope.slackTeamId,
@@ -237,7 +240,7 @@ function ContributionsModalCtrl($scope, $auth, $location, $rootScope, $statePara
           }
         }
       } else {
-        console.log('comes here');
+        log('comes here');
         $modalInstance.close('submit');
         PostMessageService.sendGesture('hideIframe');
         PostMessageService.gesture.showAlert('In order to submit a contribution to this channel, click on the channel name above and "Add a Collaborative Project"', 'error');
@@ -249,8 +252,15 @@ function ContributionsModalCtrl($scope, $auth, $location, $rootScope, $statePara
 
   };
 
+  function refreshContributers(nameQuery) {
+    $scope.contributers = $scope.updatedUsersList.filter(function(user) {
+      log("refreshContributers", user, nameQuery);
+      return user.real_name.indexOf(nameQuery > -1);
+    });
+  }
+
   function addCollaborator(selectedUser) {
-    console.log('addCollaborator: ', selectedUser);
+    log('addCollaborator: ', selectedUser);
     var allcontributers = $scope.model.contributers;
     $scope.updatedUsersList = [];
     $scope.selectedContributerId = '';
@@ -306,13 +316,13 @@ function ContributionsModalCtrl($scope, $auth, $location, $rootScope, $statePara
         totalActive = totalActive + 1;
       }
     }
-    console.log('total is ' + totalActive);
+    log('total is ' + totalActive);
     if (totalActive <= 0) {
       PostMessageService.gesture.showAlert('At least one contributer should be there', 'error');
       return
     }
-    console.log("In Submit method");
-    console.log($scope.model);
+    log("In Submit method");
+    log($scope.model);
     $scope.data = SaveContribution.save({}, $scope.model);
     $scope.data.$promise.then(function(result) {
 
@@ -320,11 +330,11 @@ function ContributionsModalCtrl($scope, $auth, $location, $rootScope, $statePara
 
       $modalInstance.close('submit');
       PostMessageService.sendGesture('hideIframe');
-      console.log('projectId is' + projectId);
+      log('projectId is' + projectId);
       //$state.go('evaluations', {'contributionId': result.id,'projectId':projectId});
 
     }, function(error) {
-      console.log('Error in submitting Contribution');
+      log('Error in submitting Contribution');
       PostMessageService.gesture.showAlert('Your Contribution was not submitted.', 'error');
     });
   };
@@ -368,12 +378,12 @@ function ContributionsModalCtrl($scope, $auth, $location, $rootScope, $statePara
   };
 
   function sendTestMessage(channelId, message) {
-    console.log('sending test message to slack: ' + message);
+    log('sending test message to slack: ' + message);
 
     // 'https://slack.com/api/users.list'
 
     var url = 'https://slack.com/api/chat.postMessage';
-    console.log('url: ' + url);
+    log('url: ' + url);
     var token = $scope.access_token;
     var data = {
       icon_url: 'https://s-media-cache-ak0.pinimg.com/236x/71/71/f9/7171f9ba59d5055dd0a865b41ac4b987.jpg',
@@ -388,16 +398,16 @@ function ContributionsModalCtrl($scope, $auth, $location, $rootScope, $statePara
     // TODO: move to use angularJS instead of Jquery and get rid of need to change  Host when we deploy...
     // TODO: which API ? do we get 'my boards or boards of project'.
     //$http.get(url, data).success(function(response) {
-    //    console.log('message posted successfully!');
+    //    log('message posted successfully!');
     //}).error(function(response) {
-    //    console.log('message posted erroneously!');
+    //    log('message posted erroneously!');
     //});
     $.ajax({
       type: "GET",
       url: url,
       data: data,
       success: function(response) {
-        console.log('message posted successfully!');
+        log('message posted successfully!');
       },
       persist: true,
       dataType: 'JSON'
@@ -405,7 +415,7 @@ function ContributionsModalCtrl($scope, $auth, $location, $rootScope, $statePara
   };
 
   function gotChannels(data) {
-    console.log('recieved Channels:');
+    log('recieved Channels:');
     //console.dir(data);
 
     // get specific channel:
@@ -414,7 +424,7 @@ function ContributionsModalCtrl($scope, $auth, $location, $rootScope, $statePara
       var channel = channels[channelIndex];
       // TODO removed hardcoded dependency on channel name
       if (channel.id == $scope.currentSavedContribution.channelId) {
-        console.log('is random sending ...:');
+        log('is random sending ...:');
 
         var channelId = channel.id;
         var message = buildContributionMessage($scope.currentSavedContribution);
@@ -425,12 +435,12 @@ function ContributionsModalCtrl($scope, $auth, $location, $rootScope, $statePara
 
   function getChannels() {
 
-    console.log('getting channels using access Token:' + $scope.access_token);
+    log('getting channels using access Token:' + $scope.access_token);
 
     // 'https://slack.com/api/users.list'
 
     var url = 'https://slack.com/api/channels.list';
-    console.log('url:' + url);
+    log('url:' + url);
 
     //var token = "xoxp-3655944058-3674335518-3694970236-83726d";
     var token = $scope.access_token;
@@ -457,7 +467,7 @@ function ContributionsModalCtrl($scope, $auth, $location, $rootScope, $statePara
     console.dir(contribution);
     $scope.currentSavedContribution = contribution;
 
-    console.log('sending to slack, contribution:' + $scope.currentSavedContribution.title);
+    log('sending to slack, contribution:' + $scope.currentSavedContribution.title);
     getChannels()
 
   };

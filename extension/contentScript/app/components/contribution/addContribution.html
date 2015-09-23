@@ -67,10 +67,13 @@
 					</ul>
 
 					<ui-select style="width:96%" 
+										 reset-search-input="false"
 										 ng-model="selectedContributerId"
 							   		 on-select="updateContributer($select.selected)">
 						<ui-select-match placeholder="Add Contributor"></ui-select-match>
-						<ui-select-choices repeat="user in updatedUsersList">
+						<ui-select-choices repeat="user in updatedUsersList"
+															 refresh="refreshContributers($select.search)"
+									             refresh-delay="0">
 							<div ng-bind-html="formatSelectUser(user)"></div>
 						</ui-select-choices>
 					</ui-select>
