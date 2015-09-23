@@ -161,7 +161,6 @@ angular.module('MyApp').controller('ProjectStatusModalCtrl',
 				      
 				}
 			else if ($scope.selectedMileStonetId && $scope.selectedMileStonetId != 0){
-				$scope.selectedMileStonetId = '';
 				$scope.updateViewforMileStone();
 			}
 		}
