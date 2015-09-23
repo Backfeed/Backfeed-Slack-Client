@@ -1,90 +1,66 @@
 <script type="text/ng-template" id="ProjectStatusModalTmpl">
 
-<div class="modal-header">
-  <img alt="Close modal" class="close-modal" src="/extension/contentScript/app/images/close_x.png" ng-click="closeModal()" />
-  <div class="modal-title">Project Status!</div>
-</div>
+  <div class="modal-header">
+    <img alt="Close modal" class="close-modal" src="/extension/contentScript/app/images/close_x.png" ng-click="closeModal()" />
+    <div class="modal-title">Project Status!</div>
+  </div>
 
-<form name="form"><div class="modal-body">
+  <form name="form">
+    <div class="modal-body">
 
-    <div class="row">
+      <div class="row">
         <div class="col-sm-12">
-            <div class="media pull-left">
+          <div class="media pull-left">
 
-                <div class="media-body">
-                    <h1 class="member-name media-heading"><svg-icon icon="slack"></svg-icon>
+            <div class="media-body">
+              <h1 class="member-name media-heading"><svg-icon icon="slack"></svg-icon>
                     <span class="member-username">&nbsp;{{projectStatusModel.channelName}}</span></h1>
-                </div>
             </div>
-            <div class="pull-right">
-                <select  name="milestoneSelection" ng-model="selectedMileStonetId" ng-change="updateViewforMileStone();">
-                    <option value="">On-Going Work</option>
-                    <option ng-repeat="projectMileStone in projectMileStones" value="{{projectMileStone.id}}">{{projectMileStone.title}}</option>
-                </select>
-            </div>
+          </div>
+          <div class="pull-right">
+            <select name="milestoneSelection" ng-model="selectedMileStonetId" ng-change="updateViewforMileStone();">
+              <option value="">On-Going Work</option>
+              <option ng-repeat="projectMileStone in projectMileStones" value="{{projectMileStone.id}}">{{projectMileStone.title}}</option>
+            </select>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <div class="row">
+      <div class="row">
         <div class="col-sm-12">
-            <div class="member-stats">
-                <div class="stat member-stat">
-                    <div class="stat-item">
-                        <img class="stat-icon" alt="Contribution" src="/extension/contentScript/app/images/contribution.png" />
-                        <div class="stat-data">{{projectStatusModel.contributions | number:0}}</div>
-                    </div>
-                    <div class="stat-label">Contributions&nbsp;<img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png"/></div>
-                </div>
-                <div class="stat member-stat">
-                    <div class="stat-item">
-                        <img class="stat-icon" alt="Tokens" src="/extension/contentScript/app/images/rep.png" />
-                        <div class="stat-data">{{projectStatusModel.tokens | number:0}}&nbsp;<small>{{projectStatusModel.code}}</small></div>
-                    </div>
-                    <div class="stat-label">{{projectStatusModel.tokenName}}&nbsp;
-                        <img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png"/>
-                    </div>
-                </div>
+          <div class="member-stats">
+            <div class="stat member-stat">
+              <div class="stat-item">
+                <img class="stat-icon" alt="Contribution" src="/extension/contentScript/app/images/contribution.png" />
+                <div class="stat-data">{{projectStatusModel.contributions | number:0}}</div>
+              </div>
+              <div class="stat-label">Contributions&nbsp;<img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png" /></div>
             </div>
+            <div class="stat member-stat">
+              <div class="stat-item">
+                <img class="stat-icon" alt="Tokens" src="/extension/contentScript/app/images/rep.png" />
+                <div class="stat-data">{{projectStatusModel.tokens | number:0}}&nbsp;<small>{{projectStatusModel.code}}</small></div>
+              </div>
+              <div class="stat-label">{{projectStatusModel.tokenName}}&nbsp;
+                <img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png" />
+              </div>
+            </div>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <div class="row">
+      <div class="row">
         <div class="col-sm-7">
-            <contributions-table contributions="projectStatusModel.milestoneContributions"
-                                 active-contribution="activeContribution"></contributions-table>
+          <contributions-table contributions="projectStatusModel.milestoneContributions" active-contribution="activeContribution"></contributions-table>
         </div>
 
         <div class="col-sm-5">
-            <div class="milestone-contributers">
-              <div class="milestone-contributers-header">
-                <span class="milestone-contributers-header-text">
-                  Contributers ({{ projectStatusModel.contributions }})
-                </span>
-                <img alt="help" class="pull-right" src="/extension/contentScript/app/images/icon_help.png"
-                 tooltip="All contributers to current milestone" />
-              </div>
-              <ul class="media-list milestone-contributers-list">
-                <li ng-repeat="contributer in projectStatusModel.milestoneContributers"
-                    class="milestone-contributers-list-item">
-                  <div class="media-left media-middle relative">
-                    <a href="#">
-                      <img class="media-object" ng-src="{{contributer.url}}" alt=""/>
-                      <span class="badge media-object-badge">
-                        {{ contributer.contributer_percentage }}
-                      </span>
-                    </a>
-                  </div>
+          <contributers-list contributers="projectStatusModel.milestoneContributers" 
+                             contributers-count="projectStatusModel.contributions"></contributers-list>
+        </div>
+      </div>
 
-                  <div class="media-body">
-                    <h4 class="media-heading">{{contributer.real_name}}</h4>
-                  </div>
-                </li>
-
-              </ul>
-            </div>
-          </div>
     </div>
-    
-</div></form>
+  </form>
 
 </script>
