@@ -1,5 +1,5 @@
 angular.module('MyApp')
-  .controller('ContributionStatusModalCtrl', ContributionStatusModalCtrl);
+.controller('ContributionStatusModalCtrl', ContributionStatusModalCtrl);
 
 function ContributionStatusModalCtrl($scope, $auth, $location, $stateParams, ContributionStatus,
   Account, Users, $modalInstance, PostMessageService) {
@@ -123,7 +123,7 @@ function ContributionStatusModalCtrl($scope, $auth, $location, $stateParams, Con
         });
       }
     }
-    var vis = d3.select('#visualisation_bar'),
+    var vis = d3.select('#distribution-of-reputation-histogram'),
       WIDTH = 400,
       HEIGHT = 200,
       MARGINS = {
@@ -217,7 +217,7 @@ function ContributionStatusModalCtrl($scope, $auth, $location, $stateParams, Con
     }
 
 
-    var vis = d3.select("#visualisation"),
+    var vis = d3.select("#contribution-value-line-graph"),
       WIDTH = 400,
       HEIGHT = 200,
       MARGINS = {

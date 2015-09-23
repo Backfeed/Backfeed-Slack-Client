@@ -4,7 +4,7 @@ angular.module('MyApp').controller('ContributionStatusCtrl',
             templateUrl: "ContributionStatusModalTmpl",
             controller: 'ContributionStatusModalCtrl',
             scope: $scope,
-            size: 'lg'
+            size: 'contribution-status'
         });
 
         modal.result.then(function() {

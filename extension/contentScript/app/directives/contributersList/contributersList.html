@@ -1,25 +1,21 @@
-<div class="contributers">
-  <!-- <img alt="help" class="pull-right" src="/extension/contentScript/app/images/icon_help.png"
-       tooltip="All contributers" /> -->
-  <h5>Contributers ({{ contributersCount }})</h5>
+<h5>Contributors ({{ contributersCount }})</h5>
 
-  <ul class="contributers-list list-unstyled">
-    <li ng-repeat="contributer in contributers" class="contributer flex">
+<ul class="contributers-list list-unstyled">
+  <li ng-repeat="contributer in contributers" class="contributer flex">
 
-      <div class="contributer-image">
-        <img class="img-circle" ng-src="{{ contributer.url }}" alt="{{ contributer.real_name }}" />
-        <span class="contributer-percentage">{{ contributer.contributer_percentage | number:0 }}%</span>
+    <div class="contributer-image">
+      <img class="img-circle" ng-src="{{ contributer.url }}" alt="{{ contributer.real_name }}" />
+      <span class="contributer-percentage">{{ contributer.contributer_percentage | number:0 }}%</span>
+    </div>
+
+    <div class="contributer-names">
+      <div class="contributer-realname">{{ contributer.real_name }}</div>
+      <div class="contributer-username">
+        <svg-icon icon="slack"></svg-icon>
+        &nbsp;&nbsp;
+        {{ contributer.name }}
       </div>
+    </div>
 
-      <div class="contributer-names">
-        <div class="contributer-realname">{{ contributer.real_name }}</div>
-        <div class="contributer-username">
-          <svg-icon icon="slack"></svg-icon>
-          &nbsp;&nbsp;
-          {{ contributer.name }}
-        </div>
-      </div>
-
-    </li>
-  </ul>
-</div>
+  </li>
+</ul>

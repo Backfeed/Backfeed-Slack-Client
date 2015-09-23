@@ -1,3 +1,22 @@
+.modal-contribution-status {
+  width: 1163px;
+
+  .big-data-items>.big-data-item:first-of-type .big-data-label {
+    width: 80px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.contribution-title {
+  font-size: 25px;
+}
+
+.contribution-description {
+  font-size: 16px;
+  color: #414141;
+}
+
 #chart {
   height: 360px;
   position: relative;
@@ -32,7 +51,20 @@ rect {
   flex: 1;
   text-align: center;
 
+  label {
+    font-size: 14px;
+    font-weight: normal;
+    color: #79808a;
+
+  }
+
   &:not(:last-child) {
     border-right: 1px solid lightgrey;
+  }
+
+  &:first-of-type {
+    label {
+      width: 100px;
+    }
   }
 }

@@ -9,8 +9,8 @@
 	<div class="row">
 		<div class="col-sm-4">
 			<h2 class="contribution-title">{{contributionStatusModel.title}}</h2>
-			<h3 class="h5">Contribution Description:</h3>
 			<div class="contribution-description">
+				<h3 class="h5">Contribution Description:</h3>
 				{{contributionStatusModel.file}}
 			</div>
 		</div>
@@ -31,33 +31,36 @@
 					<div class="big-data-label">My Reputation Profit/Loss</div>
 				</div>
 			</div>
-<!--
+
 			<div class="donut-charts box box-with-shadow">
 				<div class="donut-chart">
-					<single-value-donut-chart donut-value="{{contributionStatusModel.myWeight}}" donut-color="#f9ac51"></single-value-donut-chart>
-					<div>My reputation in the project</div>
+					<!--<single-value-donut-chart donut-value="{{contributionStatusModel.myWeight}}" donut-color="#f9ac51"></single-value-donut-chart>-->
+					<single-value-donut-chart donut-value="50" donut-color="#f9ac51"></single-value-donut-chart>
+					<label>My reputation in the project</label>
 				</div>
 				<div class="donut-chart">
-					<single-value-donut-chart donut-value="{{contributionStatusModel.groupWeight}}" donut-color="#6991bf"></single-value-donut-chart>
-					<div>Total reputation invested in evaluating this contribution</div>
+					<!--<single-value-donut-chart donut-value="{{contributionStatusModel.groupWeight}}" donut-color="#6991bf"></single-value-donut-chart>-->
+					<single-value-donut-chart donut-value="70" donut-color="#6991bf"></single-value-donut-chart>
+					<label>Total reputation invested in evaluating this contribution</label>
 				</div>
 			</div>
 
 			<div class="box box-with-shadow">
 				<h4 class="box-title">Contribution Value in Chronological Order</h4>
-				<svg id="visualisation" width="500" height="300"></svg>
+				<svg id="contribution-value-line-graph" width="400" height="200"></svg>
 			</div>
 
 			<div class="box box-with-shadow">
 				<h4 class="box-title">Distribution of Reputation</h4>
-				<svg id="visualisation_bar" width="500" height="300"></svg>
-			</div> -->
+				<svg id="distribution-of-reputation-histogram" width="400" height="200"></svg>
+			</div>
 		</div>
 
 		<div class="col-sm-3">
-			<contributers-list contributers="contributionStatusModel.contributionContributers" 
+			<div class="contributers box box-with-shadow">
+				<contributers-list contributers="contributionStatusModel.contributionContributers"
                          contributers-count="contributionStatusModel.contributionContributers.length"></contributers-list>
-
+			</div>
 		</div>
 	</div>
 	<div class="row">

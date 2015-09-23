@@ -7,15 +7,17 @@ angular.module('MyApp').directive('singleValueDonutChart', function() {
             donutColor: "@"
         },
         link: function(scope, element, attrs) {
+            element.css('display', 'block');
+
             var data = [parseInt(attrs.donutValue), 100-attrs.donutValue];
 
-            var width = 100,
-                height = 100,
+            var width = 80,
+                height = 80,
                 radius = Math.min(width, height) / 2;
 
             var arc = d3.svg.arc()
-                .outerRadius(radius - 10)
-                .innerRadius(radius - 20);
+                .outerRadius(radius)
+                .innerRadius(radius - 5);
 
             var pie = d3.layout.pie()
                 .sort(null)
@@ -26,7 +28,6 @@ angular.module('MyApp').directive('singleValueDonutChart', function() {
                 .attr("height", height)
                 .append("g")
                 .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
 
             var g = svg.selectAll(".arc")
                 .data(pie(data))
@@ -39,7 +40,7 @@ angular.module('MyApp').directive('singleValueDonutChart', function() {
 
             svg.append('text')
                 .data(data)
-                .attr("font-size", "16px")
+                .attr("font-size", "24px")
                 .attr("fill", "black")
                 .attr('text-anchor', 'middle')
                 .attr('y', '5px')
