@@ -1,7 +1,9 @@
 angular.module('MyApp')
   .controller('ProjectsModalCtrl', ProjectsModalCtrl);
 
-function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, Account, Users, AllSlackUsers, CheckProjectTokenName, $modalInstance, $state, CheckProjectCode, PostMessageService, ChannelProject) {
+function ProjectsModalCtrl($scope, $auth, $location, $timeout, $stateParams, _DEV, Slack, SaveProject, Account, Users, AllSlackUsers, CheckProjectTokenName, $modalInstance, $state, CheckProjectCode, PostMessageService, ChannelProject) {
+
+  log = _DEV.log('NEW PROJECT');
 
   var channelId = $stateParams.channelId
   var validationFailureForTokenName = false;
@@ -61,7 +63,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
     PostMessageService.gesture.hideIframe();
 
     $scope.userData = Account.getUserData();
-    console.log("userData is" + $scope.userData);
+    log("userData is" + $scope.userData);
 
     if ($scope.userData == undefined) {
       getProfile();
@@ -97,16 +99,18 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
       });
     }
 
-
     $scope.orderProp = "name";
 
-
-    // if not authenticated return to splash:
     if (!$auth.isAuthenticated()) {
       $location.path('splash');
     }
 
-    //$scope.slackUsers = Users.getUsers();
+    $timeout(function() {
+      Slack.getChannel(channelId, $scope.access_token)
+      .then(function(channel) {
+        log('Slack.getChannel', channel);
+      })
+    }, 2000);
 
   }
 
@@ -219,7 +223,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
     if (selectedUser.id == '') {
       return;
     }
-    console.log('update contributer: ', selectedUser);
+    log('update contributer: ', selectedUser);
     addCollaborator(selectedUser);
     var urlImage = '';
     var userName = '';
@@ -236,7 +240,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
 
     for (var i = 0; i < allcontributers.length; i++) {
       if (allcontributers[i].id == 0 && allcontributers[i].contributer_percentage == '') {
-        console.log('comes here firt');
+        log('comes here firt');
         allcontributers[i].id = selectedUser.id;
 
         //allcontributers[i].contributer_percentage = contPercentage;
@@ -256,7 +260,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
 
   function clickContributer(contributerId) {
     angular.element('#' + contributerId).trigger('focus');
-    console.log('contributerId is ' + contributerId);
+    log('contributerId is ' + contributerId);
 
     var allcontributers = $scope.projectModel.contributers,
       sliderDivElement,
@@ -304,7 +308,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
   };
 
   function addCollaborator(selectedUser) {
-    console.log('addCollaborator: ', selectedUser);
+    log('addCollaborator: ', selectedUser);
     var allcontributers = $scope.projectModel.contributers;
     $scope.updatedUsersList = [];
     $scope.selectedContributerId = '';
@@ -336,7 +340,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
 
 
   function changeTeam() {
-    console.log('comes here in logout');
+    log('comes here in logout');
     $state.go("logout");
 
   };
@@ -344,12 +348,12 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
   // ******************************* SLACK PLAY ***********************
 
   $scope.sendTestMessage = function(channelId, message) {
-    console.log('sending test message to slack: ' + message);
+    log('sending test message to slack: ' + message);
 
     // 'https://slack.com/api/users.list'
 
     var url = 'https://slack.com/api/chat.postMessage';
-    console.log('url: ' + url);
+    log('url: ' + url);
 
     //var token = "xoxp-3655944058-3674335518-3694970236-83726d";
     var token = $scope.access_token;
@@ -366,16 +370,16 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
     // TODO: move to use angularJS instead of Jquery and get rid of need to change  Host when we deploy...
     // TODO: which API ? do we get 'my boards or boards of project'.
     //$http.get(url, data).success(function(response) {
-    //    console.log('message posted successfully!');
+    //    log('message posted successfully!');
     //}).error(function(response) {
-    //    console.log('message posted erroneously!');
+    //    log('message posted erroneously!');
     //});
     $.ajax({
       type: "GET",
       url: url,
       data: data,
       success: function(response) {
-        console.log('message posted successfully!');
+        log('message posted successfully!');
       },
       persist: true,
       dataType: 'JSON'
@@ -383,7 +387,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
   };
 
   $scope.gotChannels = function(data) {
-    console.log('received Channels:');
+    log('received Channels:');
     //console.dir(data);
 
     // get specific channel:
@@ -391,7 +395,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
     var message = 'New Collaborative Project created' + ' https://chrome.google.com/webstore/detail/backfeed-slack-extension/feglgahjbjnabofomkpmoacillfnpjpb';
     for (var channelIndex in channels) {
       var channel = channels[channelIndex];
-      console.log('channel.name:' + channel.name);
+      log('channel.name:' + channel.name);
       if (channel.name == 'testextenstion') {
         //if(channel.name == 'general'){
         var testChannelId = channel.id;
@@ -411,12 +415,12 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
 
   function getChannels() {
 
-    console.log('getting channels using access Token:' + $scope.access_token);
+    log('getting channels using access Token:' + $scope.access_token);
 
     // 'https://slack.com/api/users.list'
 
     var url = 'https://slack.com/api/channels.list';
-    console.log('url:' + url);
+    log('url:' + url);
 
     //var token = "xoxp-3655944058-3674335518-3694970236-83726d";
     var token = $scope.access_token;
@@ -441,7 +445,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
 
 
   $scope.gotChannelsForProjectCreation = function(data) {
-    console.log('received Channels:');
+    log('received Channels:');
     //console.dir(data);
 
     // get specific channel:
@@ -455,32 +459,32 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
     }
     $scope.data = SaveProject.save({}, $scope.projectModel);
     $scope.data.$promise.then(function(result) {
-      console.log('channels Ids are' + result.channelId);
+      log('channels Ids are' + result.channelId);
       PostMessageService.gesture.setChannelId(result.channelId);
       $scope.userData.orgId = result.organization_id;
       $scope.userData.userOrgId = result.id;
       $scope.userData.projectExists = "true";
-      console.log('Inserted project id : ' + result.organization_id);
-      console.log('Inserted user project id : ' + result.id);
+      log('Inserted project id : ' + result.organization_id);
+      log('Inserted user project id : ' + result.id);
       Account.setUserData($scope.userData);
       $scope.slackPlay($scope.projectModel.name);
       PostMessageService.gesture.showAlert('Successfully created project', 'success');
       $modalInstance.close('submit');
       //$state.go('createContribution', {'channelId': channelId}, {reload: true});
     }, function(error) {
-      console.log('Error in creating project');
+      log('Error in creating project');
       PostMessageService.gesture.showAlert('Your project was not created', 'error');
     });
   };
 
   function getChannelsForProjectCreation() {
 
-    console.log('getting channels using access Token:' + $scope.access_token);
+    log('getting channels using access Token:' + $scope.access_token);
 
     // 'https://slack.com/api/users.list'
 
     var url = 'https://slack.com/api/channels.list';
-    console.log('url:' + url);
+    log('url:' + url);
 
     //var token = "xoxp-3655944058-3674335518-3694970236-83726d";
     var token = $scope.access_token;
@@ -507,7 +511,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
     console.dir(projectName);
     $scope.currentProjectName = projectName;
 
-    console.log('sending to slack, projectName: ' + $scope.currentProjectName);
+    log('sending to slack, projectName: ' + $scope.currentProjectName);
     getChannels();
 
   };
@@ -523,11 +527,11 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
       });
       $scope.data1.$promise.then(function(result) {
         if (result.tokenAlreadyExist == 'true') {
-          console.log('comes here in true for token');
+          log('comes here in true for token');
           validationFailureForTokenName = true;
           PostMessageService.gesture.showAlert('This name is already taken. Please use a different one', 'error');
         } else {
-          console.log('comes here in false for token');
+          log('comes here in false for token');
           validationFailureForTokenName = false;
           if ($scope.projectModel.code != '') {
             $scope.data1 = CheckProjectCode.CheckProjectCode({
@@ -538,10 +542,10 @@ function ProjectsModalCtrl($scope, $auth, $location, $stateParams, SaveProject, 
                 validationFailureForCode = true;
                 PostMessageService.gesture.showAlert('This code is already taken. Please use a different one', 'error');
               } else {
-                console.log('comes here in false for token');
+                log('comes here in false for token');
                 validationFailureForCode = false;
-                console.log("In Submit method");
-                console.log($scope.projectModel);
+                log("In Submit method");
+                log($scope.projectModel);
                 getChannelsForProjectCreation();
 
               }
