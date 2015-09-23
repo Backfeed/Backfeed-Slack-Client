@@ -107,9 +107,10 @@ function ProjectsModalCtrl($scope, $auth, $location, $timeout, $stateParams, _DE
 
     $timeout(function() {
       Slack.getChannel(channelId, $scope.access_token)
-      .then(function(channel) {
-        log('Slack.getChannel', channel);
-      })
+      .then(function(result) {
+        $scope.channelName = result.channel.name;
+        log('Slack.getChannel', result.channel.name, result);
+      });
     }, 2000);
 
   }
