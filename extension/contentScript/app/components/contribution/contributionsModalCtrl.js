@@ -10,6 +10,7 @@ function ContributionsModalCtrl($scope, $auth, $location, $rootScope, $statePara
   var contributionId = $stateParams.contributionId;
   var slackUsersMap = {};
   var projectId = '';
+  $scope.updatedUsersList = [];
 
   var ContributionModel = {
     title: '',
@@ -265,7 +266,7 @@ function ContributionsModalCtrl($scope, $auth, $location, $rootScope, $statePara
     $scope.updatedUsersList = [];
     $scope.selectedContributerId = '';
     for (var i = 0; i < $scope.users.length; i++) {
-      if ($scope.users[i].id == selectedUser.contributer_id) {
+      if ($scope.users[i].id == selectedUser.id) {
         continue;
       }
       var userExist = false;
