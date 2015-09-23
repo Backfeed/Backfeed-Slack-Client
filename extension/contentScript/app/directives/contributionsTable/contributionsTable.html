@@ -27,13 +27,13 @@
     {{ ::contribution.description }}
     <ul class="list-inline clearfix">
       <li ng-repeat="contributer in contribution.contributers" 
-          ng-if="$index < 7"
+          ng-if="$index < 8"
           class="contributer-image">
         <img class="img-circle" ng-src="{{ contributer.url }}" alt="Contributer photo">
       </li>
-      <li ng-if="contribution.contributers.length > 7"
+      <li ng-if="contribution.contributers.length > 8"
           class="contributer-image">
-        + {{ contribution.contributers.length - 7}}
+        + {{ contribution.contributers.length - 8}}
       </li>
     </ul>
 
