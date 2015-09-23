@@ -42,27 +42,8 @@
           <div class="stat-label">Value of all contributions</div>
         </div>
 
-        <div class="milestone-contributers">
-          <img alt="help" class="pull-right" src="/extension/contentScript/app/images/icon_help.png"
-               tooltip="All contributers to current milestone" />
-          <h5>Contributers ({{ contributersCount }})</h5>
-
-          <ul class="contributers-list list-unstyled">
-            <li ng-repeat="contributer in milestoneModel.contributers" class="milestone-contributer flex">
-
-              <div class="contributer-image">
-                <img class="img-circle" ng-src="{{contributer.url}}" alt="{contributer.real_name}}" />
-                <span class="contributer-percentage">{{contributer.contributer_percentage | number:0}}%</span>
-              </div>
-
-              <div class="contributer-names">
-                <div class="contributer-realname">{{contributer.real_name}}</div>
-                <div class="contributer-username"><svg-icon icon="slack"></svg-icon>&nbsp;&nbsp;{{contributer.name}}</div>
-              </div>
-
-            </li>
-          </ul>
-        </div>
+        <contributers-list contributers="milestoneModel.contributers" 
+                           contributers-count="contributersCount"></contributers-list>
 
       </div>
 
