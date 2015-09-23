@@ -83,7 +83,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $timeout, $stateParams, _DE
       $scope.projectModel.contributers[0].className = "contributer-cell-wrapper active-contributer";
       $scope.access_token = $scope.userData.access_token;
       $scope.projectModel.access_token = $scope.access_token;
-      getProjectUsers($scope.access_token);
+      getProjectUsers($scope.access_token,'','');
       $scope.ChannelProjectExistsData = ChannelProject.exists({
         channelId: channelId,
         slackTeamId: $scope.projectModel.slack_teamid,
@@ -120,8 +120,8 @@ function ProjectsModalCtrl($scope, $auth, $location, $timeout, $stateParams, _DE
     $modalInstance.dismiss('cancel');
   };
 
-  function getProjectUsers(access_token) {
-    $scope.data = AllSlackUsers.allSlackUsers({'access_token':access_token});
+  function getProjectUsers(access_token,userIds,searchString) {
+	  $scope.data = AllSlackUsers.allSlackUsers({'access_token':access_token,'userIds':userIds,'searchString':searchString});
     $scope.data.$promise.then(function(result) {
       $scope.users = result;
       $scope.updatedUsersList = [];
@@ -182,7 +182,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $timeout, $stateParams, _DE
         sliderSpanElement.removeClass('ui-slider-handle-show');
         sliderSpanElement.addClass('ui-slider-handle-show');
         $scope.projectModel.contributers[0].className = "contributer-cell-wrapper active-contributer";
-        getProjectUsers($scope.access_token);
+        getProjectUsers($scope.access_token,'','');
         $scope.ChannelProjectExistsData = ChannelProject.exists({
           channelId: channelId,
           slackTeamId: $scope.projectModel.slack_teamid,
