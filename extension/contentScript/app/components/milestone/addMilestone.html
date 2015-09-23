@@ -61,7 +61,7 @@
            tooltip="All contributers to current milestone" style="margin-left: 25px;"/>
     </div>
     <button type="submit" class="btn btn-backfeed submit-button"
-            ng-disabled="form.$invalid || milestoneModel.evaluatingTeam === ''">Submit Milestone</button>
+            ng-disabled="form.$invalid || milestoneModel.evaluatingTeam === ''|| milestoneModel.contributions <=0">Submit Milestone</button>
   </div>
 
 </form>
