@@ -1,0 +1,30 @@
+.modal[size="add-project"] {
+  &>.modal-dialog {
+    width: 1159px;
+  }
+  .modal-body{
+    section:first-of-type {
+      display: flex;
+      align-items: stretch;
+
+      &>div:nth-of-type(1) {
+        flex-basis: 380px;
+      }
+
+      &>div:nth-of-type(2) {
+        margin-left: 50px;
+        margin-right: 50px;
+        border-left: #aaaaaa solid 1px;
+        border-right: #aaaaaa solid 1px;
+
+        &>h4 {
+          margin-left: 37px;
+        }
+      }
+
+      &>div:nth-of-type(3) {
+        flex-basis: 350px;
+      }
+    }
+  }
+}

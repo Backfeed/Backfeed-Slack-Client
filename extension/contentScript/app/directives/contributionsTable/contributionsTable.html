@@ -9,7 +9,7 @@
   </div>
 </script>-->
 
-<div class="flex table-row">
+<div class="contributions-table-row">
   <div>Contribution</div>
   <div>Date</div>
   <div>Current Value</div>
@@ -17,13 +17,15 @@
 
 <accordion>
   <accordion-group ng-repeat="contribution in contributions">
+    <!--the part that's being initially shown-->
     <accordion-heading>
-      <div class="flex table-row">
+      <div class="contributions-table-row">
         <div>{{ ::contribution.title }}</div>
         <div>{{ ::contribution.date | date:'d/MM/yyyy' }}</div>
         <div>{{ ::contribution.valuation | number:0 }} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-plus': status.open, 'glyphicon-chevron-minus': !status.open}"></i></div>
       </div>
     </accordion-heading>
+    <!--the part that's hidden until the user clicks on the part that's being initially shown-->
     {{ ::contribution.description }}
     <ul class="list-inline clearfix">
       <li ng-repeat="contributer in contribution.contributers" 

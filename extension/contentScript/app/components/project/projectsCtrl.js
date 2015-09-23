@@ -4,7 +4,7 @@ angular.module('MyApp').controller('ProjectsCtrl',
             templateUrl: "ProjectsModalTmpl",
             controller: 'ProjectsModalCtrl',
             scope: $scope,
-            size: 'lg',
+            size: 'add-project',
         });
 
         modal.result.then(function() {

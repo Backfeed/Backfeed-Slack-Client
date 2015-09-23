@@ -561,5 +561,5 @@ function ProjectsModalCtrl($scope, $auth, $location, $timeout, $stateParams, _DE
     if (!data) return;
     if (!data.url) data.url = chrome.extension.getURL("extension/contentScript/app/images/icon-dude.png");
     return "<div class='select-contributer flex'><img src='" + data.url + "' /><div>" + data.name + "<br />" + data.real_name + "</div></div>";
-  };
+  }
 }

@@ -1,8 +1,11 @@
 @import '../vendor/styles/bootstrap/bootstrap.less';
 @import 'variables.less';
 @import '../directives/directives.less';
+@import '../components/project/projects.less';
+@import '../components/contribution/contributions.less';
 @import '../components/milestone/milestone.less';
 @import '../components/contributionStatus/contributionStatus.less';
+@import '../components/projectStatus/projectStatus.less';
 
 th {
   text-align: center;
@@ -98,6 +101,11 @@ td a {
     border: 0;
     background: @brand-primary url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAMAAAC6sdbXAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDE0IDc5LjE1Njc5NywgMjAxNC8wOC8yMC0wOTo1MzowMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkRFNjkxMTUzMjJFQzExRTVBNzcxRkFDNEEyMEYwRUIwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkRFNjkxMTU0MjJFQzExRTVBNzcxRkFDNEEyMEYwRUIwIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6REU2OTExNTEyMkVDMTFFNUE3NzFGQUM0QTIwRjBFQjAiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6REU2OTExNTIyMkVDMTFFNUE3NzFGQUM0QTIwRjBFQjAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4OVa+FAAAABlBMVEX6KpH///+fXRTGAAAAAnRSTlP/AOW3MEoAAAASSURBVHjaYmBgBEIGHCRAgAEAALQAC4isJ+IAAAAASUVORK5CYII=') no-repeat;
   }
+}
+
+.protocol-slider-wrapper {
+  width: 80%;
+  margin: 30px auto;
 }
 
 .protocol-slider {
@@ -259,9 +267,10 @@ td a {
 
 .contributer-cell-wrapper {
   background-color: #e2e9f7;
-  padding: 7px 8px 25px;
+  padding: 7px 8px;
   width: 100%;
   position: relative;
+  margin-bottom: 10px;
 }
 
 .contributer-cell {
@@ -280,6 +289,11 @@ td a {
   height: 48px;
   margin-right: 10px;
   border-radius: 15%;
+}
+
+.contributor-names {
+  display: flex;
+  flex-direction: column;
 }
 
 .contributor-name,
@@ -317,8 +331,10 @@ td a {
   background-color: initial;
   border: 0;
   padding: 0;
-  float: right;
   margin-top: 5px;
+  position: absolute;
+  top: 30%;
+  right: -5px;
 }
 
 .member-name {
@@ -454,25 +470,6 @@ td a {
   width: 298px;
 }
 
-.modal[size="add-contribution"] {
-  &>.modal-dialog {
-    width: 888px;
-  }
-
-  .icon-remove-contributer {
-    right: 0;
-  }
-
-  .contributor-slider {
-    margin-bottom: -32px;
-  }
-
-  .contributer-cell-wrapper {
-    margin: 0;
-    width: 100%;
-  }
-}
-
 .modal[size="member-status"] {
   &>.modal-dialog {
     width: 888px;
@@ -534,6 +531,13 @@ td a {
   padding-top: 40px;
   padding-right: 50px;
   padding-left: 50px;
+}
+
+.modal-heading {
+  display: flex;
+  align-items: center;
+  font-size: 26px;
+  font-weight: 900;
 }
 
 .modal-footer.flex {
@@ -665,6 +669,7 @@ textarea.form-control {
 
 .text-primary {
   color: @brand-primary;
+  font-weight: bold;
 }
 
 .btn-backfeed {
@@ -681,7 +686,7 @@ textarea.form-control {
     &:hover,
     &:focus,
     &,.focus {
-      color: darkgrey;
+      color: lightgrey;
       background-color: #ff2a91;
     }
   }

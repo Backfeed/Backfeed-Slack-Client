@@ -1,0 +1,30 @@
+.modal[size="project-status"] {
+  &>.modal-dialog {
+    width: 855px;
+  }
+  .modal-body {
+    & section:first-of-type {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    select.select-backfeed {
+      width: 219px;
+      height: 52px;
+      padding: 13px 15px;
+      background-position-x: 91%;
+      background-position-y: 65%;
+    }
+
+
+    .member-stats {
+      justify-content: center;
+    }
+    .stat.member-stat:not(:first-of-type) {
+      margin-left: 35px;
+    }
+    .stat.member-stat:not(:last-of-type) {
+      margin-right: 35px;
+    }
+  }
+}

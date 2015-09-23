@@ -1,30 +1,26 @@
 <script type="text/ng-template" id="ProjectStatusModalTmpl">
 
-  <div class="modal-header">
-    <img alt="Close modal" class="close-modal" src="/extension/contentScript/app/images/close_x.png" ng-click="closeModal()" />
-    <div class="modal-title">Project Status!</div>
-  </div>
+<div class="modal-header">
+  <img alt="Close modal" class="close-modal" src="/extension/contentScript/app/images/close_x.png" ng-click="closeModal()" />
+  <div class="modal-title">Project Status</div>
+</div>
 
   <form name="form">
     <div class="modal-body">
 
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="media pull-left">
-
-            <div class="media-body">
-              <h1 class="member-name media-heading"><svg-icon icon="slack"></svg-icon>
-                    <span class="member-username">&nbsp;{{projectStatusModel.channelName}}</span></h1>
-            </div>
-          </div>
-          <div class="pull-right">
-            <select name="milestoneSelection" ng-model="selectedMileStonetId" ng-change="updateViewforMileStone();">
-              <option value="">On-Going Work</option>
-              <option ng-repeat="projectMileStone in projectMileStones" value="{{projectMileStone.id}}">{{projectMileStone.title}}</option>
-            </select>
-          </div>
-        </div>
-      </div>
+    <section>
+        <h1 class="modal-heading">
+            <svg-icon icon="big-slack"></svg-icon>&nbsp;{{projectStatusModel.channelName}}
+        </h1>
+        <select class="select-backfeed"
+                name="milestoneSelection"
+                ng-model="selectedMileStonetId"
+                ng-change="updateViewforMileStone();">
+            <option value="">On-Going Work</option>
+            <option ng-repeat="projectMileStone in projectMileStones"
+                    value="{{projectMileStone.id}}">{{projectMileStone.title}}</option>
+        </select>
+    </section>
 
       <div class="row">
         <div class="col-sm-12">
@@ -55,7 +51,7 @@
         </div>
 
         <div class="col-sm-5">
-          <contributers-list contributers="projectStatusModel.milestoneContributers" 
+          <contributers-list contributers="projectStatusModel.milestoneContributers"
                              contributers-count="projectStatusModel.milestoneContributers.length"></contributers-list>
         </div>
       </div>

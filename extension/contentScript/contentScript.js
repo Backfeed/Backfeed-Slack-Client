@@ -290,7 +290,7 @@ function addProjectButton() {
 				openProjectStatusPage(channelId);
 			});
 			
-			buttonLabel = 'Submit milestone';
+			buttonLabel = 'Submit Milestone';
 			addMilestoneButton.find('a').html(buttonLabel);
 			addMilestoneButton.on('click', function() {
 				openAddMilestonePage(channelId);

@@ -7,27 +7,26 @@
 
 <div id="project-modal" class="modal-body">
 	<form>
-	<div class="row">
+	<section>
 
-		<div class="col-sm-4">
-			<h3>{{ channelName }}</h3>
+		<div>
+			<h1 class="modal-heading"><svg-icon icon="big-slack">{{channelName}}</h1>
 			<p>Welcome <span class="text-primary">{{userData.displayName}}</span>, you will be submitting the founders contribution to this channel.</p>
 			<p>Make sure you have discussed this action thoroughly with all other founding contributors. This action cannot be undone.</p>
 			<p>Once you created the team, members would be able to submit contributions and be awarded for them using <strong>Tokens</strong> and <strong>Reputation</strong>.</p>
-			<p class="text-muted">Let's set up the Backfeed experience!</p>
-		</div>
+			<p><strong>Let's set up the Backfeed experience!</strong></p>
 
-		<div class="col-sm-4">
-			<h4>General Settings</h4>
+			<hr />
+
 			<div class="form-group">
 				<input class="form-control" id="tokenName" required
-					placeholder="e.g. Bitcoin" ng-model="projectModel.token_name" />
+					   placeholder="e.g. Bitcoin" ng-model="projectModel.token_name" />
 				<label>Name the token to be used to measure contributions</label>
 			</div>
 
 			<div class="form-group">
 				<input class="form-control" id="tokenCode" required
-					placeholder="e.g. BTC" ng-model="projectModel.code" />
+					   placeholder="e.g. BTC" ng-model="projectModel.code" />
 				<label>Choose a symbol for your token</label>
 			</div>
 
@@ -39,31 +38,33 @@
 				</div>
 				<label>Evaluate the founding contribution</label>
 			</div>
+		</div>
 
-			<hr />
-
+		<div>
 			<h4>Reputation Flow&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img tooltip=" " alt="help" src="/extension/contentScript/app/images/icon_help.png"/></h4>
 
 			<div class="protocol-parameter">
 				<label>How fast do you want to pass on the responsibility over the project to new contributers ?
 					<img tooltip="test" alt="help" src="/extension/contentScript/app/images/icon_help.png">
 				</label>
-				<div id="sliderPassingResponsibility" ui-slider="rangeSlider.options"
-					 class="protocol-slider"
-					 ng-model="projectModel.a">
-				</div>
-				<div class="protocol-parameter-labels">
-					<div class="protocol-parameter-label">
-						<img tooltip="test" alt="help" src="/extension/contentScript/app/images/icon_help.png">
-						<span>+-10%</span>
+				<div class="protocol-slider-wrapper">
+					<div id="sliderPassingResponsibility" ui-slider="rangeSlider.options"
+						 class="protocol-slider"
+						 ng-model="projectModel.a">
 					</div>
-					<div class="protocol-parameter-label">
-						<img tooltip="test" alt="help" src="/extension/contentScript/app/images/icon_help.png">
-						<span>+-100%</span>
-					</div>
-					<div class="protocol-parameter-label">
-						<img tooltip="test" alt="help" src="/extension/contentScript/app/images/icon_help.png">
-						<span>+-1000%</span>
+					<div class="protocol-parameter-labels">
+						<div class="protocol-parameter-label">
+							<img tooltip="test" alt="help" src="/extension/contentScript/app/images/icon_help.png">
+							<span>+-10%</span>
+						</div>
+						<div class="protocol-parameter-label">
+							<img tooltip="test" alt="help" src="/extension/contentScript/app/images/icon_help.png">
+							<span>+-100%</span>
+						</div>
+						<div class="protocol-parameter-label">
+							<img tooltip="test" alt="help" src="/extension/contentScript/app/images/icon_help.png">
+							<span>+-1000%</span>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -74,54 +75,57 @@
 				<label>what would you consider as a "similar evaluation" of contributions?
 					<img tooltip="test" alt="help" src="/extension/contentScript/app/images/icon_help.png">
 				</label>
-				<div id="sliderConsideration" ui-slider="rangeSlider.options"
-					 class="protocol-slider"
-					 ng-model="projectModel.b">
-				</div>
-				<div class="protocol-parameter-labels">
-					<div class="protocol-parameter-label">
-						<img tooltip="test" alt="help" src="/extension/contentScript/app/images/icon_help.png">
-						<span>+-10%</span>
+				<div class="protocol-slider-wrapper">
+					<div id="sliderConsideration" ui-slider="rangeSlider.options"
+						 class="protocol-slider"
+						 ng-model="projectModel.b">
 					</div>
-					<div class="protocol-parameter-label">
-						<img tooltip="test" alt="help" src="/extension/contentScript/app/images/icon_help.png">
-						<span>+-100%</span>
-					</div>
-					<div class="protocol-parameter-label">
-						<img tooltip="test" alt="help" src="/extension/contentScript/app/images/icon_help.png">
-					<span>+-1000%</span>
+					<div class="protocol-parameter-labels">
+						<div class="protocol-parameter-label">
+							<img tooltip="test" alt="help" src="/extension/contentScript/app/images/icon_help.png">
+							<span>+-10%</span>
+						</div>
+						<div class="protocol-parameter-label">
+							<img tooltip="test" alt="help" src="/extension/contentScript/app/images/icon_help.png">
+							<span>+-100%</span>
+						</div>
+						<div class="protocol-parameter-label">
+							<img tooltip="test" alt="help" src="/extension/contentScript/app/images/icon_help.png">
+						<span>+-1000%</span>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div class="col-sm-4">
+		<div>
 			<div class="error" ng-hide="getTotalSum() == 100">Total value must be 100!</div>
-			<h2>Founders <img tooltip="Add founders and distribute the stake of the organization" alt="help" src="/extension/contentScript/app/images/icon_help.png"/></h2>
+			<h4>Founding Contributors</h4>
+			<p>How much did each member contributed to founding this time until today?</p>
 
 			<ul class="media-list">
 				<li ng-repeat="contributer in projectModel.contributers" class="{{contributer.className}}" ng-click="clickContributer(contributer.contributer_id)">
-					<div class="media-left media-middle">
-						<a href="#">
-							<img class="media-object" ng-src="{{contributer.img}}" alt=""/>
-						</a>
+					<div class="contributer-cell">
+						<div class="contributor-info">
+							<img class="contributor-image" ng-src="{{contributer.img}}" alt=""/>
+							<div class="contributor-names">
+								<h4 class="contributor-name">{{contributer.contributer_name}}</h4>
+								<p class="contributor-fullname">{{contributer.contributer_fullname}}</p>
+							</div>
+						</div>
+
+						<div class="contributor-percentage">
+								<span id="{{contributer.contributer_id}}"
+									  ng-change="changePercentage(contributer.contributer_id,contributer.contributer_percentage)"
+									  ng-model="contributer.contributer_percentage"
+									  class="contributor-percentage-number"
+									  contenteditable>{{contributer.contributer_percentage | number:0}}</span>%
+						</div>
 					</div>
 
-					<div class="media-body">
-						<h4 class="media-heading">{{contributer.contributer_name}}</h4>
-						<p>{{contributer.contributer_fullname}}</p>
-					</div>
-
-					<div class="media-right media-middle">
-						<span id="{{contributer.contributer_id}}"
-							  ng-model="contributer.contributer_percentage"
-							  class="contribution-percentage"
-							  contenteditable>{{contributer.contributer_percentage | number:0}}</span>%
-						<button type="button" class="icon-button" aria-label="Left Align" ng-click='removeCollaboratorItem(contributer.contributer_id,$index)'>
-							<img src="/extension/contentScript/app/images/trash-bin.png"/>
-						</button>
-					</div>
-
+					<button type="button" class="icon-button" aria-label="Left Align" ng-click='removeCollaboratorItem(contributer.contributer_id,$index)'>
+						<img src="/extension/contentScript/app/images/icon_remove.png"/>
+					</button>
 				</li>
 			</ul>
 
@@ -136,7 +140,7 @@
 
 		</div>
 		
-	</div>
+	</section>
 	</form>
 </div>
 

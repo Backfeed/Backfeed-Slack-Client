@@ -4,7 +4,7 @@ angular.module('MyApp').controller('ProjectStatusCtrl',
             templateUrl: "ProjectStatusModalTmpl",
             controller: 'ProjectStatusModalCtrl',
             scope: $scope,
-            size: 'lg'            
+            size: 'project-status'
         });
 
         modal.result.then(function() {
