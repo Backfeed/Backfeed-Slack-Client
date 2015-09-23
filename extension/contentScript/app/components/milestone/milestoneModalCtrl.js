@@ -94,8 +94,10 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
 
       Resource.get('organization/all/team/' + $scope.userData.slackTeamId)
       .then(function(teams) {
-        $scope.teams = teams;
         for (var i = 0; i < teams.length; i++) {
+        	if(teams[i].channelId != channelId){
+        		$scope.teams.push(teams[i]);
+        	}
         	teamChannelMap[teams[i].id] = teams[i].channelName;
         }
         
