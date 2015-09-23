@@ -25,6 +25,18 @@
       </div>
     </accordion-heading>
     {{ ::contribution.description }}
+    <ul class="list-inline clearfix">
+      <li ng-repeat="contributer in contribution.contributers" 
+          ng-if="$index < 7"
+          class="contributer-image">
+        <img class="img-circle" ng-src="{{ contributer.url }}" alt="Contributer photo">
+      </li>
+      <li ng-if="contribution.contributers.length > 7"
+          class="contributer-image pull-left">
+        + {{ contribution.contributers.length - 8}}
+      </li>
+    </ul>
+
     <users-list users="contribution.contributers"></users-list>
   </accordion-group>
 </accordion>
