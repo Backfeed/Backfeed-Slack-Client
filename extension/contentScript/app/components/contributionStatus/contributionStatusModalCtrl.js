@@ -8,6 +8,7 @@ function ContributionStatusModalCtrl($scope, $auth, $location, $stateParams, Con
     file: '',
     title: '',
     currentValuation: '',
+    valueIndic: '',
     myWeight: '',
     myValuation: '',
     reputationDelta: '',
