@@ -1,8 +1,6 @@
 angular.module('MyApp')
 .directive('contributersList', contributersList);
 
-console.log('NEw DIRECTIVE ********************************************************************')
-
 function contributersList(_DEV) {
 
   log = _DEV.log("CONTRIBUTERS DIRECTIVE");
