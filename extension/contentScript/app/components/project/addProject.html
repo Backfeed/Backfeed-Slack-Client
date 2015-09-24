@@ -2,7 +2,7 @@
 		
 <div class="modal-header">
 	<img alt="Close modal" class="close-modal" src="/extension/contentScript/app/images/close_x.png" ng-click="closeModal()" />
-	<div class="modal-title">Lets Create a New Project!</div>
+	<div class="modal-title">Let's Create a New Project!</div>
 </div>
 
 <div id="project-modal" class="modal-body">
@@ -11,23 +11,25 @@
 
 		<div>
 			<h1 class="modal-heading"><svg-icon icon="big-slack">{{channelName}}</h1>
-			<p>Welcome <span class="text-primary">{{userData.displayName}}</span>, you will be submitting the founders contribution to this channel.</p>
-			<p>Make sure you have discussed this action thoroughly with all other founding contributors. This action cannot be undone.</p>
-			<p>Once you created the team, members would be able to submit contributions and be awarded for them using <strong>Tokens</strong> and <strong>Reputation</strong>.</p>
-			<p><strong>Let's set up the Backfeed experience!</strong></p>
+			<p>Welcome <span class="text-primary">{{userData.displayName}}</span></p>
+			<p>You are submitting the founders' contribution to this channel.</p>
+			<p>Make sure you have discussed this action thoroughly with all the other founders. This action cannot be undone.</p>
+			<p>Once you created the project, team members will be able to submit contributions and be rewarded with <strong>Tokens</strong> and <strong>Reputation</strong>.</p>
+			<p><strong>Let's get started.</strong></p>
 
 			<hr />
 
 			<div class="form-group">
 				<input class="form-control" id="tokenName" required
 					   placeholder="e.g. Bitcoin" ng-model="projectModel.token_name" />
-				<label>Name the token to be used to measure contributions</label>
+				<label>Name this project's tokens</label>
+				<img tooltip="Each project uses its own tokens in order to distribute its value between the project members." alt="help" src="/extension/contentScript/app/images/icon_help.png">
 			</div>
 
 			<div class="form-group">
 				<input class="form-control" id="tokenCode" required
 					   placeholder="e.g. BTC" ng-model="projectModel.code" />
-				<label>Choose a symbol for your token</label>
+				<label>Choose a 3-letter symbol for your token</label>
 			</div>
 
 			<div class="form-group">
@@ -36,33 +38,31 @@
 						   placeholder="e.g. 21,000,000" ng-model="projectModel.token" />
 					<div class="input-group-addon">{{projectModel.code}}</div>
 				</div>
-				<label>Evaluate the founding contribution</label>
+				<label>Decide how many tokens will be distributed to the founding members</label>
+				<img tooltip="Make sure all the founding members discussed this amount and decided how to evaluate all the work they have done prior to this moment.." alt="help" src="/extension/contentScript/app/images/icon_help.png">
 			</div>
 		</div>
 
 		<div>
-			<h4>Reputation Flow&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img tooltip=" " alt="help" src="/extension/contentScript/app/images/icon_help.png"/></h4>
+			<h4>Reputation Flow&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img tooltip-placement="bottom" tooltip="When members of a project evaluate a contribution, reputation flows between members who evaluated similarly, from those who evaluated late to those who evaluated early. Thus, members who were the first to successfully estimate at how much other members will evaluate a contribution will gain reputation on the account of those who evaluate after them." alt="help" src="/extension/contentScript/app/images/icon_help.png"/></h4>
 
 			<div class="protocol-parameter">
-				<label>How fast do you want to pass on the responsibility over the project to new contributers ?
-					<img tooltip="test" alt="help" src="/extension/contentScript/app/images/icon_help.png">
+				<label>What would you consider to be a similar evaluation?
+					<img tooltip="How similar similar does an evaluation need to be considered similar? Are 100 and 110 similar, with a 10% diference? Are 100 and 1000 similar, with a 1000% difference? If you can't estimate the range of evaluations, leave the bar on its default value." alt="help" src="/extension/contentScript/app/images/icon_help.png">
 				</label>
 				<div class="protocol-slider-wrapper">
-					<div id="sliderPassingResponsibility" ui-slider="rangeSlider.options"
+					<div id="sliderConsideration" ui-slider="rangeSlider.options"
 						 class="protocol-slider"
-						 ng-model="projectModel.a">
+						 ng-model="projectModel.b">
 					</div>
 					<div class="protocol-parameter-labels">
 						<div class="protocol-parameter-label">
-							<img tooltip="test" alt="help" src="/extension/contentScript/app/images/icon_help.png">
 							<span>+-10%</span>
 						</div>
 						<div class="protocol-parameter-label">
-							<img tooltip="test" alt="help" src="/extension/contentScript/app/images/icon_help.png">
 							<span>+-100%</span>
 						</div>
 						<div class="protocol-parameter-label">
-							<img tooltip="test" alt="help" src="/extension/contentScript/app/images/icon_help.png">
 							<span>+-1000%</span>
 						</div>
 					</div>
@@ -72,36 +72,37 @@
 			<br/>
 
 			<div class="protocol-parameter">
-				<label>what would you consider as a "similar evaluation" of contributions?
-					<img tooltip="test" alt="help" src="/extension/contentScript/app/images/icon_help.png">
+				<label>How fast will responsibility over this project flow from the founders to new contributors?
+					<img tooltip="The founding contribution less or more reputation proportionally to the other contributions in a project, which means that the new reputation generated by contributions will be appropriately more or less significant, respectively. The 'Slow' option leaves the control of the project in the hands of the founders for a longer time, while the 'Fast' option quickly hands over the control to those willing to get involved and contribute." alt="help" src="/extension/contentScript/app/images/icon_help.png">
 				</label>
 				<div class="protocol-slider-wrapper">
-					<div id="sliderConsideration" ui-slider="rangeSlider.options"
+					<div id="sliderPassingResponsibility" ui-slider="rangeSlider.options"
 						 class="protocol-slider"
-						 ng-model="projectModel.b">
+						 ng-model="projectModel.a">
 					</div>
 					<div class="protocol-parameter-labels">
 						<div class="protocol-parameter-label">
-							<img tooltip="test" alt="help" src="/extension/contentScript/app/images/icon_help.png">
-							<span>+-10%</span>
+							<img tooltip="The founders will hold 50% of the reputation after contributions valued at 1/10 the founding contribution were submitted" alt="help" src="/extension/contentScript/app/images/icon_help.png">
+							<span>Slow</span>
 						</div>
 						<div class="protocol-parameter-label">
-							<img tooltip="test" alt="help" src="/extension/contentScript/app/images/icon_help.png">
-							<span>+-100%</span>
+							<img tooltip="The founders will hold 50% of the reputation after contributions with the same collective value as the founding contribution were submitted" alt="help" src="/extension/contentScript/app/images/icon_help.png">
+							<span>Normal</span>
 						</div>
 						<div class="protocol-parameter-label">
-							<img tooltip="test" alt="help" src="/extension/contentScript/app/images/icon_help.png">
-						<span>+-1000%</span>
+							<img tooltip="The founders will hold 50% of the reputation after contributions valued at 10 times the founding contribution were submitted" alt="help" src="/extension/contentScript/app/images/icon_help.png">
+							<span>Fast</span>
 						</div>
 					</div>
 				</div>
 			</div>
+
 		</div>
 
 		<div>
 			<div class="error" ng-hide="getTotalSum() == 100">Total value must be 100!</div>
-			<h4>Founding Contributors</h4>
-			<p>How much did each member contributed to founding this time until today?</p>
+			<h4>Founding Members</h4>
+			<p>How much did each founder contribute to this project so far?</p>
 
 			<ul class="media-list">
 				<li ng-repeat="contributer in projectModel.contributers" class="{{contributer.className}}" ng-click="clickContributer(contributer.contributer_id)">
@@ -152,7 +153,7 @@
 			<button type="submit"
 				class="btn btn-backfeed submit-button center-block"
 				ng-disabled="!projectModel.token_name  || !projectModel.code || !projectModel.token || buttonDisabled || !(getTotalSum() === 100)"
-				ng-click="submit()">Create a Project</button>
+				ng-click="submit()">Create the {{channelName}} Project</button>
 		</div>
 	</div>
 </div>

@@ -21,7 +21,7 @@
 				</div>
 				<div class="pull-right">
                     <select class="select-backfeed" name="projectSelection" ng-model="selectedProjectId" ng-change="updateTable();">
-                        <option value="">Choose Project</option>
+                        <option value="">All Projects</option>
                         <option ng-repeat="memberProject in memberProjects" value="{{memberProject.id}}">{{memberProject.channelName}}</option>
                     </select>
                 </div>
@@ -34,16 +34,14 @@
                     <img class="stat-icon" alt="Contribution" src="/extension/contentScript/app/images/contribution.png" />
                     <div class="stat-data">{{memberStatusModel.contributionLength | number:0}}</div>
 				</div>
-                <div class="stat-label">Contributions&nbsp;<img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png"/></div>
+                <div class="stat-label">Contributions</div>
             </div>
 			 <div class="stat member-stat">
                     <div class="stat-item">
                         <img class="stat-icon" alt="Tokens" src="/extension/contentScript/app/images/rep.png" />
                         <div class="stat-data">{{memberStatusModel.project_tokens | number:0}}&nbsp;<small>{{memberStatusModel.code}}</small></div>
                     </div>
-                    <div class="stat-label">{{memberStatusModel.tokenName}}&nbsp;
-                        <img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png"/>
-                    </div>
+                    <div class="stat-label">{{memberStatusModel.tokenName}}</div>
                 </div>
 			
 			<div class="stat member-stat">
@@ -51,7 +49,7 @@
                     <img class="stat-icon" alt="Reputation" src="/extension/contentScript/app/images/rep.png" />
                     <div class="stat-data">{{memberStatusModel.project_reputation | number:0}}&nbsp;<small>{{memberStatusModel.reputationPercentage | number:0}}%</small></div>
 				</div>
-                <div class="stat-label">Reputation&nbsp;<img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png"/></div>
+                <div class="stat-label">Reputation</div>
             </div>
 		</div>
 
@@ -61,7 +59,7 @@
                     <img class="stat-icon" alt="Contribution" src="/extension/contentScript/app/images/contribution.png" />
                     <div class="stat-data">{{memberStatusModel.contributionLength | number:0}}</div>
                 </div>
-                <div class="stat-label">Total Contributions&nbsp;<img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png"/></div>
+                <div class="stat-label">Total Contributions</div>
             </div>
 		</div>
 

@@ -29,16 +29,14 @@
                 <img class="stat-icon" alt="Contribution" src="/extension/contentScript/app/images/contribution.png" />
                 <div class="stat-data">{{projectStatusModel.contributions | number:0}}</div>
               </div>
-              <div class="stat-label">Contributions&nbsp;<img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png" /></div>
+              <div class="stat-label">Contributions&nbsp;<img tooltip="How many contributions have been contributed during this time period" alt="help" src="/extension/contentScript/app/images/icon_help.png" /></div>
             </div>
             <div class="stat member-stat">
               <div class="stat-item">
                 <img class="stat-icon" alt="Tokens" src="/extension/contentScript/app/images/rep.png" />
                 <div class="stat-data">{{projectStatusModel.tokens | number:0}}&nbsp;<small>{{projectStatusModel.code}}</small></div>
               </div>
-              <div class="stat-label">{{projectStatusModel.tokenName}}&nbsp;
-                <img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png" />
-              </div>
+              <div class="stat-label">{{projectStatusModel.tokenName}}</div>
             </div>
           </div>
         </div>

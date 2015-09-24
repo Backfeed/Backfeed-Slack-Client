@@ -1,17 +1,15 @@
 <script type="text/ng-template" id="ContributionsModalTmpl">
 	<div class="modal-header">
 		<img alt="Close modal" class="close-modal" src="/extension/contentScript/app/images/close_x.png" ng-click="closeModal()" />
-        <div class="modal-title">Add a New Contribution</div>
+        <div class="modal-title">Submit a Contribution</div>
 	</div>
 
 	<div id="contribution-modal" class="modal-body">
 		<form>
-
 			<section>
 
 				<div>
-
-					<h3 id="createContributionModalTitle">Contribution&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img tooltip="In this page you submit a new contribution for the team to evaluate. You will be rewarded with tokens based on the evaluation of it." alt="help" src="/extension/contentScript/app/images/icon_help.png"/></h3>
+					<h3 id="createContributionModalTitle">Contribution&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img tooltip="Contributions are anything that can potentially provide value to a project. When the team decides the contribution is valuable, new Tokens and Reputation are generated and divided between the contributors. Consult your project's guidelines for what makes a good contribution." alt="help" src="/extension/contentScript/app/images/icon_help.png"/></h3>
 
 					<div class="form-group">
 						<input type="text"
@@ -32,12 +30,11 @@
 								  ng-model="model.file"></textarea>
 						<label>Content</label>
 					</div>
-
 				</div>
 
 				<div>
 					<div class="error" ng-hide="getTotalSum() == 100">Total value must be 100!</div>
-					<h3>Contributors <img tooltip="This is the list of people who worked together on this new effort. Their part in it will be used to distribute among them the tokens rewarded to them by the team." alt="help" src="/extension/contentScript/app/images/icon_help.png"/></h3>
+					<h3>Contributors <img tooltip="The worth of this contribution in Tokens and Reputation will be divided between all the listed contributors. Make sure all contributors agree on this division before submitting the contribution." alt="help" src="/extension/contentScript/app/images/icon_help.png"/></h3>
 
 					<ul class="media-list">
 						<li ng-repeat="contributer in model.contributers" class="{{contributer.className}}" ng-click="clickContributer(contributer.contributer_id)">
@@ -74,8 +71,8 @@
 							<div ng-bind-html="formatSelectUser(user)"></div>
 						</ui-select-choices>
 					</ui-select>
-
 				</div>
+
 			</section>
 		</form>
 	</div>
@@ -89,6 +86,6 @@
  						ng-disabled="!model.title || 
  												 !model.file || 
  												 buttonDisabled || 
- 												 !(getTotalSum() === 100)">Add Contribution</button>
+ 												 !(getTotalSum() === 100)">Submit Contribution</button>
 	</div>
 </script>

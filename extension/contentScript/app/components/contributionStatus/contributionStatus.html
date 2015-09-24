@@ -9,10 +9,7 @@
 	<div class="row">
 		<div class="col-sm-4">
 			<h2 class="contribution-title">{{contributionStatusModel.title}}</h2>
-			<div class="contribution-description">
-				<h3 class="h5">Contribution Description:</h3>
-				{{contributionStatusModel.file}}
-			</div>
+			<div class="contribution-description">{{contributionStatusModel.file}}</div>
 		</div>
 
 		<div class="col-sm-5">
@@ -34,29 +31,29 @@
 						<svg-icon icon="up-arrows" ng-if="contributionStatusModel.reputationDelta > 0"></svg-icon>
 						<svg-icon icon="down-arrows" ng-if="contributionStatusModel.reputationDelta < 0"></svg-icon>
 					</div>
-					<div class="big-data-label">My Reputation Profit/Loss</div>
+					<div class="big-data-label">My Reputation</div>
 				</div>
 			</div>
 
 			<div class="donut-charts box box-with-shadow">
 				<div class="donut-chart">
 					<single-value-donut-chart donut-value="{{contributionStatusModel.myWeight}}" donut-color="#f9ac51"></single-value-donut-chart>
-					<!--<single-value-donut-chart donut-value="50.51" donut-color="#f9ac51"></single-value-donut-chart>-->
 					<label>My reputation in the project</label>
 				</div>
 				<div class="donut-chart">
 					<single-value-donut-chart donut-value="{{contributionStatusModel.groupWeight}}" donut-color="#6991bf"></single-value-donut-chart>
-					<!--<single-value-donut-chart donut-value="70.70" donut-color="#6991bf"></single-value-donut-chart>-->
 					<label>Total reputation invested in evaluating this contribution</label>
 				</div>
 			</div>
 
 			<!--<div class="box box-with-shadow">
-				<h4 class="box-title">Contribution Value in Chronological Order</h4>
+				<img class="pull-right" tooltip="A contribution's value changes with every evaluation. This chart shows this contribution's value over time, every point representing a single evaluation. The yellow line indicates your own evaluation." alt="help" src="/extension/contentScript/app/images/icon_help.png"/>
+				<h4 class="box-title">Value over time</h4>
 				<svg id="contribution-value-line-graph" width="400" height="200"></svg>
 			</div>
 
 			<div class="box box-with-shadow">
+				<img class="pull-right" tooltip="This histogram shows the distribution of member's evaluations of this contribution. A flat plateau shows indecision, and a lack of consensus. A bell-like shape shows consensus around an average value. Multiple bell shapes show that evaluations are split into multiple groups, each with a different consensus" alt="help" src="/extension/contentScript/app/images/icon_help.png"/>
 				<h4 class="box-title">Distribution of Reputation</h4>
 				<svg id="distribution-of-reputation-histogram" width="400" height="200"></svg>
 			</div>-->
@@ -69,15 +66,16 @@
 			</div>
 		</div>
 	</div>
+
 	<div class="row">
 		<div class="col-sm-12">
 			<table class="table table-bordered table-hover text-center evaluations-table">
 				<thead>
 					<tr>
-						<th><img alt="help" src="/extension/contentScript/app/images/star.png"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Time of Evaluation</th>
-						<th><img alt="help" src="/extension/contentScript/app/images/tokens.png"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Evaluation</th>
-						<th><img alt="help" src="/extension/contentScript/app/images/rep.png"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Weight</th>
-						<th><img alt="help" src="/extension/contentScript/app/images/heart.png"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Value After Evaluation</th>
+						<th><img src="/extension/contentScript/app/images/star.png"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Time of Evaluation</th>
+						<th><img src="/extension/contentScript/app/images/tokens.png"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Evaluation</th>
+						<th><img src="/extension/contentScript/app/images/rep.png"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Weight</th>
+						<th><img src="/extension/contentScript/app/images/heart.png"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Value After Evaluation</th>
 					</tr>
 				</thead>
 				<tbody>

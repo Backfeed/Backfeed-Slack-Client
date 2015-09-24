@@ -43,7 +43,7 @@ angular.module('MyApp').controller(
 						if($scope.memberId == $scope.slackUserId){
 							$scope.memberStatus ='Your';
 						}else{
-							$scope.memberStatus ='User';
+							$scope.memberStatus ='Member';
 						}
 						$scope.showTokens = false;
 						$scope.memberStatusModel = result;

@@ -43,11 +43,6 @@ myApp.config(function($stateProvider, $urlRouterProvider, $authProvider, $compil
             templateUrl: chrome.extension.getURL("extension/contentScript/app/components/memberStatus/memberStatus.html"),
             controller: 'MemberStatusCtrl'
         })
-        .state('contributions', {
-            url: '/contributions',
-            templateUrl: 'app/partials/contributions.html',
-            controller: 'ContributionsCtrl'
-        })
         .state('evaluations', {
             url: '/evaluations/:contributionId/:projectId',
             templateUrl: chrome.extension.getURL("extension/contentScript/app/components/evaluation/addEvaluation.html"),

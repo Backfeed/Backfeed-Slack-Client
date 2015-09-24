@@ -2,7 +2,7 @@
 
 <div class="modal-header">
   <img alt="Close modal" class="close-modal" src="/extension/contentScript/app/images/close_x.png" ng-click="closeModal()" />
-  <div class="modal-title">Add a New Milestone</div>
+  <div class="modal-title">Submit a New Milestone</div>
 </div>
 
 <form name="form" ng-submit="submit()">
@@ -12,8 +12,8 @@
       <div class="col-sm-7">
 
         <h2>
-          Milestone
-          <img tooltip="help message" alt="help" src="/extension/contentScript/app/images/icon_help.png">
+          New Milestone
+          <img tooltip="When a project's members collectively decide the project reached a significant milestone, they have the option to bundle all the contributions made so far and post it as a single contribution to another, higher-level project." alt="help" src="/extension/contentScript/app/images/icon_help.png">
         </h2> 
 
         <div class="form-group">
@@ -58,7 +58,7 @@
         <option ng-repeat="team in teams" value="{{ team.id }}">{{ team.channelName }}</option>
       </select>
       <img alt="help" class="pull-right" src="/extension/contentScript/app/images/icon_help.png"
-           tooltip="All contributers to current milestone" style="margin-left: 25px;"/>
+           tooltip="Choose the project you're submitting this milestone to." style="margin-left: 25px;"/>
     </div>
     <button type="submit" class="btn btn-backfeed submit-button"
             ng-disabled="form.$invalid || milestoneModel.evaluatingTeam === ''|| milestoneModel.contributions <=0">Submit Milestone</button>
