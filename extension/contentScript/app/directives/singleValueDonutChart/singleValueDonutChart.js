@@ -45,11 +45,11 @@ angular.module('MyApp').directive('singleValueDonutChart', function() {
                         .attr("font-size", "24px")
                         .attr("fill", "black")
                         .attr('text-anchor', 'middle')
-                        .attr('y', '5px')
+                        .attr('y', '10px')
                         .text(data[0]+"%");
                 }
             });
-            
+
         }
     }
 });

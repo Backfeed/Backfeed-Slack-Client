@@ -9,7 +9,7 @@
   </div>
 </script>-->
 
-<div class="contributions-table-row">
+<div class="contributions-table-row contributions-table-row-heading">
   <div>Contribution</div>
   <div>Date</div>
   <div>Current Value</div>
@@ -27,7 +27,7 @@
     </accordion-heading>
     <!--the part that's hidden until the user clicks on the part that's being initially shown-->
     {{ ::contribution.description }}
-    <ul class="list-inline clearfix">
+    <ul class="list-inline contribution-contributers-list clearfix">
       <li ng-repeat="contributer in contribution.contributers" 
           ng-if="$index < 8"
           class="contributer-image">

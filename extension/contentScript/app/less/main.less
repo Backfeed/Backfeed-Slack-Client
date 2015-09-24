@@ -7,6 +7,11 @@
 @import '../components/contributionStatus/contributionStatus.less';
 @import '../components/projectStatus/projectStatus.less';
 
+:focus,
+a:focus {
+  outline: 0;
+}
+
 th {
   text-align: center;
 }
@@ -651,14 +656,29 @@ textarea.form-control {
 }
 
 .big-data-value {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
   font-size: 26px;
   font-style: italic;
+
+  & > svg-icon {
+    margin-left: 6px;
+  }
 }
 
 .big-data-label {
   font-size: 14px;
   font-weight: lighter;
   color: #888888;
+}
+
+.evaluations-table > thead > tr > th {
+  vertical-align: baseline;
+
+  &>img {
+    width: 30px;
+  }
 }
 
 .text-primary {

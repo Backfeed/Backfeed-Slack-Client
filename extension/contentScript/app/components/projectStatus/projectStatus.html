@@ -44,7 +44,7 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row" ng-if="projectStatusModel.contributions > 0">
         <div class="col-sm-7">
           <contributions-table contributions="projectStatusModel.milestoneContributions" active-contribution="activeContribution"></contributions-table>
         </div>

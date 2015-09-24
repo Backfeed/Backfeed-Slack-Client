@@ -109,6 +109,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $timeout, $stateParams, _DE
       Slack.getChannel(channelId, $scope.access_token)
       .then(function(result) {
         $scope.channelName = result.channel.name;
+        $scope.$apply();
         log('Slack.getChannel', result.channel.name, result);
       });
     }, 2000);

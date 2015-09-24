@@ -19,7 +19,10 @@
 
 			<div class="big-data-items box box-with-shadow">
 				<div class="big-data-item">
-					<div class="big-data-value">{{contributionStatusModel.currentValuation}}</div>
+					<div class="big-data-value">{{contributionStatusModel.currentValuation}}
+						<svg-icon icon="up-arrows" ng-if="contributionStatusModel.valueIndic == 1"></svg-icon>
+						<svg-icon icon="down-arrows" ng-if="contributionStatusModel.valueIndic == 0"></svg-icon>
+					</div>
 					<div class="big-data-label">Current Value</div>
 				</div>
 				<div class="big-data-item">
@@ -27,7 +30,10 @@
 					<div class="big-data-label">My Evaluation</div>
 				</div>
 				<div class="big-data-item">
-					<div class="big-data-value">{{contributionStatusModel.reputationDelta}}</div>
+					<div class="big-data-value">{{contributionStatusModel.reputationDelta}}
+						<svg-icon icon="up-arrows" ng-if="contributionStatusModel.reputationDelta > 0"></svg-icon>
+						<svg-icon icon="down-arrows" ng-if="contributionStatusModel.reputationDelta < 0"></svg-icon>
+					</div>
 					<div class="big-data-label">My Reputation Profit/Loss</div>
 				</div>
 			</div>
@@ -45,7 +51,7 @@
 				</div>
 			</div>
 
-			<div class="box box-with-shadow">
+			<!--<div class="box box-with-shadow">
 				<h4 class="box-title">Contribution Value in Chronological Order</h4>
 				<svg id="contribution-value-line-graph" width="400" height="200"></svg>
 			</div>
@@ -53,7 +59,7 @@
 			<div class="box box-with-shadow">
 				<h4 class="box-title">Distribution of Reputation</h4>
 				<svg id="distribution-of-reputation-histogram" width="400" height="200"></svg>
-			</div>
+			</div>-->
 		</div>
 
 		<div class="col-sm-3">
@@ -65,13 +71,13 @@
 	</div>
 	<div class="row">
 		<div class="col-sm-12">
-			<table class="table table-bordered table-hover text-center">
+			<table class="table table-bordered table-hover text-center evaluations-table">
 				<thead>
 					<tr>
-						<th><img tooltip="Time at which the contribution was submitted" alt="help" src="/extension/contentScript/app/images/star.png"/></th>
-						<th><img tooltip="Evaluation" alt="help" src="/extension/contentScript/app/images/tokens.png"/></th>
-						<th><img tooltip="Weight" alt="help" src="/extension/contentScript/app/images/rep.png"/></th>
-						<th><img tooltip="Value After Evaluation" alt="help" src="/extension/contentScript/app/images/heart.png"/></th>
+						<th><img alt="help" src="/extension/contentScript/app/images/star.png"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Time of Evaluation</th>
+						<th><img alt="help" src="/extension/contentScript/app/images/tokens.png"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Evaluation</th>
+						<th><img alt="help" src="/extension/contentScript/app/images/rep.png"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Weight</th>
+						<th><img alt="help" src="/extension/contentScript/app/images/heart.png"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Value After Evaluation</th>
 					</tr>
 				</thead>
 				<tbody>
