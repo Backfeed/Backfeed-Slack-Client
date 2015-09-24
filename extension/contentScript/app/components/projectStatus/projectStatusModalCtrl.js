@@ -9,11 +9,7 @@ angular.module('MyApp').controller('ProjectStatusModalCtrl',
     $scope.channelId = $stateParams.channelId;
     $scope.mileStoneId = $stateParams.mileStoneId;
     $scope.channelName = '';
-    $scope.selectedMileStonetId = '';
-    if($scope.mileStoneId && $scope.mileStoneId != ''){
-    	$scope.selectedMileStonetId = $scope.mileStoneId;
-    }
-    
+    $scope.selectedMileStonetId = '';    
     PostMessageService.gesture.hideIframe();
 
     function closeModal() {
@@ -82,7 +78,7 @@ angular.module('MyApp').controller('ProjectStatusModalCtrl',
 			 if($scope.selectedMileStonetId && $scope.selectedMileStonetId != -1){
 				 
 				 $scope.MileStoneCurrentData = MileStone.getDetail({
-		    		  	id: $scope.selectedMileStonetId
+		    		  	id: $scope.selectedMileStonetId.id
 				      });
 				 $scope.MileStoneCurrentData.$promise.then(function(result) {
 			    	  $scope.projectStatusModel = result;
@@ -94,7 +90,6 @@ angular.module('MyApp').controller('ProjectStatusModalCtrl',
 						      });
 				    	  $scope.MileStoneForChannelData.$promise.then(function(result) {
 					    	  $scope.projectMileStones = result;
-					    	 
 					      });
 			    	  }
 			    	 
@@ -102,7 +97,35 @@ angular.module('MyApp').controller('ProjectStatusModalCtrl',
 			    	  $scope.projectStatusModel.channelName = $scope.channelName;
 			    	 
 			      });
-			 }else{
+			 } else if($scope.mileStoneId && $scope.mileStoneId != -1){
+				 
+				 $scope.MileStoneCurrentData = MileStone.getDetail({
+		    		  	id: $scope.mileStoneId
+				      });
+				 $scope.MileStoneCurrentData.$promise.then(function(result) {
+			    	  $scope.projectStatusModel = result;
+			    	  $scope.orgId = result.current_org_id;
+			    	  $scope.channelName = result.channelName;
+			    	  if($scope.projectMileStones == ''){
+			    		  $scope.MileStoneForChannelData = MileStoneForChannel.allDetails({
+				    		  orgId: $scope.orgId
+						      });
+				    	  $scope.MileStoneForChannelData.$promise.then(function(result) {
+					    	  $scope.projectMileStones = result;
+					    	  for (var i = 0; i < $scope.projectMileStones.length; i++) {
+					    		  if($scope.projectMileStones[i].id == $scope.mileStoneId){
+					    			  $scope.selectedMileStonetId = $scope.projectMileStones[i];
+					    			  break;
+					    		  }
+					    	  }
+					    	  $scope.mileStoneId = '';
+					      });
+			    	  }
+			    	  $scope.projectStatusModel.channelName = $scope.channelName;
+			      });
+			 }
+				 
+				 else{
 				 $scope.MileStoneCurrentData = MileStoneCurrent.getDetail({
 		    		  	orgId: $scope.orgId
 				      });
@@ -160,7 +183,7 @@ angular.module('MyApp').controller('ProjectStatusModalCtrl',
 				      });
 				      
 				}
-			else if ($scope.selectedMileStonetId && $scope.selectedMileStonetId != 0){
+			else if ($scope.mileStoneId && $scope.mileStoneId != 0){
 				$scope.updateViewforMileStone();
 			}
 		}

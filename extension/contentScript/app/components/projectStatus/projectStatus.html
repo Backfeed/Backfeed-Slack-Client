@@ -15,10 +15,9 @@
         <select class="select-backfeed"
                 name="milestoneSelection"
                 ng-model="selectedMileStonetId"
-                ng-change="updateViewforMileStone();">
+                ng-change="updateViewforMileStone();" ng-options="projectMileStone.title for projectMileStone in projectMileStones track by projectMileStone.id">
             <option value="">On-Going Work</option>
-            <option ng-repeat="projectMileStone in projectMileStones"
-                    value="{{projectMileStone.id}}">{{projectMileStone.title}}</option>
+            
         </select>
     </section>
 
