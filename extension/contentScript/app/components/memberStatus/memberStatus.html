@@ -118,7 +118,7 @@
 					<tbody>
 						<tr ng-class="{'my-contribution-row': checkOwner(contribution.owner)}" ng-repeat="contribution in memberStatusModel.contributions | orderBy:sortType:sortReverse">
 							<td><a href="" ng-click="goToStatusPage(contribution.id)">{{contribution.title}}</a></td>
-							<td nowrap>{{contribution.cTime}}</td>
+							<td nowrap>{{contribution.cTime | date:'d.M.yyyy' }}</td>
 							<td nowrap>{{contribution.myWeight}}</td>
 							<td nowrap>{{contribution.currentValuation}}</td>
 							<td nowrap>{{contribution.reputationDelta}}</td>

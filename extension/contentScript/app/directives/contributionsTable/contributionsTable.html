@@ -21,7 +21,7 @@
     <accordion-heading>
       <div class="contributions-table-row">
         <div>{{ ::contribution.title }}</div>
-        <div>{{ ::contribution.date | date:'d/MM/yyyy' }}</div>
+        <div>{{ ::contribution.date | date:'d.M.yyyy' }}</div>
         <div>{{ ::contribution.valuation | number:0 }} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-plus': status.open, 'glyphicon-chevron-minus': !status.open}"></i></div>
       </div>
     </accordion-heading>
