@@ -22,7 +22,7 @@
       <div class="contributions-table-row">
         <div>{{ ::contribution.title }}</div>
         <div>{{ ::contribution.date | date:'d.M.yyyy' }}</div>
-        <div>{{ ::contribution.valuation | number:0 }} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-plus': status.open, 'glyphicon-chevron-minus': !status.open}"></i></div>
+        <div>{{ ::contribution.valuation | number:0 }} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-plus': is-open, 'glyphicon-chevron-minus': !is-open}"></i></div>
       </div>
     </accordion-heading>
     <!--the part that's hidden until the user clicks on the part that's being initially shown-->
@@ -31,7 +31,9 @@
       <li ng-repeat="contributer in contribution.contributers" 
           ng-if="$index < 8"
           class="contributer-image">
-        <img class="img-circle"  ng-src="{{ contributer.url }}" alt="Contributer photo">
+          <a ui-sref="memberStatus({ memberId: contributer.memberId })">
+            <img class="img-circle"  ng-src="{{ contributer.url }}" alt="Contributer photo" >
+          </a>
       </li>
       <li ng-if="contribution.remainingContributers > 0"
           class="contributer-image">
@@ -39,6 +41,5 @@
       </li>
     </ul>
 
-    <users-list users="contribution.contributers"></users-list>
   </accordion-group>
 </accordion>
