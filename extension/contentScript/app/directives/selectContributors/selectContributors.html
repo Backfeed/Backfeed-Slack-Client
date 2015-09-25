@@ -1,0 +1,93 @@
+<div>
+  selectedContributerId
+  <pre>{{ ctrl.selectedContributerId | json }}</pre>
+  <div class="error" ng-hide="getTotalSum() == 100">Total value must be 100!</div>
+  <ul class="media-list">
+    <li ng-repeat="contributor in ctrl.contributors" 
+        ng-click="clickContributer(contributor.contributor_id)">
+      <div class="contributor-cell">
+        <div class="contributor-info">
+          <img class="contributor-image" ng-src="{{ contributor.img }}" alt="" />
+          <h4 class="contributor-name">{{ contributor.contributor_name }}</h4>
+          <p class="contributor-fullname">{{ contributor.contributor_fullname }}</p>
+        </div>
+  
+        <div class="contributor-percentage">
+        <span ng-model="contributor.contributor_percentage"
+              class="contributor-percentage-number"
+              contenteditable>{{ contributor.contributor_percentage | number:0 }}</span>%
+        </div>
+      </div>
+
+      <button type="button" class="icon-button" aria-label="Left Align" ng-click='ctrl.removeContributor($index)'>
+        <img src="/extension/contentScript/app/images/icon_remove.png"/>
+      </button>
+    </li>
+  </ul>
+
+  <ui-select style="width:96%"
+             reset-search-input="false"
+             ng-model="ctrl.selectedContributerId"
+             on-select="ctrl.addContributor($select.selected)">
+    <ui-select-match placeholder="Add Contributor"></ui-select-match>
+    <ui-select-choices repeat="user in ctrl.usersToSelectFrom"
+                       refresh="ctrl.refreshUsersToSelectFrom($select.search)"
+                       refresh-delay="0">
+      <div>
+        <img ng-src='user.url' />
+        <div>{{ user.name }}<br />
+        {{ user.real_name }}</div>
+      </div>
+
+      </div>
+    </ui-select-choices>
+  </ui-select>
+</div>
+
+<!-- 
+
+<div>
+  selectedContributerId
+  <pre>{{ ctrl.selectedContributerId | json }}</pre>
+  <div class="error" ng-hide="getTotalSum() == 100">Total value must be 100!</div>
+  <ul class="media-list">
+    <li ng-repeat="contributor in ctrl.contributors" 
+        ng-click="clickContributer(contributor.contributor_id)">
+      <div class="contributor-cell">
+        <div class="contributor-info">
+          <img class="contributor-image" ng-src="{{ contributor.img }}" alt="" />
+          <h4 class="contributor-name">{{ contributor.contributor_name }}</h4>
+          <p class="contributor-fullname">{{ contributor.contributor_fullname }}</p>
+        </div>
+  
+        <div class="contributor-percentage">
+        <span ng-model="contributor.contributor_percentage"
+              class="contributor-percentage-number"
+              contenteditable>{{ contributor.contributor_percentage | number:0 }}</span>%
+        </div>
+      </div>
+
+      <button type="button" class="icon-button" aria-label="Left Align" ng-click='ctrl.removeContributor($index)'>
+        <img src="/extension/contentScript/app/images/icon_remove.png"/>
+      </button>
+    </li>
+  </ul>
+
+  <ui-select style="width:96%"
+             reset-search-input="false"
+             ng-model="ctrl.selectedContributerId"
+             on-select="ctrl.addContributor($select.selected)">
+    <ui-select-match placeholder="Add Contributor"></ui-select-match>
+    <ui-select-choices repeat="user in ctrl.usersToSelectFrom"
+                       refresh="ctrl.refreshUsersToSelectFrom($select.search)"
+                       refresh-delay="0">
+      <div class='select-contributer flex'>
+        <img ng-src='user.url' />
+        <div>{{ user.name }}<br />
+        {{ user.real_name }}</div>
+      </div>
+        
+      </div>
+    </ui-select-choices>
+  </ui-select>
+</div> -->

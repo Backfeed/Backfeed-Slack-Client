@@ -6,6 +6,7 @@ function Resource($http, API_URL) {
   var service = {
 
     get: get,
+    getSlackUsers: getSlackUsers,
     post: post,
     put: put,
     destroy: destroy
@@ -13,6 +14,14 @@ function Resource($http, API_URL) {
   };
 
   return service;
+
+  function getSlackUsers(slackAccessToken, searchQuery, userIds) {
+    return post('allSlackUsers', {
+      access_token: slackAccessToken,
+      userIds: userIds,
+      searchQuery: searchQuery
+    });
+  }
 
   function get(url, params) {
     return $http.get(API_URL + url, mergeParams(params))

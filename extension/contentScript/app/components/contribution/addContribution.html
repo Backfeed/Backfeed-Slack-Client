@@ -33,44 +33,10 @@
 				</div>
 
 				<div>
-					<div class="error" ng-hide="getTotalSum() == 100">Total value must be 100!</div>
+					selectedContributors
+					<pre>{{ selectedContributors | json }}</pre>
 					<h3>Contributors <img tooltip="The worth of this contribution in Tokens and Reputation will be divided between all the listed contributors. Make sure all contributors agree on this division before submitting the contribution." alt="help" src="/extension/contentScript/app/images/icon_help.png"/></h3>
-
-					<ul class="media-list">
-						<li ng-repeat="contributer in model.contributers" class="{{contributer.className}}" ng-click="clickContributer(contributer.contributer_id)">
-							<div class="contributer-cell">
-								<div class="contributor-info">
-									<img class="contributor-image" ng-src="{{contributer.img}}" alt=""/>
-									<h4 class="contributor-name">{{contributer.contributer_name}}</h4>
-									<p class="contributor-fullname">{{contributer.contributer_fullname}}</p>
-								</div>
-
-								<div class="contributor-percentage">
-								<span id="{{contributer.contributer_id}}"
-									  ng-change="changePercentage(contributer.contributer_id,contributer.contributer_percentage)"
-									  ng-model="contributer.contributer_percentage"
-									  class="contributor-percentage-number"
-									  contenteditable>{{contributer.contributer_percentage | number:0}}</span>%
-								</div>
-							</div>
-
-							<button type="button" class="icon-button" aria-label="Left Align" ng-click='removeCollaboratorItem(contributer.contributer_id,$index)'>
-								<img src="/extension/contentScript/app/images/icon_remove.png"/>
-							</button>
-						</li>
-					</ul>
-
-					<ui-select style="width:96%" 
-										 reset-search-input="false"
-										 ng-model="selectedContributerId"
-							   		 on-select="updateContributer($select.selected)">
-						<ui-select-match placeholder="Add Contributor"></ui-select-match>
-						<ui-select-choices repeat="user in updatedUsersList"
-															 refresh="refreshContributers($select.search)"
-									             refresh-delay="0">
-							<div ng-bind-html="formatSelectUser(user)"></div>
-						</ui-select-choices>
-					</ui-select>
+					<select-contributors selected-contributors="selectedContributors"></select-contributors>
 				</div>
 
 			</section>
