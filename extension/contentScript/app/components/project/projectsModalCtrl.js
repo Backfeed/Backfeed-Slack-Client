@@ -121,6 +121,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $timeout, $stateParams, _DE
   };
 
   function getProjectUsers(access_token,userIds,searchString) {
+    $scope.data = AllSlackUsers.allSlackUsers({'access_token':access_token,'userIds':userIds,'searchString':searchString});
     $scope.data.$promise.then(function(result) {
       $scope.users = result;
       $scope.updatedUsersList = [];
