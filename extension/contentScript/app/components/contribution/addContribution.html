@@ -1,7 +1,10 @@
 <script type="text/ng-template" id="ContributionsModalTmpl">
 	<div class="modal-header">
-		<img alt="Close modal" class="close-modal" src="/extension/contentScript/app/images/close_x.png" ng-click="closeModal()" />
-        <div class="modal-title">Submit a Contribution</div>
+		<img alt="Close modal" 
+				 class="close-modal" 
+				 src="/extension/contentScript/app/images/close_x.png" 
+				 ng-click="closeModal()" />
+    <div class="modal-title">Submit a Contribution</div>
 	</div>
 
 	<div id="contribution-modal" class="modal-body">
@@ -33,10 +36,9 @@
 				</div>
 
 				<div>
-					selectedContributors
-					<pre>{{ selectedContributors | json }}</pre>
 					<h3>Contributors <img tooltip="The worth of this contribution in Tokens and Reputation will be divided between all the listed contributors. Make sure all contributors agree on this division before submitting the contribution." alt="help" src="/extension/contentScript/app/images/icon_help.png"/></h3>
-					<select-contributors selected-contributors="selectedContributors"></select-contributors>
+					<select-contributors contributors="model.contributors"
+															 contributors-valid="foo.contributorsValid"></select-contributors>
 				</div>
 
 			</section>
@@ -51,7 +53,6 @@
 						ng-click="submit()"
  						ng-disabled="!model.title || 
  												 !model.file || 
- 												 buttonDisabled || 
- 												 !(getTotalSum() === 100)">Submit Contribution</button>
+ 												 !foo.contributorsValid">Submit Contribution</button>
 	</div>
 </script>

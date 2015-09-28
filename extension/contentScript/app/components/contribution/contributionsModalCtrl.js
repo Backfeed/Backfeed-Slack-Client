@@ -10,65 +10,29 @@ function ContributionsModalCtrl($scope, $auth, $location, $rootScope, $statePara
   var contributionId = $stateParams.contributionId;
   var slackUsersMap = {};
   var projectId = '';
-  $scope.updatedUsersList = [];
 
-  var ContributionModel = {
-    title: '',
-    file: '',
-    owner: '',
-    min_reputation_to_close: '',
-    users_projects_id: '',
-    contributionContributers: [{
-      contributer_id: '',
-      contributer_percentage: ''
-    }],
-    bids: [{
-      tokens: '',
-      reputation: '',
-      stake: '',
-      owner: '',
-      bidderName: ''
-    }]
-  };
 
   var model = {
     title: '',
     file: '',
     owner: '',
     min_reputation_to_close: '',
-    users_organizations_id: '',
-    contributers: [{
-      contributer_id: '0',
-      contributer_percentage: '100',
-      contributer_name: '',
-      contributer_fullname: '',
-      contribution1: '50',
-      className: 'contributer-cell-wrapper',
-      img: '/extension/contentScript/app/images/icon-dude.png'
-    }]
+    contributors: [],
+    users_organizations_id: ''
   };
 
   angular.extend($scope, {
-
-    refreshContributers: refreshContributers,
     closeModal: closeModal,
     currencyFormatting: currencyFormatting,
-    formatSelectUser: formatSelectUser,
-    addCollaborator: addCollaborator,
-    removeCollaboratorItem: removeCollaboratorItem,
     submit: submit,
-    updateContributer: updateContributer,
-    getTotalSum: getTotalSum,
 
+    foo: {},
     buttonDisabled: false,
     orderProp: "time_created",
-    model: model,
-    ContributionModel: ContributionModel
+    model: model
   });
 
   init();
-
-
 
   function init() {
 
@@ -93,80 +57,6 @@ function ContributionsModalCtrl($scope, $auth, $location, $rootScope, $statePara
       }
     }
 
-    if (contributionId && contributionId != 0) {
-      $scope.data1 = ContributionDetail.getDetail({
-        contributionId: contributionId
-      });
-      $scope.data1.$promise.then(function(result) {
-        $scope.ContributionModel = result;
-      });
-    }
-
-    if ($auth.isAuthenticated() && $scope.projectId && $scope.projectId != 0) {
-      $scope.contributions = Contributions.getAllContributions({
-        projectId: $scope.projectId
-      });
-    }
-
-  }
-
-  function formatSelectUser(data) {
-    if (!data) return;
-    if (!data.url) data.url = chrome.extension.getURL("extension/contentScript/app/images/icon-dude.png");
-    return "<div class='select-contributer flex'><img src='" + data.url + "' /><div>" + data.name + "<br />" + data.real_name + "</div></div>";
-  }
-
-  function updateContributer(selectedUser) {
-
-    if (selectedUser.id == '') {
-      return;
-    }
-    log('update contributer: ', selectedUser);
-    addCollaborator(selectedUser);
-    var urlImage = '';
-    var userName = '';
-    for (i = 0; i < $scope.users.length; i++) {
-      if ($scope.users[i].id == selectedUser.id) {
-        urlImage = $scope.users[i].url;
-        userName = $scope.users[i].name;
-        break;
-      }
-    }
-
-    var allcontributers = $scope.model.contributers;
-    //contPercentage = 100/allcontributers.length;
-
-    for (var i = 0; i < allcontributers.length; i++) {
-      if (allcontributers[i].id == 0 && allcontributers[i].contributer_percentage == '') {
-        log('comes here firt');
-        allcontributers[i].id = selectedUser.id;
-
-        //allcontributers[i].contributer_percentage = contPercentage;
-        allcontributers[i].img = urlImage;
-
-      }
-
-    }
-
-    setTimeout(function() {
-      angular.element('#' + selectedUser.id).trigger('focus');
-      $scope.model.contributers[0].className = "contributer-cell-wrapper active-contributer";
-
-    }, 100);
-
-  }
-
-  function getTotalSum() {
-    var total = 0;
-
-    $.each($scope.model.contributers, function(i, contributer) {
-      if (contributer.contributer_percentage === '')
-        return;
-
-      total += parseFloat(contributer.contributer_percentage);
-    });
-
-    return total;
   }
 
   function getProjectUsers() {
@@ -176,22 +66,11 @@ function ContributionsModalCtrl($scope, $auth, $location, $rootScope, $statePara
     $scope.data.$promise.then(function(result) {
       Users.setAllProjectUsersData(result);
       $scope.users = result;
-      $scope.updatedUsersList = [];
 
       for (var i = 0; i < $scope.users.length; i++) {
         slackUsersMap[$scope.users[i].id] = $scope.users[i].name;
-        if ($scope.users[i].id == $scope.model.owner) {
-          $scope.model.contributers[0].img = $scope.users[i].url;
-          $scope.model.contributers[0].contributer_name = $scope.users[i].name;
-          angular.element('#' + $scope.model.contributers[0].contributer_id).trigger('focus');
-          $scope.model.contributers[0].className = "contributer-cell-wrapper active-contributer";
-
-          continue;
-        }
-        $scope.updatedUsersList.push($scope.users[i]);
       }
-      //addCollaborator();
-      //$location.path("/contribution/" + result.id);
+
     });
   };
 
@@ -210,6 +89,7 @@ function ContributionsModalCtrl($scope, $auth, $location, $rootScope, $statePara
       slackTeamId: $scope.slackTeamId,
       userId: $scope.userId
     });
+
     $scope.ChannelProjectExistsData.$promise.then(function(result) {
       if (result.channleOrgExists == 'true') {
         $scope.users_projects_id = result.userOrgId;
@@ -217,79 +97,23 @@ function ContributionsModalCtrl($scope, $auth, $location, $rootScope, $statePara
         projectId = $scope.projectId;
         $scope.model.users_organizations_id = result.userOrgId;
         $scope.model.owner = $scope.userId;
-        $scope.model.contributers[0].contributer_id = $scope.userId;
-        $scope.model.contributers[0].contributer_name = $scope.displayName;
-        //$scope.model.contributers[0].contributer_fullname =  $scope.users[i].real_name;
-        $scope.model.contributers[0].className = "contributer-cell-wrapper";
-        angular.element('#' + $scope.model.contributers[0].contributer_id).trigger('focus');
-        $scope.model.contributers[0].className = "contributer-cell-wrapper active-contributer";
         PostMessageService.gesture.showIframe();
         var allProjectUsersData = Users.getAllProjectUsersData();
         if (allProjectUsersData == undefined) {
           getProjectUsers();
         } else {
-
           $scope.users = allProjectUsersData;
-          $scope.updatedUsersList = [];
-          for (var i = 0; i < $scope.users.length; i++) {
-            slackUsersMap[$scope.users[i].id] = $scope.users[i].name;
-            if ($scope.users[i].id == $scope.model.owner) {
-              $scope.model.contributers[0].img = $scope.users[i].url;
-              continue;
-            }
-            $scope.updatedUsersList.push($scope.users[i]);
-          }
         }
       } else {
-        log('comes here');
         $modalInstance.close('submit');
         PostMessageService.sendGesture('hideIframe');
         PostMessageService.gesture.showAlert('In order to submit a contribution to this channel, click on the channel name above and "Add a Collaborative Project"', 'error');
-        //navigate to create org screen
-        //$state.go('addProject', {'channelId': channelId}, {reload: true});
       }
 
     });
 
   };
 
-  function refreshContributers(nameQuery) {
-    $scope.contributers = $scope.updatedUsersList.filter(function(user) {
-      log("refreshContributers", user, nameQuery);
-      return user.real_name.indexOf(nameQuery > -1);
-    });
-  }
-
-  function addCollaborator(selectedUser) {
-    log('addCollaborator: ', selectedUser);
-    var allcontributers = $scope.model.contributers;
-    $scope.updatedUsersList = [];
-    $scope.selectedContributerId = '';
-    for (var i = 0; i < $scope.users.length; i++) {
-      if ($scope.users[i].id == selectedUser.id) {
-        continue;
-      }
-      var userExist = false;
-      for (var j = 0; j < allcontributers.length; j++) {
-        if ($scope.users[i].id == allcontributers[j].contributer_id) {
-          userExist = true;
-          break;
-        }
-      }
-      if (userExist == false) {
-        $scope.updatedUsersList.push($scope.users[i]);
-      }
-    }
-    $scope.model.contributers.push({
-      contributer_id: selectedUser.id,
-      contributer_percentage: '',
-      contributer_name: selectedUser.name,
-      contribution1: '50',
-      className: 'contributer-cell-wrapper',
-      img: selectedUser.url
-    });
-    //$scope.buttonDisabled = true;
-  };
 
   function getProfile() {
     Account.getProfile().success(function(user) {
@@ -310,20 +134,7 @@ function ContributionsModalCtrl($scope, $auth, $location, $rootScope, $statePara
   };
 
   function submit() {
-    var allcontributers = $scope.model.contributers;
-    var totalActive = 0;
-    for (var i = 0; i < allcontributers.length; i++) {
-      if (allcontributers[i].contributer_id != 0) {
-        totalActive = totalActive + 1;
-      }
-    }
-    log('total is ' + totalActive);
-    if (totalActive <= 0) {
-      PostMessageService.gesture.showAlert('At least one contributer should be there', 'error');
-      return
-    }
-    log("In Submit method");
-    log($scope.model);
+    log("Submit", $scope.model);
     $scope.data = SaveContribution.save({}, $scope.model);
     $scope.data.$promise.then(function(result) {
 
@@ -339,26 +150,6 @@ function ContributionsModalCtrl($scope, $auth, $location, $rootScope, $statePara
       PostMessageService.gesture.showAlert('Your Contribution was not submitted.', 'error');
     });
   };
-
-  function removeCollaboratorItem(contributerId, index) {
-    $scope.model.contributers.splice(index, 1);
-    var allcontributers = $scope.model.contributers;
-    $scope.updatedUsersList = [];
-    $scope.selectedContributerId = '';
-    for (var i = 0; i < $scope.users.length; i++) {
-      var userExist = false;
-      for (var j = 0; j < allcontributers.length; j++) {
-        if ($scope.users[i].id == allcontributers[j].contributer_id) {
-          userExist = true;
-          break;
-        }
-      }
-      if (userExist == false) {
-        $scope.updatedUsersList.push($scope.users[i]);
-      }
-    }
-  };
-
 
   // ******************************* SLACK PLAY ***********************
 

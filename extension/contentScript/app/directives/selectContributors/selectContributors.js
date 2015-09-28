@@ -4,18 +4,18 @@ function selectContributors() {
 
   return {
 
-    bindToController: {},
+    bindToController: { contributors: '=', contributorsValid: '=' },
     controllerAs: 'ctrl',
     templateUrl: 'directives/selectContributors/selectContributors.html',
     controller: selectContributorsController,
-    scope: true,
-    restrict: 'E'
+    restrict: 'E',
+    scope: true
 
   };
 
 }
 
-function selectContributorsController(_DEV, Resource, Account) {
+function selectContributorsController($timeout, _DEV, Resource, Account, AllSlackUsers) {
 
   var log = _DEV.log("SELECT CONTRIBUTORS");
 
@@ -29,7 +29,7 @@ function selectContributorsController(_DEV, Resource, Account) {
     removeContributor: removeContributor,
     refreshUsersToSelectFrom: refreshUsersToSelectFrom,
     getTotalSum: getTotalSum,
-    selectedContributerId: '',
+    selectedContributorId: '',
     usersToSelectFrom: [],
     contributors: [],
   });
@@ -40,26 +40,51 @@ function selectContributorsController(_DEV, Resource, Account) {
     log('init');
     Account.getProfile().success(function(user) {
       access_token = user.access_token;
+      setCurrentUserAsFirstContributor(user);
     });
+  }
+
+  function setCurrentUserAsFirstContributor(currentUser) {
+    ctrl.contributors[0] = {
+      id: currentUser.slackUserId,
+      url: currentUser.url,
+      name: currentUser.displayName,
+      contributor_percentage: 100,
+      real_name: currentUser.user_realname
+    };
+
+    focusContributorPercentage(currentUser.slackUserId);
+  }
+
+  function focusContributorPercentage(id) {
+    log('focusContributorPercentage', id);
+    $timeout(function() {
+      angular.element('#' + id).trigger('focus');
+    }, 200);
   }
 
   function addContributor(contributor) {
     ctrl.contributors.push(contributor);
+    ctrl.usersToSelectFrom = [];
+    focusContributorPercentage(contributor.id);
   }
 
-  function removeContributor(contributor, i) {
+  function removeContributor(i) {
     ctrl.contributors.splice(i, 1);
   }
 
   function refreshUsersToSelectFrom(searchQuery) {
     if (! access_token) return;
     var userIds = getContributorsIds();
-    log('refreshUsersToSelectFrom access_token, searchQuery, userIds: ', access_token, searchQuery, userIds);
-    Resource.getSlackUsers(access_token, searchQuery, userIds)
-    .then(function(users) {
-      log('refreshUsersToSelectFrom response: ', users);
-      ctrl.usersToSelectFrom = users;
+    ctrl.foo = AllSlackUsers.allSlackUsers({'access_token':access_token,'userIds':userIds,'searchString':searchQuery});
+    ctrl.foo.$promise.then(function(result) {
+      ctrl.usersToSelectFrom = result;
     });
+
+    // TODO - refactor to method below. Remove AllSlackUsers.allSlackUsers
+    // Resource.getSlackUsers(access_token, searchQuery, userIds)
+    // .then(function(users) {
+    // });
   }
 
   function getTotalSum() {
@@ -72,11 +97,13 @@ function selectContributorsController(_DEV, Resource, Account) {
       total += parseFloat(contributor.contributor_percentage);
     });
 
+    ctrl.contributorsValid = total === 100;
+
     return total;
   }
 
   function getContributorsIds() {
-    return ctrl.contributors.map(toUid);
+    return ctrl.contributors.map(toUid).join(",");
   }
 
   function toUid(contributor) {
