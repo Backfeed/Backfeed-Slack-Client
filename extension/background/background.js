@@ -3,12 +3,17 @@ console.log("background.js");
 
 function beginStream() {
 	console.log("log in completed.");
-	
+
+      chrome.tabs.query({url: "https://*.slack.com/*"}, function(tabs) {
+        tabs.forEach(function(tab) {
+          chrome.tabs.reload(tab.id);
+        });
+      });
 	sendGesture({
 		"gesture": 'refreshWindows',
 		"options": {}
 	});
-	
+
 }
 
 
