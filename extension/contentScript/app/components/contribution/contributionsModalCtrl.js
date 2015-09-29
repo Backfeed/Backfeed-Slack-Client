@@ -157,11 +157,11 @@ function ContributionsModalCtrl($scope, $auth, $location, $rootScope, $statePara
     var contributersString = '';
     var contributersLength = contributionData.contributionContributers.length;
     var index = 0;
-    contributionData.contributionContributers.forEach(function(contributer) {
+    contributionData.contributionContributers.forEach(function(contributor) {
       if (index == contributersLength - 1) {
-        contributersString += '@' + slackUsersMap[contributer.contributer_id] + ' ' + contributer.contributer_percentage + '%';
+        contributersString += '@' + slackUsersMap[contributor.id] + ' ' + contributor.percentage + '%';
       } else {
-        contributersString += '@' + slackUsersMap[contributer.contributer_id] + ' ' + contributer.contributer_percentage + '%, ';
+        contributersString += '@' + slackUsersMap[contributor.id] + ' ' + contributor.percentage + '%, ';
       }
       index++;
     });

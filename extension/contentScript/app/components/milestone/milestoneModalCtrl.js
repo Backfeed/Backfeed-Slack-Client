@@ -19,9 +19,9 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
     b :'50',
     evaluatingTeam: '',
     contributers : [ {
-      contributer_id : '0',
-      contributer_percentage : '100',
-      contributer_name:'',
+      id : '0',
+      percentage : '100',
+      name:'',
       contribution1: '50',
       className:'media contributer-cell',
       img:'/extension/contentScript/app/images/icon-dude.png'
@@ -134,9 +134,9 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
       var index = 0;
       mileStoneData.milestoneContributers.forEach(function(contributer) {
         if (index == contributersLength - 1) {
-        	milestoneString += '@' + slackUsersMap[contributer.contributer_id] + ' ' + contributer.contributer_percentage + '%';
+        	milestoneString += '@' + slackUsersMap[contributer.id] + ' ' + contributer.percentage + '%';
         } else {
-        	milestoneString += '@' + slackUsersMap[contributer.contributer_id] + ' ' + contributer.contributer_percentage + '%, ';
+        	milestoneString += '@' + slackUsersMap[contributer.id] + ' ' + contributer.percentage + '%, ';
         }
         index++;
       });

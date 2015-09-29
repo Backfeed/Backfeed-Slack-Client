@@ -22,7 +22,7 @@ function ContributionStatusModalCtrl($scope, $auth, $location, $stateParams, Con
       stake: ''
     }],
     contributionContributers: [{
-      contributer_percentage: '',
+      percentage: '',
       name: '',
       real_name: '',
       url: '',

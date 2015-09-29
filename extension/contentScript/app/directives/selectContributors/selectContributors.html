@@ -2,7 +2,6 @@
   <div class="error" ng-hide="ctrl.getTotalSum() == 100">Total value must be 100!</div>
   <ul class="media-list">
     <li ng-repeat="contributor in ctrl.contributors"
-        ng-click="clickContributer(contributor.contributor_id)"
         class="chosen clearfix relative">
       <img class="chosen-image pull-left" ng-src="{{ contributor.url }}" alt="" />
       
@@ -12,10 +11,10 @@
       </div>
   
       <div class="chosen-percentage">
-        <span ng-model="contributor.contributor_percentage"
+        <span ng-model="contributor.percentage"
               class="chosen-percentage-number"
               id="{{ contributor.id }}"
-              contenteditable>{{ contributor.contributor_percentage | number:0 }}</span>%        
+              contenteditable>{{ contributor.percentage | number:0 }}</span>%        
       </div>
 
       <button type="button" class="icon-button" aria-label="Left Align" ng-click='ctrl.removeContributor($index)'>
@@ -28,15 +27,20 @@
              reset-search-input="true"
              ng-model="ctrl.selectedContributerId"
              on-select="ctrl.addContributor($select.selected)">
+
     <ui-select-match placeholder="Add Contributor"></ui-select-match>
+
     <ui-select-choices repeat="user in ctrl.usersToSelectFrom"
                        refresh="ctrl.refreshUsersToSelectFrom($select.search)"
                        refresh-delay="50">
+
       <div class='select-contributer flex'>
         <img ng-src="{{ user.url }}" />
         <div>{{ user.name }}<br />
         {{ user.real_name }}</div>
       </div>
+
     </ui-select-choices>
   </ui-select>
+  
 </div>

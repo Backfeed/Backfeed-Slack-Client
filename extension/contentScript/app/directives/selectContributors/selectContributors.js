@@ -49,7 +49,7 @@ function selectContributorsController($timeout, _DEV, Resource, Account, AllSlac
       id: currentUser.slackUserId,
       url: currentUser.url,
       name: currentUser.displayName,
-      contributor_percentage: 100,
+      percentage: 100,
       real_name: currentUser.user_realname
     };
 
@@ -64,8 +64,13 @@ function selectContributorsController($timeout, _DEV, Resource, Account, AllSlac
   }
 
   function addContributor(contributor) {
-    ctrl.contributors.push(contributor);
+    ctrl.contributors.push({
+      id: contributor.id,
+      percentage: contributor.percentage
+    });
+
     ctrl.usersToSelectFrom = [];
+
     focusContributorPercentage(contributor.id);
   }
 
@@ -91,10 +96,10 @@ function selectContributorsController($timeout, _DEV, Resource, Account, AllSlac
     var total = 0;
 
     $.each(ctrl.contributors, function(i, contributor) {
-      if (contributor.contributor_percentage === '')
+      if (contributor.percentage === '')
         return;
 
-      total += parseFloat(contributor.contributor_percentage);
+      total += parseFloat(contributor.percentage);
     });
 
     ctrl.contributorsValid = total === 100;
