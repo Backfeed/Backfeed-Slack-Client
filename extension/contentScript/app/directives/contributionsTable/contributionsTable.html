@@ -27,17 +27,17 @@
     </accordion-heading>
     <!--the part that's hidden until the user clicks on the part that's being initially shown-->
     {{ ::contribution.description }}
-    <ul class="list-inline contribution-contributers-list clearfix">
-      <li ng-repeat="contributer in contribution.contributers" 
+    <ul class="list-inline contribution-contributors-list clearfix">
+      <li ng-repeat="contributor in contribution.contributors" 
           ng-if="$index < 8"
-          class="contributer-image">
-          <a ui-sref="memberStatus({ memberId: contributer.memberId })">
-            <img class="img-circle"  ng-src="{{ contributer.url }}" alt="Contributer photo" >
+          class="contributor-image">
+          <a ui-sref="memberStatus({ memberId: contributor.memberId })">
+            <img class="img-circle"  ng-src="{{ contributor.url }}" alt="Contributer photo" >
           </a>
       </li>
-      <li ng-if="contribution.remainingContributers > 0"
-          class="contributer-image">
-        + {{ contribution.remainingContributers}}
+      <li ng-if="contribution.remainingContributors > 0"
+          class="contributor-image">
+        + {{ contribution.remainingContributors}}
       </li>
     </ul>
 

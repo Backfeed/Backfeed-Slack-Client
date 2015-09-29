@@ -18,12 +18,12 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
     a :'50',
     b :'50',
     evaluatingTeam: '',
-    contributers : [ {
+    contributors : [ {
       id : '0',
       percentage : '100',
       name:'',
       contribution1: '50',
-      className:'media contributer-cell',
+      className:'media contributor-cell',
       img:'/extension/contentScript/app/images/icon-dude.png'
     } ],
     contributions: []
@@ -113,8 +113,8 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
         Milestone.getCurrent(result.orgId).then(function(result) {
           log('init Timeout: Get channel: get milestone ', result);
           $scope.milestoneModel.contributions = result.milestoneContributions;
-          $scope.milestoneModel.contributers = result.milestoneContributers;
-          $scope.contributersCount = result.contributers;
+          $scope.milestoneModel.contributors = result.milestoneContributors;
+          $scope.contributorsCount = result.contributors;
           $scope.tokenCode = result.code;
           $scope.totalValue = result.totalValue;
           
@@ -130,13 +130,13 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
  
   $scope.buildMileStoneMessage = function(mileStoneData) {
       var milestoneString = '';
-      var contributersLength = mileStoneData.milestoneContributers.length;
+      var contributorsLength = mileStoneData.milestoneContributors.length;
       var index = 0;
-      mileStoneData.milestoneContributers.forEach(function(contributer) {
-        if (index == contributersLength - 1) {
-        	milestoneString += '@' + slackUsersMap[contributer.id] + ' ' + contributer.percentage + '%';
+      mileStoneData.milestoneContributors.forEach(function(contributor) {
+        if (index == contributorsLength - 1) {
+        	milestoneString += '@' + slackUsersMap[contributor.id] + ' ' + contributor.percentage + '%';
         } else {
-        	milestoneString += '@' + slackUsersMap[contributer.id] + ' ' + contributer.percentage + '%, ';
+        	milestoneString += '@' + slackUsersMap[contributor.id] + ' ' + contributor.percentage + '%, ';
         }
         index++;
       });

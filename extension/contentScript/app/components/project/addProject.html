@@ -105,26 +105,26 @@
 			<p>How much did each founder contribute to this project so far?</p>
 
 			<ul class="media-list">
-				<li ng-repeat="contributer in projectModel.contributers" class="{{contributer.className}}" ng-click="clickContributer(contributer.id)">
-					<div class="contributer-cell">
+				<li ng-repeat="contributor in projectModel.contributors" class="{{contributor.className}}" ng-click="clickContributer(contributor.id)">
+					<div class="contributor-cell">
 						<div class="contributor-info">
-							<img class="contributor-image" ng-src="{{contributer.img}}" alt=""/>
+							<img class="contributor-image" ng-src="{{contributor.img}}" alt=""/>
 							<div class="contributor-names">
-								<h4 class="contributor-name">{{contributer.name}}</h4>
-								<p class="contributor-fullname">{{contributer.fullname}}</p>
+								<h4 class="contributor-name">{{contributor.name}}</h4>
+								<p class="contributor-fullname">{{contributor.fullname}}</p>
 							</div>
 						</div>
 
 						<div class="contributor-percentage">
-								<span id="{{contributer.id}}"
-									  ng-change="changePercentage(contributer.id, contributer.percentage)"
-									  ng-model="contributer.percentage"
+								<span id="{{contributor.id}}"
+									  ng-change="changePercentage(contributor.id, contributor.percentage)"
+									  ng-model="contributor.percentage"
 									  class="contributor-percentage-number"
-									  contenteditable>{{contributer.percentage | number:0}}</span>%
+									  contenteditable>{{contributor.percentage | number:0}}</span>%
 						</div>
 					</div>
 
-					<button type="button" class="icon-button" aria-label="Left Align" ng-click='removeCollaboratorItem(contributer.id,$index)'>
+					<button type="button" class="icon-button" aria-label="Left Align" ng-click='removeCollaboratorItem(contributor.id,$index)'>
 						<img src="/extension/contentScript/app/images/icon_remove.png"/>
 					</button>
 				</li>

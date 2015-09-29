@@ -26,8 +26,8 @@ angular.module('MyApp').controller('ProjectStatusModalCtrl',
     	tokens : '',
     	contributions :'',
     	channelName:'',
-    	contributers :'',
-        milestoneContributers : [ {
+    	contributors :'',
+        milestoneContributors : [ {
             id : '',
             percentage : '',
             name:'',
@@ -40,8 +40,8 @@ angular.module('MyApp').controller('ProjectStatusModalCtrl',
             valuation:'',
             contribution_id:'',
             desciption:'',
-            remainingContributers:'',
-            contributers : [ {
+            remainingContributors:'',
+            contributors : [ {
             	memberId : '',
             	url : '',
             } ]

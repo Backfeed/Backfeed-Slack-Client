@@ -96,7 +96,7 @@ function ContributionsModalCtrl($scope, $auth, $location, $rootScope, $statePara
         $scope.projectId = result.orgId;
         projectId = $scope.projectId;
         $scope.model.users_organizations_id = result.userOrgId;
-        $scope.model.owner = $scope.userId;
+        $scope.model.ownerId = $scope.userId;
         PostMessageService.gesture.showIframe();
         var allProjectUsersData = Users.getAllProjectUsersData();
         if (allProjectUsersData == undefined) {
@@ -154,19 +154,19 @@ function ContributionsModalCtrl($scope, $auth, $location, $rootScope, $statePara
   // ******************************* SLACK PLAY ***********************
 
   function buildContributionMessage(contributionData) {
-    var contributersString = '';
-    var contributersLength = contributionData.contributionContributers.length;
+    var contributorsString = '';
+    var contributorsLength = contributionData.contributionContributors.length;
     var index = 0;
-    contributionData.contributionContributers.forEach(function(contributor) {
-      if (index == contributersLength - 1) {
-        contributersString += '@' + slackUsersMap[contributor.id] + ' ' + contributor.percentage + '%';
+    contributionData.contributionContributors.forEach(function(contributor) {
+      if (index == contributorsLength - 1) {
+        contributorsString += '@' + slackUsersMap[contributor.id] + ' ' + contributor.percentage + '%';
       } else {
-        contributersString += '@' + slackUsersMap[contributor.id] + ' ' + contributor.percentage + '%, ';
+        contributorsString += '@' + slackUsersMap[contributor.id] + ' ' + contributor.percentage + '%, ';
       }
       index++;
     });
 
-    return 'New contribution submitted' + '\n' + contributionData.id + '\n' + '*' + contributionData.title + '*' + '\n' + contributionData.file + '\n' + contributersString;
+    return 'New contribution submitted' + '\n' + contributionData.id + '\n' + '*' + contributionData.title + '*' + '\n' + contributionData.file + '\n' + contributorsString;
   };
 
   function sendTestMessage(channelId, message) {

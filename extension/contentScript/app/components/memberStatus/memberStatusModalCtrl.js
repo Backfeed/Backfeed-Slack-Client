@@ -48,7 +48,7 @@ angular.module('MyApp').controller(
 						$scope.showTokens = false;
 						$scope.memberStatusModel = result;
 						var allcontributions = $scope.memberStatusModel.contributions;
-		                //contPercentage = 100/allcontributers.length;
+		                //contPercentage = 100/allcontributors.length;
 
 		                for(var i=0;i<allcontributions.length;i++){
 		                	allcontributions[i].myWeight = allcontributions[i].myWeight.toFixed(2);
@@ -73,7 +73,7 @@ angular.module('MyApp').controller(
 						$scope.showTokens = true;
 						$scope.memberStatusModel = result;
 						var allcontributions = $scope.memberStatusModel.contributions;
-		                //contPercentage = 100/allcontributers.length;
+		                //contPercentage = 100/allcontributors.length;
 
 		                for(var i=0;i<allcontributions.length;i++){
 		                	allcontributions[i].myWeight = allcontributions[i].myWeight.toFixed(2);

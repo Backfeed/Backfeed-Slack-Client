@@ -20,13 +20,13 @@ function ProjectsModalCtrl($scope, $auth, $location, $timeout, $stateParams, _DE
     a: '50',
     b: '50',
     access_token: '',
-    contributers: [{
+    contributors: [{
       id: '0',
       percentage: '100',
       name: '',
-      contributer_fullname: '',
+      contributor_fullname: '',
       contribution1: '50',
-      className: 'contributer-cell-wrapper',
+      className: 'contributor-cell-wrapper',
       img: '/extension/contentScript/app/images/icon-dude.png'
     }]
   };
@@ -71,16 +71,16 @@ function ProjectsModalCtrl($scope, $auth, $location, $timeout, $stateParams, _DE
       $scope.userId = $scope.userData.userId;
       $scope.projectModel.name = $scope.userData.slackTeamName;
       $scope.projectModel.slack_teamid = $scope.userData.slackTeamId;
-      $scope.projectModel.contributers[0].id = $scope.userData.slackUserId;
-      $scope.projectModel.contributers[0].name = $scope.userData.displayName;
-      angular.element('#' + $scope.projectModel.contributers[0].id).trigger('focus');
-      var sliderDivElement = angular.element('#slider' + $scope.projectModel.contributers[0].id + " div");
+      $scope.projectModel.contributors[0].id = $scope.userData.slackUserId;
+      $scope.projectModel.contributors[0].name = $scope.userData.displayName;
+      angular.element('#' + $scope.projectModel.contributors[0].id).trigger('focus');
+      var sliderDivElement = angular.element('#slider' + $scope.projectModel.contributors[0].id + " div");
       sliderDivElement.removeClass('ui-widget-header-active');
       sliderDivElement.addClass('ui-widget-header-active');
-      var sliderSpanElement = angular.element('#slider' + $scope.projectModel.contributers[0].id + " span");
+      var sliderSpanElement = angular.element('#slider' + $scope.projectModel.contributors[0].id + " span");
       sliderSpanElement.removeClass('ui-slider-handle-show');
       sliderSpanElement.addClass('ui-slider-handle-show');
-      $scope.projectModel.contributers[0].className = "contributer-cell-wrapper active-contributer";
+      $scope.projectModel.contributors[0].className = "contributor-cell-wrapper active-contributor";
       $scope.access_token = $scope.userData.access_token;
       $scope.projectModel.access_token = $scope.access_token;
       getProjectUsers($scope.access_token,'','');
@@ -139,21 +139,21 @@ function ProjectsModalCtrl($scope, $auth, $location, $timeout, $stateParams, _DE
       sliderSpanElement.removeClass('ui-slider-handle-show');
       sliderSpanElement.addClass('ui-slider-handle-show');
 
-      $scope.projectModel.contributers[0].className = "contributer-cell-wrapper active-contributer";
+      $scope.projectModel.contributors[0].className = "contributor-cell-wrapper active-contributor";
 
       for (var i = 0; i < $scope.users.length; i++) {
         if ($scope.users[i].id == $scope.userData.slackUserId) {
-          $scope.projectModel.contributers[0].img = $scope.users[i].url;
-          $scope.projectModel.contributers[0].name = $scope.users[i].name;
-          $scope.projectModel.contributers[0].contributer_fullname = $scope.users[i].real_name;
-          angular.element('#' + $scope.projectModel.contributers[0].id).trigger('focus');
-          sliderDivElement = angular.element('#slider' + $scope.projectModel.contributers[0].id + " div");
+          $scope.projectModel.contributors[0].img = $scope.users[i].url;
+          $scope.projectModel.contributors[0].name = $scope.users[i].name;
+          $scope.projectModel.contributors[0].contributor_fullname = $scope.users[i].real_name;
+          angular.element('#' + $scope.projectModel.contributors[0].id).trigger('focus');
+          sliderDivElement = angular.element('#slider' + $scope.projectModel.contributors[0].id + " div");
           sliderDivElement.removeClass('ui-widget-header-active');
           sliderDivElement.addClass('ui-widget-header-active');
-          sliderSpanElement = angular.element('#slider' + $scope.projectModel.contributers[0].id + " span");
+          sliderSpanElement = angular.element('#slider' + $scope.projectModel.contributors[0].id + " span");
           sliderSpanElement.removeClass('ui-slider-handle-show');
           sliderSpanElement.addClass('ui-slider-handle-show');
-          $scope.projectModel.contributers[0].className = "contributer-cell-wrapper active-contributer";
+          $scope.projectModel.contributors[0].className = "contributor-cell-wrapper active-contributor";
         } else {
           $scope.updatedUsersList.push($scope.users[i]);
         }
@@ -172,16 +172,16 @@ function ProjectsModalCtrl($scope, $auth, $location, $timeout, $stateParams, _DE
         $scope.projectModel.slack_teamid = $scope.userData.slackTeamId;
         $scope.access_token = $scope.userData.access_token;
         $scope.projectModel.access_token = $scope.access_token;
-        $scope.projectModel.contributers[0].id = $scope.userData.slackUserId;
-        $scope.projectModel.contributers[0].name = $scope.userData.displayName;
-        angular.element('#' + $scope.projectModel.contributers[0].id).trigger('focus');
-        sliderDivElement = angular.element('#slider' + $scope.projectModel.contributers[0].id + " div");
+        $scope.projectModel.contributors[0].id = $scope.userData.slackUserId;
+        $scope.projectModel.contributors[0].name = $scope.userData.displayName;
+        angular.element('#' + $scope.projectModel.contributors[0].id).trigger('focus');
+        sliderDivElement = angular.element('#slider' + $scope.projectModel.contributors[0].id + " div");
         sliderDivElement.removeClass('ui-widget-header-active');
         sliderDivElement.addClass('ui-widget-header-active');
-        sliderSpanElement = angular.element('#slider' + $scope.projectModel.contributers[0].id + " span");
+        sliderSpanElement = angular.element('#slider' + $scope.projectModel.contributors[0].id + " span");
         sliderSpanElement.removeClass('ui-slider-handle-show');
         sliderSpanElement.addClass('ui-slider-handle-show');
-        $scope.projectModel.contributers[0].className = "contributer-cell-wrapper active-contributer";
+        $scope.projectModel.contributors[0].className = "contributor-cell-wrapper active-contributor";
         getProjectUsers($scope.access_token,'','');
         $scope.ChannelProjectExistsData = ChannelProject.exists({
           channelId: channelId,
@@ -209,11 +209,11 @@ function ProjectsModalCtrl($scope, $auth, $location, $timeout, $stateParams, _DE
   function getTotalSum() {
     var total = 0;
 
-    $.each($scope.projectModel.contributers, function(i, contributer) {
-      if (contributer.percentage === '')
+    $.each($scope.projectModel.contributors, function(i, contributor) {
+      if (contributor.percentage === '')
         return;
 
-      total += parseFloat(contributer.percentage);
+      total += parseFloat(contributor.percentage);
     });
 
     return total;
@@ -224,7 +224,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $timeout, $stateParams, _DE
     if (selectedUser.id == '') {
       return;
     }
-    log('update contributer: ', selectedUser);
+    log('update contributor: ', selectedUser);
     addCollaborator(selectedUser);
     var urlImage = '';
     var userName = '';
@@ -236,16 +236,16 @@ function ProjectsModalCtrl($scope, $auth, $location, $timeout, $stateParams, _DE
       }
     }
 
-    var allcontributers = $scope.projectModel.contributers;
-    //contPercentage = 100/allcontributers.length;
+    var allcontributors = $scope.projectModel.contributors;
+    //contPercentage = 100/allcontributors.length;
 
-    for (var i = 0; i < allcontributers.length; i++) {
-      if (allcontributers[i].id == 0 && allcontributers[i].percentage == '') {
+    for (var i = 0; i < allcontributors.length; i++) {
+      if (allcontributors[i].id == 0 && allcontributors[i].percentage == '') {
         log('comes here firt');
-        allcontributers[i].id = selectedUser.id;
+        allcontributors[i].id = selectedUser.id;
 
-        //allcontributers[i].percentage = contPercentage;
-        allcontributers[i].img = urlImage;
+        //allcontributors[i].percentage = contPercentage;
+        allcontributors[i].img = urlImage;
 
       }
 
@@ -253,51 +253,51 @@ function ProjectsModalCtrl($scope, $auth, $location, $timeout, $stateParams, _DE
 
     setTimeout(function() {
       angular.element('#' + selectedUser.id).trigger('focus');
-      $scope.projectModel.contributers[0].className = "media contributer-cell active-contributer";
+      $scope.projectModel.contributors[0].className = "media contributor-cell active-contributor";
 
     }, 100);
 
   };
 
-  function clickContributer(contributerId) {
-    angular.element('#' + contributerId).trigger('focus');
-    log('contributerId is ' + contributerId);
+  function clickContributer(contributorId) {
+    angular.element('#' + contributorId).trigger('focus');
+    log('contributorId is ' + contributorId);
 
-    var allcontributers = $scope.projectModel.contributers,
+    var allcontributors = $scope.projectModel.contributors,
       sliderDivElement,
       sliderSpanElement;
 
-    for (var i = 0; i < allcontributers.length; i++) {
-      if (allcontributers[i].id != contributerId) {
-        sliderDivElement = angular.element('#slider' + allcontributers[i].id + " div");
+    for (var i = 0; i < allcontributors.length; i++) {
+      if (allcontributors[i].id != contributorId) {
+        sliderDivElement = angular.element('#slider' + allcontributors[i].id + " div");
         sliderDivElement.removeClass('ui-widget-header-active');
-        allcontributers[i].className = "contributer-cell-wrapper";
-        sliderSpanElement = angular.element('#slider' + allcontributers[i].id + " span");
+        allcontributors[i].className = "contributor-cell-wrapper";
+        sliderSpanElement = angular.element('#slider' + allcontributors[i].id + " span");
         sliderSpanElement.removeClass('ui-slider-handle-show');
-        allcontributers[i].className = "contributer-cell-wrapper";
+        allcontributors[i].className = "contributor-cell-wrapper";
       } else {
-        angular.element('#' + allcontributers[i].id).trigger('focus');
-        sliderDivElement = angular.element('#slider' + allcontributers[i].id + " div");
+        angular.element('#' + allcontributors[i].id).trigger('focus');
+        sliderDivElement = angular.element('#slider' + allcontributors[i].id + " div");
         sliderDivElement.removeClass('ui-widget-header-active');
         sliderDivElement.addClass('ui-widget-header-active');
-        sliderSpanElement = angular.element('#slider' + allcontributers[i].id + " span");
+        sliderSpanElement = angular.element('#slider' + allcontributors[i].id + " span");
         sliderSpanElement.removeClass('ui-slider-handle-show');
         sliderSpanElement.addClass('ui-slider-handle-show');
-        allcontributers[i].className = "contributer-cell-wrapper active-contributer";
+        allcontributors[i].className = "contributor-cell-wrapper active-contributor";
       }
     }
   };
 
 
-  function removeCollaboratorItem(contributerId, index) {
-    $scope.projectModel.contributers.splice(index, 1);
-    var allcontributers = $scope.projectModel.contributers;
+  function removeCollaboratorItem(contributorId, index) {
+    $scope.projectModel.contributors.splice(index, 1);
+    var allcontributors = $scope.projectModel.contributors;
     $scope.updatedUsersList = [];
     $scope.selectedContributerId = '';
     for (var i = 0; i < $scope.users.length; i++) {
       var userExist = false;
-      for (var j = 0; j < allcontributers.length; j++) {
-        if ($scope.users[i].id == allcontributers[j].id) {
+      for (var j = 0; j < allcontributors.length; j++) {
+        if ($scope.users[i].id == allcontributors[j].id) {
           userExist = true;
           break;
         }
@@ -310,7 +310,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $timeout, $stateParams, _DE
 
   function addCollaborator(selectedUser) {
     log('addCollaborator: ', selectedUser);
-    var allcontributers = $scope.projectModel.contributers;
+    var allcontributors = $scope.projectModel.contributors;
     $scope.updatedUsersList = [];
     $scope.selectedContributerId = '';
     for (var i = 0; i < $scope.users.length; i++) {
@@ -318,8 +318,8 @@ function ProjectsModalCtrl($scope, $auth, $location, $timeout, $stateParams, _DE
         continue;
       }
       var userExist = false;
-      for (var j = 0; j < allcontributers.length; j++) {
-        if ($scope.users[i].id == allcontributers[j].id) {
+      for (var j = 0; j < allcontributors.length; j++) {
+        if ($scope.users[i].id == allcontributors[j].id) {
           userExist = true;
           break;
         }
@@ -328,12 +328,12 @@ function ProjectsModalCtrl($scope, $auth, $location, $timeout, $stateParams, _DE
         $scope.updatedUsersList.push($scope.users[i]);
       }
     }
-    $scope.projectModel.contributers.push({
+    $scope.projectModel.contributors.push({
       id: selectedUser.id,
       percentage: '',
       name: selectedUser.name,
       contribution1: '50',
-      className: 'media contributer-cell',
+      className: 'media contributor-cell',
       img: selectedUser.url
     });
     //$scope.buttonDisabled = true;
@@ -560,6 +560,6 @@ function ProjectsModalCtrl($scope, $auth, $location, $timeout, $stateParams, _DE
   function formatSelectUser(data) {
     if (!data) return;
     if (!data.url) data.url = chrome.extension.getURL("extension/contentScript/app/images/icon-dude.png");
-    return "<div class='select-contributer flex'><img src='" + data.url + "' /><div>" + data.name + "<br />" + data.real_name + "</div></div>";
+    return "<div class='select-contributor flex'><img src='" + data.url + "' /><div>" + data.name + "<br />" + data.real_name + "</div></div>";
   }
 }

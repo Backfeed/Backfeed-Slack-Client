@@ -19,7 +19,7 @@ angular.module('MyApp').controller('MileStoneEvaluationsModalCtrl',
 	        .success(function(data) {
 				Account.setUserData(data);
 				var userData = Account.getUserData();
-				$scope.evaluation.owner = userData.userId;
+				$scope.evaluation.ownerId = userData.userId;
 				$scope.userId = userData.userId;
 				
 				getMileStoneForEvaluation();
@@ -47,7 +47,7 @@ angular.module('MyApp').controller('MileStoneEvaluationsModalCtrl',
 		 if(userData == undefined) {
 			 $scope.getProfile();
 		 } else {
-			 $scope.evaluation.owner = userData.userId;
+			 $scope.evaluation.ownerId = userData.userId;
 			 $scope.userId = userData.userId;
 			 getMileStoneForEvaluation();
 			 

@@ -52,7 +52,7 @@ angular.module('MyApp').controller('EvaluationsModalCtrl',
 		 if(userData == undefined) {
 			 $scope.getProfile();
 		 } else {
-			 $scope.evaluation.owner = userData.userId;
+			 $scope.evaluation.ownerId = userData.userId;
 			 $scope.userId = userData.userId;
 			 getContributionForEvaluation();
 			 /*orgExists = userData.projectExists;

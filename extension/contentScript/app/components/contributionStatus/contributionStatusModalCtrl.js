@@ -21,7 +21,7 @@ function ContributionStatusModalCtrl($scope, $auth, $location, $stateParams, Con
       owner: '',
       stake: ''
     }],
-    contributionContributers: [{
+    contributionContributors: [{
       percentage: '',
       name: '',
       real_name: '',
@@ -80,7 +80,7 @@ function ContributionStatusModalCtrl($scope, $auth, $location, $stateParams, Con
       if (bids[i].tokens > maxToken) {
         maxToken = bids[i].tokens;
       }
-      if (bids[i].owner == $scope.userId) {
+      if (bids[i].ownerId == $scope.userId) {
         myStake = bids[i].stake;
       }
     }
@@ -99,7 +99,7 @@ function ContributionStatusModalCtrl($scope, $auth, $location, $stateParams, Con
       for (var j = 1; j <= bin; j++) {
 
         if (bids[i].tokens <= j * eachBucketSize && bids[i].tokens > (j - 1) * eachBucketSize) {
-          if (bids[i].owner == $scope.userId) {
+          if (bids[i].ownerId == $scope.userId) {
             myBidIndex = j - 1;
           }
           binData[j - 1] = binData[j - 1] + bids[i].stake;
@@ -211,7 +211,7 @@ function ContributionStatusModalCtrl($scope, $auth, $location, $stateParams, Con
       if (bids[i].contribution_value_after_bid > maxContributionValueAfterBid) {
         maxContributionValueAfterBid = bids[i].contribution_value_after_bid;
       }
-      if (bids[i].owner == $scope.userId) {
+      if (bids[i].ownerId == $scope.userId) {
         myBidValue = bids[i].tokens;
       }
       data.push(bids[i]);
@@ -295,7 +295,7 @@ function ContributionStatusModalCtrl($scope, $auth, $location, $stateParams, Con
       });
       $scope.contributionStatus.$promise.then(function(result) {
         $scope.contributionStatusModel = result;
-        $scope.contributionStatusModel.contributionContributers.sort(compareRanks);
+        $scope.contributionStatusModel.contributionContributors.sort(compareRanks);
         $scope.contributionStatusModel.myWeight = $scope.contributionStatusModel.myWeight.toFixed(2);
         $scope.contributionStatusModel.groupWeight = $scope.contributionStatusModel.groupWeight.toFixed(2);
         $scope.contributionStatusModel.bids.sort(compareBids);
