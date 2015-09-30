@@ -5,6 +5,72 @@ iframe.setAttribute("frameborder", "0");
 
 $(window).resize(setIframeHeight);
 
+$(document).on('click', "#COMPOSE_ACTION_EVALUATION_BUTTON", onEvaluationButtonClick);
+
+$(document).on('click', "#COMPOSE_ACTION_MILESTONE_EVALUATION_BUTTON", onMilestoneEvaluationButtonClick);
+
+$(document).on('click', ".member_status_button", onMemberStatusButtonClick);
+
+var GESTURES = {
+  "showIframe": showIframe,
+  "hideIframeMilstone": hideIframeMilstone,
+  "hideIframe": hideIframe,
+  "showAlert": showAlert,
+  "windowRefresh": windowRefresh,
+  "setChannelId":setChannelId
+};
+
+// Single member is shown
+var teamMembersListObserver = new MutationObserver(onTeamMembersListObservation);
+
+// More buttons are shown for a single team member in the list of team members
+var singleTeamMemberObserver = new MutationObserver(onSingleTeamMemberObservation);
+
+var floatingMenuObserver = new MutationObserver(onFloatingMenuOpened);
+var addEvaluationObserver = new MutationObserver(onAddEvaluationObservation);
+
+$(function() {
+    document.body.appendChild(iframe);
+  floatingMenuObserver.observe(document.getElementById('client-ui'), {childList: true});
+  addEvaluationObserver.observe(document.getElementById('msgs_div'), {childList: true});
+  teamMembersListObserver.observe(document.getElementById('team_tab'), {attributes: true});
+
+
+  chrome.runtime.onMessage.addListener(function(msg) {
+    if (msg.gesture && msg.gesture in GESTURES) {
+      GESTURES[msg.gesture](msg.options)
+    }
+  });
+});
+
+function onEvaluationButtonClick() {
+  var teamName = $('#team_name').html().trim();
+  var contributionIdForThisEvaluation = $(this).attr('data-contributionId');
+  var textContent = $(this).text();
+  if (textContent == 'EVALUATE') {
+    openAddEvaluationPage(contributionIdForThisEvaluation,teamName);
+  } else {
+    openContributionStatusPage(contributionIdForThisEvaluation,teamName);
+  }
+}
+
+function onMilestoneEvaluationButtonClick() {
+  var teamName = $('#team_name').html().trim();
+  var mileStoneIdForThisEvaluation = $(this).attr('data-mileStoneId');
+  var textContent = $(this).text();
+  if (textContent == 'EVALUATE') {
+    openAddMileStoneEvaluationPage(mileStoneIdForThisEvaluation,teamName);
+  } else {
+    openMileStoneStatus(mileStoneIdForThisEvaluation,teamName);
+  }
+}
+
+function onMemberStatusButtonClick() {
+  var teamName = $('#team_name').html().trim();
+  var memberId = $(this).siblings('.member_details').find('.member_preview_link').data('member-id');
+  openMemberStatusPage(memberId,teamName);
+}
+
 function openAddProjectPage(channelId,teamName) {
 	chrome.runtime.sendMessage({
 		message : {
@@ -116,34 +182,6 @@ function openMemberStatusPage(memberId,teamName) {
 	});
 }
 
-$(document).on('click', "#COMPOSE_ACTION_EVALUATION_BUTTON", function() {
-	var teamName = $('#team_name').html().trim();
-	var contributionIdForThisEvaluation = $(this).attr('data-contributionId');
-	var textContent = $(this).text();
-	if (textContent == 'EVALUATE') {
-		openAddEvaluationPage(contributionIdForThisEvaluation,teamName);
-	} else {
-		openContributionStatusPage(contributionIdForThisEvaluation,teamName);
-	}
-});
-
-$(document).on('click', "#COMPOSE_ACTION_MILESTONE_EVALUATION_BUTTON", function() {
-	var teamName = $('#team_name').html().trim();
-	var mileStoneIdForThisEvaluation = $(this).attr('data-mileStoneId');
-	var textContent = $(this).text();
-	if (textContent == 'EVALUATE') {
-		openAddMileStoneEvaluationPage(mileStoneIdForThisEvaluation,teamName);
-	} else {
-		openMileStoneStatus(mileStoneIdForThisEvaluation,teamName);
-	}
-});
-
-$(document).on('click', ".member_status_button", function() {
-	var teamName = $('#team_name').html().trim();
-	var memberId = $(this).siblings('.member_details').find('.member_preview_link').data('member-id');
-	openMemberStatusPage(memberId,teamName);
-});
-
 function setIframeHeight() {
 	iframe.style.height = document.documentElement.clientHeight + 'px';
 }
@@ -151,15 +189,6 @@ function setIframeHeight() {
 function windowRefresh(){
 	window.location.reload();
 }
-
-var GESTURES = {
-	"showIframe": showIframe,
-	"hideIframeMilstone": hideIframeMilstone,
-	"hideIframe": hideIframe,
-	"showAlert": showAlert,
-	"windowRefresh": windowRefresh,
-	"setChannelId":setChannelId
-};
 
 function showIframe() {
 	console.log('displaying iframe');
@@ -525,27 +554,3 @@ function evaluationObservationOnChannelId(channelId,mutations){
 	}
 
 }
-
-// Single member is shown
-var teamMembersListObserver = new MutationObserver(onTeamMembersListObservation);
-
-// More buttons are shown for a single team member in the list of team members
-var singleTeamMemberObserver = new MutationObserver(onSingleTeamMemberObservation);
-
-var floatingMenuObserver = new MutationObserver(onFloatingMenuOpened);
-var addEvaluationObserver = new MutationObserver(onAddEvaluationObservation);
-
-
-$(function() {
-    document.body.appendChild(iframe);
-	floatingMenuObserver.observe(document.getElementById('client-ui'), {childList: true});
-	addEvaluationObserver.observe(document.getElementById('msgs_div'), {childList: true});
-	teamMembersListObserver.observe(document.getElementById('team_tab'), {attributes: true});
-
-
-	chrome.runtime.onMessage.addListener(function(msg) {
-		if (msg.gesture && msg.gesture in GESTURES) {
-			GESTURES[msg.gesture](msg.options)
-		}
-	});
-});
