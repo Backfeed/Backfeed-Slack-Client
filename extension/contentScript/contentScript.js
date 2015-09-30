@@ -213,7 +213,7 @@ function onTeamMembersListObservation(mutations) {
 			if (mutations[0].attributeName == 'class' && teamDirectory.classList.contains('active')) {
 				if (!document.getElementById('member_preview_container').classList.contains('hidden')) {
 					var $memberContainer = $('#member_preview_scroller');
-					$memberContainer.append('<div class="top_margin member_status_button"><a class="member_action_button btn btn_outline">Collaborator Overview</a></div>')
+					$memberContainer.append('<div class="top_margin member_status_button"><a class="member_action_button btn btn_outline"><img src="' + chrome.extension.getURL('/extension/contentScript/app/images/collaborator-overview.png') + '" /> Collaborator Overview</a></div>')
 				} else {
 					$('.team_list_item').each(function(i, teamItem) {
 						singleTeamMemberObserver.observe(teamItem, {attributes: true, attributeFilter: ['class']});
@@ -235,7 +235,7 @@ function onSingleTeamMemberObservation(mutations) {
 			var teamMember = mutations[0].target;
 			if (teamMember.classList.contains('expanded')) {
 				if ($(teamMember).find('.member_status_button').length == 0) {
-					$(teamMember).append('<div class="top_margin member_status_button"><a class="member_action_button btn btn_outline">Collaborator Overview</a></div>')
+					$(teamMember).append('<div class="top_margin member_status_button"><a class="member_action_button btn btn_outline"><img src="' + chrome.extension.getURL('/extension/contentScript/app/images/collaborator-overview.png') + '" /> Collaborator Overview</a></div>')
 				}
 			} else {
 				$(teamMember).find('.member_status_button').remove();
@@ -286,35 +286,41 @@ function addProjectButton() {
 		channelIds = response.channelId;
 		if(channelIds != undefined) {
 			var channelIdsVarArray = channelIds.split(",");
-			for (i = 0; i < channelIdsVarArray.length; i++) { 
+			for (var i = 0; i < channelIdsVarArray.length; i++) {
 				if(channelIdsVarArray[i] == channelId){
 					channelOrganizationFound = true;
 					break;
 				}
 			}
 		}
-		var buttonLabel = 'Add a Collaborative Project';
-		if(channelOrganizationFound){
-			var addMilestoneButton = menuItems.last().clone().prependTo(menuItemsList);
-			addMilestoneButton.removeAttr('id');
-			var addProjectButton = menuItems.last().clone().prependTo(menuItemsList);
-			addProjectButton.removeAttr('id');
-			buttonLabel = 'Project Status';
-			addProjectButton.find('a').html(buttonLabel);
-			addProjectButton.on('click', function() {
+
+		if (channelOrganizationFound) {
+			var projectStatusButton = menuItems.last().clone().prependTo(menuItemsList);
+			var projectStatusButtonIcon = '<img src="' + chrome.extension.getURL('/extension/contentScript/app/images/project-status.png') + '" />';
+			var projectStatusButtonLabel = 'Project Status';
+			projectStatusButton.removeAttr('id');
+			projectStatusButton.find('a').html(projectStatusButtonIcon + '&nbsp;&nbsp;&nbsp;' + projectStatusButtonLabel);
+
+			projectStatusButton.on('click', function() {
 				openProjectStatusPage(channelId,teamName);
 			});
-			
-			buttonLabel = 'Submit Milestone';
-			addMilestoneButton.find('a').html(buttonLabel);
+
+			var addMilestoneButton = menuItems.last().clone().prependTo(menuItemsList);
+			var addMilestoneButtonIcon = '<img src="' + chrome.extension.getURL('/extension/contentScript/app/images/add-milestone.png') + '" />';
+			var addMilestoneButtonLabel = 'Submit Milestone';
+			addMilestoneButton.removeAttr('id');
+			addMilestoneButton.find('a').html(addMilestoneButtonIcon + '&nbsp;&nbsp;&nbsp;' + addMilestoneButtonLabel);
+
 			addMilestoneButton.on('click', function() {
 				openAddMilestonePage(channelId,teamName);
 			});
-		}else{			
+		} else {
 			var addProjectButton = menuItems.last().clone().prependTo(menuItemsList);
 			addProjectButton.removeAttr('id');
-			buttonLabel = 'Add a Collaborative Project';
-			addProjectButton.find('a').html(buttonLabel);
+			var addProjectButtonIcon = '<img src="' + chrome.extension.getURL('/extension/contentScript/app/images/add-project.png') + '" />';
+			var addProjectButtonLabel = 'Add a Collaborative Project';
+			addProjectButton.find('a').html(addProjectButtonIcon + '&nbsp;&nbsp;&nbsp;' + addProjectButtonLabel);
+
 			addProjectButton.on('click', function() {
 				openAddProjectPage(channelId,teamName);
 			});
@@ -383,7 +389,7 @@ function onAddEvaluationObservation(mutations) {
 				channelIds = response.channelId;
 				if(channelIds != undefined) {
 					var channelIdsVarArray = channelIds.split(",");
-					for (i = 0; i < channelIdsVarArray.length; i++) { 
+					for (var i = 0; i < channelIdsVarArray.length; i++) {
 					    evaluationObservationOnChannelId(channelIdsVarArray[i],mutations);
 					}
 				}
@@ -456,7 +462,7 @@ function evaluationObservationOnChannelId(channelId,mutations){
 					if (spanChildrenForMileStoneButton.length == 0){
 						var spanText = spanElement.html();
 						var originalText = spanText;
-						var removalText = "New MileStone submitted<br>";
+						var removalText = "New Milestone submitted<br>";
 						var indexOfRemovalContent = spanText.indexOf(removalText);
 						if (indexOfRemovalContent > -1){
 							spanText = spanText.replace(removalText, "");
