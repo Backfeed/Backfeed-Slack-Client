@@ -8,7 +8,7 @@ angular.module('MyApp')
     }
 
     $auth.logout().then(function() {
-      PostMessageService.gesture.showAlert('You have been logged out', 'information');
+      PostMessageService.showAlert('You have been logged out', 'information');
       $location.path('splash');
     });
   });

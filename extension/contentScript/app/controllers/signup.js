@@ -8,10 +8,10 @@ angular.module('MyApp')
       }).catch(function(response) {
         if (typeof response.data.message === 'object') {
           angular.forEach(response.data.message, function(message) {
-            PostMessageService.gesture.showAlert(message[0], 'error');
+            PostMessageService.showAlert(message[0], 'error');
           });
         } else {
-          PostMessageService.gesture.showAlert(response.data.message, 'error');
+          PostMessageService.showAlert(response.data.message, 'error');
         }
       });
     };

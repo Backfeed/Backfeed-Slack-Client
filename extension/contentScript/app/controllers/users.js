@@ -54,7 +54,7 @@ angular.module('MyApp')
 		console.log($scope.UserModel);
 		$scope.data = SaveUser.save({},$scope.UserModel);
 		$scope.data.$promise.then(function() {
-			PostMessageService.gesture.showAlert('Successfully saved', 'success');
+			PostMessageService.showAlert('Successfully saved', 'success');
 			$location.path("/users");
 		});
 	};

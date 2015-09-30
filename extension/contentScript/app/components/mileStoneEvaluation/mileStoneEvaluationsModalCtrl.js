@@ -5,7 +5,7 @@ angular.module('MyApp').controller('MileStoneEvaluationsModalCtrl',
 	  $scope.mileStoneId = $stateParams.mileStoneId;
 	  $scope.evaluationId = $stateParams.evaluationId;
 	  $scope.projectId = $stateParams.projectId;
-	  PostMessageService.sendGesture('hideIframe');
+	  PostMessageService.hideIframe();
 	  
 	  $scope.closeModal = function() {
 		  $modalInstance.dismiss('cancel');
@@ -28,9 +28,9 @@ angular.module('MyApp').controller('MileStoneEvaluationsModalCtrl',
 	        })
 	        .error(function(error) {
 	        	if (error && error.message) {
-                    PostMessageService.gesture.showAlert(error.message, 'error');
+                    PostMessageService.showAlert(error.message, 'error');
                 } else {
-                    PostMessageService.gesture.showAlert('Please relogin', 'error');
+                    PostMessageService.showAlert('Please relogin', 'error');
                 }
 	        });
 	    };
@@ -70,12 +70,12 @@ angular.module('MyApp').controller('MileStoneEvaluationsModalCtrl',
 			});
 			$scope.data3.$promise.then(function(result1) {
 				if(result1.contributionClose == 'true'){
-					 PostMessageService.gesture.showAlert('MileStone is closed. It cannot be evaluated anymore.', 'error');
+					 PostMessageService.showAlert('MileStone is closed. It cannot be evaluated anymore.', 'error');
 					 $state.go('contributionStatus', {'contributionId': $scope.mileStoneId}, {reload: true});
 				 }
 				else 
 				if(result1.bidExists == 'true'){
-					 PostMessageService.gesture.showAlert('You already evaluated on this milestone.', 'error');
+					 PostMessageService.showAlert('You already evaluated on this milestone.', 'error');
 					 $state.go('contributionStatus', {'contributionId': $scope.mileStoneId}, {reload: true});
 				 }else{
 					 console.log('comes here'+$scope.mileStoneId);
@@ -93,7 +93,7 @@ angular.module('MyApp').controller('MileStoneEvaluationsModalCtrl',
 							$scope.code = result.code;
 						});
 						
-						PostMessageService.sendGesture('showIframe');
+						PostMessageService.showIframe();
 				 }
 				
 			});
@@ -115,13 +115,13 @@ angular.module('MyApp').controller('MileStoneEvaluationsModalCtrl',
 		$scope.data = SaveEvaluationToMileStone.save({},$scope.evaluation);
 		$scope.data.$promise.then(function(result) {
 			$modalInstance.close('submit');
-			PostMessageService.gesture.showAlert('Evaluation submitted', 'success');
-			PostMessageService.gesture.hideIframeMilstone($scope.mileStoneId);
+			PostMessageService.showAlert('Evaluation submitted', 'success');
+			PostMessageService.hideIframeMilstone($scope.mileStoneId);
 			//$state.go('contributionStatus', {'contributionId': $scope.contributionId}, {reload: true});
 		}, function(result) {
 			$modalInstance.close('submit');
-			PostMessageService.gesture.showAlert('You have no reputation! Submit a contribution to gain some.', 'error');
-			PostMessageService.gesture.hideIframe();
+			PostMessageService.showAlert('You have no reputation! Submit a contribution to gain some.', 'error');
+			PostMessageService.hideIframe();
 			//$state.go('contributionStatus', {'contributionId': $scope.contributionId});
 		});
 

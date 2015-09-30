@@ -18,7 +18,7 @@ angular.module('MyApp')
 			
         })
         .error(function(error) {
-            PostMessageService.gesture.showAlert(error.message, 'error');
+            PostMessageService.showAlert(error.message, 'error');
         });
     };
 
@@ -31,7 +31,7 @@ angular.module('MyApp')
         displayName: $scope.user.displayName,
         email: $scope.user.email
       }).then(function() {
-        PostMessageService.gesture.showAlert('Profile has been updated', 'success');
+        PostMessageService.showAlert('Profile has been updated', 'success');
       });
     };
 
@@ -42,19 +42,19 @@ angular.module('MyApp')
 		var supportedProviders = ['trello','slack'];
 		
 		if(supportedProviders.indexOf(provider) == -1) {
-          PostMessageService.gesture.showAlert('Under construction.', 'warning');
+          PostMessageService.showAlert('Under construction.', 'warning');
           return;
 		}
 		
         $auth.link(provider)
           .then(function() {
-                PostMessageService.gesture.showAlert('You have successfully linked ' + provider + ' account', 'success');
+                PostMessageService.showAlert('You have successfully linked ' + provider + ' account', 'success');
           })
           .then(function() {
             $scope.getProfile();
           })
           .catch(function(response) {
-                PostMessageService.gesture.showAlert(response.data.message, 'success');
+                PostMessageService.showAlert(response.data.message, 'success');
           });
     };
 
@@ -64,18 +64,18 @@ angular.module('MyApp')
     $scope.unlink = function(provider) {
 	
 	   //	*************  currently not supported :
-        PostMessageService.gesture.showAlert('Under construction.', 'warning');
+        PostMessageService.showAlert('Under construction.', 'warning');
 		
 		/*
         $auth.unlink(provider)
             .then(function() {
-                PostMessageService.gesture.showAlert('You have successfully unlinked ' + provider + ' account', 'success');
+                PostMessageService.showAlert('You have successfully unlinked ' + provider + ' account', 'success');
             })
             .then(function() {
               $scope.getProfile();
             })
             .catch(function(response) {
-                PostMessageService.gesture.showAlert(response.data ? response.data.message : 'Could not unlink ' + provider + ' account', 'error');
+                PostMessageService.showAlert(response.data ? response.data.message : 'Could not unlink ' + provider + ' account', 'error');
             });
          */
     };

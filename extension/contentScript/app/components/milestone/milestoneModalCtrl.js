@@ -70,7 +70,7 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
 
   function init() {
 
-    PostMessageService.gesture.hideIframe();
+    PostMessageService.hideIframe();
     
     $scope.userData = Account.getUserData();
     log("userData is"+$scope.userData);
@@ -80,7 +80,7 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
     } else {
      $scope.userId = $scope.userData.userId;
      $scope.access_token = $scope.userData.access_token;
-     PostMessageService.gesture.showIframe();
+     PostMessageService.showIframe();
     }
 
     $timeout(function() {
@@ -245,7 +245,7 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
       $scope.slackPlay(result);
 
       $modalInstance.close('submit');
-      PostMessageService.sendGesture('hideIframe');
+      PostMessageService.hideIframe();
     });
   }
 
@@ -257,13 +257,13 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
       $scope.userId = $scope.userData.userId;
       $scope.userName = $scope.userData.displayName;
       $scope.access_token = $scope.userData.access_token;
-      PostMessageService.gesture.showIframe();
+      PostMessageService.showIframe();
     })
     .error(function(error) {
       if (error && error.message) {
-        PostMessageService.gesture.showAlert(error.message, 'error');
+        PostMessageService.showAlert(error.message, 'error');
       } else {
-        PostMessageService.gesture.showAlert('Please relogin', 'error');
+        PostMessageService.showAlert('Please relogin', 'error');
       }
     });
   };

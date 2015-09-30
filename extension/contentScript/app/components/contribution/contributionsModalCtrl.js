@@ -95,8 +95,14 @@ function ContributionsModalCtrl($scope, $auth, $location, $stateParams, _DEV, Co
         $scope.projectId = result.orgId;
         projectId = $scope.projectId;
         $scope.model.users_organizations_id = result.userOrgId;
-        $scope.model.ownerId = $scope.userId;
-        PostMessageService.gesture.showIframe();
+        $scope.model.owner = $scope.userId;
+        $scope.model.contributers[0].contributer_id = $scope.userId;
+        $scope.model.contributers[0].contributer_name = $scope.displayName;
+        //$scope.model.contributers[0].contributer_fullname =  $scope.users[i].real_name;
+        //$scope.model.contributers[0].className = "contributer-cell-wrapper";
+        angular.element('#' + $scope.model.contributers[0].contributer_id).trigger('focus');
+        $scope.model.contributers[0].className = "contributer-cell-wrapper active-contributer";
+        PostMessageService.showIframe();
         var allProjectUsersData = Users.getAllProjectUsersData();
         if (allProjectUsersData == undefined) {
           getProjectUsers();
@@ -105,8 +111,10 @@ function ContributionsModalCtrl($scope, $auth, $location, $stateParams, _DEV, Co
         }
       } else {
         $modalInstance.close('submit');
-        PostMessageService.sendGesture('hideIframe');
-        PostMessageService.gesture.showAlert('In order to submit a contribution to this channel, click on the channel name above and "Add a Collaborative Project"', 'error');
+        PostMessageService.hideIframe();
+        PostMessageService.showAlert('In order to submit a contribution to this channel, click on the channel name above and "Add a Collaborative Project"', 'error');
+        //navigate to create org screen
+        //$state.go('addProject', {'channelId': channelId}, {reload: true});
       }
 
     });
@@ -125,9 +133,9 @@ function ContributionsModalCtrl($scope, $auth, $location, $stateParams, _DEV, Co
 
     }).error(function(error) {
       if (error && error.message) {
-        PostMessageService.gesture.showAlert(error.message, 'error');
+        PostMessageService.showAlert(error.message, 'error');
       } else {
-        PostMessageService.gesture.showAlert('Please relogin', 'error');
+        PostMessageService.showAlert('Please relogin', 'error');
       }
     });
   };
@@ -140,13 +148,13 @@ function ContributionsModalCtrl($scope, $auth, $location, $stateParams, _DEV, Co
       slackPlay(result);
 
       $modalInstance.close('submit');
-      PostMessageService.sendGesture('hideIframe');
+      PostMessageService.hideIframe();
       log('projectId is' + projectId);
       //$state.go('evaluations', {'contributionId': result.id,'projectId':projectId});
 
     }, function(error) {
       log('Error in submitting Contribution');
-      PostMessageService.gesture.showAlert('Your Contribution was not submitted.', 'error');
+      PostMessageService.showAlert('Your Contribution was not submitted.', 'error');
     });
   };
 

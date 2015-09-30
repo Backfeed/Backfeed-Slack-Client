@@ -30,13 +30,13 @@ angular.module('MyApp')
 					
 		        })
 		        .error(function(error) {
-					  PostMessageService.gesture.showAlert(error.message, 'error');
+					  PostMessageService.showAlert(error.message, 'error');
 		        });
 		    };
 	$scope.authenticate = function(provider) {
       $auth.authenticate(provider)
         .then(function() {
-			  PostMessageService.gesture.showAlert('You have successfully logged in', 'success');
+			  PostMessageService.showAlert('You have successfully logged in', 'success');
 
 			  if(Account.getUserData() == undefined){
 				console.log('this is empty');
@@ -44,7 +44,7 @@ angular.module('MyApp')
 			  }
         })
         .catch(function(response) {
-			  PostMessageService.gesture.showAlert(response.data ? response.data.message : response, 'error');
+			  PostMessageService.showAlert(response.data ? response.data.message : response, 'error');
         });
     };
 	/*

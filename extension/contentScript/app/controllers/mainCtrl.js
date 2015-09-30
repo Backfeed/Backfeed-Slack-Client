@@ -51,18 +51,18 @@ angular.module('MyApp').controller('MainCtrl', ["$scope", "$state","PostMessageS
 	
 	function showAlert() {
 		console.log('Showing Alert');
-		PostMessageService.gesture.showAlert('You need to login in order to use the extension. Click the extension icon above.', 'error');
+		PostMessageService.showAlert('You need to login in order to use the extension. Click the extension icon above.', 'error');
 	}
 	
 	function refreshWindows() {
 		console.log('Refresh Windows');
-		PostMessageService.gesture.showAlert('Successful authorized. Please continue', 'success');
-		PostMessageService.gesture.windowRefresh();
+		PostMessageService.showAlert('Successful authorized. Please continue', 'success');
+		PostMessageService.windowRefresh();
 	}
 	
 	function logout() {
 		console.log('Logging Out');
-		PostMessageService.gesture.windowRefresh();
+		PostMessageService.windowRefresh();
 	}
 
 	var GESTURES = {

@@ -10,14 +10,14 @@ angular.module('MyApp').controller('ProjectStatusModalCtrl',
     $scope.mileStoneId = $stateParams.mileStoneId;
     $scope.channelName = '';
     $scope.selectedMileStonetId = '';    
-    PostMessageService.gesture.hideIframe();
+    PostMessageService.hideIframe();
 
     function closeModal() {
         $modalInstance.dismiss('cancel');
       };
       
    
-    PostMessageService.gesture.showIframe();
+    PostMessageService.showIframe();
     $scope.projectMileStones = '';
     $scope.projectStatusModel = {
     	totalValue : '',
@@ -67,9 +67,9 @@ angular.module('MyApp').controller('ProjectStatusModalCtrl',
 	        })
 	        .error(function(error) {
 	        	if (error && error.message) {
-                  PostMessageService.gesture.showAlert(error.message, 'error');
+                  PostMessageService.showAlert(error.message, 'error');
               } else {
-                  PostMessageService.gesture.showAlert('Please relogin', 'error');
+                  PostMessageService.showAlert('Please relogin', 'error');
               }
 	        });
 	    };

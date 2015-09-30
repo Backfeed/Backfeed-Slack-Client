@@ -316,7 +316,7 @@ function ContributionStatusModalCtrl($scope, $auth, $location, $stateParams, Con
         InitLineChart($scope.contributionStatusModel.bids);
         InitBarChart($scope.contributionStatusModel.bids);
       });
-      PostMessageService.sendGesture('showIframe');
+      PostMessageService.showIframe();
     }
   };
 
@@ -328,7 +328,7 @@ function ContributionStatusModalCtrl($scope, $auth, $location, $stateParams, Con
         getContributionStatus();
       })
       .error(function(error) {
-        PostMessageService.gesture.showAlert(error.message, 'error');
+        PostMessageService.showAlert(error.message, 'error');
       });
   };
 

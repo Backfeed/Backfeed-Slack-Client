@@ -8,8 +8,8 @@ angular.module('MyApp').controller('ContributionsCtrl',
         });
 
         modal.result.then(function() {
-            PostMessageService.sendGesture('hideIframe');
+            PostMessageService.hideIframe();
         }, function() {
-            PostMessageService.sendGesture('hideIframe');
+            PostMessageService.hideIframe();
         });
     });

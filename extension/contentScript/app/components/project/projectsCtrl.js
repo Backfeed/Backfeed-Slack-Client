@@ -8,8 +8,8 @@ angular.module('MyApp').controller('ProjectsCtrl',
         });
 
         modal.result.then(function() {
-            PostMessageService.sendGesture('hideIframe');
+            PostMessageService.hideIframe();
         }, function() {
-            PostMessageService.sendGesture('hideIframe');
+            PostMessageService.hideIframe();
         });
     });

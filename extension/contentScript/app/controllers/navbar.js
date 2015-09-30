@@ -24,7 +24,7 @@ angular.module('MyApp').controller('NavbarCtrl',
 					$scope.user = data;
 					Account.setUserData(data);
 				}).error(function(error) {
-					PostMessageService.gesture.showAlert(error.message, 'error');
+					PostMessageService.showAlert(error.message, 'error');
 				});
 			};
 

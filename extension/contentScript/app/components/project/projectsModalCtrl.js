@@ -61,7 +61,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $timeout, $stateParams, _DE
 
   function init() {
 
-    PostMessageService.gesture.hideIframe();
+    PostMessageService.hideIframe();
 
     $scope.userData = Account.getUserData();
     log("userData is" + $scope.userData);
@@ -94,9 +94,9 @@ function ProjectsModalCtrl($scope, $auth, $location, $timeout, $stateParams, _DE
 
       $scope.ChannelProjectExistsData.$promise.then(function(result) {
         if (result.channleOrgExists == 'true') {
-          PostMessageService.gesture.showAlert('Organization already exists for this channel', 'error');
+          PostMessageService.showAlert('Organization already exists for this channel', 'error');
         } else {
-          PostMessageService.gesture.showIframe();
+          PostMessageService.showIframe();
         }
       });
     }
@@ -193,18 +193,18 @@ function ProjectsModalCtrl($scope, $auth, $location, $timeout, $stateParams, _DE
         });
         $scope.ChannelProjectExistsData.$promise.then(function(result) {
           if (result.channleOrgExists == 'true') {
-            PostMessageService.gesture.showAlert('Organization already exists for this channel', 'error');
+            PostMessageService.showAlert('Organization already exists for this channel', 'error');
           } else {
-            PostMessageService.gesture.showIframe();
+            PostMessageService.showIframe();
           }
         });
 
       })
       .error(function(error) {
         if (error && error.message) {
-          PostMessageService.gesture.showAlert(error.message, 'error');
+          PostMessageService.showAlert(error.message, 'error');
         } else {
-          PostMessageService.gesture.showAlert('Please relogin', 'error');
+          PostMessageService.showAlert('Please relogin', 'error');
         }
       });
   }
@@ -464,7 +464,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $timeout, $stateParams, _DE
     $scope.data = SaveProject.save({}, $scope.projectModel);
     $scope.data.$promise.then(function(result) {
       log('channels Ids are' + result.channelId);
-      PostMessageService.gesture.setChannelId(result.channelId);
+      PostMessageService.setChannelId(result.channelId);
       $scope.userData.orgId = result.organization_id;
       $scope.userData.userOrgId = result.id;
       $scope.userData.projectExists = "true";
@@ -472,12 +472,12 @@ function ProjectsModalCtrl($scope, $auth, $location, $timeout, $stateParams, _DE
       log('Inserted user project id : ' + result.id);
       Account.setUserData($scope.userData);
       $scope.slackPlay($scope.projectModel.name);
-      PostMessageService.gesture.showAlert('Successfully created project', 'success');
+      PostMessageService.showAlert('Successfully created project', 'success');
       $modalInstance.close('submit');
       //$state.go('createContribution', {'channelId': channelId}, {reload: true});
     }, function(error) {
       log('Error in creating project');
-      PostMessageService.gesture.showAlert('Your project was not created', 'error');
+      PostMessageService.showAlert('Your project was not created', 'error');
     });
   };
 
@@ -533,7 +533,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $timeout, $stateParams, _DE
         if (result.tokenAlreadyExist == 'true') {
           log('comes here in true for token');
           validationFailureForTokenName = true;
-          PostMessageService.gesture.showAlert('This name is already taken. Please use a different one', 'error');
+          PostMessageService.showAlert('This name is already taken. Please use a different one', 'error');
         } else {
           log('comes here in false for token');
           validationFailureForTokenName = false;
@@ -544,7 +544,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $timeout, $stateParams, _DE
             $scope.data1.$promise.then(function(result) {
               if (result.codeAlreadyExist == 'true') {
                 validationFailureForCode = true;
-                PostMessageService.gesture.showAlert('This code is already taken. Please use a different one', 'error');
+                PostMessageService.showAlert('This code is already taken. Please use a different one', 'error');
               } else {
                 log('comes here in false for token');
                 validationFailureForCode = false;

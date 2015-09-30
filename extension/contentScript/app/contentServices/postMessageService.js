@@ -1,65 +1,68 @@
-angular.module('MyApp').service('PostMessageService', function(Account,$state) {
+angular.module('MyApp').service('PostMessageService', PostMessageService);
 
-  	this.init = function(portname) {
-  		if(arguments.length > 0) {
-  			this.port = chrome.runtime.connect({name: portname});
-  		}
-  	};
-   
+function PostMessageService($window, $state, Account) {
 
-   	this.sendGesture = function(gestureName, opt) {
-   		this.port.postMessage({
-			"gesture": gestureName,
-			"options": opt
-		});
-   	};
+  var service = {
 
-   	var self = this;
-   	this.gesture = {
-		showIframe: function(option) {
-			self.sendGesture("showIframe", option);
-		},
-		hideIframe: function(option) {
-			self.sendGesture("hideIframe",option);
-		},
-		hideIframeMilstone: function(option) {
-			self.sendGesture("hideIframeMilstone",option);
-		},
-		showAlert: function(message, type) {
-			if (!type) type = 'warning';
-			self.sendGesture("showAlert", {message: message, type: type});
-		},windowRefresh: function(option) {
-			self.sendGesture("windowRefresh", option);
-		},setChannelId: function(channelId) {
-			self.sendGesture("setChannelId", channelId);
-		}
-	};
+    init: init,
+    hideIframe: hideIframe,
+    showIframe: showIframe,
+    hideIframeMilstone: hideIframeMilstone,
+    showAlert: showAlert,
+    setChannelId: setChannelId,
+    windowRefresh: windowRefresh
 
-   	this.getProfile = function() {
-		Account.getProfile().success(function(data) {
-			var projectExists = data.orgexists;
-			if (projectExists == 'false') {
-				$state.go('addProject', {}, {reload: true});
-			}else{
-				self.gesture.windowRefresh();
-			}			
+  };
 
-		}).error(function(error) {
-			console.log('getProfile: ' + error.message);
-		});
-	};
-	
-   	this.navigateToAddProject = function() {
-   		var userData = Account.getUserData();
-   		if(userData == undefined){
-   			this.getProfile();
-   		}else{
-   			if (userData.projectExists == 'false') {
-   				$state.go('addProject', {}, {reload: true});
-			}else{
-				self.gesture.windowRefresh();
-			}
-   		}
-   	}
+  return service;
 
-});
+  function init(portname) {
+
+    if (!portname) 
+      return;
+
+    $window.port = $window.chrome.runtime.connect({
+      name: portname
+    });
+    
+  }
+
+  function hideIframe(option) {
+    sendGesture("hideIframe", option);
+  }
+
+  function showIframe(option) {
+    sendGesture("showIframe", option);
+  }
+
+  function hideIframeMilstone(option) {
+    sendGesture("hideIframeMilstone", option);
+  }
+
+  function windowRefresh(option) {
+    sendGesture("windowRefresh", option);
+  }
+
+  function setChannelId(channelId) {
+    sendGesture("setChannelId", channelId);
+  }
+
+  function showAlert(message, type) {
+
+    type = type || 'warning';
+
+    sendGesture("showAlert", {
+      message: message,
+      type: type
+    });
+
+  }
+
+  function sendGesture(gestureName, opt) {
+    $window.port.postMessage({
+      gesture: gestureName,
+      options: opt
+    });
+  }
+
+}
