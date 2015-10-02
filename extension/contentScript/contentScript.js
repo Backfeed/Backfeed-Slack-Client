@@ -5,140 +5,143 @@ iframe.setAttribute("frameborder", "0");
 
 $(window).resize(setIframeHeight);
 
-function openAddProjectPage(channelId) {
+function openAddProjectPage(channelId,teamName) {
 	chrome.runtime.sendMessage({
 		message : {
 			"gesture": 'openAddProject',
 			"options": channelId
-		}
+		},teamName : teamName
 	}, function(response) {
 		console.log('Here in the callback from add project page');
 	});
 }
 
-function openProjectStatusPage(channelId) {
+function openProjectStatusPage(channelId,teamName) {
 	chrome.runtime.sendMessage({
 		message : {
 			"gesture": 'openProjectStatus',
 			"options": channelId
-		}
+		},teamName : teamName
 	}, function(response) {
 		console.log('Here in the callback from project status page');
 	});	
 	
 }
 
-function openProjectStatusPageFromMileStone(mileStoneId) {
+function openMileStoneStatus(mileStoneId,teamName) {
 	chrome.runtime.sendMessage({
 		message : {
-			"gesture": 'openProjectStatusPageFromMileStone',
+			"gesture": 'openMileStoneStatus',
 			"options": mileStoneId
-		}
+		},teamName : teamName
 	}, function(response) {
-		console.log('Here in the callback from project status page');
+		console.log('Here in the callback from milestone status page');
 	});	
 	
 }
 
 
-function openAddMilestonePage(channelId) {
+function openAddMilestonePage(channelId,teamName) {
 	chrome.runtime.sendMessage({
 		message : {
 			"gesture": 'openAddMilestone',
 			"options": channelId
-		}
+		},teamName : teamName
 	}, function(response) {
 		console.log('Here in the callback from add milestone page');
 	});
 }
 
-function openAddContributionPage(channelId) {
+function openAddContributionPage(channelId,teamName) {
 	chrome.runtime.sendMessage({
         message : {
             "gesture": 'openAddContributionPage',
             "options": channelId
-        }
+        },teamName : teamName
     }, function(response) {
     	console.log('Here in the callback from add contribution page');
 	});
 }
 
 
-function openAddEvaluationPage(contributionId) {
+function openAddEvaluationPage(contributionId,teamName) {
 	
 	console.log('contributionId is: ' + contributionId);
 	chrome.runtime.sendMessage({        
         message : {
             "gesture": 'openAddEvaluationPage',
             "options": contributionId
-        }
+        },teamName : teamName
     }, function(response) {
     	console.log('Here in the callback from add evaluation page');
 	});
 
 }
 
-function openAddMileStoneEvaluationPage(milestoneId) {
+function openAddMileStoneEvaluationPage(milestoneId,teamName) {
 	
 	console.log('milestoneId is: ' + milestoneId);
 	chrome.runtime.sendMessage({        
         message : {
             "gesture": 'openAddMileStoneEvaluationPage',
             "options": milestoneId
-        }
+        },teamName : teamName
     }, function(response) {
     	console.log('Here in the callback from add milestoneId evaluation page');
 	});
 
 }
 
-function openContributionStatusPage(contributionId) {
+function openContributionStatusPage(contributionId,teamName) {
 	console.log('contributionId is: ' + contributionId);
 	chrome.runtime.sendMessage({        
         message : {
             "gesture": 'openContributionStatusPage',
             "options": contributionId
-        }
+        },teamName : teamName
     }, function(response) {
     	console.log('Here in the callback from contribution status page');
 	});
 
 }
 
-function openMemberStatusPage(memberId) {
+function openMemberStatusPage(memberId,teamName) {
 	chrome.runtime.sendMessage({
 		message : {
 			"gesture": 'openMemberStatusPage',
 			"options": memberId
-		}
+		},teamName : teamName
 	}, function(response) {
 		console.log('Here in the callback from member status page');
 	});
 }
 
 $(document).on('click', "#COMPOSE_ACTION_EVALUATION_BUTTON", function() {
+	var teamName = $('#team_name').html().trim();
 	var contributionIdForThisEvaluation = $(this).attr('data-contributionId');
 	var textContent = $(this).text();
 	if (textContent == 'EVALUATE') {
-		openAddEvaluationPage(contributionIdForThisEvaluation);
+		openAddEvaluationPage(contributionIdForThisEvaluation,teamName);
 	} else {
-		openContributionStatusPage(contributionIdForThisEvaluation);
+		openContributionStatusPage(contributionIdForThisEvaluation,teamName);
 	}
 });
 
 $(document).on('click', "#COMPOSE_ACTION_MILESTONE_EVALUATION_BUTTON", function() {
+	var teamName = $('#team_name').html().trim();
 	var mileStoneIdForThisEvaluation = $(this).attr('data-mileStoneId');
 	var textContent = $(this).text();
 	if (textContent == 'EVALUATE') {
-		openAddMileStoneEvaluationPage(mileStoneIdForThisEvaluation);
+		openAddMileStoneEvaluationPage(mileStoneIdForThisEvaluation,teamName);
 	} else {
-		openProjectStatusPageFromMileStone(mileStoneIdForThisEvaluation);
+		openMileStoneStatus(mileStoneIdForThisEvaluation,teamName);
 	}
 });
 
 $(document).on('click', ".member_status_button", function() {
+	var teamName = $('#team_name').html().trim();
 	var memberId = $(this).siblings('.member_details').find('.member_preview_link').data('member-id');
-	openMemberStatusPage(memberId);
+	openMemberStatusPage(memberId,teamName);
 });
 
 function setIframeHeight() {
@@ -201,62 +204,74 @@ function showAlert(options) {
  */
 
 function onTeamMembersListObservation(mutations) {
+	var teamName = $('#team_name').html().trim();
 	chrome.runtime.sendMessage({
-		message : 'updateChannelIds'
+		message : 'updateChannelIds',teamName:teamName
 	}, function(response) {
-		var teamDirectory = mutations[0].target;
-		if (mutations[0].attributeName == 'class' && teamDirectory.classList.contains('active')) {
-			if (!document.getElementById('member_preview_container').classList.contains('hidden')) {
-				var $memberContainer = $('#member_preview_scroller');
-				$memberContainer.append('<div class="top_margin member_status_button"><a class="member_action_button btn btn_outline">Collaborator Overview</a></div>')
-			} else {
-				$('.team_list_item').each(function(i, teamItem) {
-					singleTeamMemberObserver.observe(teamItem, {attributes: true, attributeFilter: ['class']});
-				});
+		if (response.login == 'true') {
+			var teamDirectory = mutations[0].target;
+			if (mutations[0].attributeName == 'class' && teamDirectory.classList.contains('active')) {
+				if (!document.getElementById('member_preview_container').classList.contains('hidden')) {
+					var $memberContainer = $('#member_preview_scroller');
+					$memberContainer.append('<div class="top_margin member_status_button"><a class="member_action_button btn btn_outline">Collaborator Overview</a></div>')
+				} else {
+					$('.team_list_item').each(function(i, teamItem) {
+						singleTeamMemberObserver.observe(teamItem, {attributes: true, attributeFilter: ['class']});
+					});
+				}
 			}
 		}
+		
 	});
 	
 }
 
 function onSingleTeamMemberObservation(mutations) {
+	var teamName = $('#team_name').html().trim();
 	chrome.runtime.sendMessage({
-		message : 'updateChannelIds'
+		message : 'updateChannelIds',teamName:teamName
 	}, function(response) {
-		var teamMember = mutations[0].target;
-		if (teamMember.classList.contains('expanded')) {
-			if ($(teamMember).find('.member_status_button').length == 0) {
-				$(teamMember).append('<div class="top_margin member_status_button"><a class="member_action_button btn btn_outline">Collaborator Overview</a></div>')
+		if (response.login == 'true') {
+			var teamMember = mutations[0].target;
+			if (teamMember.classList.contains('expanded')) {
+				if ($(teamMember).find('.member_status_button').length == 0) {
+					$(teamMember).append('<div class="top_margin member_status_button"><a class="member_action_button btn btn_outline">Collaborator Overview</a></div>')
+				}
+			} else {
+				$(teamMember).find('.member_status_button').remove();
 			}
-		} else {
-			$(teamMember).find('.member_status_button').remove();
 		}
+		
 	});
 	
 }
 
 function onFloatingMenuOpened(nodes) {
+	var teamName = $('#team_name').html().trim();
 	chrome.runtime.sendMessage({
-		message : 'updateChannelIds'
+		message : 'updateChannelIds',teamName:teamName
 	}, function(response) {
-		var addedNodes = $(nodes[0].addedNodes);
-		if (addedNodes.length > 0) {
-			addedNodes.each(function() {
-				if (this.id == 'menu') {
-					
-					var menuItems = $(this).find('#menu_items');
-					var firstMenuItem = menuItems.children(':first-child');
-					if (this.classList.contains('file_menu')) {
-						addContributionButton.bind(this)();
-					} else if (firstMenuItem.is('#member_profile_item') || firstMenuItem.is('#member_prefs_item')) {
-						memberStatusButton.bind(this)();
-					} else if (firstMenuItem.is('#channel_archives_item')) {
-						addProjectButton.bind(this)();
-					}
+		if (response.login == 'true') {
+			var addedNodes = $(nodes[0].addedNodes);
+			if (addedNodes.length > 0) {
+				addedNodes.each(function() {
+					if (this.id == 'menu') {
+						
+						var menuItems = $(this).find('#menu_items');
+						var firstMenuItem = menuItems.children(':first-child');
+						if (this.classList.contains('file_menu')) {
+							addContributionButton.bind(this)();
+						} else if (firstMenuItem.is('#member_profile_item') || firstMenuItem.is('#member_prefs_item')) {
+							memberStatusButton.bind(this)();
+						} else if (firstMenuItem.is('#channel_archives_item')) {
+							addProjectButton.bind(this)();
+						}
 
-				}
-			});
+					}
+				});
+			}
 		}
+		
 	});
 }
 
@@ -264,7 +279,7 @@ function addProjectButton() {
 	var menuItemsList = $(this).find('#menu_items');
 	var menuItems = menuItemsList.children();
 	var channelId = $('#channel-list').find('.active').find('.channel_name').attr('data-channel-id');
-	
+	var teamName = $('#team_name').html().trim();
 	var channelIds = '';
 	var channelOrganizationFound = false;
 	chrome.storage.sync.get('channelId', function (response) {
@@ -287,13 +302,13 @@ function addProjectButton() {
 			buttonLabel = 'Project Status';
 			addProjectButton.find('a').html(buttonLabel);
 			addProjectButton.on('click', function() {
-				openProjectStatusPage(channelId);
+				openProjectStatusPage(channelId,teamName);
 			});
 			
 			buttonLabel = 'Submit Milestone';
 			addMilestoneButton.find('a').html(buttonLabel);
 			addMilestoneButton.on('click', function() {
-				openAddMilestonePage(channelId);
+				openAddMilestonePage(channelId,teamName);
 			});
 		}else{			
 			var addProjectButton = menuItems.last().clone().prependTo(menuItemsList);
@@ -301,7 +316,7 @@ function addProjectButton() {
 			buttonLabel = 'Add a Collaborative Project';
 			addProjectButton.find('a').html(buttonLabel);
 			addProjectButton.on('click', function() {
-				openAddProjectPage(channelId);
+				openAddProjectPage(channelId,teamName);
 			});
 		}
     });
@@ -311,6 +326,7 @@ function addProjectButton() {
 
 function addMilestoneButton() {
 	var menuItemsList = $(this).find('#menu_items');
+	var teamName = $('#team_name').html().trim();
 	var menuItems = menuItemsList.children();
 	var channelId = $('#channel-list').find('.active').find('.channel_name').attr('data-channel-id');
 
@@ -319,7 +335,7 @@ function addMilestoneButton() {
 	var buttonLabel = 'Submit milestone';
 	addMilestoneButton.find('a').html(buttonLabel);
 	addMilestoneButton.on('click', function() {
-		openAddMilestonePage(channelId);
+		openAddMilestonePage(channelId,teamName);
 	});
 
 }
@@ -327,6 +343,7 @@ function addMilestoneButton() {
 function addContributionButton() {
 	
 	var menuItemsList = $(this).find('#menu_items');
+	var teamName = $('#team_name').html().trim();
 	var channelId = $('#channel-list').find('.active').find('.channel_name').attr('data-channel-id');
 	console.log('channelId is '+channelId);
 
@@ -338,7 +355,7 @@ function addContributionButton() {
 	var buttonLabel = '<img src="' + contributionIcon + '" />&nbsp;&nbsp;Submit Contribution';
 	addContributionButton.find('a').attr('href','#').html(buttonLabel);
 	addContributionButton.on('click', function() {
-		openAddContributionPage(channelId);
+		openAddContributionPage(channelId,teamName);
 	});
 
 	this.style.top = parseInt(this.style.top) - 32 + "px";
@@ -346,28 +363,33 @@ function addContributionButton() {
 
 function memberStatusButton() {
 	var menuItemsList = $(this).find('#menu_items');
+	var teamName = $('#team_name').html().trim();
 	var memberId = $(this).find('.member_preview_link').data('member-id');
 	var memberStatusButton = $('<li id="member_status_backfeed"><a>Collaborator Overview</a></li>').prependTo(menuItemsList);
 	memberStatusButton.on('click', function() {
-		openMemberStatusPage(memberId);
+		openMemberStatusPage(memberId,teamName);
 	});
 
 }
 
 function onAddEvaluationObservation(mutations) {
+	var teamName = $('#team_name').html().trim();
 	chrome.runtime.sendMessage({
-		message : 'updateChannelIds'
+		message : 'updateChannelIds',teamName:teamName
 	}, function(response) {
-		var channelIds = '';
-		chrome.storage.sync.get('channelId', function (response) {
-			channelIds = response.channelId;
-			if(channelIds != undefined) {
-				var channelIdsVarArray = channelIds.split(",");
-				for (i = 0; i < channelIdsVarArray.length; i++) { 
-				    evaluationObservationOnChannelId(channelIdsVarArray[i],mutations);
+		if (response.login == 'true') {
+			var channelIds = '';
+			chrome.storage.sync.get('channelId', function (response) {
+				channelIds = response.channelId;
+				if(channelIds != undefined) {
+					var channelIdsVarArray = channelIds.split(",");
+					for (i = 0; i < channelIdsVarArray.length; i++) { 
+					    evaluationObservationOnChannelId(channelIdsVarArray[i],mutations);
+					}
 				}
-			}
-	    });
+		    });
+		}
+		
 	});
 	
 }
@@ -377,7 +399,7 @@ function onAddEvaluationObservation(mutations) {
  */
 function evaluationObservationOnChannelId(channelId,mutations){
 
-  	
+	var teamName = $('#team_name').html().trim();
 	var channelNode = document.getElementsByClassName('channel_'+channelId);
 	//check whether user is login slack extension
 	if (channelNode.length > 0 && channelNode[0].classList.contains('active')) {
@@ -395,7 +417,7 @@ function evaluationObservationOnChannelId(channelId,mutations){
 			message : {
 				"gesture": 'checkUserLogin',
 				"options": {}
-			}
+			},teamName:teamName
 		}, function(response) {
 			if (response.login == 'true') {
 				messagesFromBot.forEach(function(message) {

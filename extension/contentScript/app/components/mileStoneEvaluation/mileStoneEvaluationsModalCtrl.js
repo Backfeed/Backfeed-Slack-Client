@@ -69,23 +69,20 @@ angular.module('MyApp').controller('MileStoneEvaluationsModalCtrl',
 				'userId' :  $scope.userId
 			});
 			$scope.data3.$promise.then(function(result1) {
+				if(result1.contributionClose == 'true'){
+					 PostMessageService.gesture.showAlert('MileStone is closed. It cannot be evaluated anymore.', 'error');
+					 $state.go('contributionStatus', {'contributionId': $scope.mileStoneId}, {reload: true});
+				 }
+				else 
 				if(result1.bidExists == 'true'){
 					 PostMessageService.gesture.showAlert('You already evaluated on this milestone.', 'error');
-					 //$state.go('contributionStatus', {'contributionId': $scope.contributionId}, {reload: true});
+					 $state.go('contributionStatus', {'contributionId': $scope.mileStoneId}, {reload: true});
 				 }else{
 					 console.log('comes here'+$scope.mileStoneId);
 					 $scope.projectId = result1.organizationId;
 						console.log('userData.userId: '+ $scope.userId);
 						console.log('userData.projectId: '+$scope.projectId);
-						$scope.data2 = UserDetail.getDetail({
-							userId: $scope.userId,
-							projectId: $scope.projectId
-						});
-						$scope.data2.$promise.then(function(result1) {
-							console.log('result.reputation'+result1.reputation);
-							$scope.evaluation.reputation = result1.reputation;
-							$scope.evaluation.stake = (parseInt(result1.reputation)*5)/100;
-						});
+						
 						$scope.data1 = MileStone.getDetail({
 							id : $scope.mileStoneId
 						});

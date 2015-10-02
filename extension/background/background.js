@@ -246,7 +246,7 @@ chrome.runtime.onMessage.addListener(function(msg, sender,sendResponse) {
 		      break;
 		      
 	    case 'updateChannelIds':
-	    	if(localStorage['satellizer_token'] != undefined){
+if(localStorage['satellizer_token'] != undefined && localStorage['bf-ext-team'] == msg.teamName){
 	    		var params = {team:JSON.parse(localStorage['bf-ext-team-info']).id};
 	    		// passing slack team
 	    		$.ajax({
@@ -254,7 +254,7 @@ chrome.runtime.onMessage.addListener(function(msg, sender,sendResponse) {
 	    		  url: 'https://refactor.elasticbeanstalk.com/allChannelIdsForTeam',
 	    		  data: params,
 	    		  success: function(data) {
-	    			  sendResponse({gotData: "true"});
+	    			  sendResponse({login: "true"});
 	    		       if(data != ''){
 	    		    	   data= data.substring(1, data.length - 1);
 	    		    	        chrome.storage.sync.set({'channelId':data}, function () {
@@ -268,7 +268,7 @@ chrome.runtime.onMessage.addListener(function(msg, sender,sendResponse) {
 		      break;
 
 	    default:
-	      if(localStorage['satellizer_token'] == undefined){
+if(localStorage['satellizer_token'] == undefined || localStorage['bf-ext-team'] != msg.teamName){
 	    	  sendResponse({login: "false"});
 	    	  sendGesture({
 	              "gesture": 'showAlertFromMainCtr',

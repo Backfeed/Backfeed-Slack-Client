@@ -2,7 +2,7 @@ angular.module('MyApp')
 .controller('ContributionStatusModalCtrl', ContributionStatusModalCtrl);
 
 function ContributionStatusModalCtrl($scope, $auth, $location, $stateParams, ContributionStatus,
-  Account, Users, $modalInstance, PostMessageService) {
+  Account, Users, $modalInstance, PostMessageService,MileStone) {
 
   var contributionStatusModel = {
     file: '',
@@ -34,15 +34,29 @@ function ContributionStatusModalCtrl($scope, $auth, $location, $stateParams, Con
     closeModal: closeModal,
     contributionStatusModel: contributionStatusModel
   });
-
-  init();
+  $scope.contributionId = $stateParams.contributionId;
+  $scope.mileStoneId = $stateParams.mileStoneId;
+  if($scope.contributionId == ''){
+	  $scope.MileStoneCurrentData = MileStone.getDetail({
+		  	id: $scope.mileStoneId
+	      });
+	  $scope.MileStoneCurrentData.$promise.then(function(result) {
+    	  $scope.contributionId = result.contribution_id;
+    	  init();
+    	 
+      });
+  }else{
+	  init();
+  }
+  
 
   function init() {
     // if not authenticated return to splash:
     if (!$auth.isAuthenticated()) {
       $location.path('splash');
     } else {
-      $scope.contributionId = $stateParams.contributionId;
+      
+      
       var userData = Account.getUserData();
       console.log("userData is" + userData);
       if (userData == undefined) {

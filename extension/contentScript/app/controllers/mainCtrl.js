@@ -13,7 +13,7 @@ angular.module('MyApp').controller('MainCtrl', ["$scope", "$state","PostMessageS
 		$state.go('projectStatus', {'channelId': channelId,'mileStoneId': ''}, {reload: true});
 	}
 	
-	function goToProjectStatusFromMileStone(mileStoneId) {
+	function goToMileStoneStatus(mileStoneId) {
 		console.log('Project Status from MileStone');
 		$state.go('projectStatus', {'channelId': '','mileStoneId': mileStoneId}, {reload: true});
 	}
@@ -41,7 +41,7 @@ angular.module('MyApp').controller('MainCtrl', ["$scope", "$state","PostMessageS
 	
 	function goToContributionStatus(contributionId) {
 		console.log('Starting showing contribution status: '+contributionId);
-		$state.go('contributionStatus', {'contributionId': contributionId}, {reload: true});
+		$state.go('contributionStatus', {'contributionId': contributionId,'mileStoneId': ''}, {reload: true});
 	}
 
 	function goToMemberStatus(memberId) {
@@ -76,7 +76,7 @@ angular.module('MyApp').controller('MainCtrl', ["$scope", "$state","PostMessageS
 		"openMemberStatusPage": goToMemberStatus,
 		"refreshWindows": refreshWindows,
 		"openProjectStatus":goToProjectStatus,
-		"openProjectStatusPageFromMileStone":goToProjectStatusFromMileStone,
+		"openMileStoneStatus":goToMileStoneStatus,
 		"logout": logout
 	};
 

@@ -91,16 +91,7 @@ angular.module('MyApp').controller('EvaluationsModalCtrl',
 					 console.log('comes here'+$scope.contributionId);
 					 $scope.projectId = result1.organizationId;
 						console.log('userData.userId: '+ $scope.userId);
-						console.log('userData.projectId: '+$scope.projectId);
-						$scope.data2 = UserDetail.getDetail({
-							userId: $scope.userId,
-							projectId: $scope.projectId
-						});
-						$scope.data2.$promise.then(function(result1) {
-							console.log('result.reputation'+result1.reputation);
-							$scope.evaluation.reputation = result1.reputation;
-							$scope.evaluation.stake = (parseInt(result1.reputation)*5)/100;
-						});
+						console.log('userData.projectId: '+$scope.projectId);						
 						$scope.data1 = ContributionDetail.getDetail({
 							contributionId : $scope.contributionId
 						});

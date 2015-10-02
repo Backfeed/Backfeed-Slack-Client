@@ -34,7 +34,7 @@ myApp.config(function($stateProvider, $urlRouterProvider, $authProvider, $compil
             controller: 'MilestoneCtrl'
         })
         .state('contributionStatus', {
-            url: '/contributionStatus/:contributionId',
+			url: '/contributionStatus/:contributionId/:mileStoneId',
             templateUrl: chrome.extension.getURL("extension/contentScript/app/components/contributionStatus/contributionStatus.html"),
             controller: 'ContributionStatusCtrl'
         })

@@ -10,6 +10,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $timeout, $stateParams, _DE
   var validationFailureForCode = false;
 
   var projectModel = {
+    slack_user_id:'',
     token_name: '',
     slack_teamid: '',
     name: '',
@@ -72,6 +73,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $timeout, $stateParams, _DE
       $scope.projectModel.name = $scope.userData.slackTeamName;
       $scope.projectModel.slack_teamid = $scope.userData.slackTeamId;
       $scope.projectModel.contributors[0].id = $scope.userData.slackUserId;
+      $scope.projectModel.slack_user_id = $scope.userData.slackUserId;
       $scope.projectModel.contributors[0].name = $scope.userData.displayName;
       angular.element('#' + $scope.projectModel.contributors[0].id).trigger('focus');
       var sliderDivElement = angular.element('#slider' + $scope.projectModel.contributors[0].id + " div");
@@ -173,6 +175,7 @@ function ProjectsModalCtrl($scope, $auth, $location, $timeout, $stateParams, _DE
         $scope.access_token = $scope.userData.access_token;
         $scope.projectModel.access_token = $scope.access_token;
         $scope.projectModel.contributors[0].id = $scope.userData.slackUserId;
+        $scope.projectModel.slack_user_id = $scope.userData.slackUserId;
         $scope.projectModel.contributors[0].name = $scope.userData.displayName;
         angular.element('#' + $scope.projectModel.contributors[0].id).trigger('focus');
         sliderDivElement = angular.element('#slider' + $scope.projectModel.contributors[0].id + " div");
