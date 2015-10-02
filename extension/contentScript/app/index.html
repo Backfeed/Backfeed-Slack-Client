@@ -1,4 +1,5 @@
 <html>
+
 <head>
 	<title>Backfeed App</title>
 	 <link href='https://fonts.googleapis.com/css?family=Lato:200,400,700,900' rel='stylesheet' />
@@ -9,6 +10,7 @@
 	 <link href="vendor/styles/jquery-ui.css" rel="stylesheet" />
 	 <link href="build/main.css" rel="stylesheet" />
 </head>
+
 <body ng-app="MyApp" ng-csp>
 
 <div ng-controller='MainCtrl'></div>
@@ -21,7 +23,6 @@
 <script src="vendor/scripts/jquery.js"></script>
 <script src="vendor/scripts/jquery-ui.js"></script>
 <script src="vendor/scripts/spin.min.js"></script>
-
 <script src="vendor/scripts/angular.js"></script>
 <script src="vendor/scripts/angular-sanitize.js"></script>
 <script src="vendor/scripts/angular-touch.js"></script>
@@ -49,6 +50,14 @@
 <script src="services/currentUser.js"></script>
 <script src="services/milestone.js"></script>
 
+<!-- directives -->
+<script src="directives/svgIcon.js"></script>
+<script src="directives/contenteditable.js"></script>
+<script src="directives/singleValueDonutChart/singleValueDonutChart.js"></script>
+<script src="directives/contributionsTable/contributionsTable.js"></script>
+<script src="directives/contributorsList/contributorsList.js"></script>
+<script src="directives/selectContributors/selectContributors.js"></script>
+
 <!-- controllers -->
 <script src="controllers/mainCtrl.js"></script>
 <script src="controllers/splash.js"></script>
@@ -59,46 +68,37 @@
 <script src="controllers/profile.js"></script>
 <script src="controllers/navbar.js"></script>
 
-<!--contributions-->
+<!-- contributions -->
 <script src="components/contribution/contributionsCtrl.js"></script>
 <script src="components/contribution/contributionsModalCtrl.js"></script>
 
-<!--contribution status-->
+<!-- contribution status -->
 <script src="components/contributionStatus/contributionStatusCtrl.js"></script>
 <script src="components/contributionStatus/contributionStatusModalCtrl.js"></script>
 
-<!--member status-->
+<!-- member status -->
 <script src="components/memberStatus/memberStatusCtrl.js"></script>
 <script src="components/memberStatus/memberStatusModalCtrl.js"></script>
 
-<!--evaluations-->
+<!-- evaluations -->
 <script src="components/evaluation/evaluationsModalCtrl.js"></script>
 <script src="components/evaluation/evaluationsCtrl.js"></script>
 
-<!--projects-->
+<!-- projects -->
 <script src="components/project/projectsCtrl.js"></script>
 <script src="components/project/projectsModalCtrl.js"></script>
 
-<!--milestone-->
-<script src="components/milestone/milestoneCtrl.js"></script>
-<script src="components/milestone/milestoneModalCtrl.js"></script>
-
-<!--mileStone evaluations-->
-<script src="components/mileStoneEvaluation/mileStoneEvaluationsModalCtrl.js"></script>
-<script src="components/mileStoneEvaluation/mileStoneEvaluationsCtrl.js"></script>
-
-<!--projects-->
+<!-- projects status -->
 <script src="components/projectStatus/projectStatusCtrl.js"></script>
 <script src="components/projectStatus/projectStatusModalCtrl.js"></script>
 
-<!-- directives -->
-<script src="directives/svgIcon.js"></script>
-<script src="directives/contenteditable.js"></script>
-<script src="directives/singleValueDonutChart/singleValueDonutChart.js"></script>
-<script src="directives/contributionsTable/contributionsTable.js"></script>
-<script src="directives/contributorsList/contributorsList.js"></script>
-<script src="directives/selectContributors/selectContributors.js"></script>
+<!-- milestone -->
+<script src="components/milestone/milestoneCtrl.js"></script>
+<script src="components/milestone/milestoneModalCtrl.js"></script>
 
+<!-- mileStone evaluations -->
+<script src="components/mileStoneEvaluation/mileStoneEvaluationsModalCtrl.js"></script>
+<script src="components/mileStoneEvaluation/mileStoneEvaluationsCtrl.js"></script>
 
 </body>
 </html>
