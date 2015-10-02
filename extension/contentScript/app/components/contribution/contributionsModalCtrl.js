@@ -1,8 +1,7 @@
 angular.module('MyApp').controller('ContributionsModalCtrl', ContributionsModalCtrl);
 
-function ContributionsModalCtrl($scope, $auth, $location, $rootScope, $stateParams, _DEV, Contributions,
-  ContributionDetail, SaveContribution, CloseContribution, $state,
-  Account, Users, $modalInstance, PostMessageService, ChannelProject) {
+function ContributionsModalCtrl($scope, $auth, $location, $stateParams, _DEV, Contributions,
+  ContributionDetail, SaveContribution, Account, Users, $modalInstance, PostMessageService, ChannelProject) {
 
   var log = _DEV.log('Add Contribution');
 

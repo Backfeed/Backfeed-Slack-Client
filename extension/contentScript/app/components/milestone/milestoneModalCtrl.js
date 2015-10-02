@@ -46,6 +46,7 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
       $scope.data = Users.getProject.getUsers({
         projectId: $scope.orgId
       });
+
       $scope.data.$promise.then(function(result) {
         Users.setAllProjectUsersData(result);
         $scope.users = result;
@@ -53,14 +54,13 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
           slackUsersMap[$scope.users[i].id] = $scope.users[i].name;
         }
       });
-    };
+  };
+
   function getSlackUsers(){
-	  
-	  var allProjectUsersData = Users.getAllProjectUsersData();
-	  if (allProjectUsersData == undefined) {
+        var allProjectUsersData = Users.getAllProjectUsersData();
+        if (allProjectUsersData == undefined) {
           $scope.getProjectUsers();
         } else {
-
           $scope.users = allProjectUsersData;
           for (var i = 0; i < $scope.users.length; i++) {
             slackUsersMap[$scope.users[i].id] = $scope.users[i].name;
@@ -75,18 +75,12 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
     $scope.userData = Account.getUserData();
     log("userData is"+$scope.userData);
 
-    if ( $scope.userData == undefined ) {
-
+    if ($scope.userData == undefined) {
      getProfile();
-
-    } 
-
-    else {
-
+    } else {
      $scope.userId = $scope.userData.userId;
      $scope.access_token = $scope.userData.access_token;
      PostMessageService.gesture.showIframe();
-
     }
 
     $timeout(function() {
@@ -117,7 +111,6 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
           $scope.contributorsCount = result.contributors;
           $scope.tokenCode = result.code;
           $scope.totalValue = result.totalValue;
-          
         });
       });
     }, 1000);
@@ -126,7 +119,7 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
 
   function closeModal() {
     $modalInstance.dismiss('cancel');
-  };
+  }
  
   $scope.buildMileStoneMessage = function(mileStoneData) {
       var milestoneString = '';

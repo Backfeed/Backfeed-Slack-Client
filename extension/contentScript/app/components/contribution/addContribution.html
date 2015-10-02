@@ -12,7 +12,11 @@
 			<section>
 
 				<div>
-					<h3 id="createContributionModalTitle">Contribution&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img tooltip="Contributions are anything that can potentially provide value to a project. When the team decides the contribution is valuable, new Tokens and Reputation are generated and divided between the contributors. Consult your project's guidelines for what makes a good contribution." alt="help" src="/extension/contentScript/app/images/icon_help.png"/></h3>
+					<h3 id="createContributionModalTitle">Contribution&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<img alt="help" src="/extension/contentScript/app/images/icon_help.png"
+							 tooltip="Contributions are anything that can potentially provide value to a project. When the team decides the contribution is valuable, new Tokens and Reputation are generated and divided between the contributors. Consult your project's guidelines for what makes a good contribution."
+							 tooltip-placement="right" />
+					</h3>
 
 					<div class="form-group">
 						<input type="text"
@@ -36,9 +40,14 @@
 				</div>
 
 				<div>
-					<h3>Contributors <img tooltip="The worth of this contribution in Tokens and Reputation will be divided between all the listed contributors. Make sure all contributors agree on this division before submitting the contribution." alt="help" src="/extension/contentScript/app/images/icon_help.png"/></h3>
+					<h3>
+						Contributors 
+						<img alt="help" src="/extension/contentScript/app/images/icon_help.png"
+													  tooltip="The worth of this contribution in Tokens and Reputation will be divided between all the listed contributors. Make sure all contributors agree on this division before submitting the contribution."
+													  tooltip-placement="right" />
 					<select-contributors contributors="model.contributors"
 															 contributors-valid="foo.contributorsValid"></select-contributors>
+					</h3>
 				</div>
 
 			</section>

@@ -13,7 +13,9 @@
 
         <h2>
           New Milestone
-          <img tooltip="When a project's members collectively decide the project reached a significant milestone, they have the option to bundle all the contributions made so far and post it as a single contribution to another, higher-level project." alt="help" src="/extension/contentScript/app/images/icon_help.png">
+          <img alt="help" src="/extension/contentScript/app/images/icon_help.png"
+               tooltip="When a project's members collectively decide the project reached a significant milestone, they have the option to bundle all the contributions made so far and post it as a single contribution to another, higher-level project."
+               tooltip-placement="right" />
         </h2> 
 
         <div class="form-group">
@@ -28,7 +30,12 @@
           <label>Content</label>
         </div>
 
-        <contributions-table contributions="milestoneModel.contributions" active-contribution="activeContribution"></contributions-table>
+        <contributions-table ng-if="milestoneModel.contributions.length > 0"
+                contributions="milestoneModel.contributions"
+                active-contribution="activeContribution"></contributions-table>
+
+        <div ng-show="milestoneModel.contributions == 0"
+             class="alert alert-danger" role="alert">You need to make contributions before you can submit a milestone.</div>
 
       </div>  
 

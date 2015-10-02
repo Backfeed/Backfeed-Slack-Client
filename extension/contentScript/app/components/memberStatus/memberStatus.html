@@ -1,7 +1,7 @@
 <script type="text/ng-template" id="MemberStatusModalTmpl">
 <div class="modal-header">
 	<img alt="Close modal" class="close" src="/extension/contentScript/app/images/close_x.png" ng-click="closeModal()" />
-	<h4 class="modal-title">{{memberStatus}} stats</h4>
+	<h4 class="modal-title">{{memberStatusTitle}} Status</h4>
 </div>
 <div class="modal-body">
 	<form>
@@ -63,7 +63,7 @@
             </div>
 		</div>
 
-		<div class="row">
+		<div class="row" ng-if="memberStatusModel.contributions.length">
 			<div class="col-sm-12">
 				<table class="table table-condensed table-hover contributions-table">
 					<thead>
@@ -126,6 +126,7 @@
 				</table>
 			</div>
 		</div>
+
 	</form>
 
 	<div class="modal-footer">
