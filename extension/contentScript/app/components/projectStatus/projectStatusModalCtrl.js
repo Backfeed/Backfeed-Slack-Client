@@ -21,6 +21,7 @@ function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, 
     selectedMileStonetId: '',
     milestones: [],
     milestoneContributers: [],
+    currentUser: currentUser,
     activeContribution: {}
 
   });

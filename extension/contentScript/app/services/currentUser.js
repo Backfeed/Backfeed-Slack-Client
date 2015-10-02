@@ -1,13 +1,16 @@
 angular.module('MyApp')
   .service('CurrentUser', CurrentUser);
 
-function CurrentUser(Resource) {
+function CurrentUser(_DEV, Resource, $localStorage) {
 
-  var currentUser = undefined;
+  var log = _DEV.log('CURRENT USER');
 
   var service = {
 
-    get: get
+    get: get,
+    set: set,
+    update: update,
+    destroy: destroy
 
   };
 
@@ -18,21 +21,29 @@ function CurrentUser(Resource) {
   function init() {
 
     Resource.get('api/me').then(function(user) {
-      currentUser = user;
+
+      log("init", user);
+
+      $localStorage.currentUser = user;
+
     });
 
   }
 
   function get() {
-    return currentUser;
+    return $localStorage.currentUser || null;
+  }
+
+  function set(user) {
+    $localStorage.currentUser = user;
   }
 
   function update(params) {
-    angular.extend(currentUser, params);
+    angular.extend($localStorage.currentUser, params);
   }
 
   function destroy() {
-    currentUser = undefined;
+    $localStorage.currentUser = null;
   }
 
 }
