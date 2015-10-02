@@ -1,4 +1,5 @@
-angular.module('MyApp').directive('selectContributors', selectContributors);
+angular.module('MyApp')
+  .directive('selectContributors', selectContributors);
 
 function selectContributors() {
 
@@ -64,10 +65,7 @@ function selectContributorsController($timeout, _DEV, Resource, Account, AllSlac
   }
 
   function addContributor(contributor) {
-    ctrl.contributors.push({
-      id: contributor.id,
-      percentage: contributor.percentage
-    });
+    ctrl.contributors.push(contributor);
 
     ctrl.usersToSelectFrom = [];
 
@@ -79,6 +77,7 @@ function selectContributorsController($timeout, _DEV, Resource, Account, AllSlac
   }
 
   function refreshUsersToSelectFrom(searchQuery) {
+    log("refreshUsersToSelectFrom", searchQuery);
     if (! access_token) return;
     var userIds = getContributorsIds();
     ctrl.foo = AllSlackUsers.allSlackUsers({'access_token':access_token,'userIds':userIds,'searchString':searchQuery});
