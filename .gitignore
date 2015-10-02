@@ -3,3 +3,4 @@
 /config.json
 /build/
 /node_modules/
+/extension/contentScript/app/vendor/bower

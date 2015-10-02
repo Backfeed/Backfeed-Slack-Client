@@ -1,0 +1,21 @@
+{
+  "name": "BF-chrome-extension",
+  "version": "0.0.3",
+  "homepage": "https://github.com/Backfeed/BF-Chrome-Extension",
+  "authors": [
+    "Backfeed dev team"
+  ],
+  "description": "Back feed slack chrome extension",
+  "license": "MIT",
+  "dependencies": {
+    
+  },
+  "devDependencies": {},
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
