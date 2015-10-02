@@ -4,10 +4,11 @@ function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, 
 
   var log = _DEV.log("PROJECT STATUS MODAL");
 
+  var currentUser = CurrentUser.get();
+
   var channelId   = $stateParams.channelId;
   var mileStoneId = $stateParams.mileStoneId;
-  
-  var slackTeamId = '';
+
   var orgId       = '';
 
   var ctrl = this;
@@ -30,17 +31,12 @@ function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, 
 
     PostMessageService.hideIframe();
     PostMessageService.showIframe();
+    
+    getCurrentProjectStatus();
 
-    CurrentUser.get().then(function(me) {
-
-      log('CurrentUser.get', me);
-
-      userId      = me.userId;
-      slackTeamId = me.slackTeamId;
-
-      getCurrentProjectStatus();
-
-    });
+    // CurrentUser.get().then(function(me) {
+    //   log('CurrentUser.get', me);
+    // });
 
   }
 
@@ -54,7 +50,7 @@ function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, 
       function(result) {
 
         $scope.projectStatusModel = result;
-        debugger; // assignto controller instead of projectStatusModel
+        log("updateViewforMileStone: TODO: assignto controller instead of projectStatusModel");
 
         orgId            = result.current_org_id;
         ctrl.channelName = result.channelName;
@@ -76,8 +72,8 @@ function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, 
 
     var ChannelProjectExistsData = ChannelProject.exists({
       channelId: channelId,
-      slackTeamId: slackTeamId,
-      userId: userId
+      slackTeamId: currentUser.slackTeamId,
+      userId: currentUser.userId
     });
 
     ChannelProjectExistsData.$promise.then(function(result) {
