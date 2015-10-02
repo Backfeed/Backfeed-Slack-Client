@@ -2,9 +2,9 @@
 
 var myApp = angular.module('MyApp', ['ui.slider', 'ngResource', 'ngTouch', 'ngMessages', 'ui.router', 'ui.bootstrap', 'satellizer','BFAPIServices','ngSanitize','ui.select']);
 
-myApp.constant('environmentURL', 'https://stagingenviornment.elasticbeanstalk.com/');
+myApp.constant('environmentURL', 'https://refactor.elasticbeanstalk.com/');
 myApp.constant('SLACK_API_URL', 'https://slack.com/api/');
-myApp.constant('API_URL', 'https://stagingenviornment.elasticbeanstalk.com/');
+myApp.constant('API_URL', 'https://refactor.elasticbeanstalk.com/');
 
 myApp.config(function($stateProvider, $urlRouterProvider, $authProvider, $compileProvider) {
     $stateProvider
