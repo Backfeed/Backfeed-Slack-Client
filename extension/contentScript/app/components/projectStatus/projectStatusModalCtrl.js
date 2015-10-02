@@ -1,6 +1,6 @@
 angular.module('MyApp').controller('ProjectStatusModalCtrl', ProjectStatusModalCtrl);
 
-function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, $modalInstance, _DEV, CurrentUser, PostMessageService, ChannelProject, Milestone) {
+function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, $modalInstance, _DEV, CurrentUser, PostMessageService, ChannelProject, Milestone, Project) {
 
   var log = _DEV.log("PROJECT STATUS MODAL");
 
@@ -8,20 +8,18 @@ function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, 
 
   var channelId   = $stateParams.channelId;
   var mileStoneId = $stateParams.mileStoneId;
-
-  var orgId       = '';
-
+  var project     = Project.getByChannelId(channelId);
   var ctrl = this;
 
   angular.extend(ctrl, {
 
     closeModal: closeModal,
     updateViewforMileStone: updateViewforMileStone,
-    channelName: '',
     selectedMileStonetId: '',
+    channelName: project.channelName,
+    currentUser: currentUser,
     milestones: [],
     milestoneContributers: [],
-    currentUser: currentUser,
     activeContribution: {}
 
   });
@@ -33,11 +31,24 @@ function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, 
     PostMessageService.hideIframe();
     PostMessageService.showIframe();
     
-    getCurrentProjectStatus();
+    Milestone.getAll(project.orgId).then(function(milestones) {
+      log("init: milestones", milestones);
+      ctrl.milestones = milestones;
+    });
 
-    // CurrentUser.get().then(function(me) {
-    //   log('CurrentUser.get', me);
-    // });
+    Milestone.getCurrent(project.orgId).then(function(currentMilestone) {
+      log("init: current milestones", currentMilestone);
+      angular.extend(ctrl, {
+
+        milestoneContributers: currentMilestone.milestoneContributers,
+        milestoneContributions: currentMilestone.milestoneContributions,
+        tokenName: currentMilestone.tokenName,
+        tokens: currentMilestone.tokens,
+        totalValue: currentMilestone.totalValue
+
+      });
+
+    });
 
   }
 
@@ -53,9 +64,6 @@ function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, 
         $scope.projectStatusModel = result;
         log("updateViewforMileStone: TODO: assignto controller instead of projectStatusModel");
 
-        orgId            = result.current_org_id;
-        ctrl.channelName = result.channelName;
-
       },
 
       function(err) {
@@ -63,42 +71,6 @@ function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, 
       }
 
     );
-
-  }
-
-  function getCurrentProjectStatus() {
-
-    if ( !( channelId && channelId != 0 && channelId != '' ) )
-      return;
-
-    var ChannelProjectExistsData = ChannelProject.exists({
-      channelId: channelId,
-      slackTeamId: currentUser.slackTeamId,
-      userId: currentUser.userId
-    });
-
-    ChannelProjectExistsData.$promise.then(function(result) {
-      orgId            = result.orgId;
-      ctrl.channelName = result.channelName;
-
-      Milestone.getAll(orgId).then(function(milestones) {
-        ctrl.milestones = milestones;
-      });
-
-      Milestone.getCurrent(orgId).then(function(result) {
-        angular.extend(ctrl, {
-
-          milestoneContributers: result.milestoneContributers,
-          milestoneContributions: result.milestoneContributions,
-          tokenName: result.tokenName,
-          tokens: result.tokens,
-          totalValue: result.totalValue
-
-        });
-
-      });
-
-    });
 
   }
 
