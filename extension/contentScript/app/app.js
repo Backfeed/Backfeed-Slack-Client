@@ -23,11 +23,6 @@ myApp.config(function($stateProvider, $urlRouterProvider, $authProvider, $compil
             templateUrl: chrome.extension.getURL("extension/contentScript/app/components/project/addProject.html"),
             controller: 'ProjectsCtrl'
         })
-         .state('projectStatus', {
-            url: '/projectStatus/:channelId/:mileStoneId',
-            templateUrl: chrome.extension.getURL("extension/contentScript/app/components/projectStatus/projectStatus.html"),
-            controller: 'ProjectStatusCtrl'
-        })
         .state('addMilestone', {
             url: '/milestone/:channelId',
             templateUrl: chrome.extension.getURL("extension/contentScript/app/components/milestone/addMilestone.html"),

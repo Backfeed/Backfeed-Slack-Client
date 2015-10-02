@@ -1,25 +1,29 @@
 <script type="text/ng-template" id="ProjectStatusModalTmpl">
 
-<div class="modal-header">
-  <img alt="Close modal" class="close-modal" src="/extension/contentScript/app/images/close_x.png" ng-click="closeModal()" />
-  <div class="modal-title">Project Status</div>
-</div>
+  <div class="modal-header">
+    <img alt="Close modal" class="close-modal" src="/extension/contentScript/app/images/close_x.png" ng-click="ctrl.closeModal()" />
+    <div class="modal-title">Project Status</div>
+  </div>
 
   <form name="form">
     <div class="modal-body">
 
-    <section>
+      <section>
         <h1 class="modal-heading">
-            <svg-icon icon="big-slack"></svg-icon>&nbsp;{{projectStatusModel.channelName}}
+          <svg-icon icon="big-slack"></svg-icon>
+          {{ ctrl.channelName  }}
         </h1>
-        <select class="select-backfeed"
-                name="milestoneSelection"
-                ng-model="selectedMileStonetId"
-                ng-change="updateViewforMileStone();" ng-options="projectMileStone.title for projectMileStone in projectMileStones track by projectMileStone.id">
-            <option value="">On-Going Work</option>
-            
+
+        <select class="select-backfeed" 
+                name="milestoneSelection" 
+                ng-model="ctrl.selectedMileStonetId" 
+                ng-change="ctrl.updateViewforMileStone();" 
+                ng-options="milestone.title as milestone.id for milestone in ctrl.milestones track by milestone.id">
+
+          <option value="">On-Going Work</option>
+
         </select>
-    </section>
+      </section>
 
       <div class="row">
         <div class="col-sm-12">
@@ -27,30 +31,37 @@
             <div class="stat member-stat">
               <div class="stat-item">
                 <img class="stat-icon" alt="Contribution" src="/extension/contentScript/app/images/contribution.png" />
-                <div class="stat-data">{{projectStatusModel.contributions | number:0}}</div>
+                <div class="stat-data">{{ ctrl.milestoneContributions.length | number: 0 }}</div>
               </div>
-              <div class="stat-label">Contributions&nbsp;<img tooltip="How many contributions have been contributed during this time period" alt="help" src="/extension/contentScript/app/images/icon_help.png" /></div>
+              <div class="stat-label">
+                Contributions
+                <img tooltip="How many contributions have been contributed during this time period" alt="help" src="/extension/contentScript/app/images/icon_help.png" />
+              </div>
             </div>
             <div class="stat member-stat">
               <div class="stat-item">
                 <img class="stat-icon" alt="Tokens" src="/extension/contentScript/app/images/rep.png" />
-                <div class="stat-data">{{projectStatusModel.tokens | number:0}}&nbsp;<small>{{projectStatusModel.code}}</small></div>
+                <div class="stat-data">
+                  {{ ctrl.tokens | number: 0 }}
+                  <small>{{ ctrl.code }}</small>
+                </div>
               </div>
-              <div class="stat-label">{{projectStatusModel.tokenName}}</div>
+              <div class="stat-label">{{ ctrl.tokenName }}</div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="row" ng-if="projectStatusModel.contributions > 0">
+      <div class="row" ng-if="ctrl.milestoneContributions.length > 0">
         <div class="col-sm-7">
-          <contributions-table contributions="projectStatusModel.milestoneContributions" active-contribution="activeContribution"></contributions-table>
+          <contributions-table contributions="ctrl.milestoneContributions" 
+                               active-contribution="ctrl.activeContribution"></contributions-table>
         </div>
 
         <div class="col-sm-5">
-          <div class="contributors box">
-            <contributors-list contributors="projectStatusModel.milestoneContributors"
-                               contributors-count="projectStatusModel.milestoneContributors.length"></contributors-list>
+          <div class="contributers box">
+            <contributers-list contributers="ctrl.milestoneContributers" 
+                               contributers-count="ctrl.milestoneContributers.length"></contributers-list>
           </div>
         </div>
       </div>
