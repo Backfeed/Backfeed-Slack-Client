@@ -95,13 +95,7 @@ function ContributionsModalCtrl($scope, $auth, $location, $stateParams, _DEV, Co
         $scope.projectId = result.orgId;
         projectId = $scope.projectId;
         $scope.model.users_organizations_id = result.userOrgId;
-        $scope.model.owner = $scope.userId;
-        $scope.model.contributers[0].contributer_id = $scope.userId;
-        $scope.model.contributers[0].contributer_name = $scope.displayName;
-        //$scope.model.contributers[0].contributer_fullname =  $scope.users[i].real_name;
-        //$scope.model.contributers[0].className = "contributer-cell-wrapper";
-        angular.element('#' + $scope.model.contributers[0].contributer_id).trigger('focus');
-        $scope.model.contributers[0].className = "contributer-cell-wrapper active-contributer";
+        $scope.model.ownerId = $scope.userId;
         PostMessageService.showIframe();
         var allProjectUsersData = Users.getAllProjectUsersData();
         if (allProjectUsersData == undefined) {
