@@ -1,6 +1,6 @@
 'use strict';
 
-var myApp = angular.module('MyApp', ['ui.slider', 'ngResource', 'ngTouch', 'ngMessages', 'ui.router', 'ui.bootstrap', 'satellizer','BFAPIServices','ngSanitize','ui.select']);
+var myApp = angular.module('MyApp', ['ui.slider', 'ngResource', 'ngTouch', 'ngMessages', 'ui.router', 'ui.bootstrap', 'satellizer','BFAPIServices','ngSanitize','ui.select', 'ngStorage']);
 
 myApp.constant('environmentURL', 'https://stagingenviornment.elasticbeanstalk.com/');
 myApp.constant('SLACK_API_URL', 'https://slack.com/api/');

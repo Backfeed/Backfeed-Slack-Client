@@ -8,7 +8,7 @@
   "description": "Back feed slack chrome extension",
   "license": "MIT",
   "dependencies": {
-    
+    "ngstorage": "ng-storage#~0.4.2"
   },
   "devDependencies": {},
   "ignore": [
