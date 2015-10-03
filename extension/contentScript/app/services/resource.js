@@ -1,7 +1,9 @@
 angular.module('MyApp')
 .service('Resource', Resource);
 
-function Resource($http, API_URL) {
+function Resource($http, API_URL, _DEV, $localStorage) {
+
+  var log = _DEV.log("RESOURCE");
 
   var service = {
 
@@ -49,11 +51,11 @@ function Resource($http, API_URL) {
   }
 
   function getBaseParams() {
-    return { user_token: '' };
+    return { access_token: $localStorage.currentUser.access_token };
   }
   
   function mergeParams(params) {
-    return angular.extend(getBaseParams(), params);
+    return params ? angular.extend(getBaseParams(), params) : getBaseParams();
   }
 
 }
