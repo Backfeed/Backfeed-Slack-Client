@@ -42,8 +42,11 @@ function Project(_DEV, Resource, $localStorage) {
   }
 
   function create(project) {
-    log("create", project, $localStorage.BF_projects.length);
-    return Resource.post('organization', project).then(function(newProject) {
+
+    var projectToSubmit = getPreparedProjectForCreation(project);
+
+    log("create", projectToSubmit, $localStorage.BF_projects.length);
+    return Resource.post('organization', projectToSubmit).then(function(newProject) {
       $localStorage.BF_projects.push(newProject);
       log("create CB", $localStorage.BF_projects, $localStorage.BF_projects.length);
       return newProject;
@@ -56,6 +59,24 @@ function Project(_DEV, Resource, $localStorage) {
     return Resource.destroy(projectId).then(function() {
       log("destroy CB", $localStorage.BF_projects.length, $localStorage.BF_projects.length);
     });
+  }
+
+  function getPreparedProjectForCreation(project) {
+
+    var projectToSubmit = angular.copy(project);
+
+    projectToSubmit.contributors = _.map(projectToSubmit.contributors, function(contributor) {
+
+      return {
+
+        id: contributor.id,
+        percentage: contributor.percentage
+
+      }
+
+    });
+
+    return projectToSubmit;
   }
 
 }
