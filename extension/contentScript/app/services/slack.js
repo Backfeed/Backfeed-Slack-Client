@@ -22,7 +22,7 @@ function Slack($q, $http, SLACK_API_URL, CurrentUser) {
     });
   }
 
-  function sendTestMessage(channelId, message) {
+  function postMessage(channelId, message) {
     log('sending test message to slack: ' + message);
 
     return get('chat.postMessage', {
