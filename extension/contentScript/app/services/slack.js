@@ -1,23 +1,41 @@
 angular.module('MyApp')
 .service('Slack', Slack);
 
-function Slack($q, $http, SLACK_API_URL) {
+function Slack($q, $http, SLACK_API_URL, CurrentUser) {
+
+  var currentUser = CurrentUser.get();
 
   var service = {
 
     getChannel: getChannel,
-    get: get
+    get: get,
+    postMessage: postMessage
 
   };
 
   return service;
 
-  function getChannel(channelId, token) {
+  function getChannel(channelId) {
     return get('channels.info', {
       channel: channelId,
-      token: token
+      token: currentUser.access_token
     });
   }
+
+  function sendTestMessage(channelId, message) {
+    log('sending test message to slack: ' + message);
+
+    return get('chat.postMessage', {
+      icon_url: 'https://s-media-cache-ak0.pinimg.com/236x/71/71/f9/7171f9ba59d5055dd0a865b41ac4b987.jpg',
+      username: 'backfeed-bot',
+      token: currentUser.access_token,
+      channel: channelId,
+      text: message,
+      link_names: 1,
+      parse: "full"
+    });
+
+  };
 
   function get(url, params) {
     var deferred = $q.defer();
