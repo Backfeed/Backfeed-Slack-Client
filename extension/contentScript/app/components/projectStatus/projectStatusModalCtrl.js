@@ -17,7 +17,6 @@ function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, 
     updateViewforMileStone: updateViewforMileStone,
     selectedMileStonetId: '',
     channelName: project.channelName,
-    currentUser: currentUser,
     milestones: [],
     milestoneContributers: [],
     activeContribution: {}
