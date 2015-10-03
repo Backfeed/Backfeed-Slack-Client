@@ -47,49 +47,6 @@ myApp.config(function($stateProvider, $urlRouterProvider, $authProvider, $compil
             url: '/mileStoneEvaluations/:mileStoneId/:projectId',
             templateUrl: chrome.extension.getURL("extension/contentScript/app/components/mileStoneEvaluation/addMileStoneEvaluation.html"),
             controller: 'mileStoneEvaluationsCtrl'
-        })
-        .state('users', {
-            url: '/users',
-            templateUrl: 'app/partials/users.html',
-            controller: 'UsersCtrl'
-        })
-        .state('createUser', {
-            url: '/user',
-            templateUrl: 'app/partials/createUser.html',
-            controller: 'UsersCtrl'
-        })
-
-        .state('login', {
-            url: '/login',
-            templateUrl: 'app/partials/login.html',
-            controller: 'LoginCtrl'
-        })
-        .state('signup', {
-            url: '/signup',
-            templateUrl: 'app/partials/signup.html',
-            controller: 'SignupCtrl'
-        })
-        .state('logout', {
-            url: '/logout',
-            template: null,
-            controller: 'LogoutCtrl'
-        })
-        .state('profile', {
-            url: '/profile',
-            templateUrl: 'app/partials/profile.html',
-            controller: 'ProfileCtrl',
-            resolve: {
-                //authenticated: function($q, $location, $auth) {
-                //    var deferred = $q.defer();
-                //
-                //    if (!$auth.isAuthenticated()) {
-                //        $location.path('/splash');
-                //    } else {
-                //        deferred.resolve();
-                //    }
-                //    return deferred.promise;
-                //}
-            }
         });
 
     //$urlRouterProvider.otherwise('/contribution');
