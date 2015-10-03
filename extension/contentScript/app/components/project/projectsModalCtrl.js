@@ -28,7 +28,9 @@ function ProjectsModalCtrl($stateParams, _DEV, Slack, $modalInstance, PostMessag
     channelName: "",
     contributorsValid: true,
     project: {
-      channelId: channelId
+      channelId: channelId,
+      similarEvaluationRate: '50',
+      passingResponsibilityRate: '50'
     }
 
   });
