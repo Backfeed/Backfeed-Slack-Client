@@ -8,7 +8,9 @@ function Project(_DEV, Resource, $localStorage) {
   var service = {
 
     getAll: getAll,
-    getByChannelId: getByChannelId
+    getByChannelId: getByChannelId,
+    create: create,
+    destroy: destroy
 
   };
 
@@ -37,6 +39,23 @@ function Project(_DEV, Resource, $localStorage) {
 
     function matchChannelId(project) { return project.channelId = channelId; }
 
+  }
+
+  function create(project) {
+    log("create", project, $localStorage.BF_projects.length);
+    return Resource.post('organization', project).then(function(newProject) {
+      $localStorage.BF_projects.push(newProject);
+      log("create CB", $localStorage.BF_projects, $localStorage.BF_projects.length);
+      return newProject;
+    });
+
+  }
+
+  function destroy(projectId) {
+    log("destroy", projectId, $localStorage.BF_projects.length, $localStorage.BF_projects.length);
+    return Resource.destroy(projectId).then(function() {
+      log("destroy CB", $localStorage.BF_projects.length, $localStorage.BF_projects.length);
+    });
   }
 
 }
