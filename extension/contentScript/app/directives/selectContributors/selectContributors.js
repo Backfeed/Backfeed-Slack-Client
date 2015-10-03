@@ -5,12 +5,12 @@ function selectContributors() {
 
   return {
 
-    bindToController: { contributors: '=', contributorsValid: '=' },
+    bindToController: true,
     controllerAs: 'ctrl',
     templateUrl: 'directives/selectContributors/selectContributors.html',
     controller: selectContributorsController,
     restrict: 'E',
-    scope: true
+    scope: { contributors: '=', contributorsValid: '=' }
 
   };
 
@@ -34,7 +34,8 @@ function selectContributorsController($timeout, _DEV, Resource, CurrentUser, All
     getTotalSum: getTotalSum,
     selectedContributorId: '',
     usersToSelectFrom: [],
-    contributors: [],
+    contributors: []
+    
   });
 
   init();
@@ -42,10 +43,10 @@ function selectContributorsController($timeout, _DEV, Resource, CurrentUser, All
   function init() {
     log('init');
     
-    setCurrentUserAsFirstContributor(user);
+    setCurrentUserAsFirstContributor();
   }
 
-  function setCurrentUserAsFirstContributor(currentUser) {
+  function setCurrentUserAsFirstContributor() {
     ctrl.contributors[0] = {
       id: currentUser.slackUserId,
       url: currentUser.url,
@@ -100,11 +101,13 @@ function selectContributorsController($timeout, _DEV, Resource, CurrentUser, All
   function getTotalSum() {
     var total = 0;
 
-    $.each(ctrl.contributors, function(i, contributor) {
+    _.each(ctrl.contributors, function(contributor) {
+
       if (contributor.percentage === '')
         return;
 
       total += parseFloat(contributor.percentage);
+
     });
 
     ctrl.contributorsValid = total === 100;
