@@ -47,7 +47,7 @@
 								 type="number"
 								 required
 						   	 placeholder="e.g. 21,000,000" 
-						   	 ng-model="ctrl.project.token" />
+						   	 ng-model="ctrl.project.initialTokens" />
 					<div class="input-group-addon">{{ ctrl.project.code }}</div>
 				</div>
 				<label>Decide how many tokens will be distributed to the founding members</label>
@@ -135,7 +135,7 @@
 						ng-click="ctrl.submit()"
 						ng-disabled="!ctrl.project.token_name  ||
 												 !ctrl.project.code ||
-												 !ctrl.project.token ||
+												 !ctrl.project.initialTokens ||
 												 !ctrl.contributorsValid">
 												 Create the {{ ctrl.channelName }} Project</button>
 		</div>
