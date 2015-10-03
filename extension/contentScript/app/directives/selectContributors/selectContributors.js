@@ -16,13 +16,15 @@ function selectContributors() {
 
 }
 
-function selectContributorsController($timeout, _DEV, Resource, Account, AllSlackUsers) {
+function selectContributorsController($timeout, _DEV, Resource, CurrentUser, AllSlackUsers) {
 
   var log = _DEV.log("SELECT CONTRIBUTORS");
 
+  var currentUser = CurrentUser.get();
+
   var ctrl = this;
 
-  var access_token;
+  var access_token = currentUser.access_token;
 
   angular.extend(ctrl, {
 
@@ -39,10 +41,8 @@ function selectContributorsController($timeout, _DEV, Resource, Account, AllSlac
 
   function init() {
     log('init');
-    Account.getProfile().success(function(user) {
-      access_token = user.access_token;
-      setCurrentUserAsFirstContributor(user);
-    });
+    
+    setCurrentUserAsFirstContributor(user);
   }
 
   function setCurrentUserAsFirstContributor(currentUser) {
@@ -78,9 +78,15 @@ function selectContributorsController($timeout, _DEV, Resource, Account, AllSlac
 
   function refreshUsersToSelectFrom(searchQuery) {
     log("refreshUsersToSelectFrom", searchQuery);
-    if (! access_token) return;
+
     var userIds = getContributorsIds();
-    ctrl.foo = AllSlackUsers.allSlackUsers({'access_token':access_token,'userIds':userIds,'searchString':searchQuery});
+
+    ctrl.foo = AllSlackUsers.allSlackUsers({
+      access_token: access_token,
+      userIds: userIds,
+      searchString:searchQuery 
+    });
+    
     ctrl.foo.$promise.then(function(result) {
       ctrl.usersToSelectFrom = result;
     });
