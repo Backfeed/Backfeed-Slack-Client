@@ -136,6 +136,22 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
       
       return 'New MileStone submitted' + '\n' + mileStoneData.id + '\n' + '*' + mileStoneData.title + '*' + '\n' + mileStoneData.description + '\n' + milestoneString;
     };
+    
+    $scope.buildMileStoneMessageForOrigin = function(mileStoneData) {
+        var milestoneString = '';
+        var contributorsLength = mileStoneData.milestoneContributors.length;
+        var index = 0;
+        mileStoneData.milestoneContributors.forEach(function(contributor) {
+          if (index == contributorsLength - 1) {
+          	milestoneString += '@' + slackUsersMap[contributor.id] + ' ' + contributor.percentage + '%';
+          } else {
+          	milestoneString += '@' + slackUsersMap[contributor.id] + ' ' + contributor.percentage + '%, ';
+          }
+          index++;
+        });
+        
+        return 'New MileStone submitted '+ '\n' + '*' + mileStoneData.title + '*' + '\n' + mileStoneData.description + '\n' + milestoneString;
+      };
 
     $scope.sendTestMessage = function(channelId, message) {
         console.log('sending test message to slack: ' + message);
@@ -190,6 +206,13 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
           var message = $scope.buildMileStoneMessage($scope.currentSavedMilestone);
           $scope.sendTestMessage(channelId, message);
         }
+        if (channel.id == $scope.milestoneModel.channelId) {
+            console.log('is random sending ...:');
+
+            var channelId = channel.id;
+            var message = $scope.buildMileStoneMessageForOrigin($scope.currentSavedMilestone);
+            $scope.sendTestMessage(channelId, message);
+          }
       }
     };
   $scope.getChannels = function() {
