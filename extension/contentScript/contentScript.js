@@ -491,12 +491,11 @@ function evaluationObservationOnChannelId(channelId,mutations){
 					if (spanChildrenForMileStoneButton.length == 0){
 						var spanText = spanElement.html();
 						var originalText = spanText;
-						var removalText = "New Milestone submitted<br>";
-						var indexOfRemovalContent = spanText.indexOf(removalText);
+						var indexOfRemovalContent = spanText.indexOf('New MileStone submitted<br>');
 						if (indexOfRemovalContent > -1){
-							spanText = spanText.replace(removalText, "");
+							spanText = spanText.replace('New MileStone submitted<br>', "");
 							var mileStoneId = spanText.substring(4,spanText.indexOf("<br>"));
-							var lengthOfText = removalText.length;
+							var lengthOfText = 'New MileStone submitted<br>'.length;
 							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+mileStoneId.length+4), "");
 							$( '.message_content', $(message)).html (originalText);
 							var openComposeButton = document.createElement("span");
@@ -538,12 +537,11 @@ function evaluationObservationOnChannelId(channelId,mutations){
 					if (spanChildren.length == 0){
 						var spanText = spanElement.html();
 						var originalText = spanText;
-						var removalText = "New MileStone submitted<br>";
-						var indexOfRemovalContent = spanText.indexOf(removalText);
+						var indexOfRemovalContent = spanText.indexOf('New MileStone submitted<br>');
 						if (indexOfRemovalContent > -1){
-							spanText = spanText.replace(removalText, "");
+							spanText = spanText.replace('New MileStone submitted<br>', "");
 							var mileStoneId = spanText.substring(5,spanText.indexOf("<br>"));
-							var lengthOfText = removalText.length;
+							var lengthOfText = 'New MileStone submitted<br>'.length;
 							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+mileStoneId.length+4), "");
 							$( '.message_content', $(message)).html(originalText);
 						}
