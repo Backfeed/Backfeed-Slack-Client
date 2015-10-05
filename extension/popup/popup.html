@@ -1,62 +1,57 @@
-
 <!-- <!DOCTYPE html>-->
 <html>
 
-  <head>
-    <!--<link href="/extension/contentScript/app/vendor/bootstrap.min.css" rel="stylesheet" media="screen" type="text/css">-->
-    <link href="/extension/popup/css/lato.css" rel="stylesheet" />
-    <link href="/extension/popup/css/style.css" rel="stylesheet" />
-  </head>
+<head>
+  <link href="/extension/popup/css/lato.css" rel="stylesheet" />
+  <link href="/extension/popup/css/style.css" rel="stylesheet" />
+</head>
 
-  <body tabindex="1">
+<body tabindex="1">
 
-    <!-- API Token view -->
-    <div id="api-token-view">
-      <h3>Welcome to Backfeed!</h3>
-      <hr />
-      <h4>First thing's first...</h4>
-	  <p >Slack are aware of ongoing issues affecting user authorization.</p>
+  <!-- API Token view -->
+  <div id="api-token-view">
+    <h3>Welcome to Backfeed!</h3>
+    <hr />
+    <h4>First thing's first...</h4>
+    <p>Slack are aware of ongoing issues affecting user authorization. We are working on a workaround.</p>
 
-      <p >If the button below doesn't work, visit <a id="slack-api" class="linkable" href="https://api.slack.com/web">this page on Slack's website</a>, scroll to the bottom, click 'Create token', and paste the given token below.</p>
+    <p>In the meanwhile, visit <a id="slack-api" class="linkable" href="https://api.slack.com/web">this page on Slack's website</a>, scroll to the bottom, click 'Create token' next to the relevant Slack team, and paste the given token below:</p>
 
-      <div id="backfeed-token-form" class="input-group">
-        <input type="text" id="backfeed-token-input" class="form-control" placeholder="Enter Slack token here">
-        <span class="input-group-btn">
-          <button class="btn btn-default" id="backfeed-token-submit" type="button">Go!</button>
-        </span>
-      </div>
-
-      <hr />
-
-      <h4>Let's get going...</h4>
-      <p>Authorization is needed in order to post contributions to Slack, evaluate them, and share the value generated between all the team members.</p>
-
-      <button class="btn btn-default" id="OAuth">Authorize with Slack</button>
-
-      <hr />
-
-      <p>Don't worry - Backfeed will never send any messages without you asking it to.</p>
-
-      <p>For help signing in, email <a class="linkable" href="mailto:shahar@backfeed.cc">support@backfeed.cc</a>  .</p>
-
-      <hr />
-
-      <p id="me-promo">by <a class="linkable" href='http://backfeed.cc'>Backfeed</a></p>
-
+    <div id="backfeed-token-form" class="input-group">
+      <input type="text" id="backfeed-token-input" class="form-control" placeholder="Enter Slack token here">
+      <span class="input-group-btn">
+        <button class="btn btn-default" id="backfeed-token-submit" type="button">Go!</button>
+      </span>
     </div>
-    <!-- /API Token view -->
 
-    <button class="btn btn-default" id="logout">Logout</button>
-
- 
-  </body>
 <!--
-  <script type="text/javascript" src="/components/jquery/dist/jquery.js"></script>
-  <script type="text/javascript" src="/components/bootstrap/dist/js/bootstrap.js"></script>
-  <script type="text/javascript" src="/components/moment/moment.js"></script>
-  <script src="/js/app.js"></script> 
+    <hr />
+
+    <h4>Let's get going...</h4>
+    <p>Authorization is needed in order to post contributions to Slack, evaluate them, and share the value generated between all the team members.</p>
+
+    <button class="btn btn-default" id="OAuth">Authorize with Slack</button>
 -->
- <script src="/extension/contentScript/app/vendor/scripts/jquery.js"></script>
- <script src="/extension/popup/popup.js"></script>
+
+    <hr />
+
+    <p>Don't worry - Backfeed will never send any messages without you asking it to.</p>
+
+    <p>For help signing in, email <a class="linkable" href="mailto:shahar@backfeed.cc">support@backfeed.cc</a>  .</p>
+
+    <hr />
+
+    <p id="me-promo">by <a class="linkable" href='http://backfeed.cc'>Backfeed</a></p>
+
+  </div>
+  <!-- /API Token view -->
+
+  <button class="btn btn-default" id="logout">Logout</button>
+
+  <script src="/extension/contentScript/app/vendor/scripts/jquery.js"></script>
+  <script src="/extension/popup/popup.js"></script>
+
+</body>
+
 </html>
 

@@ -1,9 +1,9 @@
 html {
-  overflow: auto; }
+  overflow: auto;
+  max-height: 250px; }
 
 body {
-  width: 300px;
-  min-height: 400px;
+  width: 240px;
   height: auto;
   overflow: hidden;
   padding: 0px 10px 10px 10px;
@@ -17,16 +17,12 @@ h2 {
 h4 {
   font-weight: 700; }
 
-#api-token-view,
-#main-view,
-#history-view {
-  }
-  #api-token-view #me-promo,
-  #main-view #me-promo,
-  #history-view #me-promo {
-    margin: 10px 0px 0px 0px;
-    float: right;
-    font-weight: 300; }
+#api-token-view #me-promo,
+#main-view #me-promo,
+#history-view #me-promo {
+  margin: 10px 0px 0px 0px;
+  float: right;
+  font-weight: 300; }
 
 #api-token-view {
   width: 100%; }
