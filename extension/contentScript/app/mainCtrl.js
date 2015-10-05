@@ -2,7 +2,10 @@ angular.module('MyApp')
 	.controller('MainCtrl', MainCtrl);
 
 
-function MainCtrl($state, _DEV, PostMessageService) {
+function MainCtrl($state, _DEV, PostMessageService, CurrentUser, Project) {
+
+  Project.init();
+  CurrentUser.init();
 
   var log = _DEV.log("MAIN CTRL");
 

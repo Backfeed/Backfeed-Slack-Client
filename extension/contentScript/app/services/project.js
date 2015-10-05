@@ -7,14 +7,13 @@ function Project(_DEV, Resource, $localStorage) {
 
   var service = {
 
+    init: init,
     getAll: getAll,
     getByChannelId: getByChannelId,
     create: create,
     destroy: destroy
 
   };
-
-  init();
 
   return service;
 

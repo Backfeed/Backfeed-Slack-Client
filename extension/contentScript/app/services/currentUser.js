@@ -7,14 +7,13 @@ function CurrentUser(_DEV, Resource, $localStorage) {
 
   var service = {
 
+    init: init,
     get: get,
     set: set,
     update: update,
     destroy: destroy
 
   };
-
-  init();
 
   return service;
 
