@@ -52,7 +52,14 @@ function Resource($http, API_URL, _DEV, $localStorage) {
 
   function getBaseParams() {
     var access_token = $localStorage.currentUser ? $localStorage.currentUser.access_token : null;
-    return { access_token: access_token };
+    var slackTeamId = $localStorage.currentUser ? $localStorage.currentUser.slackTeamId : null;
+
+    return { 
+
+      access_token: access_token,
+      slackTeamId: slackTeamId
+
+    };
   }
   
   function mergeParams(params) {
