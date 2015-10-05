@@ -7,7 +7,7 @@ function selectContributors() {
 
     bindToController: true,
     controllerAs: 'ctrl',
-    templateUrl: 'directives/selectContributors/selectContributors.html',
+    templateUrl: chrome.extension.getURL("extension/contentScript/app/directives/selectContributors/selectContributors.html"),
     controller: selectContributorsController,
     restrict: 'E',
     scope: { contributors: '=', contributorsValid: '=' }
@@ -35,7 +35,7 @@ function selectContributorsController($timeout, _DEV, Resource, CurrentUser, All
     selectedContributorId: '',
     usersToSelectFrom: [],
     contributors: []
-    
+
   });
 
   init();

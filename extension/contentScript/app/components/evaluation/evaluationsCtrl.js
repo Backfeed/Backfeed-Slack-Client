@@ -1,12 +1,14 @@
 angular.module('MyApp').controller('evaluationsCtrl',
-    function(PostMessageService, $modal,$scope) {       
-        
+    function(PostMessageService, $modal, $scope) {
         var modal = $modal.open({
             templateUrl: 'EvaluationsModalTmpl',
             controller: 'EvaluationsModalCtrl',
             scope: $scope,
-            size: 'md',
-            backdrop: 'static'
+            size: 'md'
+        });
+
+        modal.opened.then(function() {
+            $('div[modal-render]').remove();
         });
 
         modal.result.then(function() {

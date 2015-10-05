@@ -82,6 +82,10 @@ td a {
   font-size: 14px;
 }
 
+.tooltip-inner {
+  text-align: left;
+}
+
 .ui-widget-header {
   height: 3px;
   background: rgba(160, 182, 228,0.78);
@@ -541,7 +545,7 @@ td a {
 
 .modal-heading {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   font-size: 26px;
   font-weight: 900;
 }
@@ -707,9 +711,9 @@ textarea.form-control {
 
     &:hover,
     &:focus,
-    &,.focus {
-      color: lightgrey;
-      background-color: #ff2a91;
+    & {
+      color: white;
+      background-color: #cab1bd;
     }
   }
 }

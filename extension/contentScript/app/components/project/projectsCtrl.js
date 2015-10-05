@@ -7,12 +7,16 @@ function ProjectsCtrl(PostMessageService, $modal, $scope) {
     controller: 'ProjectsModalCtrl',
     controllerAs: 'ctrl',
     scope: $scope,
-    size: 'add-project',
-    backdrop: 'static'
+    size: 'add-project'
+  });
+
+  modal.opened.then(function() {
+    $('div[modal-render]').remove();
   });
 
   modal.result.then(
     function() { PostMessageService.hideIframe(); }, 
     function() { PostMessageService.hideIframe(); }
   );
+
 }

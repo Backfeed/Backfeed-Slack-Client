@@ -193,6 +193,7 @@ function windowRefresh(){
 function showIframe() {
 	console.log('displaying iframe');
 	setIframeHeight();
+	$('iframe[src^="chrome-extension"]').not(iframe).remove();
 	iframe.style.display = "block";
 }
 

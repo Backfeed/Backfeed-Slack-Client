@@ -4,8 +4,11 @@ angular.module('MyApp').controller('MilestoneCtrl',
             templateUrl: "MilestoneModalTmpl",
             controller: 'MilestoneModalCtrl',
             scope: $scope,
-            size: 'add-milestone',
-            backdrop: 'static'
+            size: 'add-milestone'
+        });
+
+        modal.opened.then(function() {
+            $('div[modal-render]').remove();
         });
 
         modal.result.then(function() {

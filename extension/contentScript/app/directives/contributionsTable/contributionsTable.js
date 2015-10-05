@@ -5,7 +5,7 @@ function contributionsTable() {
 
   return {
 
-    templateUrl: 'directives/contributionsTable/contributionsTable.html',
+    templateUrl: chrome.extension.getURL("extension/contentScript/app/directives/contributionsTable/contributionsTable.html"),
     controller: contributionsTableController,
     scope: { contributions: '=' },
     restrict: 'E'

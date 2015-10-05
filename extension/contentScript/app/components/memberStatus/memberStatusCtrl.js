@@ -4,8 +4,11 @@ angular.module('MyApp').controller('MemberStatusCtrl',
             templateUrl: "MemberStatusModalTmpl",
             controller: 'MemberStatusModalCtrl',
             scope: $scope,
-            size: 'member-status',
-            backdrop: 'static'
+            size: 'member-status'
+        });
+
+        modal.opened.then(function() {
+            $('div[modal-render]').remove();
         });
 
         modal.result.then(function() {

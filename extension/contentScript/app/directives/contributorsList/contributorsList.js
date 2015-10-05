@@ -7,7 +7,7 @@ function contributorsList(_DEV) {
 
   return {
 
-    templateUrl: 'directives/contributorsList/contributorsList.html',
+    templateUrl: chrome.extension.getURL("extension/contentScript/app/directives/contributorsList/contributorsList.html"),
     controller: contributorsListController,
     scope: { contributors: '=', contributorsCount: '=' },
     restrict: 'E'
