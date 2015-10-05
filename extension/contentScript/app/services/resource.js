@@ -51,7 +51,8 @@ function Resource($http, API_URL, _DEV, $localStorage) {
   }
 
   function getBaseParams() {
-    return { access_token: $localStorage.currentUser.access_token };
+    var access_token = $localStorage.currentUser ? $localStorage.currentUser.access_token : null;
+    return { access_token: access_token };
   }
   
   function mergeParams(params) {
