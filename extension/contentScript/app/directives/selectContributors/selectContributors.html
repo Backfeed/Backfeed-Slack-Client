@@ -3,7 +3,7 @@
   <ul class="media-list">
     <li ng-repeat="contributor in ctrl.contributors"
         class="chosen clearfix relative">
-      <img class="chosen-image pull-left" ng-src="{{ contributor.url }}" alt="" />
+      <img class="chosen-image pull-left" ng-src="{{ contributor.imgUrl }}" alt="" />
       
       <div class="pull-left">
         <h4 class="chosen-name">{{ contributor.name }}</h4>
@@ -35,7 +35,7 @@
                        refresh-delay="50">
 
       <div class='select-contributor flex'>
-        <img ng-src="{{ user.url }}" />
+        <img ng-src="{{ user.imgUrl }}" />
         <div>{{ user.name }}<br />
         {{ user.real_name }}</div>
       </div>

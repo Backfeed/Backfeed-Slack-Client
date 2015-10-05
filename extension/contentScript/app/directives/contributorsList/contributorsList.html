@@ -8,7 +8,7 @@
   <li ng-repeat="contributor in contributors" class="contributor flex">
 
     <div class="contributor-image">
-      <img class="img-circle" ng-src="{{ contributor.url }}" alt="{{ contributor.real_name }}" />
+      <img class="img-circle" ng-src="{{ contributor.imgUrl }}" alt="{{ contributor.real_name }}" />
       <span class="contributor-percentage">{{ contributor.percentage | number:0 }}%</span>
     </div>
 

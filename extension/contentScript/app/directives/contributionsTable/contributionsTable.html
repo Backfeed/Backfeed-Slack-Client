@@ -32,7 +32,7 @@
           ng-if="$index < 8"
           class="contributor-image">
           <a ui-sref="memberStatus({ memberId: contributor.memberId })">
-            <img class="img-circle"  ng-src="{{ contributor.url }}" alt="Contributer photo" >
+            <img class="img-circle"  ng-src="{{ contributor.imgUrl }}" alt="Contributer photo" >
           </a>
       </li>
       <li ng-if="contribution.remainingContributors > 0"

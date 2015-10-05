@@ -49,7 +49,7 @@ function selectContributorsController($timeout, _DEV, Resource, CurrentUser, All
   function setCurrentUserAsFirstContributor() {
     ctrl.contributors[0] = {
       id: currentUser.slackUserId,
-      url: currentUser.url,
+      imgUrl: currentUser.imgUrl,
       name: currentUser.displayName,
       percentage: 100,
       real_name: currentUser.user_realname
