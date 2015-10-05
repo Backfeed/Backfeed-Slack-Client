@@ -10,8 +10,7 @@
     <div class="modal-body">
       <section>
         <h1 class="modal-heading">
-          <svg-icon icon="big-slack"></svg-icon>
-          {{ ctrl.channelName  }}
+          <svg-icon icon="big-slack"></svg-icon>&nbsp;{{ctrl.channelName}}
         </h1>
 
         <select class="select-backfeed" 
@@ -19,9 +18,7 @@
                 ng-model="ctrl.selectedMileStonetId" 
                 ng-change="ctrl.updateViewforMileStone();" 
                 ng-options="milestone.title as milestone.id for milestone in ctrl.milestones track by milestone.id">
-
           <option value="">On-Going Work</option>
-
         </select>
       </section>
 
@@ -52,16 +49,16 @@
         </div>
       </div>
 
-      <div class="row" ng-if="ctrl.milestoneContributions.length > 0">
-        <div class="col-sm-7">
+      <div class="row">
+        <div class="col-sm-7" ng-if="ctrl.milestoneContributions.length > 0">
           <contributions-table contributions="ctrl.milestoneContributions" 
                                active-contribution="ctrl.activeContribution"></contributions-table>
         </div>
 
-        <div class="col-sm-5">
-          <div class="contributers box">
-            <contributers-list contributers="ctrl.milestoneContributers" 
-                               contributers-count="ctrl.milestoneContributers.length"></contributers-list>
+        <div class="col-sm-5" ng-if="ctrl.milestoneContributors.length > 0">
+          <div class="contributors box">
+            <contributors-list contributors="ctrl.milestoneContributors"
+                               contributors-count="ctrl.milestoneContributors.length"></contributors-list>
           </div>
         </div>
       </div>

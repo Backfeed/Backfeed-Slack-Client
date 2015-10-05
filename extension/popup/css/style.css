@@ -20,7 +20,7 @@ h4 {
 #api-token-view #me-promo,
 #main-view #me-promo,
 #history-view #me-promo {
-  margin: 10px 0px 0px 0px;
+  margin: 0;
   float: right;
   font-weight: 300; }
 

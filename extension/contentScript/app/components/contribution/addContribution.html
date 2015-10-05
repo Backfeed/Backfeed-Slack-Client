@@ -1,67 +1,67 @@
 <script type="text/ng-template" id="ContributionsModalTmpl">
-	<div class="modal-header">
-		<img alt="Close modal" 
-				 class="close-modal" 
-				 src="/extension/contentScript/app/images/close_x.png" 
-				 ng-click="closeModal()" />
-    <div class="modal-title">Submit a Contribution</div>
-	</div>
 
-	<div id="contribution-modal" class="modal-body">
-		<form>
-			<section>
+<div class="modal-header">
+	<img alt="Close modal"
+			 class="close-modal"
+			 src="/extension/contentScript/app/images/close_x.png"
+			 ng-click="closeModal()" />
+	<div class="modal-title">Submit a Contribution</div>
+</div>
 
-				<div>
-					<h3 id="createContributionModalTitle">Contribution&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<img alt="help" src="/extension/contentScript/app/images/icon_help.png"
-							 tooltip="Contributions are anything that can potentially provide value to a project. When the team decides the contribution is valuable, new Tokens and Reputation are generated and divided between the contributors. Consult your project's guidelines for what makes a good contribution."
-							 tooltip-placement="right" />
-					</h3>
+<div id="contribution-modal" class="modal-body">
+	<form>
+		<section>
 
-					<div class="form-group">
-						<input type="text"
-							   class="form-control"
-							   id="title"
-							   required
-							   placeholder="Name of the new contribution"
-							   ng-model="model.title"/>
-						<label>Title</label>
-					</div>
+			<div>
+				<h3 id="createContributionModalTitle">Contribution&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<img alt="help" src="/extension/contentScript/app/images/icon_help.png"
+						 tooltip="Contributions are anything that can potentially provide value to a project. When the team decides the contribution is valuable, new Tokens and Reputation are generated and divided between the contributors. Consult your project's guidelines for what makes a good contribution."
+						 tooltip-placement="right" />
+				</h3>
 
-					<div class="form-group">
-						<textarea class="form-control"
-								  id="content"
-								  required
-								  rows="5"
-								  placeholder="Describe the contribution to the team. Add links to relevant resources."
-								  ng-model="model.file"></textarea>
-						<label>Content</label>
-					</div>
+				<div class="form-group">
+					<input type="text"
+						   class="form-control"
+						   id="title"
+						   required
+						   placeholder="Name of the new contribution"
+						   ng-model="model.title"/>
+					<label>Title</label>
 				</div>
 
-				<div>
-					<h3>
-						Contributors 
-						<img alt="help" src="/extension/contentScript/app/images/icon_help.png"
-													  tooltip="The worth of this contribution in Tokens and Reputation will be divided between all the listed contributors. Make sure all contributors agree on this division before submitting the contribution."
-													  tooltip-placement="right" />
-					<select-contributors contributors="model.contributors"
-															 contributors-valid="foo.contributorsValid"></select-contributors>
-					</h3>
-				</div>
+				<div class="form-group">
+					<textarea class="form-control"
+							  id="content"
+							  required
+							  rows="5"
+							  placeholder="Describe the contribution to the team. Add links to relevant resources."
+							  ng-model="model.file"></textarea>
+					<label>Content</label>
+			</div>
 
-			</section>
-		</form>
-	</div>
+			<div>
+				<h3>Contributors
+					<img alt="help" src="/extension/contentScript/app/images/icon_help.png"
+						 tooltip="The worth of this contribution in Tokens and Reputation will be divided between all the listed contributors. Make sure all contributors agree on this division before submitting the contribution."
+						 tooltip-placement="right" />
+				<select-contributors contributors="model.contributors"
+									 contributors-valid="foo.contributorsValid"></select-contributors>
+				</h3>
+			</div>
 
-    <hr />
+		</section>
+	</form>
+</div>
 
-	<div class="modal-footer flex">
-		<p class="lead">Contributions are the only way to generate new tokens and reputation.</p>
-		<button class="btn btn-backfeed submit-button"
-						ng-click="submit()"
- 						ng-disabled="!model.title || 
- 												 !model.file || 
- 												 !foo.contributorsValid">Submit Contribution</button>
-	</div>
+<hr />
+
+<div class="modal-footer flex">
+	<p class="lead">Contributions are the only way to generate new tokens and reputation.</p>
+	<button class="btn btn-backfeed submit-button"
+			ng-click="submit()"
+			ng-disabled="!model.title ||
+						 !model.file ||
+						 !foo.contributorsValid">Submit Contribution</button>
+</div>
+
 </script>

@@ -2,13 +2,17 @@
 
 <head>
 	<title>Backfeed App</title>
-	 <link href='https://fonts.googleapis.com/css?family=Lato:200,400,700,900' rel='stylesheet' />
-  	 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
-  	 <link href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" />
-  	 <link href="https://cdn.jsdelivr.net/animatecss/3.2.0/animate.css" rel="stylesheet" />
-	 <link href="vendor/styles/select.css" rel="stylesheet" />
-	 <link href="vendor/styles/jquery-ui.css" rel="stylesheet" />
-	 <link href="build/main.css" rel="stylesheet" />
+
+	<link href='https://fonts.googleapis.com/css?family=Lato:200,400,700,900' rel='stylesheet' />
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" />
+	<link href="https://cdn.jsdelivr.net/animatecss/3.2.0/animate.css" rel="stylesheet" />
+	<link href="vendor/styles/select.css" rel="stylesheet" />
+	<link href="vendor/styles/jquery-ui.css" rel="stylesheet" />
+	<link href="build/main.css" rel="stylesheet" />
+
+	<script src="vendor/scripts/jquery.js"></script>
+	<script src="vendor/bower/angular/angular.js"></script>
 </head>
 
 <body ng-app="MyApp" ng-csp>
@@ -16,12 +20,9 @@
 <div ng-controller='MainCtrl'></div>
 
 <div ui-view></div>
-	
+
 
 <!-- vendor -->
-<script src="vendor/scripts/jquery.js"></script>
-
-<script src="vendor/bower/angular/angular.js"></script>
 <script src="vendor/bower/ngstorage/ngStorage.js"></script>
 <script src="vendor/bower/underscore/underscore.js"></script>
 

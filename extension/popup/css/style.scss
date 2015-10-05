@@ -34,7 +34,7 @@ h4 {
 #main-view,
 #history-view {
   #me-promo {
-    margin: 10px 0px 0px 0px;
+    margin: 0;
     float: right;
     font-weight: 300;
   }
@@ -42,6 +42,7 @@ h4 {
 
 #api-token-view {
   width: 100%;
+
   button#OAuth {
     width: 100%;
     margin: 15px 0 20px 0;

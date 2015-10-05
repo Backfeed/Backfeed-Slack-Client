@@ -4,7 +4,7 @@ angular.module('MyApp').controller('EvaluationsCtrl',
             templateUrl: 'EvaluationsModalTmpl',
             controller: 'EvaluationsModalCtrl',
             scope: $scope,
-            size: 'md'
+            size: 'add-evaluation'
         });
 
         modal.opened.then(function() {

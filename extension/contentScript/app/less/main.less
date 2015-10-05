@@ -3,9 +3,26 @@
 @import '../directives/directives.less';
 @import '../components/project/projects.less';
 @import '../components/contribution/contributions.less';
+@import '../components/evaluation/evaluations.less';
 @import '../components/milestone/milestone.less';
 @import '../components/contributionStatus/contributionStatus.less';
 @import '../components/projectStatus/projectStatus.less';
+
+/* Angular adds out-of-the-box CSS for some directives. There is a bug in Angular where it applies the CSS to the
+ * parent container and not the iframe container. This was duplicated from Angular core.
+ * @see http://briantree.se/quick-tip-15-fix-ng-cloak-flicker-angularjs/
+ */
+[ng\:cloak],
+[ng-cloak],
+[data-ng-cloak],
+[x-ng-cloak],
+.ng-cloak,
+.x-ng-cloak,
+.ng-hide:not(.ng-hide-animate) {display:none !important;}
+ng\:form {display:block;}
+.ng-animate-shim{visibility:hidden;}
+.ng-anchor{position:absolute;}
+/* END: Angular out-of-the-box CSS */
 
 :focus,
 a:focus {
@@ -573,6 +590,7 @@ img[src$="icon_help.png"] {
   align-items: center;
 
   .lead {
+    height: 58px;
     margin-bottom: 0;
     text-align: left;
     font-size: 19px;

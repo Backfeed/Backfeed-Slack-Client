@@ -81,7 +81,7 @@ angular.module('MyApp').controller('EvaluationsModalCtrl',
 			});
 			$scope.data3.$promise.then(function(result1) {
 				if(result1.contributionClose == 'true'){
-					 PostMessageService.showAlert('Contribution is closed. It cannot be evaluated anymore.', 'error');
+					 PostMessageService.showAlert('Contribution is closed. It cannot be evaluated anymore. Showing the contribution status instead.', 'error');
 					 $state.go('contributionStatus', {'contributionId': $scope.contributionId}, {reload: true});
 				 }
 				else if(result1.bidExists == 'true'){

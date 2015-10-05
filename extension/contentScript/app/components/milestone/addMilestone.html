@@ -10,13 +10,11 @@
   <div class="modal-body row">
 
       <div class="col-sm-7">
-
-        <h2>
-          New Milestone
+        <h2>New Milestone
           <img alt="help" src="/extension/contentScript/app/images/icon_help.png"
                tooltip="When a project's members collectively decide the project reached a significant milestone, they have the option to bundle all the contributions made so far and post it as a single contribution to another, higher-level project."
                tooltip-placement="right" />
-        </h2> 
+        </h2>
 
         <div class="form-group">
           <input type="text" class="form-control" required
@@ -34,13 +32,11 @@
                 contributions="milestoneModel.contributions"
                 active-contribution="activeContribution"></contributions-table>
 
-        <div ng-show="milestoneModel.contributions == 0"
-             class="alert alert-danger" role="alert">You need to make contributions before you can submit a milestone.</div>
-
-      </div>  
+        <div class="alert alert-danger" ng-show="milestoneModel.contributions == 0" ng-cloak
+             role="alert">You need to make contributions before you can submit a milestone.</div>
+      </div>
 
       <div class="col-sm-5">
-
         <div class="stat">
           <div class="stat-item">
             <img class="stat-icon" alt="Tokens" src="/extension/contentScript/app/images/tokens.png" />
@@ -49,11 +45,10 @@
           <div class="stat-label">Value of all contributions</div>
         </div>
 
-        <div class="contributors box">
+        <div class="contributors box" ng-hide="!contributorsCount" ng-cloak>
           <contributors-list contributors="milestoneModel.contributors"
                              contributors-count="contributorsCount"></contributors-list>
         </div>
-
       </div>
 
   </div>
