@@ -6,7 +6,11 @@ myApp.constant('environmentURL', 'https://stagingenviornment.elasticbeanstalk.co
 myApp.constant('SLACK_API_URL', 'https://slack.com/api/');
 myApp.constant('API_URL', 'https://stagingenviornment.elasticbeanstalk.com/');
 
-myApp.config(function($modalProvider, $stateProvider, $authProvider, $compileProvider, $locationProvider) {
+myApp.config(function($tooltipProvider, $modalProvider, $stateProvider, $authProvider, $compileProvider, $locationProvider) {
+    $tooltipProvider.options({
+        appendToBody: 'true'
+    });
+
     $modalProvider.options.backdrop = 'static';
 
     $authProvider.slack({
@@ -55,12 +59,12 @@ myApp.config(function($modalProvider, $stateProvider, $authProvider, $compilePro
         .state('evaluations', {
             url: '/evaluations/:contributionId/:projectId',
             templateUrl: chrome.extension.getURL("extension/contentScript/app/components/evaluation/addEvaluation.html"),
-            controller: 'evaluationsCtrl'
+            controller: 'EvaluationsCtrl'
         })
         .state('mileStoneEvaluations', {
             url: '/mileStoneEvaluations/:mileStoneId/:projectId',
             templateUrl: chrome.extension.getURL("extension/contentScript/app/components/mileStoneEvaluation/addMileStoneEvaluation.html"),
-            controller: 'mileStoneEvaluationsCtrl'
+            controller: 'MileStoneEvaluationsCtrl'
         });
 
 

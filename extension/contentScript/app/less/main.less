@@ -78,12 +78,30 @@ td a {
   margin-right: 5px;
 }
 
+img[src$="icon_help.png"] {
+  cursor: help;
+}
+
 .tooltip {
   font-size: 14px;
 }
 
 .tooltip-inner {
   text-align: left;
+}
+
+.has-feedback {
+  .form-control {
+    padding-left: 12px !important;
+  }
+  .form-control-feedback[tooltip] {
+    width: initial;
+    height: initial;
+    right: 5px;
+    left: auto;
+    margin-top: 9px;
+    pointer-events: fill;
+  }
 }
 
 .ui-widget-header {

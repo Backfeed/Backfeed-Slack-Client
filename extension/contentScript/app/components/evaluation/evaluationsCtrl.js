@@ -1,4 +1,4 @@
-angular.module('MyApp').controller('evaluationsCtrl',
+angular.module('MyApp').controller('EvaluationsCtrl',
     function(PostMessageService, $modal, $scope) {
         var modal = $modal.open({
             templateUrl: 'EvaluationsModalTmpl',
