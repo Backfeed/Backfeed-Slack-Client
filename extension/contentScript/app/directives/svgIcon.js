@@ -4,7 +4,7 @@ angular.module('MyApp').directive('svgIcon', function() {
         template: '<span ng-include="getIconUrl()"></span>',
         link: function (scope, element, attrs) {
             scope.getIconUrl = function() {
-                return "images/svg/" + attrs.icon + ".html";
+                return chrome.extension.getURL("extension/contentScript/app/images/svg/" + attrs.icon + ".html");
             }
         }
     };

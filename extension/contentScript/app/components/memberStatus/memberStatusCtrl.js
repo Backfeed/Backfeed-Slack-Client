@@ -4,7 +4,8 @@ angular.module('MyApp').controller('MemberStatusCtrl',
             templateUrl: "MemberStatusModalTmpl",
             controller: 'MemberStatusModalCtrl',
             scope: $scope,
-            size: 'member-status'
+            size: 'member-status',
+            backdrop: 'static'
         });
 
         modal.result.then(function() {

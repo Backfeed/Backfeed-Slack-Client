@@ -5,7 +5,8 @@ angular.module('MyApp').controller('evaluationsCtrl',
             templateUrl: 'EvaluationsModalTmpl',
             controller: 'EvaluationsModalCtrl',
             scope: $scope,
-            size: 'md'
+            size: 'md',
+            backdrop: 'static'
         });
 
         modal.result.then(function() {

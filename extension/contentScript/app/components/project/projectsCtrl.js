@@ -7,7 +7,8 @@ function ProjectsCtrl(PostMessageService, $modal, $scope) {
     controller: 'ProjectsModalCtrl',
     controllerAs: 'ctrl',
     scope: $scope,
-    size: 'add-project'
+    size: 'add-project',
+    backdrop: 'static'
   });
 
   modal.result.then(

@@ -6,7 +6,8 @@ function ProjectStatusCtrl($scope, $modal, PostMessageService) {
     controller: 'ProjectStatusModalCtrl',
     controllerAs: 'ctrl',
     scope: $scope,
-    size: 'project-status'
+    size: 'project-status',
+    backdrop: 'static'
   });
 
   modal.result.then(

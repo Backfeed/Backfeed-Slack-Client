@@ -4,7 +4,8 @@ angular.module('MyApp').controller('ContributionsCtrl',
             templateUrl: "ContributionsModalTmpl",
             controller: 'ContributionsModalCtrl',
             scope: $scope,
-            size: 'add-contribution'
+            size: 'add-contribution',
+            backdrop: 'static'
         });
 
         modal.result.then(function() {
