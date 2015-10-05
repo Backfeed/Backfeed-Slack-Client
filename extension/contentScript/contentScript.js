@@ -90,8 +90,8 @@ function openProjectStatusPage(channelId,teamName) {
 		},teamName : teamName
 	}, function(response) {
 		console.log('Here in the callback from project status page');
-	});	
-	
+	});
+
 }
 
 function openMileStoneStatus(mileStoneId,teamName) {
@@ -102,8 +102,8 @@ function openMileStoneStatus(mileStoneId,teamName) {
 		},teamName : teamName
 	}, function(response) {
 		console.log('Here in the callback from milestone status page');
-	});	
-	
+	});
+
 }
 
 
@@ -253,7 +253,7 @@ function onTeamMembersListObservation(mutations) {
 		}
 		
 	});
-	
+
 }
 
 function onSingleTeamMemberObservation(mutations) {
@@ -273,7 +273,7 @@ function onSingleTeamMemberObservation(mutations) {
 		}
 		
 	});
-	
+
 }
 
 function onFloatingMenuOpened(nodes) {
@@ -377,7 +377,6 @@ function addMilestoneButton() {
 }
 
 function addContributionButton() {
-	
 	var menuItemsList = $(this).find('#menu_items');
 	var teamName = $('#team_name').html().trim();
 	var channelId = $('#channel-list').find('.active').find('.channel_name').attr('data-channel-id');
@@ -405,7 +404,6 @@ function memberStatusButton() {
 	memberStatusButton.on('click', function() {
 		openMemberStatusPage(memberId,teamName);
 	});
-
 }
 
 function onAddEvaluationObservation(mutations) {
@@ -427,7 +425,6 @@ function onAddEvaluationObservation(mutations) {
 		}
 		
 	});
-	
 }
 
 /**
@@ -448,7 +445,7 @@ function evaluationObservationOnChannelId(channelId,mutations){
 		var messagesFromBot = Array.from(mutationWithAddedNodes.addedNodes).filter(function(node) {
 			return node.classList && node.classList.contains('bot_message');
 		});
-		
+
 		chrome.runtime.sendMessage({
 			message : {
 				"gesture": 'checkUserLogin',
@@ -478,10 +475,10 @@ function evaluationObservationOnChannelId(channelId,mutations){
 							openComposeButton.setAttribute("id", "COMPOSE_ACTION_EVALUATION_BUTTON");
 							openComposeButton.textContent = "EVALUATE";
 							var contributionIdsVar = response.contributionIds;
-							contributionIdsVar = String(contributionIdsVar);							
-							var contributionIdsVarArray = contributionIdsVar.split(",");							
-							for (var i = 0; i < contributionIdsVarArray.length; i++) {								
-								if(contributionIdsVarArray[i].trim() == contributionId){
+							contributionIdsVar = String(contributionIdsVar);
+							var contributionIdsVarArray = contributionIdsVar.split(",");
+							for (var i = 0; i < contributionIdsVarArray.length; i++) {
+								if(contributionIdsVarArray[i].trim() == contributionId) {
 									openComposeButton.textContent = "STATUS";
 								}
 							}
