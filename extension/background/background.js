@@ -39,7 +39,7 @@ function addMsgListener(msg, sender, sendResponse) {
 
         $.ajax({
           type: 'POST',
-          url: 'https://stagingenviornment.elasticbeanstalk.com/allChannelIdsForTeam',
+          url: 'https://refactor.elasticbeanstalk.com/allChannelIdsForTeam',
           data: params,
           success: function(data) {
             sendResponse({
@@ -72,13 +72,13 @@ function addMsgListener(msg, sender, sendResponse) {
         var token = localStorage['bf-ext-token'];
 
         var params = {
-          token: token
+          token: token,channelId: channelId
         };
 
         // get satellizer_token (to be used in API calls)
         $.ajax({
           type: 'POST',
-          url: 'https://stagingenviornment.elasticbeanstalk.com/allContributionsFromUser',
+          url: 'https://refactor.elasticbeanstalk.com/allContributionsFromUser',
           data: params,
           success: function(data) {
             console.log('server returned, satellizer token:' + data);
@@ -86,7 +86,9 @@ function addMsgListener(msg, sender, sendResponse) {
             sendResponse({
               login: "true",
               contributionIds: JSON.parse(data).contribitions,
-              milestonesIds: JSON.parse(data).milestones
+              milestonesIds: JSON.parse(data).milestones,
+              closeContributionIds: JSON.parse(data).closedContribitions,
+              closeMilestonesIds: JSON.parse(data).closedMilestones
             });
             sendGesture(msg.message, sendResponse);
           }
@@ -220,7 +222,7 @@ function submitToken(token) {
     // get satellizer_token (to be used in API calls)
     $.ajax({
       type: 'POST',
-      url: 'https://stagingenviornment.elasticbeanstalk.com/auth/ext_login',
+      url: 'https://refactor.elasticbeanstalk.com/auth/ext_login',
       data: { token: token },
       success: function(data) {
         console.log('server returned, satellizer token:' + data.token);

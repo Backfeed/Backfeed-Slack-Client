@@ -450,7 +450,7 @@ function evaluationObservationOnChannelId(channelId,mutations){
 			message : {
 				"gesture": 'checkUserLogin',
 				"options": {}
-			},teamName:teamName
+			},teamName:teamName,channelId:channelId
 		}, function(response) {
 			if (response.login == 'true') {
 				messagesFromBot.forEach(function(message) {
@@ -482,6 +482,14 @@ function evaluationObservationOnChannelId(channelId,mutations){
 									openComposeButton.textContent = "STATUS";
 								}
 							}
+							var closeContributionIdsVar = response.closeContributionIds;
+							closeContributionIdsVar = String(closeContributionIdsVar);							
+							var closeContributionIdsVarArray = closeContributionIdsVar.split(",");							
+							for (var i = 0; i < closeContributionIdsVarArray.length; i++) {								
+								if(closeContributionIdsVarArray[i].trim() == contributionId) {
+									openComposeButton.textContent = "CLOSE";
+								}
+							}
 							$(openComposeButton).insertBefore(spanElement);
 						}
 					}
@@ -507,6 +515,15 @@ function evaluationObservationOnChannelId(channelId,mutations){
 							for (var i = 0; i < milesStoneIdsVarArray.length; i++) {
 								if(milesStoneIdsVarArray[i].trim() == mileStoneId){
 									openComposeButton.textContent = "STATUS";
+								}
+							}
+							var closeMilestonesIdsVar = response.closeMilestonesIds;
+							closeMilestonesIdsVar = String(closeMilestonesIdsVar);
+							//milesStoneIdsVar = milesStoneIdsVar.substring(1, milesStoneIdsVar.length-1);
+							var closeMilestonesIdsVarArray = closeMilestonesIdsVar.split(",");
+							for (var i = 0; i < closeMilestonesIdsVarArray.length; i++) {
+								if(closeMilestonesIdsVarArray[i].trim() == MilestoneId) {
+									openComposeButton.textContent = "CLOSE";
 								}
 							}
 							$(openComposeButton).insertBefore(spanElement);
