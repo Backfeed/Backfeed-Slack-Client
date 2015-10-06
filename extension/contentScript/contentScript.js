@@ -45,38 +45,42 @@ $(function() {
 
 function onEvaluationButtonClick() {
   var teamName = $('#team_name').html().trim();
+  var channelId = $('#channel-list').find('.active').find('.channel_name').attr('data-channel-id');
   var contributionIdForThisEvaluation = $(this).attr('data-contributionId');
   var textContent = $(this).text();
   if (textContent == 'EVALUATE') {
-    openAddEvaluationPage(contributionIdForThisEvaluation,teamName);
+    openAddEvaluationPage(contributionIdForThisEvaluation,teamName,channelId);
   } else {
-    openContributionStatusPage(contributionIdForThisEvaluation,teamName);
+    openContributionStatusPage(contributionIdForThisEvaluation,teamName,channelId);
   }
 }
 
 function onMilestoneEvaluationButtonClick() {
   var teamName = $('#team_name').html().trim();
+  var channelId = $('#channel-list').find('.active').find('.channel_name').attr('data-channel-id');
   var mileStoneIdForThisEvaluation = $(this).attr('data-mileStoneId');
   var textContent = $(this).text();
   if (textContent == 'EVALUATE') {
-    openAddMileStoneEvaluationPage(mileStoneIdForThisEvaluation,teamName);
+    openAddMileStoneEvaluationPage(mileStoneIdForThisEvaluation,teamName,channelId);
   } else {
-    openMileStoneStatus(mileStoneIdForThisEvaluation,teamName);
+    openMileStoneStatus(mileStoneIdForThisEvaluation,teamName,channelId);
   }
 }
 
 function onMemberStatusButtonClick() {
   var teamName = $('#team_name').html().trim();
+  var channelId = $('#channel-list').find('.active').find('.channel_name').attr('data-channel-id');
   var memberId = $(this).siblings('.member_details').find('.member_preview_link').data('member-id');
-  openMemberStatusPage(memberId,teamName);
+  openMemberStatusPage(memberId,teamName,channelId);
 }
 
 function openAddProjectPage(channelId,teamName) {
+	console.log('Here in the callback from add project page 123');
 	chrome.runtime.sendMessage({
 		message : {
 			"gesture": 'openAddProject',
 			"options": channelId
-		},teamName : teamName
+		},teamName : teamName,channelId:channelId
 	}, function(response) {
 		console.log('Here in the callback from add project page');
 	});
@@ -87,19 +91,19 @@ function openProjectStatusPage(channelId,teamName) {
 		message : {
 			"gesture": 'openProjectStatus',
 			"options": channelId
-		},teamName : teamName
+		},teamName : teamName,channelId:channelId
 	}, function(response) {
 		console.log('Here in the callback from project status page');
 	});
 
 }
 
-function openMileStoneStatus(mileStoneId,teamName) {
+function openMileStoneStatus(mileStoneId,teamName,channelId) {
 	chrome.runtime.sendMessage({
 		message : {
 			"gesture": 'openMileStoneStatus',
 			"options": mileStoneId
-		},teamName : teamName
+		},teamName : teamName,channelId:channelId
 	}, function(response) {
 		console.log('Here in the callback from milestone status page');
 	});
@@ -112,7 +116,7 @@ function openAddMilestonePage(channelId,teamName) {
 		message : {
 			"gesture": 'openAddMilestone',
 			"options": channelId
-		},teamName : teamName
+		},teamName : teamName,channelId:channelId
 	}, function(response) {
 		console.log('Here in the callback from add milestone page');
 	});
@@ -123,60 +127,60 @@ function openAddContributionPage(channelId,teamName) {
         message : {
             "gesture": 'openAddContributionPage',
             "options": channelId
-        },teamName : teamName
+        },teamName : teamName,channelId:channelId
     }, function(response) {
     	console.log('Here in the callback from add contribution page');
 	});
 }
 
 
-function openAddEvaluationPage(contributionId,teamName) {
+function openAddEvaluationPage(contributionId,teamName,channelId) {
 	
 	console.log('contributionId is: ' + contributionId);
 	chrome.runtime.sendMessage({        
         message : {
             "gesture": 'openAddEvaluationPage',
             "options": contributionId
-        },teamName : teamName
+        },teamName : teamName,channelId:channelId
     }, function(response) {
     	console.log('Here in the callback from add evaluation page');
 	});
 
 }
 
-function openAddMileStoneEvaluationPage(milestoneId,teamName) {
+function openAddMileStoneEvaluationPage(milestoneId,teamName,channelId) {
 	
 	console.log('milestoneId is: ' + milestoneId);
 	chrome.runtime.sendMessage({        
         message : {
             "gesture": 'openAddMileStoneEvaluationPage',
             "options": milestoneId
-        },teamName : teamName
+        },teamName : teamName,channelId:channelId
     }, function(response) {
     	console.log('Here in the callback from add milestoneId evaluation page');
 	});
 
 }
 
-function openContributionStatusPage(contributionId,teamName) {
+function openContributionStatusPage(contributionId,teamName,channelId) {
 	console.log('contributionId is: ' + contributionId);
 	chrome.runtime.sendMessage({        
         message : {
             "gesture": 'openContributionStatusPage',
             "options": contributionId
-        },teamName : teamName
+        },teamName : teamName,channelId:channelId
     }, function(response) {
     	console.log('Here in the callback from contribution status page');
 	});
 
 }
 
-function openMemberStatusPage(memberId,teamName) {
+function openMemberStatusPage(memberId,teamName,channelId) {
 	chrome.runtime.sendMessage({
 		message : {
 			"gesture": 'openMemberStatusPage',
 			"options": memberId
-		},teamName : teamName
+		},teamName : teamName,channelId:channelId
 	}, function(response) {
 		console.log('Here in the callback from member status page');
 	});
@@ -399,10 +403,11 @@ function addContributionButton() {
 function memberStatusButton() {
 	var menuItemsList = $(this).find('#menu_items');
 	var teamName = $('#team_name').html().trim();
+	var channelId = $('#channel-list').find('.active').find('.channel_name').attr('data-channel-id');
 	var memberId = $(this).find('.member_preview_link').data('member-id');
 	var memberStatusButton = $('<li id="member_status_backfeed"><a>Collaborator Overview</a></li>').prependTo(menuItemsList);
 	memberStatusButton.on('click', function() {
-		openMemberStatusPage(memberId,teamName);
+		openMemberStatusPage(memberId,teamName,channelId);
 	});
 }
 

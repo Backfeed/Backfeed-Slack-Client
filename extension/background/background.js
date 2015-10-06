@@ -72,7 +72,7 @@ function addMsgListener(msg, sender, sendResponse) {
         var token = localStorage['bf-ext-token'];
 
         var params = {
-          token: token,channelId: channelId
+          token: token,channelId: msg.channelId
         };
 
         // get satellizer_token (to be used in API calls)
