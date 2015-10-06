@@ -1,7 +1,7 @@
 angular.module('MyApp').directive('svgIcon', svgIcon);
 
 
-function svgIcon)() {
+function svgIcon() {
 
   return {
 
