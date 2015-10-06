@@ -55,7 +55,7 @@ function MemberStatusModalCtrl ($scope, $auth, $location, $stateParams, MemberSt
 					allContributions[i].myWeight = allContributions[i].myWeight.toFixed(2);
 				}
 			});
-			PostMessageService.sendGesture('showIframe');
+			PostMessageService.showIframe();
 		}
 	};
 
@@ -77,7 +77,7 @@ function MemberStatusModalCtrl ($scope, $auth, $location, $stateParams, MemberSt
 					allContributions[i].myWeight = allContributions[i].myWeight.toFixed(2);
 				}
 			});
-			PostMessageService.sendGesture('showIframe');
+			PostMessageService.showIframe();
 		} else {
 			 $scope.getMemberStatus();
 		}
@@ -106,7 +106,7 @@ function MemberStatusModalCtrl ($scope, $auth, $location, $stateParams, MemberSt
 				Account.setUserData(data);
 				$scope.getMemberStatus();
 			}).error(function(error) {
-				PostMessageService.gesture.showAlert('Please relogin', 'error');
+				PostMessageService.showAlert('Please relogin', 'error');
 			});
 		};
 
