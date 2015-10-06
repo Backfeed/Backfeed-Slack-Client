@@ -9,6 +9,7 @@ function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, 
   var channelId   = $stateParams.channelId;
   var mileStoneId = $stateParams.mileStoneId;
   var project     = Project.getByChannelId(channelId);
+
   var ctrl = this;
 
   angular.extend(ctrl, {
@@ -18,7 +19,7 @@ function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, 
     selectedMilestonetId: '',
     channelName: project.channelName,
     milestones: [],
-    milestoneContributers: [],
+    milestoneContributors: [],
     activeContribution: {}
 
   });
@@ -39,7 +40,7 @@ function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, 
       log("init: current milestones", currentMilestone);
       angular.extend(ctrl, {
 
-        milestoneContributers: currentMilestone.milestoneContributers,
+        milestoneContributors: currentMilestone.milestoneContributors,
         milestoneContributions: currentMilestone.milestoneContributions,
         tokenName: currentMilestone.tokenName,
         tokens: currentMilestone.tokens,
@@ -59,9 +60,10 @@ function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, 
     Milestone.get(ctrl.selectedMilestonetId).then(
 
       function(result) {
+        log('updateViewforMilestone', result);
 
-        $scope.projectStatusModel = result;
-        log("updateViewforMilestone: TODO: assignto controller instead of projectStatusModel");
+        ctrl.milestoneContributions = result.milestoneContributions;
+        ctrl.milestoneContributors = result.milestoneContributors;
 
       },
 
