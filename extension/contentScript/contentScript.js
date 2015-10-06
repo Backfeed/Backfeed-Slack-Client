@@ -527,7 +527,7 @@ function evaluationObservationOnChannelId(channelId,mutations){
 							//milesStoneIdsVar = milesStoneIdsVar.substring(1, milesStoneIdsVar.length-1);
 							var closeMilestonesIdsVarArray = closeMilestonesIdsVar.split(",");
 							for (var i = 0; i < closeMilestonesIdsVarArray.length; i++) {
-								if(closeMilestonesIdsVarArray[i].trim() == MilestoneId) {
+								if(closeMilestonesIdsVarArray[i].trim() == mileStoneId) {
 									openComposeButton.textContent = "CLOSE";
 								}
 							}
