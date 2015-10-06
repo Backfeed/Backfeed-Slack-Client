@@ -121,7 +121,7 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
     $modalInstance.dismiss('cancel');
   }
  
-  $scope.buildMileStoneMessage = function(mileStoneData) {
+  $scope.buildMilestoneMessage = function(mileStoneData) {
       var milestoneString = '';
       var contributorsLength = mileStoneData.milestoneContributors.length;
       var index = 0;
@@ -134,10 +134,10 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
         index++;
       });
       
-      return 'New MileStone submitted' + '\n' + mileStoneData.id + '\n' + '*' + mileStoneData.title + '*' + '\n' + mileStoneData.description + '\n' + milestoneString;
+      return 'New Milestone submitted' + '\n' + mileStoneData.id + '\n' + '*' + mileStoneData.title + '*' + '\n' + mileStoneData.description + '\n' + milestoneString;
     };
     
-    $scope.buildMileStoneMessageForOrigin = function(mileStoneData) {
+    $scope.buildMilestoneMessageForOrigin = function(mileStoneData) {
         var milestoneString = '';
         var contributorsLength = mileStoneData.milestoneContributors.length;
         var index = 0;
@@ -150,7 +150,7 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
           index++;
         });
         
-        return 'New MileStone submitted '+ '\n' + '*' + mileStoneData.title + '*' + '\n' + mileStoneData.description + '\n' + milestoneString;
+        return 'New Milestone submitted '+ '\n' + '*' + mileStoneData.title + '*' + '\n' + mileStoneData.description + '\n' + milestoneString;
       };
 
     $scope.sendTestMessage = function(channelId, message) {
@@ -203,14 +203,14 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
           console.log('is random sending ...:');
 
           var channelId = channel.id;
-          var message = $scope.buildMileStoneMessage($scope.currentSavedMilestone);
+          var message = $scope.buildMilestoneMessage($scope.currentSavedMilestone);
           $scope.sendTestMessage(channelId, message);
         }
         if (channel.id == $scope.milestoneModel.channelId) {
             console.log('is random sending ...:');
 
             var channelId = channel.id;
-            var message = $scope.buildMileStoneMessageForOrigin($scope.currentSavedMilestone);
+            var message = $scope.buildMilestoneMessageForOrigin($scope.currentSavedMilestone);
             $scope.sendTestMessage(channelId, message);
           }
       }

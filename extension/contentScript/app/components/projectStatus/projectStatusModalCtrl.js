@@ -14,8 +14,8 @@ function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, 
   angular.extend(ctrl, {
 
     closeModal: closeModal,
-    updateViewforMileStone: updateViewforMileStone,
-    selectedMileStonetId: '',
+    updateViewforMilestone: updateViewforMilestone,
+    selectedMilestonetId: '',
     channelName: project.channelName,
     milestones: [],
     milestoneContributers: [],
@@ -51,22 +51,22 @@ function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, 
 
   }
 
-  function updateViewforMileStone() {
+  function updateViewforMilestone() {
 
-    if (ctrl.selectedMileStonetId === '')
+    if (ctrl.selectedMilestonetId === '')
       return;
 
-    Milestone.get(ctrl.selectedMileStonetId).then(
+    Milestone.get(ctrl.selectedMilestonetId).then(
 
       function(result) {
 
         $scope.projectStatusModel = result;
-        log("updateViewforMileStone: TODO: assignto controller instead of projectStatusModel");
+        log("updateViewforMilestone: TODO: assignto controller instead of projectStatusModel");
 
       },
 
       function(err) {
-        log('updateViewforMileStone ERROR', err);
+        log('updateViewforMilestone ERROR', err);
       }
 
     );

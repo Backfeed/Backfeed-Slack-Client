@@ -1,6 +1,6 @@
-angular.module('MyApp').controller('MileStoneEvaluationsModalCtrl',
-		function($scope, $auth, $location, $stateParams, Users, GetEvaluationOfMileStone,
-				 SaveEvaluationToMileStone, Account, MileStone, UserDetail, $modalInstance,
+angular.module('MyApp').controller('MilestoneEvaluationsModalCtrl',
+		function($scope, $auth, $location, $stateParams, Users, GetEvaluationOfMilestone,
+				 SaveEvaluationToMilestone, Account, Milestone, UserDetail, $modalInstance,
 				 PostMessageService, $state) {
 	  $scope.mileStoneId = $stateParams.mileStoneId;
 	  $scope.evaluationId = $stateParams.evaluationId;
@@ -22,7 +22,7 @@ angular.module('MyApp').controller('MileStoneEvaluationsModalCtrl',
 				$scope.evaluation.ownerId = userData.userId;
 				$scope.userId = userData.userId;
 				
-				getMileStoneForEvaluation();
+				getMilestoneForEvaluation();
                 
 				
 	        })
@@ -49,7 +49,7 @@ angular.module('MyApp').controller('MileStoneEvaluationsModalCtrl',
 		 } else {
 			 $scope.evaluation.ownerId = userData.userId;
 			 $scope.userId = userData.userId;
-			 getMileStoneForEvaluation();
+			 getMilestoneForEvaluation();
 			 
 		 }
 		 
@@ -61,16 +61,16 @@ angular.module('MyApp').controller('MileStoneEvaluationsModalCtrl',
 	//$scope.slackUsers = Users.getUsers();
   
    
-	function getMileStoneForEvaluation(){
+	function getMilestoneForEvaluation(){
 		if ($scope.mileStoneId && $scope.mileStoneId != 0) {
 			//check for exsting contribution
-			$scope.data3 = GetEvaluationOfMileStone.Evaluation({
+			$scope.data3 = GetEvaluationOfMilestone.Evaluation({
 				'mileStoneId':$scope.mileStoneId,
 				'userId' :  $scope.userId
 			});
 			$scope.data3.$promise.then(function(result1) {
 				if(result1.contributionClose == 'true'){
-					 PostMessageService.showAlert('MileStone is closed. It cannot be evaluated anymore.', 'error');
+					 PostMessageService.showAlert('Milestone is closed. It cannot be evaluated anymore.', 'error');
 					 $state.go('contributionStatus', {'contributionId': $scope.mileStoneId}, {reload: true});
 				 }
 				else 
@@ -83,7 +83,7 @@ angular.module('MyApp').controller('MileStoneEvaluationsModalCtrl',
 						console.log('userData.userId: '+ $scope.userId);
 						console.log('userData.projectId: '+$scope.projectId);
 						
-						$scope.data1 = MileStone.getDetail({
+						$scope.data1 = Milestone.getDetail({
 							id : $scope.mileStoneId
 						});
 						$scope.data1.$promise.then(function(result) {
@@ -112,7 +112,7 @@ angular.module('MyApp').controller('MileStoneEvaluationsModalCtrl',
 		console.log("In Submit method");
 		console.log($scope.evaluation);
 
-		$scope.data = SaveEvaluationToMileStone.save({},$scope.evaluation);
+		$scope.data = SaveEvaluationToMilestone.save({},$scope.evaluation);
 		$scope.data.$promise.then(function(result) {
 			$modalInstance.close('submit');
 			PostMessageService.showAlert('Evaluation submitted', 'success');

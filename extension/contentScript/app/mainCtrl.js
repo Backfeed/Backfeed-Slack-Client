@@ -20,8 +20,8 @@ function MainCtrl($state, _DEV, PostMessageService, CurrentUser, Project) {
     openAddEvaluationPage: goToAddEvaluation,
 
     openAddMilestone: goToAddMilestone,
-    openMileStoneStatus: goToMileStoneStatus,
-    openAddMileStoneEvaluationPage: goToAddMileStoneEvaluation,
+    openMilestoneStatus: goToMilestoneStatus,
+    openAddMilestoneEvaluationPage: goToAddMilestoneEvaluation,
 
     openMemberStatusPage: goToMemberStatus,
     
@@ -70,8 +70,8 @@ function MainCtrl($state, _DEV, PostMessageService, CurrentUser, Project) {
     });
   }
 
-  function goToMileStoneStatus(mileStoneId) {
-    log('Project Status from MileStone');
+  function goToMilestoneStatus(mileStoneId) {
+    log('Project Status from Milestone');
     $state.go('projectStatus', {
       'channelId': '',
       'mileStoneId': mileStoneId
@@ -108,7 +108,7 @@ function MainCtrl($state, _DEV, PostMessageService, CurrentUser, Project) {
     });
   }
 
-  function goToAddMileStoneEvaluation(mileStoneId) {
+  function goToAddMilestoneEvaluation(mileStoneId) {
     log('Starting evaluations for mileStoneId: ' + mileStoneId);
     $state.go('mileStoneEvaluations', {
       'mileStoneId': mileStoneId

@@ -63,8 +63,8 @@ myApp.config(function($tooltipProvider, $modalProvider, $stateProvider, $authPro
         })
         .state('mileStoneEvaluations', {
             url: '/mileStoneEvaluations/:mileStoneId/:projectId',
-            templateUrl: chrome.extension.getURL("extension/contentScript/app/components/mileStoneEvaluation/addMileStoneEvaluation.html"),
-            controller: 'MileStoneEvaluationsCtrl'
+            templateUrl: chrome.extension.getURL("extension/contentScript/app/components/mileStoneEvaluation/addMilestoneEvaluation.html"),
+            controller: 'MilestoneEvaluationsCtrl'
         });
 
 

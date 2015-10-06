@@ -33,7 +33,7 @@ bfAPIServices.factory('SlackTeam', [ '$resource','environmentURL', function($res
 	});
 } ]);
 
-bfAPIServices.factory('MileStoneCurrent', [ '$resource','environmentURL', function($resource,environmentURL) {
+bfAPIServices.factory('MilestoneCurrent', [ '$resource','environmentURL', function($resource,environmentURL) {
 	return $resource(environmentURL+'organization/currentStatus/:orgId', {}, {
 		getDetail : {
 			method : 'GET',
@@ -43,7 +43,7 @@ bfAPIServices.factory('MileStoneCurrent', [ '$resource','environmentURL', functi
 	});
 } ]);
 
-bfAPIServices.factory('MileStoneForChannel', [ '$resource','environmentURL', function($resource,environmentURL) {
+bfAPIServices.factory('MilestoneForChannel', [ '$resource','environmentURL', function($resource,environmentURL) {
 	return $resource(environmentURL+'milestone/all/:orgId', {}, {
 		allDetails : {
 			method : 'GET',
@@ -63,7 +63,7 @@ bfAPIServices.factory('SaveContribution', [ '$resource','environmentURL', functi
 	});
 } ]);
 
-bfAPIServices.factory('SaveMileStone', [ '$resource','environmentURL', function($resource,environmentURL) {
+bfAPIServices.factory('SaveMilestone', [ '$resource','environmentURL', function($resource,environmentURL) {
 	return $resource(environmentURL+'milestone', {}, {
 		save : {
 			method : 'POST',
@@ -93,7 +93,7 @@ bfAPIServices.factory('SaveEvaluationToContribution', [ '$resource','environment
 	});
 } ]);
 
-bfAPIServices.factory('SaveEvaluationToMileStone', [ '$resource','environmentURL', function($resource,environmentURL) {
+bfAPIServices.factory('SaveEvaluationToMilestone', [ '$resource','environmentURL', function($resource,environmentURL) {
 	return $resource(environmentURL+'mileStoneBids', {}, {
 		save : {
 			method : 'POST',
@@ -112,7 +112,7 @@ bfAPIServices.factory('GetEvaluationOfContribution', [ '$resource','environmentU
 	});
 } ]);
 
-bfAPIServices.factory('GetEvaluationOfMileStone', [ '$resource','environmentURL', function($resource,environmentURL) {
+bfAPIServices.factory('GetEvaluationOfMilestone', [ '$resource','environmentURL', function($resource,environmentURL) {
 	return $resource(environmentURL+'mileStonebid/:mileStoneId/:userId', {}, {
 		Evaluation : {
 			method : 'GET',
@@ -122,7 +122,7 @@ bfAPIServices.factory('GetEvaluationOfMileStone', [ '$resource','environmentURL'
 	});
 } ]);
 
-bfAPIServices.factory('MileStone', [ '$resource','environmentURL', function($resource,environmentURL) {
+bfAPIServices.factory('Milestone', [ '$resource','environmentURL', function($resource,environmentURL) {
 	return $resource(environmentURL+'milestone/:id', {}, {
 		getDetail : {
 			method : 'GET',

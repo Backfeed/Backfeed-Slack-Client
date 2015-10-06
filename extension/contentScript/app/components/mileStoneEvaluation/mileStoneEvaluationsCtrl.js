@@ -1,8 +1,8 @@
 angular.module('MyApp').controller('MilestoneEvaluationsCtrl',
     function(PostMessageService, $modal, $scope) {
         var modal = $modal.open({
-            templateUrl: 'MileStoneEvaluationsModalTmpl',
-            controller: 'MileStoneEvaluationsModalCtrl',
+            templateUrl: 'MilestoneEvaluationsModalTmpl',
+            controller: 'MilestoneEvaluationsModalCtrl',
             scope: $scope,
             size: 'md'
         });
