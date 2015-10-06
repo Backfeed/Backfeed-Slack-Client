@@ -11,18 +11,23 @@ function MainCtrl($state, _DEV, PostMessageService, CurrentUser, Project) {
 
   var GESTURES = {
 
-    "openAddProject": goToAddProject,
-    "openAddMilestone": goToAddMilestone,
-    "openAddContributionPage": goToAddContribution,
-    "openAddEvaluationPage": goToAddEvaluation,
-    "openAddMileStoneEvaluationPage": goToAddMileStoneEvaluation,
-    "showAlertFromMainCtr": showAlert,
-    "openContributionStatusPage": goToContributionStatus,
-    "openMemberStatusPage": goToMemberStatus,
-    "refreshWindows": refreshWindows,
-    "openProjectStatus": goToProjectStatus,
-    "openMileStoneStatus": goToMileStoneStatus,
-    "logout": logout
+    openAddProject: goToAddProject,
+    openProjectStatus: goToProjectStatus,
+
+    openAddContributionPage: goToAddContribution,
+    openContributionStatusPage: goToContributionStatus,
+
+    openAddEvaluationPage: goToAddEvaluation,
+
+    openAddMilestone: goToAddMilestone,
+    openMileStoneStatus: goToMileStoneStatus,
+    openAddMileStoneEvaluationPage: goToAddMileStoneEvaluation,
+
+    openMemberStatusPage: goToMemberStatus,
+    
+    showAlertFromMainCtr: showAlert,
+    refreshWindows: refreshWindows,
+    logout: logout
 
   };
 
@@ -31,17 +36,21 @@ function MainCtrl($state, _DEV, PostMessageService, CurrentUser, Project) {
   function init() {
 
     log('init');
+
     PostMessageService.init("myport");
 
-    chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-      log(sender.tab ? "from a content script:" + sender.tab.url : "from the extension");
-      if (request.gesture && request.gesture in GESTURES) {
-        GESTURES[request.gesture](request.options)
-      }
-    });
+    chrome.runtime.onMessage.addListener(onMessageListener);
+
   }
 
   //************    Listen to incoming messages in order to open modal and navigate the App       ************
+
+  function onMessageListener(request, sender, sendResponse) {
+    if (request.gesture && request.gesture in GESTURES) {
+      GESTURES[request.gesture](request.options)
+    }
+  }
+
   function goToAddProject(channelId) {
     log('Creating Project');
     $state.go('addProject', {
