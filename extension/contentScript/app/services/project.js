@@ -36,7 +36,7 @@ function Project(_DEV, Resource, $localStorage) {
   function getByChannelId(channelId) {
     return _.find($localStorage.BF_projects, matchChannelId);
 
-    function matchChannelId(project) { return project.channelId = channelId; }
+    function matchChannelId(project) { return project.channelId === channelId; }
 
   }
 
