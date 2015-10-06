@@ -9,17 +9,21 @@
         <h4 class="chosen-name">{{ contributor.name }}</h4>
         <p class="chosen-fullname">{{ contributor.real_name }}</p>
       </div>
-  
-      <div class="chosen-percentage">
-        <span ng-model="contributor.percentage"
-              class="chosen-percentage-number"
-              id="{{ contributor.id }}"
-              contenteditable>{{ contributor.percentage | number:0 }}</span>%        
-      </div>
 
-      <button type="button" class="icon-button" aria-label="Left Align" ng-click='ctrl.removeContributor($index)'>
-        <img src="/extension/contentScript/app/images/icon_remove.png"/>
-      </button>
+      <div class="pull-right">
+        <div class="chosen-percentage">
+          <span ng-model="contributor.percentage"
+                class="chosen-percentage-number"
+                id="{{ contributor.id }}"
+                contenteditable>{{ contributor.percentage | number: 0 }}</span>%        
+        </div>
+
+        <a class="remove-contributor" ng-click='ctrl.removeContributor($index)'>
+          <img src="/extension/contentScript/app/images/icon_remove.png"/>
+        </a>
+      </div>
+  
+
     </li>
   </ul>
 
