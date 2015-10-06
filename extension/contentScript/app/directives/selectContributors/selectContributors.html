@@ -10,12 +10,16 @@
         <p class="chosen-fullname">{{ contributor.real_name }}</p>
       </div>
 
-      <div class="pull-right">
+      <div class="pull-right chosen-right">
         <div class="chosen-percentage">
-          <span ng-model="contributor.percentage"
-                class="chosen-percentage-number"
-                id="{{ contributor.id }}"
-                contenteditable>{{ contributor.percentage | number: 0 }}</span>%        
+          <input ng-model="contributor.percentage"
+                 type="number"
+                 required
+                 min="1"
+                 max="100"
+                 class="chosen-percentage-number"
+                 id="{{ contributor.id }}">
+                 %
         </div>
 
         <a class="remove-contributor" ng-click='ctrl.removeContributor($index)'>
