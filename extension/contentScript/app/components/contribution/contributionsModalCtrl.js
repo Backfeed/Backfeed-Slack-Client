@@ -102,6 +102,9 @@ function ContributionsModalCtrl($scope, $auth, $location, $stateParams, _DEV, Co
           getProjectUsers();
         } else {
           $scope.users = allProjectUsersData;
+          for (var i = 0; i < $scope.users.length; i++) {
+              slackUsersMap[$scope.users[i].id] = $scope.users[i].name;
+            }
         }
       } else {
         $modalInstance.close('submit');
@@ -159,6 +162,7 @@ function ContributionsModalCtrl($scope, $auth, $location, $stateParams, _DEV, Co
     var contributorsLength = contributionData.contributionContributors.length;
     var index = 0;
     contributionData.contributionContributors.forEach(function(contributor) {
+    	console.log('contributor.id'+contributor.id)
       if (index == contributorsLength - 1) {
         contributorsString += '@' + slackUsersMap[contributor.id] + ' ' + contributor.percentage + '%';
       } else {
