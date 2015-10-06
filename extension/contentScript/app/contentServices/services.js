@@ -122,7 +122,7 @@ bfAPIServices.factory('GetEvaluationOfMilestone', [ '$resource','environmentURL'
 	});
 } ]);
 
-bfAPIServices.factory('Milestone', [ '$resource','environmentURL', function($resource,environmentURL) {
+bfAPIServices.factory('MilestoneDetail', [ '$resource','environmentURL', function($resource,environmentURL) {
 	return $resource(environmentURL+'milestone/:id', {}, {
 		getDetail : {
 			method : 'GET',

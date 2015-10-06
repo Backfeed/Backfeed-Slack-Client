@@ -1,6 +1,6 @@
 angular.module('MyApp').controller('MilestoneEvaluationsModalCtrl',
 		function($scope, $auth, $location, $stateParams, Users, GetEvaluationOfMilestone,
-				 SaveEvaluationToMilestone, Account, Milestone, UserDetail, $modalInstance,
+				 SaveEvaluationToMilestone, Account, MilestoneDetail, UserDetail, $modalInstance,
 				 PostMessageService, $state) {
 	  $scope.mileStoneId = $stateParams.mileStoneId;
 	  $scope.evaluationId = $stateParams.evaluationId;
@@ -83,8 +83,8 @@ angular.module('MyApp').controller('MilestoneEvaluationsModalCtrl',
 						console.log('userData.userId: '+ $scope.userId);
 						console.log('userData.projectId: '+$scope.projectId);
 						
-						$scope.data1 = Milestone.getDetail({
-							id : $scope.mileStoneId
+						$scope.data1 = MilestoneDetail.getDetail({
+							'id' : $scope.mileStoneId
 						});
 						$scope.data1.$promise.then(function(result) {
 							console.log('result.title'+result.title);

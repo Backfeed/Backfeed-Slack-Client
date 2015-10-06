@@ -2,7 +2,7 @@ angular.module('MyApp')
 .controller('ContributionStatusModalCtrl', ContributionStatusModalCtrl);
 
 function ContributionStatusModalCtrl($scope, $auth, $location, $stateParams, ContributionStatus,
-  Account, Users, $modalInstance, PostMessageService,Milestone) {
+  Account, Users, $modalInstance, PostMessageService,MilestoneDetail) {
 
   var contributionStatusModel = {
     file: '',
@@ -37,7 +37,7 @@ function ContributionStatusModalCtrl($scope, $auth, $location, $stateParams, Con
   $scope.contributionId = $stateParams.contributionId;
   $scope.mileStoneId = $stateParams.mileStoneId;
   if($scope.contributionId == ''){
-	  $scope.MilestoneCurrentData = Milestone.getDetail({
+	  $scope.MilestoneCurrentData = MilestoneDetail.getDetail({
 		  	id: $scope.mileStoneId
 	      });
 	  $scope.MilestoneCurrentData.$promise.then(function(result) {
