@@ -134,7 +134,7 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
         index++;
       });
       
-      return 'New Milestone submitted' + '\n' + mileStoneData.id + '\n' + '*' + mileStoneData.title + '*' + '\n' + mileStoneData.description + '\n' + milestoneString;
+      return 'New Milestone submitted' + '\n' + mileStoneData.id +':' + channelId + '\n' + '*' + mileStoneData.title + '*' + '\n' + mileStoneData.description + '\n' + milestoneString;
     };
     
     $scope.buildMilestoneMessageForOrigin = function(mileStoneData) {

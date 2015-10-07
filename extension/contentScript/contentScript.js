@@ -59,11 +59,12 @@ function onMilestoneEvaluationButtonClick() {
   var teamName = $('#team_name').html().trim();
   var channelId = $('#channel-list').find('.active').find('.channel_name').attr('data-channel-id');
   var mileStoneIdForThisEvaluation = $(this).attr('data-mileStoneId');
+  var channelIdForThisEvaluation = $(this).attr('data-channelId');
   var textContent = $(this).text();
   if (textContent == 'EVALUATE') {
     openAddMilestoneEvaluationPage(mileStoneIdForThisEvaluation,teamName,channelId);
   } else {
-    openMilestoneStatus(mileStoneIdForThisEvaluation,teamName,channelId);
+    openMilestoneStatus(mileStoneIdForThisEvaluation,teamName,channelIdForThisEvaluation);
   }
 }
 
@@ -510,7 +511,13 @@ function evaluationObservationOnChannelId(channelId,mutations){
 							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+mileStoneId.length+4), "");
 							$( '.message_content', $(message)).html (originalText);
 							var openComposeButton = document.createElement("span");
-							openComposeButton.setAttribute("data-mileStoneId", mileStoneId);
+							var mileStoneIdArray = mileStoneId.split(":");
+							console.log('mileStoneIdArray is'+mileStoneIdArray);
+							openComposeButton.setAttribute("data-mileStoneId", mileStoneIdArray[0].trim());
+							if(mileStoneIdArray[1] != undefined){
+								openComposeButton.setAttribute("data-channelId", mileStoneIdArray[1].trim());
+							}
+							
 							openComposeButton.setAttribute("id", "COMPOSE_ACTION_MILESTONE_EVALUATION_BUTTON");
 							openComposeButton.textContent = "EVALUATE";
 							var milesStoneIdsVar = response.milestonesIds;
@@ -518,7 +525,7 @@ function evaluationObservationOnChannelId(channelId,mutations){
 							//milesStoneIdsVar = milesStoneIdsVar.substring(1, milesStoneIdsVar.length-1);
 							var milesStoneIdsVarArray = milesStoneIdsVar.split(",");
 							for (var i = 0; i < milesStoneIdsVarArray.length; i++) {
-								if(milesStoneIdsVarArray[i].trim() == mileStoneId){
+								if(milesStoneIdsVarArray[i].trim() == mileStoneIdArray[0].trim()){
 									openComposeButton.textContent = "STATUS";
 								}
 							}
@@ -527,7 +534,7 @@ function evaluationObservationOnChannelId(channelId,mutations){
 							//milesStoneIdsVar = milesStoneIdsVar.substring(1, milesStoneIdsVar.length-1);
 							var closeMilestonesIdsVarArray = closeMilestonesIdsVar.split(",");
 							for (var i = 0; i < closeMilestonesIdsVarArray.length; i++) {
-								if(closeMilestonesIdsVarArray[i].trim() == mileStoneId) {
+								if(closeMilestonesIdsVarArray[i].trim() == mileStoneIdArray[0].trim()) {
 									openComposeButton.textContent = "CLOSE";
 								}
 							}
