@@ -6,9 +6,9 @@ function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, 
 
   var currentUser = CurrentUser.get();
 
-  var channelId   = $stateParams.channelId;
-  var mileStoneId = $stateParams.mileStoneId;
-  var project     = Project.getByChannelId(channelId);
+  var channelId = $stateParams.channelId;
+  var mileStoneId = $stateParams.mileStoneId !== '' ? parseInt($stateParams.mileStoneId) : null; // availble if got here by pressing "status" button on milestone
+  var project = Project.getByChannelId(channelId);
   var ctrl = this;
   angular.extend(ctrl, {
 
@@ -25,85 +25,62 @@ function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, 
   init();
 
   function init() {
+    log("init", "channelId", channelId, "project", project);
 
     PostMessageService.hideIframe();
     PostMessageService.showIframe();
-    
+
     Milestone.getAll(project.orgId).then(function(milestones) {
       log("init: milestones", milestones);
       ctrl.milestones = milestones;
+
+      updateViewforMilestone();
+
     });
-
-    if (ctrl.selectedMilestonetId === ''){
-    	Milestone.getCurrent(project.orgId).then(function(currentMilestone) {
-    	      log("init: current milestones", currentMilestone);
-    	      angular.extend(ctrl, {
-
-    	        milestoneContributors: currentMilestone.milestoneContributors,
-    	        milestoneContributions: currentMilestone.milestoneContributions,
-    	        tokenName: currentMilestone.tokenName,
-    	        tokens: currentMilestone.tokens,
-    	        totalValue: currentMilestone.totalValue,
-    	        code: currentMilestone.code
-
-    	      });
-
-    	    });
-    }else{
-    	Milestone.get(ctrl.selectedMilestonetId).then(function(result) {
-    		  log('updateViewforMilestone', result);
-    	      angular.extend(ctrl, {
-
-    	        milestoneContributors: result.milestoneContributors,
-    	        milestoneContributions: result.milestoneContributions,
-    	        tokenName: result.tokenName,
-    	        tokens: result.tokens,
-    	        totalValue: result.totalValue,
-    	        code: result.code
-    	      });
-
-    	    });
-    }
-        
 
   }
 
   function updateViewforMilestone() {
-    if (ctrl.selectedMilestonetId == null || ctrl.selectedMilestonetId == ''){
-    		Milestone.getCurrent(project.orgId).then(function(currentMilestone) {
-    					ctrl.milestoneContributors = currentMilestone.milestoneContributors;
-    					ctrl.milestoneContributions = currentMilestone.milestoneContributions;
-    					ctrl.totalValue = currentMilestone.totalValue;
-    					ctrl.tokens = currentMilestone.tokens;
-    					ctrl.code = currentMilestone.code;
-    		      },
+    if (ctrl.selectedMilestonetId == null || ctrl.selectedMilestonetId == '') {
 
-    		      function(err) {
-    		        log('updateViewforMilestone ERROR', err);
-    		      }
+      Milestone.getCurrent(project.orgId).then(
+        function(currentMilestone) {
+          log('updateViewforMilestone: current:', currentMilestone);
+          ctrl.milestoneContributors = currentMilestone.milestoneContributors;
+          ctrl.milestoneContributions = currentMilestone.milestoneContributions;
+          ctrl.totalValue = currentMilestone.totalValue;
+          ctrl.tokens = currentMilestone.tokens;
+          ctrl.code = currentMilestone.code;
+        },
 
-    		    );
-    	return;
+        function(err) {
+          log('updateViewforMilestone ERROR', err);
+        }
+
+      );
+
+    } else {
+
+      Milestone.get(ctrl.selectedMilestonetId).then(
+
+        function(selectedMilestone) {
+          log('updateViewforMilestone: ', ctrl.selectedMilestonetId, selectedMilestone);
+
+          ctrl.milestoneContributions = selectedMilestone.milestoneContributions;
+          ctrl.milestoneContributors = selectedMilestone.milestoneContributors;
+          ctrl.totalValue = selectedMilestone.totalValue;
+          ctrl.tokens = selectedMilestone.tokens;
+          ctrl.code = selectedMilestone.code;
+
+        },
+
+        function(err) {
+          log('updateViewforMilestone ERROR', err);
+        }
+
+      );
+
     }
-      
-
-    Milestone.get(ctrl.selectedMilestonetId).then(
-
-      function(result) {
-        log('updateViewforMilestone', result);
-
-        ctrl.milestoneContributions = result.milestoneContributions;
-        ctrl.milestoneContributors = result.milestoneContributors;
-        ctrl.totalValue = result.totalValue;
-        ctrl.tokens = result.tokens;
-        ctrl.code = result.code;
-      },
-
-      function(err) {
-        log('updateViewforMilestone ERROR', err);
-      }
-
-    );
 
   }
 

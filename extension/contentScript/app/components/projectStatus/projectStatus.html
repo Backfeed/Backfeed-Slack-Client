@@ -17,7 +17,7 @@
                 name="milestoneSelection" 
                 ng-model="ctrl.selectedMilestonetId" 
                 ng-change="ctrl.updateViewforMilestone();" 
-                ng-options="milestone.id as milestone.title for milestone in ctrl.milestones track by milestone.id">
+                ng-options="milestone.id as milestone.title for milestone in ctrl.milestones">
           <option value="">On-Going Work</option>
         </select>
       </section>
