@@ -31,11 +31,6 @@ myApp.config(function($tooltipProvider, $modalProvider, $stateProvider, $authPro
             templateUrl: chrome.extension.getURL("extension/contentScript/app/partials/splash.html"),
             controller: 'SplashCtrl'
         })
-        .state('createContribution', {
-            url: '/contribution/:channelId',
-            templateUrl: chrome.extension.getURL("extension/contentScript/app/components/contribution/addContribution.html"),
-            controller: 'ContributionsCtrl'
-        })
         .state('addProject', {
             url: '/project/:channelId',
             templateUrl: chrome.extension.getURL("extension/contentScript/app/components/project/addProject.html"),
