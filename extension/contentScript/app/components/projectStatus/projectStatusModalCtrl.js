@@ -9,14 +9,12 @@ function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, 
   var channelId   = $stateParams.channelId;
   var mileStoneId = $stateParams.mileStoneId;
   var project     = Project.getByChannelId(channelId);
-
   var ctrl = this;
-
   angular.extend(ctrl, {
 
     closeModal: closeModal,
     updateViewforMilestone: updateViewforMilestone,
-    selectedMilestonetId: '',
+    selectedMilestonetId: mileStoneId,
     channelName: project.channelName,
     milestones: [],
     milestoneContributors: [],
@@ -36,26 +34,56 @@ function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, 
       ctrl.milestones = milestones;
     });
 
-    Milestone.getCurrent(project.orgId).then(function(currentMilestone) {
-      log("init: current milestones", currentMilestone);
-      angular.extend(ctrl, {
+    if (ctrl.selectedMilestonetId === ''){
+    	Milestone.getCurrent(project.orgId).then(function(currentMilestone) {
+    	      log("init: current milestones", currentMilestone);
+    	      angular.extend(ctrl, {
 
-        milestoneContributors: currentMilestone.milestoneContributors,
-        milestoneContributions: currentMilestone.milestoneContributions,
-        tokenName: currentMilestone.tokenName,
-        tokens: currentMilestone.tokens,
-        totalValue: currentMilestone.totalValue
+    	        milestoneContributors: currentMilestone.milestoneContributors,
+    	        milestoneContributions: currentMilestone.milestoneContributions,
+    	        tokenName: currentMilestone.tokenName,
+    	        tokens: currentMilestone.tokens,
+    	        totalValue: currentMilestone.totalValue
 
-      });
+    	      });
 
-    });
+    	    });
+    }else{
+    	Milestone.get(ctrl.selectedMilestonetId).then(function(result) {
+    		  log('updateViewforMilestone', result);
+    	      angular.extend(ctrl, {
+
+    	        milestoneContributors: result.milestoneContributors,
+    	        milestoneContributions: result.milestoneContributions,
+    	        tokenName: result.tokenName,
+    	        tokens: result.tokens,
+    	        totalValue: result.totalValue
+
+    	      });
+
+    	    });
+    }
+        
 
   }
 
   function updateViewforMilestone() {
+    if (ctrl.selectedMilestonetId == null || ctrl.selectedMilestonetId == ''){
+    		Milestone.getCurrent(project.orgId).then(function(currentMilestone) {
+    					ctrl.milestoneContributors = currentMilestone.milestoneContributors;
+    					ctrl.milestoneContributions = currentMilestone.milestoneContributions;
+    					ctrl.totalValue = currentMilestone.totalValue;
+    					ctrl.tokens = currentMilestone.tokens;
+    		      },
 
-    if (ctrl.selectedMilestonetId === '')
-      return;
+    		      function(err) {
+    		        log('updateViewforMilestone ERROR', err);
+    		      }
+
+    		    );
+    	return;
+    }
+      
 
     Milestone.get(ctrl.selectedMilestonetId).then(
 
@@ -64,7 +92,8 @@ function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, 
 
         ctrl.milestoneContributions = result.milestoneContributions;
         ctrl.milestoneContributors = result.milestoneContributors;
-
+        ctrl.totalValue = result.totalValue;
+        ctrl.tokens = result.tokens;
       },
 
       function(err) {

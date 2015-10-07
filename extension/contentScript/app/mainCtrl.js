@@ -70,10 +70,14 @@ function MainCtrl($state, _DEV, PostMessageService, CurrentUser, Project) {
     });
   }
 
-  function goToMilestoneStatus(mileStoneId) {
-    log('Project Status from Milestone');
+  function goToMilestoneStatus(options) {
+	var optionsAsArray = options.split(",");
+	var mileStoneId = optionsAsArray[0];
+	var channelId = optionsAsArray[1];
+    log('Project Status from Milestone'+channelId);
+    log('Project Status from Milestone'+mileStoneId);
     $state.go('projectStatus', {
-      'channelId': '',
+      'channelId': channelId,
       'mileStoneId': mileStoneId
     }, {
       reload: true

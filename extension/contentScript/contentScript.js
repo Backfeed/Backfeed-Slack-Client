@@ -102,7 +102,7 @@ function openMilestoneStatus(mileStoneId,teamName,channelId) {
 	chrome.runtime.sendMessage({
 		message : {
 			"gesture": 'openMilestoneStatus',
-			"options": mileStoneId
+			"options": ''+mileStoneId+','+channelId
 		},teamName : teamName,channelId:channelId
 	}, function(response) {
 		console.log('Here in the callback from milestone status page');
