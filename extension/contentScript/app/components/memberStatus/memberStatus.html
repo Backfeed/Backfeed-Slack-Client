@@ -119,7 +119,8 @@
 							<td nowrap>{{contribution.cTime | date:'d.M.yyyy' }}</td>
 							<td nowrap>{{contribution.myWeight}}</td>
 							<td nowrap>{{contribution.currentValuation}}</td>
-							<td nowrap>{{contribution.reputationDelta}}</td>
+							<td nowrap>{{contribution.reputationDelta}}<svg-icon icon="up-arrows" ng-if="contribution.reputationDelta > 0"></svg-icon>
+						<svg-icon icon="down-arrows" ng-if="contribution.reputationDelta < 0"></svg-icon></td>
 							<td nowrap>{{contribution.tokenName}}</td>
 						</tr>
 					</tbody>
