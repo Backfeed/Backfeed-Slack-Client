@@ -43,7 +43,8 @@ function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, 
     	        milestoneContributions: currentMilestone.milestoneContributions,
     	        tokenName: currentMilestone.tokenName,
     	        tokens: currentMilestone.tokens,
-    	        totalValue: currentMilestone.totalValue
+    	        totalValue: currentMilestone.totalValue,
+    	        code: currentMilestone.code
 
     	      });
 
@@ -57,8 +58,8 @@ function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, 
     	        milestoneContributions: result.milestoneContributions,
     	        tokenName: result.tokenName,
     	        tokens: result.tokens,
-    	        totalValue: result.totalValue
-
+    	        totalValue: result.totalValue,
+    	        code: result.code
     	      });
 
     	    });
@@ -74,6 +75,7 @@ function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, 
     					ctrl.milestoneContributions = currentMilestone.milestoneContributions;
     					ctrl.totalValue = currentMilestone.totalValue;
     					ctrl.tokens = currentMilestone.tokens;
+    					ctrl.code = currentMilestone.code;
     		      },
 
     		      function(err) {
@@ -94,6 +96,7 @@ function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, 
         ctrl.milestoneContributors = result.milestoneContributors;
         ctrl.totalValue = result.totalValue;
         ctrl.tokens = result.tokens;
+        ctrl.code = result.code;
       },
 
       function(err) {
