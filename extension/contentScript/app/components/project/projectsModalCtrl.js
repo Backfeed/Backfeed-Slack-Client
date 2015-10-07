@@ -1,7 +1,7 @@
 angular.module('MyApp')
   .controller('ProjectsModalCtrl', ProjectsModalCtrl);
 
-function ProjectsModalCtrl($stateParams, _DEV, Slack, $modalInstance, PostMessageService, CurrentUser, Project) {
+function ProjectsModalCtrl($stateParams, _DEV, Slack, $modalInstance, PostMessageService) {
 
   log = _DEV.log('NEW PROJECT');
 
@@ -10,7 +10,7 @@ function ProjectsModalCtrl($stateParams, _DEV, Slack, $modalInstance, PostMessag
   var channelId = $stateParams.channelId;
 
   var rangeSlider = {
-    
+
     min: 1,
     max: 100,
     range: 'min'

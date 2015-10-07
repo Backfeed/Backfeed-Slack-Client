@@ -24,11 +24,11 @@
 			<hr />
 
 			<div class="form-group has-feedback">
-				<input class="form-control" 
-							 id="tokenName" 
+				<input class="form-control"
+							 id="tokenName"
 							 type="text"
 							 required
-					   	 placeholder="e.g. Bitcoin" 
+					   	 placeholder="e.g. Bitcoin"
 					   	 ng-model="ctrl.project.token_name" />
 				<img alt="help" src="/extension/contentScript/app/images/icon_help.png" class="form-control-feedback"
 					 tooltip="Each project uses its own tokens in order to distribute its value between the project members."
@@ -37,29 +37,27 @@
 			</div>
 
 			<div class="form-group">
-				<input class="form-control" 
-							 id="tokenCode" 
+				<input class="form-control"
+							 id="tokenCode"
 							 type="text"
 							 required maxlength="3"
-					   	 placeholder="e.g. BTC" 
+					   	 placeholder="e.g. BTC"
 					   	 ng-model="ctrl.project.code" />
 				<label>Choose a 3-letter symbol for your token</label>
 			</div>
 
 			<div class="form-group has-feedback">
 				<div class="input-group">
-					<div class="input-group-addon">{{ ctrl.project.code }}</div>
-					<input class="form-control" 
-								 id="token" 
-								 required
-						   	 placeholder="e.g. 21,000,000" 
-						   	 ng-model="ctrl.project.initialTokens" />
-
-					<img alt="help" 
-							 src="/extension/contentScript/app/images/icon_help.png" 
-							 class="form-control-feedback"
-						 	 tooltip="Make sure all the founding members discussed this amount and decided how to evaluate all the work they have done prior to this moment."
-						 	 tooltip-placement="right" />
+					<div class="input-group-addon">{{projectModel.code}}</div>
+					<input class="form-control"
+						   id="token"
+						   type="tel"
+						   required
+						   placeholder="e.g. 21000"
+						   ng-model="ctrl.project.initialTokens" />
+					<img alt="help" src="/extension/contentScript/app/images/icon_help.png" class="form-control-feedback"
+						 tooltip="Make sure all the founding members discussed this amount and decided how to evaluate all the work they have done prior to this moment."
+						 tooltip-placement="right" />
 				</div>
 				<label>Decide how many tokens will be distributed to the founding members</label>
 			</div>
@@ -131,7 +129,7 @@
 
 			<select-contributors contributors="ctrl.project.contributors"
 													 contributors-valid="ctrl.contributorsValid"></select-contributors>
-			
+
 		</div>
 		
 	</section>
@@ -143,15 +141,13 @@
 <div class="modal-footer">
 	<div class="row">
 		<div class="col-sm-12">
-
-		<button type="submit"
-						class="btn btn-backfeed submit-button center-block"
-						ng-click="ctrl.submit()"
-						ng-disabled="!ctrl.project.token_name  ||
-												 !ctrl.project.code ||
-												 !ctrl.project.initialTokens ||
-												 !ctrl.contributorsValid">
-												 Create the {{ ctrl.channelName }} Project</button>
+			<button type="submit"
+					class="btn btn-backfeed submit-button center-block"
+					ng-click="ctrl.submit()"
+					ng-disabled="!ctrl.project.token_name  ||
+                                 !ctrl.project.code ||
+                                 !ctrl.project.initialTokens ||
+                                 !ctrl.contributorsValid">Create the {{ctrl.channelName}} Project</button>
 		</div>
 	</div>
 </div>
