@@ -7,7 +7,8 @@ function Contribution(_DEV, Resource) {
 
   var service = {
 
-    create: create
+    create: create,
+    get: get
 
   };
 
@@ -21,6 +22,10 @@ function Contribution(_DEV, Resource) {
 
     return Resource.post('contribution', contributionToSubmit);
 
+  }
+
+  function get(contributionId) {
+    return Resource.get('contribution/' + contributionId);
   }
 
   function getPreparedContributionForCreation(contribution) {
