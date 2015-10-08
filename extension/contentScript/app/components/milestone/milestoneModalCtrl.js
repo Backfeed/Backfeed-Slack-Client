@@ -150,7 +150,7 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
           index++;
         });
         
-        return 'New Milestone submitted '+ '\n' + '*' + mileStoneData.title + '*' + '\n' + mileStoneData.description + '\n' + milestoneString;
+        return 'New Milestone submitted to #'+teamChannelMap[$scope.milestoneModel.evaluatingTeam]+ '\n' + '*' + mileStoneData.title + '*' + '\n' + mileStoneData.description + '\n' + milestoneString;
       };
 
     $scope.sendTestMessage = function(channelId, message) {
