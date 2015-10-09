@@ -283,31 +283,29 @@ function onSingleTeamMemberObservation(mutations) {
 
 function onFloatingMenuOpened(nodes) {
 	var teamName = $('#team_name').html().trim();
-	chrome.runtime.sendMessage({
-		message : 'updateChannelIds',teamName:teamName
-	}, function(response) {
-		if (response.login == 'true') {
-			var addedNodes = $(nodes[0].addedNodes);
-			if (addedNodes.length > 0) {
-				addedNodes.each(function() {
-					if (this.id == 'menu') {
-						
-						var menuItems = $(this).find('#menu_items');
-						var firstMenuItem = menuItems.children(':first-child');
-						if (this.classList.contains('file_menu')) {
-							addContributionButton.bind(this)();
-						} else if (firstMenuItem.is('#member_profile_item') || firstMenuItem.is('#member_prefs_item')) {
-							memberStatusButton.bind(this)();
-						} else if (firstMenuItem.is('#channel_archives_item')) {
-							addProjectButton.bind(this)();
+	var addedNodes = $(nodes[0].addedNodes);
+	if (addedNodes.length > 0) {
+		addedNodes.each(function() {
+			if (this.id == 'menu') {
+				var currentObject = this;
+				var menuItems = $(currentObject).find('#menu_items');
+				var firstMenuItem = menuItems.children(':first-child');
+				if (currentObject.classList.contains('file_menu')) {
+					addContributionButton.bind(currentObject)();
+				} else if (firstMenuItem.is('#member_profile_item') || firstMenuItem.is('#member_prefs_item')) {
+					memberStatusButton.bind(currentObject)();
+				} else if (firstMenuItem.is('#channel_archives_item')) {
+					chrome.runtime.sendMessage({
+						message : 'updateChannelIds',teamName:teamName
+					}, function(response) {
+						if (response.login == 'true') {
+							addProjectButton.bind(currentObject)();
 						}
-
-					}
-				});
-			}
-		}
-		
-	});
+					});
+				}
+		     }
+		});
+	}
 }
 
 function addProjectButton() {
@@ -335,7 +333,6 @@ function addProjectButton() {
 			var projectStatusButtonLabel = 'Project Status';
 			projectStatusButton.removeAttr('id');
 			projectStatusButton.find('a').html(projectStatusButtonIcon + '&nbsp;&nbsp;&nbsp;' + projectStatusButtonLabel);
-
 			projectStatusButton.on('click', function() {
 				openProjectStatusPage(channelId,teamName);
 			});
