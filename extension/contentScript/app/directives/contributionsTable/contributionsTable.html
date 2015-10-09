@@ -12,11 +12,11 @@
 <div class="contributions-table-row contributions-table-row-heading">
   <div>Contribution</div>
   <div>Date</div>
-  <div >{{ ::code }}</div>
+  <div >{{ ::ctrl.code }}</div>
 </div>
 
 <accordion>
-  <accordion-group ng-repeat="contribution in contributions">
+  <accordion-group ng-repeat="contribution in ctrl.contributions">
     <!--the part that's being initially shown-->
     <accordion-heading>
       <div class="contributions-table-row">

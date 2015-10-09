@@ -41,11 +41,6 @@ myApp.config(function($tooltipProvider, $modalProvider, $stateProvider, $authPro
             templateUrl: chrome.extension.getURL("extension/contentScript/app/components/milestone/addMilestone.html"),
             controller: 'MilestoneCtrl'
         })
-        .state('contributionStatus', {
-			url: '/contributionStatus/:contributionId/:mileStoneId',
-            templateUrl: chrome.extension.getURL("extension/contentScript/app/components/contributionStatus/contributionStatus.html"),
-            controller: 'ContributionStatusCtrl'
-        })
         .state('memberStatus', {
             url: '/memberStatus/:memberId',
             templateUrl: chrome.extension.getURL("extension/contentScript/app/components/memberStatus/memberStatus.html"),
