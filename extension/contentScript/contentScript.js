@@ -490,7 +490,7 @@ function evaluationObservationOnChannelId(channelId,mutations){
 							var closeContributionIdsVarArray = closeContributionIdsVar.split(",");							
 							for (var i = 0; i < closeContributionIdsVarArray.length; i++) {								
 								if(closeContributionIdsVarArray[i].trim() == contributionId) {
-									openComposeButton.textContent = "CLOSE";
+									openComposeButton.textContent = "CLOSED";
 								}
 							}
 							$(openComposeButton).insertBefore(spanElement);
@@ -514,7 +514,7 @@ function evaluationObservationOnChannelId(channelId,mutations){
 							if(mileStoneIdArray[1] != undefined){
 								openComposeButton.setAttribute("data-channelId", mileStoneIdArray[1].trim());
 							}
-							
+
 							openComposeButton.setAttribute("id", "COMPOSE_ACTION_MILESTONE_EVALUATION_BUTTON");
 							openComposeButton.textContent = "EVALUATE";
 							var milesStoneIdsVar = response.milestonesIds;
@@ -532,7 +532,7 @@ function evaluationObservationOnChannelId(channelId,mutations){
 							var closeMilestonesIdsVarArray = closeMilestonesIdsVar.split(",");
 							for (var i = 0; i < closeMilestonesIdsVarArray.length; i++) {
 								if(closeMilestonesIdsVarArray[i].trim() == mileStoneIdArray[0].trim()) {
-									openComposeButton.textContent = "CLOSE";
+									openComposeButton.textContent = "CLOSED";
 								}
 							}
 							$(openComposeButton).insertBefore(spanElement);
