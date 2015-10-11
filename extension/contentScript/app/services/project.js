@@ -46,7 +46,7 @@ function Project(_DEV, Resource, $localStorage) {
 
     log("create", projectToSubmit, $localStorage.BF_projects.length);
     return Resource.post('organization', projectToSubmit).then(function(newProject) {
-      $localStorage.BF_projects.push(newProject);
+      init();
       log("create CB", $localStorage.BF_projects, $localStorage.BF_projects.length);
       return newProject;
     });
