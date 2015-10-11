@@ -1,7 +1,7 @@
 angular.module('MyApp')
   .controller('ProjectsModalCtrl', ProjectsModalCtrl);
 
-function ProjectsModalCtrl($stateParams, _DEV, Slack, $modalInstance, PostMessageService, CurrentUser) {
+function ProjectsModalCtrl($stateParams, _DEV, Slack, $modalInstance, PostMessageService, CurrentUser, Project) {
 
   log = _DEV.log('NEW PROJECT');
 
