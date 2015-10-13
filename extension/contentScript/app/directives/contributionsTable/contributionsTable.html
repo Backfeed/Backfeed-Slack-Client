@@ -1,45 +1,43 @@
-<!--<script type="text/ng-template" id="contributions-table-row.html">
-  <div class="">
-    <div class="heading">
-      <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" accordion-transclude="heading">
-        <span ng-class="{'text-muted': isDisabled}">{{heading}}</span>
-      </a>
+<div class="contributions-table">
+  <div class="row list-row list-header">
+    <div class="col-sm-5">
+      Contribution
     </div>
-    <div class="collapse" collapse="!isOpen" ng-transclude></div>
+    <div class="col-sm-3">
+      Date
+    </div>
+    <div class="col-sm-3">
+      {{ ::ctrl.code }}
+    </div>
+  
   </div>
-</script>-->
-
-<div class="contributions-table-row contributions-table-row-heading">
-  <div>Contribution</div>
-  <div>Date</div>
-  <div >{{ ::ctrl.code }}</div>
-</div>
-
-<accordion>
-  <accordion-group ng-repeat="contribution in ctrl.contributions">
-    <!--the part that's being initially shown-->
-    <accordion-heading>
-      <div class="contributions-table-row">
-        <div>{{ ::contribution.title }}</div>
-        <div>{{ ::contribution.date | date:'d.M.yyyy' }}</div>
-        <div>{{ ::contribution.valuation | number:0 }} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-plus': is-open, 'glyphicon-chevron-minus': !is-open}"></i></div>
+  
+  <div ng-repeat="contribution in ctrl.contributions" 
+       ng-mouseenter="ctrl.activeContribution = contribution"
+       ng-mouseleave="ctrl.activeContribution = null">
+    <div class="row list-row" ng-class="{ 'active': contribution === ctrl.activeContribution }">
+      <div class="col-sm-5">
+        {{ ::contribution.title }}
       </div>
-    </accordion-heading>
-    <!--the part that's hidden until the user clicks on the part that's being initially shown-->
-    {{ ::contribution.description }}
-    <ul class="list-inline contribution-contributors-list clearfix">
-      <li ng-repeat="contributor in contribution.contributors" 
-          ng-if="$index < 8"
-          class="contributor-image">
-          <a ui-sref="memberStatus({ memberId: contributor.memberId })">
-            <img class="img-circle"  ng-src="{{ contributor.imgUrl }}" alt="Contributer photo" >
-          </a>
-      </li>
-      <li ng-if="contribution.remainingContributors > 0"
-          class="contributor-image">
-        + {{ contribution.remainingContributors}}
-      </li>
-    </ul>
-
-  </accordion-group>
-</accordion>
+      <div class="col-sm-3">
+        {{ ::contribution.date | date: 'd/MM/yyyy' }}
+      </div>
+      <div class="col-sm-3">
+        {{ ::contribution.valuation }}
+      </div>
+      <div class="col-sm-1">
+        <i class="pull-right glyphicon" 
+           ng-class="{ 'glyphicon-plus': contribution !== ctrl.activeContribution, 
+                       'glyphicon-minus': contribution === ctrl.activeContribution }"></i>
+      </div>
+    </div>
+  
+    <div class="row list-row-toggle" ng-show="contribution === ctrl.activeContribution">
+      <div class="col-sm-12">
+        {{ ::contribution.description }}
+      </div>
+      <users-list users="contribution.contributors" remaining-users="contribution.remainingContributors"></users-list>
+    </div>
+  
+  </div>
+</div>

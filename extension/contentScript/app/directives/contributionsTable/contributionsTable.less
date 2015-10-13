@@ -1,41 +1,13 @@
 .list-row {
   border-bottom: 1px solid #eee;
 
-  &.active  { background-color: gray; }
+  &.active  { 
+    background-color: #f0f0f0; 
+    font-weight: bold;
+  }
 }
 
 .list-row-toggle {
   border-bottom: 1px solid #eee;
-  background-color: gray;
-}
-
-.contributions-table-row {
-  display: flex;
-  justify-content: space-between;
-
-  &>:nth-child(1),
-  &>:nth-child(2),
-  &>:nth-child(3) {
-    word-wrap: break-word;
-    flex-grow: 0;
-    flex-shrink: 0;
-  }
-  &>:nth-child(1) {
-    flex-basis: 167px;
-  }
-  &>:nth-child(2) {
-    flex-basis: 134px;
-  }
-  &>:nth-child(3) {
-    flex-basis: 68px;
-    text-align: right;
-  }
-}
-
-.contributions-table-row-heading > div {
-  flex-basis: initial !important;
-}
-
-.contribution-contributors-list {
-  margin-top: 10px;
+  background-color: #f0f0f0;
 }

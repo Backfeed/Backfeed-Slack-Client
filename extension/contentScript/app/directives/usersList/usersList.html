@@ -1,0 +1,14 @@
+<ul class="list-inline contribution-contributors-list clearfix">
+  <li ng-repeat="user in ctrl.users" 
+      ng-if="$index < 8"
+      class="contributor-image">
+      <a ui-sref="memberStatus({ memberId: user.memberId })"
+         tooltip="{{ user.realName }}">
+        <img class="img-circle"  ng-src="{{ user.imgUrl }}" alt="User photo" >
+      </a>
+  </li>
+  <li ng-if="ctrl.remainingContributors > 0"
+      class="contributor-image">
+    + {{ ctrl.remainingUsers }}
+  </li>
+</ul>
