@@ -149,10 +149,12 @@
 			<button type="submit"
 					class="btn btn-backfeed submit-button center-block"
 					ng-click="ctrl.submit()"
-					ng-disabled="!ctrl.project.token_name  ||
-                                 !ctrl.project.code ||
-                                 !ctrl.project.initialTokens ||
-                                 !ctrl.contributorsValid">Create the {{ctrl.channelName}} Project</button>
+					ng-disabled="ctrl.isProcessing ||
+											!ctrl.project.token_name  ||
+                      !ctrl.project.code ||
+                      !ctrl.project.initialTokens ||
+                      !ctrl.contributorsValid">
+                      Create the {{ ctrl.channelName }} Project</button>
 		</div>
 	</div>
 </div>

@@ -27,6 +27,7 @@ function ProjectsModalCtrl($stateParams, _DEV, Slack, $modalInstance, PostMessag
     rangeSlider: rangeSlider,
     channelName: "",
     contributorsValid: true,
+    isProcessing: false,
     project: {
       channelId: channelId,
       similarEvaluationRate: '50',
@@ -55,6 +56,8 @@ function ProjectsModalCtrl($stateParams, _DEV, Slack, $modalInstance, PostMessag
 
   function submit() {
 
+    ctrl.isProcessing = true;
+
     Project.create(ctrl.project).then(
 
       function() {
@@ -63,6 +66,7 @@ function ProjectsModalCtrl($stateParams, _DEV, Slack, $modalInstance, PostMessag
       },
 
       function(err) {
+        ctrl.isProcessing = false;
         log("submit", err);
         PostMessageService.showAlert('Your project was not created', 'error');
       }
