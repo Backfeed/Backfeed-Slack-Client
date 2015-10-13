@@ -25,7 +25,14 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="input-group">
-					<input class="form-control" id="token" placeholder="talk to me in numbers" ng-model="evaluation.tokens" required ng-change="checkNumber(evaluation.tokens)"/>
+					<input class="form-control" 
+								 id="token" 
+								 type="number"
+								 enforce-integers
+							   min="0"
+								 placeholder="talk to me in numbers" 
+								 ng-model="evaluation.tokens" 
+								 required />
 					<span class="input-group-addon">{{code}}</span>
 				</div>
 			</div>
