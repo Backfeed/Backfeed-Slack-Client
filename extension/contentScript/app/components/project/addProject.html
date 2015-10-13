@@ -54,7 +54,9 @@
 					<div class="input-group-addon">{{ ctrl.project.code }}</div>
 					<input class="form-control"
 						   id="token"
-						   type="tel"
+						   type="number"
+						   enforce-integers
+						   min="1"
 						   required
 						   placeholder="e.g. 21000"
 						   ng-model="ctrl.project.initialTokens" />
