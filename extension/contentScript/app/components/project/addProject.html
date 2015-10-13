@@ -28,6 +28,7 @@
 							 id="tokenName"
 							 type="text"
 							 required
+							 maxlength="60"
 					   	 placeholder="e.g. Bitcoin"
 					   	 ng-model="ctrl.project.token_name" />
 				<img alt="help" src="/extension/contentScript/app/images/icon_help.png" class="form-control-feedback"
@@ -40,7 +41,9 @@
 				<input class="form-control"
 							 id="tokenCode"
 							 type="text"
-							 required maxlength="3"
+							 required 
+							 maxlength="3"
+							 strip-whitespace
 					   	 placeholder="e.g. BTC"
 					   	 ng-model="ctrl.project.code" />
 				<label>Choose a 3-letter symbol for your token</label>
