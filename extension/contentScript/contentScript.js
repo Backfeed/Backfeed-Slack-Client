@@ -45,7 +45,7 @@ $(function() {
 
 function onEvaluationButtonClick() {
   var teamName = $('#team_name').html().trim();
-  var channelId = $('#channel-list').find('.active').find('.channel_name').attr('data-channel-id');
+  var channelId = getActiveChannelId();
   var contributionIdForThisEvaluation = $(this).attr('data-contributionId');
   var textContent = $(this).text();
   if (textContent == 'EVALUATE') {
@@ -57,7 +57,7 @@ function onEvaluationButtonClick() {
 
 function onMilestoneEvaluationButtonClick() {
   var teamName = $('#team_name').html().trim();
-  var channelId = $('#channel-list').find('.active').find('.channel_name').attr('data-channel-id');
+  var channelId = getActiveChannelId();
   var mileStoneIdForThisEvaluation = $(this).attr('data-mileStoneId');
   var channelIdForThisEvaluation = $(this).attr('data-channelId');
   var textContent = $(this).text();
@@ -70,7 +70,7 @@ function onMilestoneEvaluationButtonClick() {
 
 function onMemberStatusButtonClick() {
   var teamName = $('#team_name').html().trim();
-  var channelId = $('#channel-list').find('.active').find('.channel_name').attr('data-channel-id');
+  var channelId = getActiveChannelId();
   var memberId = $(this).siblings('.member_details').find('.member_preview_link').data('member-id');
   openMemberStatusPage(memberId,teamName,channelId);
 }
@@ -311,7 +311,7 @@ function onFloatingMenuOpened(nodes) {
 function addProjectButton() {
 	var menuItemsList = $(this).find('#menu_items');
 	var menuItems = menuItemsList.children();
-	var channelId = $('#channel-list').find('.active').find('.channel_name').attr('data-channel-id');
+	var channelId = getActiveChannelId();
 	var teamName = $('#team_name').html().trim();
 	var channelIds = '';
 	var channelOrganizationFound = false;
@@ -366,7 +366,7 @@ function addMilestoneButton() {
 	var menuItemsList = $(this).find('#menu_items');
 	var teamName = $('#team_name').html().trim();
 	var menuItems = menuItemsList.children();
-	var channelId = $('#channel-list').find('.active').find('.channel_name').attr('data-channel-id');
+	var channelId = getActiveChannelId();
 
 	var addMilestoneButton = menuItems.last().clone().prependTo(menuItemsList);
 	addMilestoneButton.removeAttr('id');
@@ -381,7 +381,7 @@ function addMilestoneButton() {
 function addContributionButton() {
 	var menuItemsList = $(this).find('#menu_items');
 	var teamName = $('#team_name').html().trim();
-	var channelId = $('#channel-list').find('.active').find('.channel_name').attr('data-channel-id');
+	var channelId = getActiveChannelId();
 	console.log('channelId is '+channelId);
 
 	var menuItems = menuItemsList.children();
@@ -401,7 +401,7 @@ function addContributionButton() {
 function memberStatusButton() {
 	var menuItemsList = $(this).find('#menu_items');
 	var teamName = $('#team_name').html().trim();
-	var channelId = $('#channel-list').find('.active').find('.channel_name').attr('data-channel-id');
+	var channelId = getActiveChannelId();
 	var memberId = $(this).find('.member_preview_link').data('member-id');
 	var memberStatusButton = $('<li id="member_status_backfeed"><a>Collaborator Overview</a></li>').prependTo(menuItemsList);
 	memberStatusButton.on('click', function() {
@@ -575,4 +575,8 @@ function evaluationObservationOnChannelId(channelId,mutations){
 		});
 	}
 
+}
+
+function getActiveChannelId() {
+  return $('.channel.active .channel_name').data('channelId');
 }
