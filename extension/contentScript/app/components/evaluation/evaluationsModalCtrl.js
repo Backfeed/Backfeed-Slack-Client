@@ -10,9 +10,6 @@ angular.module('MyApp').controller('EvaluationsModalCtrl',
 	  $scope.closeModal = function() {
 		  $modalInstance.dismiss('cancel');
       };
-      $scope.checkNumber = function(num) {
-		  $scope.validationPass = !isNaN(parseFloat(num)) && isFinite(num);		  		  
-      };
 	 
 	  $scope.getProfile = function() {
 	      Account.getProfile()
