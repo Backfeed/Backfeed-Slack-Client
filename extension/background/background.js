@@ -39,7 +39,7 @@ function addMsgListener(msg, sender, sendResponse) {
 
         $.ajax({
           type: 'POST',
-          url: 'https://refactor.elasticbeanstalk.com/allChannelIdsForTeam',
+          url: 'https://developslackext.elasticbeanstalk.com/allChannelIdsForTeam',
           data: params,
           success: function(data) {
             sendResponse({
@@ -70,7 +70,6 @@ function addMsgListener(msg, sender, sendResponse) {
         });
       } else {
         var token = localStorage['bf-ext-token'];
-
         var params = {
           token: token,channelId: msg.channelId
         };
@@ -78,7 +77,7 @@ function addMsgListener(msg, sender, sendResponse) {
         // get satellizer_token (to be used in API calls)
         $.ajax({
           type: 'POST',
-          url: 'https://refactor.elasticbeanstalk.com/allContributionsFromUser',
+          url: 'https://developslackext.elasticbeanstalk.com/allContributionsFromUser',
           data: params,
           success: function(data) {
             console.log('server returned, satellizer token:' + data);
@@ -222,7 +221,7 @@ function submitToken(token) {
     // get satellizer_token (to be used in API calls)
     $.ajax({
       type: 'POST',
-      url: 'https://refactor.elasticbeanstalk.com/auth/ext_login',
+      url: 'https://developslackext.elasticbeanstalk.com/auth/ext_login',
       data: { token: token },
       success: function(data) {
         console.log('server returned, satellizer token:' + data.token);
