@@ -31,11 +31,6 @@ myApp.config(function($tooltipProvider, $modalProvider, $stateProvider, $authPro
             templateUrl: chrome.extension.getURL("extension/contentScript/app/partials/splash.html"),
             controller: 'SplashCtrl'
         })
-        .state('memberStatus', {
-            url: '/memberStatus/:memberId',
-            templateUrl: chrome.extension.getURL("extension/contentScript/app/components/memberStatus/memberStatus.html"),
-            controller: 'MemberStatusCtrl'
-        })
         .state('evaluations', {
             url: '/evaluations/:contributionId/:projectId',
             templateUrl: chrome.extension.getURL("extension/contentScript/app/components/evaluation/addEvaluation.html"),
