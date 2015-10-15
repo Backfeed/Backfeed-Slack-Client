@@ -16,6 +16,6 @@ function usersList() {
 
 }
 
-function usersListController($scope) {
-  console.log('USERSLISTCONTROLLER');
+function usersListController() {
+
 }
