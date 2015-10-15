@@ -7,8 +7,7 @@
         <img class="img-circle"  ng-src="{{ user.imgUrl }}" alt="User photo" >
       </a>
   </li>
-  <li ng-if="ctrl.remainingContributors > 0"
-      class="contributor-image">
+  <li class="contributor-image remaining-users" ng-if="ctrl.remainingContributors > 0">
     + {{ ctrl.remainingUsers }}
   </li>
 </ul>

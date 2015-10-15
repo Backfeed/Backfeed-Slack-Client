@@ -34,9 +34,9 @@
   
     <div class="row list-row-toggle" ng-show="contribution === ctrl.activeContribution">
       <div class="col-sm-12">
-        {{ ::contribution.description }}
+        <p>{{ ::contribution.description }}</p>
+        <users-list users="contribution.contributors" remaining-users="contribution.remainingContributors"></users-list>
       </div>
-      <users-list users="contribution.contributors" remaining-users="contribution.remainingContributors"></users-list>
     </div>
   
   </div>
