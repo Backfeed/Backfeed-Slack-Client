@@ -35,10 +35,10 @@ function ContributionStatusModalCtrl($scope, $auth, $location, $stateParams, Con
     contributionStatusModel: contributionStatusModel
   });
   $scope.contributionId = $stateParams.contributionId;
-  $scope.mileStoneId = $stateParams.mileStoneId;
+  $scope.milestoneId = $stateParams.milestoneId;
   if($scope.contributionId == ''){
 	  $scope.MilestoneCurrentData = MilestoneDetail.getDetail({
-		  	id: $scope.mileStoneId
+		  	id: $scope.milestoneId
 	      });
 	  $scope.MilestoneCurrentData.$promise.then(function(result) {
     	  $scope.contributionId = result.contribution_id;

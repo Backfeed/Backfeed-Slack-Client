@@ -121,11 +121,11 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
     $modalInstance.dismiss('cancel');
   }
  
-  $scope.buildMilestoneMessage = function(mileStoneData) {
+  $scope.buildMilestoneMessage = function(milestoneData) {
       var milestoneString = '';
-      var contributorsLength = mileStoneData.milestoneContributors.length;
+      var contributorsLength = milestoneData.milestoneContributors.length;
       var index = 0;
-      mileStoneData.milestoneContributors.forEach(function(contributor) {
+      milestoneData.milestoneContributors.forEach(function(contributor) {
         if (index == contributorsLength - 1) {
         	milestoneString += '@' + slackUsersMap[contributor.id] + ' ' + contributor.percentage + '%';
         } else {
@@ -134,14 +134,14 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
         index++;
       });
       
-      return 'New Milestone submitted' + '\n' + mileStoneData.id +':' + channelId + '\n' + '*' + mileStoneData.title + '*' + '\n' + mileStoneData.description + '\n' + milestoneString;
+      return 'New Milestone submitted' + '\n' + milestoneData.id +':' + channelId + '\n' + '*' + milestoneData.title + '*' + '\n' + milestoneData.description + '\n' + milestoneString;
     };
     
-    $scope.buildMilestoneMessageForOrigin = function(mileStoneData) {
+    $scope.buildMilestoneMessageForOrigin = function(milestoneData) {
         var milestoneString = '';
-        var contributorsLength = mileStoneData.milestoneContributors.length;
+        var contributorsLength = milestoneData.milestoneContributors.length;
         var index = 0;
-        mileStoneData.milestoneContributors.forEach(function(contributor) {
+        milestoneData.milestoneContributors.forEach(function(contributor) {
           if (index == contributorsLength - 1) {
           	milestoneString += '@' + slackUsersMap[contributor.id] + ' ' + contributor.percentage + '%';
           } else {
@@ -150,7 +150,7 @@ function MilestoneModalCtrl($scope, $stateParams, $timeout, $modalInstance, _DEV
           index++;
         });
         
-        return 'New Milestone submitted to #'+teamChannelMap[$scope.milestoneModel.evaluatingTeam]+ '\n' + '*' + mileStoneData.title + '*' + '\n' + mileStoneData.description + '\n' + milestoneString;
+        return 'New Milestone submitted to #'+teamChannelMap[$scope.milestoneModel.evaluatingTeam]+ '\n' + '*' + milestoneData.title + '*' + '\n' + milestoneData.description + '\n' + milestoneString;
       };
 
     $scope.sendTestMessage = function(channelId, message) {

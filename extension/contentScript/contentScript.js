@@ -58,13 +58,13 @@ function onEvaluationButtonClick() {
 function onMilestoneEvaluationButtonClick() {
   var teamName = $('#team_name').html().trim();
   var channelId = getActiveChannelId();
-  var mileStoneIdForThisEvaluation = $(this).attr('data-mileStoneId');
+  var milestoneIdForThisEvaluation = $(this).attr('data-milestoneId');
   var channelIdForThisEvaluation = $(this).attr('data-channelId');
   var textContent = $(this).text();
   if (textContent == 'EVALUATE') {
-    openAddMilestoneEvaluationPage(mileStoneIdForThisEvaluation,teamName,channelId);
+    openAddMilestoneEvaluationPage(milestoneIdForThisEvaluation,teamName,channelId);
   } else {
-    openMilestoneStatus(mileStoneIdForThisEvaluation,teamName,channelIdForThisEvaluation);
+    openMilestoneStatus(milestoneIdForThisEvaluation,teamName,channelIdForThisEvaluation);
   }
 }
 
@@ -99,11 +99,11 @@ function openProjectStatusPage(channelId,teamName) {
 
 }
 
-function openMilestoneStatus(mileStoneId,teamName,channelId) {
+function openMilestoneStatus(milestoneId,teamName,channelId) {
 	chrome.runtime.sendMessage({
 		message : {
 			"gesture": 'openMilestoneStatus',
-			"options": ''+mileStoneId+','+channelId
+			"options": ''+milestoneId+','+channelId
 		},teamName : teamName,channelId:channelId
 	}, function(response) {
 		console.log('Here in the callback from milestone status page');
@@ -503,16 +503,16 @@ function evaluationObservationOnChannelId(channelId,mutations){
 						var indexOfRemovalContent = spanText.indexOf('New Milestone submitted<br>');
 						if (indexOfRemovalContent > -1){
 							spanText = spanText.replace('New Milestone submitted<br>', "");
-							var mileStoneId = spanText.substring(4,spanText.indexOf("<br>"));
+							var milestoneId = spanText.substring(4,spanText.indexOf("<br>"));
 							var lengthOfText = 'New Milestone submitted<br>'.length;
-							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+mileStoneId.length+4), "");
+							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+milestoneId.length+4), "");
 							$( '.message_content', $(message)).html (originalText);
 							var openComposeButton = document.createElement("span");
-							var mileStoneIdArray = mileStoneId.split(":");
-							console.log('mileStoneIdArray is'+mileStoneIdArray);
-							openComposeButton.setAttribute("data-mileStoneId", mileStoneIdArray[0].trim());
-							if(mileStoneIdArray[1] != undefined){
-								openComposeButton.setAttribute("data-channelId", mileStoneIdArray[1].trim());
+							var milestoneIdArray = milestoneId.split(":");
+							console.log('milestoneIdArray is'+milestoneIdArray);
+							openComposeButton.setAttribute("data-milestoneId", milestoneIdArray[0].trim());
+							if(milestoneIdArray[1] != undefined){
+								openComposeButton.setAttribute("data-channelId", milestoneIdArray[1].trim());
 							}
 
 							openComposeButton.setAttribute("id", "COMPOSE_ACTION_MILESTONE_EVALUATION_BUTTON");
@@ -522,7 +522,7 @@ function evaluationObservationOnChannelId(channelId,mutations){
 							//milesStoneIdsVar = milesStoneIdsVar.substring(1, milesStoneIdsVar.length-1);
 							var milesStoneIdsVarArray = milesStoneIdsVar.split(",");
 							for (var i = 0; i < milesStoneIdsVarArray.length; i++) {
-								if(milesStoneIdsVarArray[i].trim() == mileStoneIdArray[0].trim()){
+								if(milesStoneIdsVarArray[i].trim() == milestoneIdArray[0].trim()){
 									openComposeButton.textContent = "STATUS";
 								}
 							}
@@ -531,7 +531,7 @@ function evaluationObservationOnChannelId(channelId,mutations){
 							//milesStoneIdsVar = milesStoneIdsVar.substring(1, milesStoneIdsVar.length-1);
 							var closeMilestonesIdsVarArray = closeMilestonesIdsVar.split(",");
 							for (var i = 0; i < closeMilestonesIdsVarArray.length; i++) {
-								if(closeMilestonesIdsVarArray[i].trim() == mileStoneIdArray[0].trim()) {
+								if(closeMilestonesIdsVarArray[i].trim() == milestoneIdArray[0].trim()) {
 									openComposeButton.textContent = "CLOSED";
 								}
 							}
@@ -564,9 +564,9 @@ function evaluationObservationOnChannelId(channelId,mutations){
 						var indexOfRemovalContent = spanText.indexOf('New Milestone submitted<br>');
 						if (indexOfRemovalContent > -1){
 							spanText = spanText.replace('New Milestone submitted<br>', "");
-							var mileStoneId = spanText.substring(5,spanText.indexOf("<br>"));
+							var milestoneId = spanText.substring(5,spanText.indexOf("<br>"));
 							var lengthOfText = 'New Milestone submitted<br>'.length;
-							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+mileStoneId.length+4), "");
+							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+milestoneId.length+4), "");
 							$( '.message_content', $(message)).html(originalText);
 						}
 					}

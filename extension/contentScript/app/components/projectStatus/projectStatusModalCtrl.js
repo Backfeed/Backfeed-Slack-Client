@@ -7,14 +7,14 @@ function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, 
   var currentUser = CurrentUser.get();
 
   var channelId = $stateParams.channelId;
-  var mileStoneId = $stateParams.mileStoneId !== '' ? parseInt($stateParams.mileStoneId) : null; // availble if got here by pressing "status" button on milestone
+  var milestoneId = $stateParams.milestoneId !== '' ? parseInt($stateParams.milestoneId) : null; // availble if got here by pressing "status" button on milestone
   var project = Project.getByChannelId(channelId);
   var ctrl = this;
   angular.extend(ctrl, {
 
     closeModal: closeModal,
     updateViewforMilestone: updateViewforMilestone,
-    selectedMilestonetId: mileStoneId,
+    selectedMilestonetId: milestoneId,
     channelName: project.channelName,
     milestones: [],
     milestoneContributors: [],

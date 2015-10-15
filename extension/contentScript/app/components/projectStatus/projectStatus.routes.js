@@ -5,7 +5,7 @@ function routes($stateProvider) {
 
   .state('projectStatus', {
 
-    url: '/projectStatus/:channelId/:mileStoneId',
+    url: '/projectStatus/:channelId/:milestoneId',
     templateUrl: chrome.extension.getURL("extension/contentScript/app/components/projectStatus/projectStatus.html"),
     controller: 'ProjectStatusCtrl',
     resolve: { userIsAuthenticated: isUserAuthenticated }

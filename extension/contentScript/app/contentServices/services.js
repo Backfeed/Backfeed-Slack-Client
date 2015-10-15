@@ -94,7 +94,7 @@ bfAPIServices.factory('SaveEvaluationToContribution', [ '$resource','environment
 } ]);
 
 bfAPIServices.factory('SaveEvaluationToMilestone', [ '$resource','environmentURL', function($resource,environmentURL) {
-	return $resource(environmentURL+'mileStoneBids', {}, {
+	return $resource(environmentURL+'milestoneBids', {}, {
 		save : {
 			method : 'POST',
 			params : {},
@@ -113,7 +113,7 @@ bfAPIServices.factory('GetEvaluationOfContribution', [ '$resource','environmentU
 } ]);
 
 bfAPIServices.factory('GetEvaluationOfMilestone', [ '$resource','environmentURL', function($resource,environmentURL) {
-	return $resource(environmentURL+'mileStonebid/:mileStoneId/:userId', {}, {
+	return $resource(environmentURL+'milestonebid/:milestoneId/:userId', {}, {
 		Evaluation : {
 			method : 'GET',
 			params : {},

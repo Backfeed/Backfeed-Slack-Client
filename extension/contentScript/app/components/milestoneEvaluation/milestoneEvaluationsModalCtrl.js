@@ -2,7 +2,7 @@ angular.module('MyApp').controller('MilestoneEvaluationsModalCtrl',
 		function($scope, $auth, $location, $stateParams, Users, GetEvaluationOfMilestone,
 				 SaveEvaluationToMilestone, Account, MilestoneDetail, UserDetail, $modalInstance,
 				 PostMessageService, $state) {
-	  $scope.mileStoneId = $stateParams.mileStoneId;
+	  $scope.milestoneId = $stateParams.milestoneId;
 	  $scope.evaluationId = $stateParams.evaluationId;
 	  $scope.projectId = $stateParams.projectId;
 	  PostMessageService.hideIframe();
@@ -62,29 +62,29 @@ angular.module('MyApp').controller('MilestoneEvaluationsModalCtrl',
   
    
 	function getMilestoneForEvaluation(){
-		if ($scope.mileStoneId && $scope.mileStoneId != 0) {
+		if ($scope.milestoneId && $scope.milestoneId != 0) {
 			//check for exsting contribution
 			$scope.data3 = GetEvaluationOfMilestone.Evaluation({
-				'mileStoneId':$scope.mileStoneId,
+				'milestoneId':$scope.milestoneId,
 				'userId' :  $scope.userId
 			});
 			$scope.data3.$promise.then(function(result1) {
 				if(result1.contributionClose == 'true'){
 					 PostMessageService.showAlert('Milestone is closed. It cannot be evaluated anymore.', 'error');
-					 $state.go('contributionStatus', {'contributionId': $scope.mileStoneId}, {reload: true});
+					 $state.go('contributionStatus', {'contributionId': $scope.milestoneId}, {reload: true});
 				 }
 				else 
 				if(result1.bidExists == 'true'){
 					 PostMessageService.showAlert('You already evaluated on this milestone.', 'error');
-					 $state.go('contributionStatus', {'contributionId': $scope.mileStoneId}, {reload: true});
+					 $state.go('contributionStatus', {'contributionId': $scope.milestoneId}, {reload: true});
 				 }else{
-					 console.log('comes here'+$scope.mileStoneId);
+					 console.log('comes here'+$scope.milestoneId);
 					 $scope.projectId = result1.organizationId;
 						console.log('userData.userId: '+ $scope.userId);
 						console.log('userData.projectId: '+$scope.projectId);
 						
 						$scope.data1 = MilestoneDetail.getDetail({
-							'id' : $scope.mileStoneId
+							'id' : $scope.milestoneId
 						});
 						$scope.data1.$promise.then(function(result) {
 							console.log('result.title'+result.title);
@@ -101,8 +101,8 @@ angular.module('MyApp').controller('MilestoneEvaluationsModalCtrl',
 			}
 	}
 
-	if($scope.mileStoneId && $scope.mileStoneId != 0){
-		$scope.evaluation.milestone_id =$scope.mileStoneId ;
+	if($scope.milestoneId && $scope.milestoneId != 0){
+		$scope.evaluation.milestone_id =$scope.milestoneId ;
 	}
 	
 	
@@ -116,7 +116,7 @@ angular.module('MyApp').controller('MilestoneEvaluationsModalCtrl',
 		$scope.data.$promise.then(function(result) {
 			$modalInstance.close('submit');
 			PostMessageService.showAlert('Evaluation submitted', 'success');
-			PostMessageService.hideIframeMilstone($scope.mileStoneId);
+			PostMessageService.hideIframeMilstone($scope.milestoneId);
 			//$state.go('contributionStatus', {'contributionId': $scope.contributionId}, {reload: true});
 		}, function(result) {
 			$modalInstance.close('submit');
