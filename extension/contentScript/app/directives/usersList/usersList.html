@@ -3,7 +3,7 @@
       ng-if="$index < 8"
       class="contributor-image">
       <a ui-sref="memberStatus({ memberId: user.memberId })"
-         tooltip="{{ user.realName }}">
+         tooltip="{{ user.displayName }}">
         <img class="img-circle"  ng-src="{{ user.imgUrl }}" alt="User photo" >
       </a>
   </li>
