@@ -1,128 +1,85 @@
-angular.module('MyApp').controller('MemberStatusModalCtrl', MemberStatusModalCtrl);
+angular.module('MyApp')
+	.controller('MemberStatusModalCtrl', MemberStatusModalCtrl);
 
-function MemberStatusModalCtrl ($scope, $auth, $location, $stateParams, MemberStatus, _DEV,
-		 Account, $modalInstance,PostMessageService,$state,Member,MemberStatusForAllProjects) {
+function MemberStatusModalCtrl ($stateParams, $modalInstance, _DEV, PostMessageService, User) {
 
-	var log = _DEV.log('Member Status');
+	var log = _DEV.log('MEMBER STATUS CTRL');
 
-	$scope.selectedProjectId = '';
-	$scope.memberStatusModel = {
-		project_tokens:'',
-		project_reputation:'',
-		contributionLength : '',
-		url : '',
-		fullName : '',
-		name : '',
-		reputationPercentage : '',
-		contributions : [ {
-			currentValuation : '',
-			reputationDelta:'',
-			myWeight: '',
-			title:'',
-			cTime: '',
-			tokenName: '',
-			id:'',
-			owner:''
-		} ]
-	};
+	var userId = $stateParams.memberId;
 
-	$scope.sortType     = 'date'; // set the default sort type
-	$scope.sortReverse  = false;  // set the default sort order
+	var ctrl = this;
 
-	$scope.closeModal = function() {
+  angular.extend(ctrl, {
+
+    closeModal: closeModal,
+    projectChanged: projectChanged,
+    sortReverse: false,
+    sortType: 'date',
+    user: { projects: [] },
+    contributions: [],
+    code: '',
+    tokens: 0,
+    reputation: 0,
+    tokensName: '',
+    reputationPercentage: 0,
+    activeProjectId: null
+
+  });
+
+  init();
+
+  function init() {
+
+    PostMessageService.hideIframe();
+    PostMessageService.showIframe();
+
+    getUser();
+    getProjects();
+
+  }
+
+  function getUser() {
+    User.get(userId).then(function(user) {
+    	ctrl.user = user;
+    });
+  }
+
+  function projectChanged() {
+    if ( ctrl.activeProjectId ) {
+      getProject();
+    } else {
+      getProjects();
+    }
+  }
+
+  function getProjects() {
+    User.getProjects(userId).then(function(projects) {
+      angular.extend(ctrl, {
+        code: '',
+        tokens: 0,
+        tokenName: '',
+        reputation: 0,
+        reputationPercentage: 0,
+        contributions: projects.contributions
+      });
+    });
+  }
+
+  function getProject() {
+    User.getProject(userId, ctrl.activeProjectId).then(function(project) {
+      angular.extend(ctrl, {
+        code: project.code,
+        tokens: project.tokens,
+        tokenName: project.tokenName,
+        reputation: project.reputation,
+        reputationPercentage: project.reputationPercentage,
+    		contributions: project.contributions
+      });
+  	});
+  }
+
+	function closeModal() {
 		$modalInstance.dismiss('cancel');
-	};
-
-	$scope.getMemberStatus = function(){
-		if ($scope.memberId && $scope.memberId != 0) {
-			$scope.memberProjects = Member.getProjects({
-				slackTeamId: $scope.slackTeamId
-			});
-			$scope.memberStatus = MemberStatusForAllProjects.getDetail({
-				slackTeamId: $scope.slackTeamId,
-				userId: $scope.memberId
-			});
-			$scope.memberStatus.$promise.then(function(result) {
-				$scope.memberStatusTitle = $scope.memberId == $scope.slackUserId ? 'Your' : 'Member';
-				$scope.showTokens = false;
-				$scope.memberStatusModel = result;
-
-				log(result);
-
-				var allContributions = $scope.memberStatusModel.contributions;
-
-				for(var i=0;i<allContributions.length;i++){
-					allContributions[i].myWeight = allContributions[i].myWeight.toFixed(2);
-				}
-			});
-			PostMessageService.showIframe();
-		}
-	};
-
-	$scope.updateTable = function() {
-		if ($scope.selectedProjectId && $scope.selectedProjectId != -1) {
-			$scope.memberStatus = MemberStatus.getDetail({
-				projectId: $scope.selectedProjectId,
-				userId: $scope.memberId
-			});
-			$scope.memberStatus.$promise.then(function(result) {
-				$scope.showTokens = true;
-				$scope.memberStatusModel = result;
-
-				log(result);
-
-				var allContributions = $scope.memberStatusModel.contributions;
-
-				for(var i=0;i<allContributions.length;i++){
-					allContributions[i].myWeight = allContributions[i].myWeight.toFixed(2);
-				}
-			});
-			PostMessageService.showIframe();
-		} else {
-			 $scope.getMemberStatus();
-		}
-	};
-
-	$scope.goToStatusPage = function(contributionId){
-		$state.go('contributionStatus', {'contributionId': contributionId});
-	};
-
-	$scope.checkOwner = function(owner) {
-		return owner == $scope.userId;
-	};
-
-
-	// if not authenticated return to splash:
-	if (!$auth.isAuthenticated()) {
-		$location.path('splash');
-	} else {
-		$scope.memberId = $stateParams.memberId;
-
-		$scope.getProfile = function() {
-			Account.getProfile().success(function(data) {
-				$scope.userId = data.userId;
-				$scope.slackUserId = data.slackUserId;
-				$scope.slackTeamId = data.slackTeamId;
-				Account.setUserData(data);
-				$scope.getMemberStatus();
-			}).error(function(error) {
-				PostMessageService.showAlert('Please relogin', 'error');
-			});
-		};
-
-		var userData = Account.getUserData();
-		log("userData is" + userData);
-		if (userData == undefined) {
-			$scope.getProfile();
-		} else {
-			$scope.userId = userData.userId;
-			$scope.slackUserId = userData.slackUserId;
-			$scope.slackTeamId = userData.slackTeamId;
-			$scope.getMemberStatus();
-		}
-
-
-
 	}
 
 }

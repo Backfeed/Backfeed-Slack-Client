@@ -1,19 +1,22 @@
-angular.module('MyApp').controller('MemberStatusCtrl',
-    function(PostMessageService, $modal,$scope) {
-        var modal = $modal.open({
-            templateUrl: "MemberStatusModalTmpl",
-            controller: 'MemberStatusModalCtrl',
-            scope: $scope,
-            size: 'member-status'
-        });
+angular.module('MyApp')
+  .controller('MemberStatusCtrl', MemberStatusCtrl);
 
-        modal.opened.then(function() {
-            $('div[modal-render]').remove();
-        });
+function MemberStatusCtrl(PostMessageService, $modal, $scope) {
 
-        modal.result.then(function() {
-            PostMessageService.hideIframe();
-        }, function() {
-            PostMessageService.hideIframe();
-        });
-    });
+  var modal = $modal.open({
+    templateUrl: "MemberStatusModalTmpl",
+    controller: 'MemberStatusModalCtrl',
+    scope: $scope,
+    size: 'member-status'
+  });
+
+  modal.opened.then(function() {
+    $('div[modal-render]').remove();
+  });
+
+  modal.result.then(
+    function() { PostMessageService.hideIframe(); }, 
+    function() { PostMessageService.hideIframe(); }
+  );
+  
+}

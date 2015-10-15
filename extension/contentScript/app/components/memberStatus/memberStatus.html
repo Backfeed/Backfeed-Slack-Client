@@ -1,137 +1,147 @@
 <script type="text/ng-template" id="MemberStatusModalTmpl">
-<div class="modal-header">
-	<img alt="Close modal" class="close" src="/extension/contentScript/app/images/close_x.png" ng-click="closeModal()" />
-	<h4 class="modal-title">{{memberStatusTitle}} Stats</h4>
-</div>
-<div class="modal-body">
-	<form>
 
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="media pull-left">
-					<div class="media-left">
-						<a href="#">
-							<img class="media-object img-circle" ng-src="{{memberStatusModel.imgUrl}}"  alt="" />
-						</a>
-					</div>
-					<div class="media-body">
-						<h1 class="member-name media-heading">{{memberStatusModel.fullName}}</h1>
-						<svg-icon icon="slack"></svg-icon><span class="member-username">&nbsp;{{memberStatusModel.name}}</span>
-					</div>
-				</div>
-				<div class="pull-right">
-                    <select class="select-backfeed" name="projectSelection" ng-model="selectedProjectId" ng-change="updateTable();">
-                        <option value="">All Projects</option>
-                        <option ng-repeat="memberProject in memberProjects" value="{{memberProject.id}}">{{memberProject.channelName}}</option>
-                    </select>
-                </div>
-			</div>
-		</div>
+  <div class="modal-header">
+    <img alt="Close modal" class="close" src="/extension/contentScript/app/images/close_x.png" ng-click="ctrl.closeModal()" />
+    <h4 class="modal-title">Member Stats</h4>
+  </div>
+  <div class="modal-body">
+    <form>
 
-		<div class="member-stats" ng-show="showTokens">
-			<div class="stat member-stat">
-				<div class="stat-item">
-                    <img class="stat-icon" alt="Contribution" src="/extension/contentScript/app/images/contribution.png" />
-                    <div class="stat-data">{{memberStatusModel.contributionLength | number:0}}</div>
-				</div>
-                <div class="stat-label">Contributions</div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="media pull-left">
+            <div class="media-left">
+              <a href="#">
+                <img class="media-object img-circle" ng-src="{{ctrl.user.imgUrl}}" alt="{{ ctrl.user.displayName }}" />
+              </a>
             </div>
-			 <div class="stat member-stat">
-                    <div class="stat-item">
-                        <img class="stat-icon" alt="Tokens" src="/extension/contentScript/app/images/rep.png" />
-                        <div class="stat-data">{{memberStatusModel.project_tokens | number:0}}&nbsp;<small>{{memberStatusModel.code}}</small></div>
-                    </div>
-                    <div class="stat-label">{{memberStatusModel.tokenName}}</div>
-                </div>
-			
-			<div class="stat member-stat">
-				<div class="stat-item">
-                    <img class="stat-icon" alt="Reputation" src="/extension/contentScript/app/images/rep.png" />
-                    <div class="stat-data">{{memberStatusModel.project_reputation | number:0}}&nbsp;<small>{{memberStatusModel.reputationPercentage | number:0}}%</small></div>
-				</div>
-                <div class="stat-label">Reputation</div>
+            <div class="media-body">
+              <h1 class="member-name media-heading"> {{ ctrl.user.displayName }}</h1>
+              <svg-icon icon="slack"></svg-icon><span class="member-username">&nbsp;{{ ctrl.user.name }}</span>
             </div>
-		</div>
+          </div>
+          <div class="pull-right">
+            <select class="select-backfeed" 
+            				name="projectSelection" 
+            				ng-model="activeProjectId" 
+            				ng-change="getProject">
+              <option value="">All Projects</option>
+              <option ng-repeat="project in user.projects" value="{{ project.id }}">{{ project.channelName }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
 
-		<div class="member-stats" ng-hide="showTokens">
-			<div class="stat member-stat">
-                <div class="stat-item">
-                    <img class="stat-icon" alt="Contribution" src="/extension/contentScript/app/images/contribution.png" />
-                    <div class="stat-data">{{memberStatusModel.contributionLength | number:0}}</div>
-                </div>
-                <div class="stat-label">Total Contributions</div>
+      <div class="member-stats" ng-show="ctrl.activeProjectId">
+        <div class="stat member-stat">
+          <div class="stat-item">
+            <img class="stat-icon" alt="Contribution" src="/extension/contentScript/app/images/contribution.png" />
+            <div class="stat-data">{{ ctrl.contributions.length | number: 0 }}</div>
+          </div>
+          <div class="stat-label">Contributions</div>
+        </div>
+        <div class="stat member-stat">
+          <div class="stat-item">
+            <img class="stat-icon" alt="Tokens" src="/extension/contentScript/app/images/rep.png" />
+            <div class="stat-data">{{ ctrl.tokens | number: 0 }}&nbsp;<small>{{ ctrl.code }}</small></div>
+          </div>
+          <div class="stat-label">{{ ctrl.tokenName }}</div>
+        </div>
+
+        <div class="stat member-stat">
+          <div class="stat-item">
+            <img class="stat-icon" alt="Reputation" src="/extension/contentScript/app/images/rep.png" />
+            <div class="stat-data">{{ctrl.reputation | number: 0 }}
+            												&nbsp;
+            												<small>{{ctrl.reputationPercentage | number: 0 }}%</small>
             </div>
-		</div>
+          </div>
+          <div class="stat-label">Reputation</div>
+        </div>
+      </div>
 
-		<div class="row" ng-if="memberStatusModel.contributions.length">
-			<div class="col-sm-12">
-				<table class="table table-condensed table-hover contributions-table">
-					<thead>
-					<tr>
-						<td nowrap>
-							<a class="table-column-title" href="#" ng-click="sortType = 'title'; sortReverse = !sortReverse">
+      <div class="member-stats" ng-hide="ctrl.activeProjectId">
+        <div class="stat member-stat">
+          <div class="stat-item">
+            <img class="stat-icon" alt="Contribution" src="/extension/contentScript/app/images/contribution.png" />
+            <div class="stat-data">{{ ctrl.contributions.length | number: 0 }}</div>
+          </div>
+          <div class="stat-label">Total Contributions</div>
+        </div>
+      </div>
+
+      <div class="row" ng-if="ctrl.contributions.length">
+        <div class="col-sm-12">
+          <table class="table table-condensed table-hover contributions-table">
+            <thead>
+              <tr>
+                <td nowrap>
+                  <a class="table-column-title" href="#" ng-click="sortType = 'title'; sortReverse = !sortReverse">
 								Contribution
 								<svg-icon icon="caret-down" ng-if="sortType == 'title' && !sortReverse"></svg-icon>
 								<svg-icon icon="caret-up" ng-if="sortType == 'title' && sortReverse"></svg-icon>
 							</a>
-						</td>
-						<td nowrap>
-							<a class="table-column-title" href="#" ng-click="sortType = 'cTime'; sortReverse = !sortReverse">
+                </td>
+                <td nowrap>
+                  <a class="table-column-title" href="#" ng-click="sortType = 'cTime'; sortReverse = !sortReverse">
 								Date
 								<svg-icon icon="caret-down" ng-if="sortType == 'cTime' && !sortReverse"></svg-icon>
 								<svg-icon icon="caret-up" ng-if="sortType == 'cTime' && sortReverse"></svg-icon>
 							</a>
-						</td>
-						<td nowrap>
-							<a class="table-column-title" href="#" ng-click="sortType = 'myWeight'; sortReverse = !sortReverse">
+                </td>
+                <td nowrap>
+                  <a class="table-column-title" href="#" ng-click="sortType = 'myWeight'; sortReverse = !sortReverse">
 								Rep %
 								<svg-icon icon="caret-down" ng-if="sortType == 'myWeight' && !sortReverse"></svg-icon>
 								<svg-icon icon="caret-up" ng-if="sortType == 'myWeight' && sortReverse"></svg-icon>
 							</a>
-						</td>
-						<td nowrap>
-							<a class="table-column-title" href="#" ng-click="sortType = 'currentValuation'; sortReverse = !sortReverse">
+                </td>
+                <td nowrap>
+                  <a class="table-column-title" href="#" ng-click="sortType = 'currentValuation'; sortReverse = !sortReverse">
 								Current Value
 								<svg-icon icon="caret-down" ng-if="sortType == 'currentValuation' && !sortReverse"></svg-icon>
 								<svg-icon icon="caret-up" ng-if="sortType == 'currentValuation' && sortReverse"></svg-icon>
 							</a>
-						</td>
-						<td nowrap>
-							<a class="table-column-title" href="#" ng-click="sortType = 'reputationDelta'; sortReverse = !sortReverse">
+                </td>
+                <td nowrap>
+                  <a class="table-column-title" href="#" ng-click="sortType = 'reputationDelta'; sortReverse = !sortReverse">
 								My Rep
 								<svg-icon icon="caret-down" ng-if="sortType == 'reputationDelta' && !sortReverse"></svg-icon>
 								<svg-icon icon="caret-up" ng-if="sortType == 'reputationDelta' && sortReverse"></svg-icon>
 							</a>
-						</td>
-						<td nowrap>
-							<a class="table-column-title" href="#" ng-click="sortType = 'tokenName'; sortReverse = !sortReverse">
+                </td>
+                <td nowrap>
+                  <a class="table-column-title" href="#" ng-click="sortType = 'tokenName'; sortReverse = !sortReverse">
 								Token Name
 								<svg-icon icon="caret-down" ng-if="sortType == 'tokenName' && !sortReverse"></svg-icon>
 								<svg-icon icon="caret-up" ng-if="sortType == 'tokenName' && sortReverse"></svg-icon>
 							</a>
-						</td>
-					</tr>
-					</thead>
+                </td>
+              </tr>
+            </thead>
 
-					<tbody>
-						<tr ng-class="{'my-contribution-row': checkOwner(contribution.ownerId)}" ng-repeat="contribution in memberStatusModel.contributions | orderBy:sortType:sortReverse">
-							<td><a href="" ng-click="goToStatusPage(contribution.id)">{{contribution.title}}</a></td>
-							<td nowrap>{{contribution.cTime | date:'d.M.yyyy' }}</td>
-							<td nowrap>{{contribution.myWeight}}</td>
-							<td nowrap>{{contribution.currentValuation}}</td>
-							<td nowrap>{{contribution.reputationDelta}}<svg-icon icon="up-arrows" ng-if="contribution.reputationDelta > 0"></svg-icon>
-						<svg-icon icon="down-arrows" ng-if="contribution.reputationDelta < 0"></svg-icon></td>
-							<td nowrap>{{contribution.tokenName}}</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
+            <tbody>
+              <tr ng-class="{ 'my-contribution-row': isOwner(contribution.ownerId )}" 
+              		ng-repeat="contribution in ctrl.contributions | orderBy: sortType: sortReverse">
+                <td><a href="" ui-sref="contributionStatus({ 'contributionId': contribution.id })">{{ contribution.title }}</a></td>
+                <td nowrap>{{ contribution.cTime | date:'d.M.yyyy' }}</td>
+                <td nowrap>{{ contribution.myWeight }}</td>
+                <td nowrap>{{ contribution.currentValuation }}</td>
+                <td nowrap>{{ contribution.reputationDelta }}
+                  <svg-icon icon="up-arrows" ng-if="contribution.reputationDelta > 0"></svg-icon>
+                  <svg-icon icon="down-arrows" ng-if="contribution.reputationDelta < 0"></svg-icon>
+                </td>
+                <td nowrap>{{ contribution.tokenName }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
 
-	</form>
+    </form>
 
-	<div class="modal-footer">
-		<div class="row"></div>		
-	</div>
-</div>
-		</script>
+    <div class="modal-footer">
+      <div class="row"></div>
+    </div>
+  </div>
+</script>
