@@ -51,16 +51,10 @@ function Resource($http, API_URL, _DEV, $localStorage) {
   }
 
   function getBaseParams() {
-    var access_token = $localStorage.currentUser ? $localStorage.currentUser.access_token : null;
-    var slackTeamId = $localStorage.currentUser ? $localStorage.currentUser.slackTeamId : null;
-    var userId = $localStorage.currentUser ? $localStorage.currentUser.userId : null;
+    var slackAccessToken = $localStorage.currentUser ? $localStorage.currentUser.slackAccessToken : null;
 
     return { 
-
-      access_token: access_token,
-      slackTeamId: slackTeamId,
-      userId: userId
-
+      slackAccessToken: slackAccessToken 
     };
   }
   
