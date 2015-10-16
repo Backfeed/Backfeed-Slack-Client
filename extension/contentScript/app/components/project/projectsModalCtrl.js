@@ -68,7 +68,7 @@ function ProjectsModalCtrl($stateParams, _DEV, Slack, $modalInstance, PostMessag
       function(err) {
         ctrl.isProcessing = false;
         log("submit", err);
-        PostMessageService.showAlert('Your project was not created', 'error');
+        PostMessageService.showAlert(err.data.message, 'error');
       }
 
     )
