@@ -1,32 +1,31 @@
 <script type="text/ng-template" id="MilestoneEvaluationsModalTmpl">
    
 <div class="modal-header">
-		<img alt="Close modal" class="close-modal" src="/extension/contentScript/app/images/close_x.png" ng-click="closeModal()" />
+		<img alt="Close modal" class="close-modal" src="/extension/contentScript/app/images/close_x.png" ng-click="ctrl.closeModal()" />
 	</div>
 	<div class="modal-body">
+
 		<form>
 
 			<div class="row">
 				<div class="col-sm-12">
-					<h2>It's Evaluating Time!<img tooltip="Consult your project's evaluation guidelines before your evaluation. Usually every token is considered as being worth a set amount of currency (i.e. 1 ILS or 1 USD) and specific contribution types have set evaluation ranges." alt="help" src="/extension/contentScript/app/images/icon_help.png"/></h2>
-					<h6>How many {{tokenName}} does "{{title}}" worth to the team?</h6>
+					<h2>It's Evaluating Time!
+						<img alt="help" 
+								 src="/extension/contentScript/app/images/icon_help.png"
+								 tooltip="Consult your project's evaluation guidelines before your evaluation. Usually every token is considered as being worth a set amount of currency (i.e. 1 ILS or 1 USD) and specific contribution types have set evaluation ranges." /></h2>
+					<h6>How many {{ ctrl.milestone.tokenName }} does "{{ ctrl.milestone.title }}" worth to the team?</h6>
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="col-sm-12">
 					<div class="input-group">
-						<input class="form-control" id="token" placeholder="talk to me in numbers" ng-model="evaluation.tokens" required ng-change="checkNumber(evaluation.tokens)"/>
-						<span class="input-group-addon">{{code}}</span>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-12">
-					<div class="input-group">
-						<div class="invalid-message" ng-hide="validationPass">
-					    		<span class="invalid-mail" ng-hide="validationPass && !evaluation.tokens">Enter Numbers Only</span>
-					    </div>
+						<input class="form-control" 
+									 id="token" 
+									 placeholder="talk to me in numbers" 
+									 ng-model="ctrl.evaluation.tokens" 
+									 required />
+						<span class="input-group-addon">{{ ctrl.milestone.code }}</span>
 					</div>
 				</div>
 			</div>
@@ -38,10 +37,8 @@
 		<p class="lead">Once submitting your evaluation you will not be able to change it.</p>
 		<button type="submit"
 				class="btn btn-backfeed submit-button"
-				ng-disabled="!evaluation.tokens || !validationPass"
-				ng-click="submit()">Evaluate</button>
+				ng-disabled="!ctrl.evaluation.tokens"
+				ng-click="ctrl.submit()">Evaluate</button>
 	</div>
 
 </script>
-
-

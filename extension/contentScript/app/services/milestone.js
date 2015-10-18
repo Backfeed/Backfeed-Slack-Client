@@ -8,6 +8,7 @@ function Milestone(_DEV, Resource, Project) {
   var service = {
 
     create: create,
+    addEvaluation: addEvaluation,
     getCurrent: getCurrent,
     getCurrentByChannelId: getCurrentByChannelId,
     get: get,
@@ -17,8 +18,12 @@ function Milestone(_DEV, Resource, Project) {
 
   return service;
 
-  function create(title, description, evaluatingTeam, channelId) {
-    return Resource.post('milestone', title, description, evaluatingTeam, channelId);
+  function create(title, description, evaluatingProject, channelId) {
+    return Resource.post('milestone', title, description, evaluatingProject, channelId);
+  }
+
+  function addEvaluation(milestone) {
+    return Resource.post('milestoneBids', milestone);
   }
 
   function get(id) {

@@ -1,19 +1,22 @@
-angular.module('MyApp').controller('MilestoneEvaluationsCtrl',
-    function(PostMessageService, $modal, $scope) {
-        var modal = $modal.open({
-            templateUrl: 'MilestoneEvaluationsModalTmpl',
-            controller: 'MilestoneEvaluationsModalCtrl',
-            scope: $scope,
-            size: 'md'
-        });
+angular.module('MyApp')
+  .controller('MilestoneEvaluationsCtrl', MilestoneEvaluationsCtrl);
 
-        modal.opened.then(function() {
-            $('div[modal-render]').remove();
-        });
+function MilestoneEvaluationsCtrl(PostMessageService, $modal, $scope) {
+  var modal = $modal.open({
+    templateUrl: 'MilestoneEvaluationsModalTmpl',
+    controllerAs: 'ctrl',
+    controller: 'MilestoneEvaluationsModalCtrl',
+    scope: $scope,
+    size: 'md'
+  });
 
-        modal.result.then(function() {
-            PostMessageService.hideIframe();
-        }, function() {
-            PostMessageService.hideIframe();
-        });
-    });
+  modal.opened.then(function() {
+    $('div[modal-render]').remove();
+  });
+
+  modal.result.then(
+    function() { PostMessageService.hideIframe(); }, 
+    function() { PostMessageService.hideIframe(); }
+  );
+  
+}

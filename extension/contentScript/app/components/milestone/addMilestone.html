@@ -63,7 +63,7 @@
 
   <div class="modal-footer flex">
     <div class="milestone-destination-project">
-      <select class="select-backfeed" ng-model="ctrl.milestone.evaluatingTeam" required>
+      <select class="select-backfeed" ng-model="ctrl.milestone.evaluatingProject" required>
         <option value="" selected>Destination Project</option>
         <option ng-repeat="project in ctrl.projects" value="{{ project.id }}">{{ project.channelName }}</option>
       </select>
