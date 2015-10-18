@@ -1,11 +1,11 @@
 <script type="text/ng-template" id="MilestoneModalTmpl">
 
 <div class="modal-header">
-  <img alt="Close modal" class="close-modal" src="/extension/contentScript/app/images/close_x.png" ng-click="closeModal()" />
+  <img alt="Close modal" class="close-modal" src="/extension/contentScript/app/images/close_x.png" ng-click="ctrl.closeModal()" />
   <div class="modal-title">Submit a New Milestone</div>
 </div>
 
-<form name="form" ng-submit="submit()">
+<form name="form" ng-submit="ctrl.submit()">
 
   <div class="modal-body row">
 
@@ -17,23 +17,30 @@
         </h2>
 
         <div class="form-group">
-          <input type="text" class="form-control" required
-                 placeholder="Name of the new milestone" ng-model="milestoneModel.title" />
+          <input type="text" 
+                 class="form-control" 
+                 required
+                 placeholder="Name of the new milestone" 
+                 ng-model="ctrl.milestone.title" />
           <label>Title</label>
         </div>
 
         <div class="form-group">
-          <textarea class="form-control" required
-                 placeholder="Describe the milestone" ng-model="milestoneModel.description"></textarea>
+          <textarea class="form-control" 
+                    required
+                    placeholder="Describe the milestone" 
+                    ng-model="ctrl.milestone.description"></textarea>
           <label>Content</label>
         </div>
 
-        <contributions-table ng-if="milestoneModel.contributions.length > 0"
-                             code="tokenCode" 
-                contributions="milestoneModel.contributions"
-                active-contribution="activeContribution"></contributions-table>
+        <contributions-table ng-if="ctrl.milestone.contributions.length > 0"
+                             code="ctrl.tokenCode" 
+                             contributions="ctrl.milestone.contributions"
+                             active-contribution="ctrl.activeContribution"></contributions-table>
 
-        <div class="alert alert-danger" ng-show="milestoneModel.contributions == 0" ng-cloak
+        <div class="alert alert-danger" 
+             ng-show="ctrl.milestone.contributions == 0" 
+             ng-cloak
              role="alert">You need to make contributions before you can submit a milestone.</div>
       </div>
 
@@ -41,13 +48,13 @@
         <div class="stat">
           <div class="stat-item">
             <img class="stat-icon" alt="Tokens" src="/extension/contentScript/app/images/tokens.png" />
-            <div class="stat-data">{{totalValue | number:0}} <small>{{tokenCode}}</small></div>
+            <div class="stat-data">{{ ctrl.totalValue | number: 0 }} <small>{{ ctrl.tokenCode }}</small></div>
           </div>
           <div class="stat-label">Value of all contributions</div>
         </div>
 
-        <div class="contributors box" ng-hide="!contributorsCount" ng-cloak>
-          <contributors-list contributors="milestoneModel.contributors"
+        <div class="contributors box" ng-if="contributorsCount" ng-cloak>
+          <contributors-list contributors="ctrl.milestone.contributors"
                              contributors-count="contributorsCount"></contributors-list>
         </div>
       </div>
@@ -56,15 +63,16 @@
 
   <div class="modal-footer flex">
     <div class="milestone-destination-project">
-      <select class="select-backfeed" ng-model="milestoneModel.evaluatingTeam">
+      <select class="select-backfeed" ng-model="ctrl.milestone.evaluatingTeam" required>
         <option value="" selected>Destination Project</option>
-        <option ng-repeat="team in teams" value="{{ team.id }}">{{ team.channelName }}</option>
+        <option ng-repeat="project in ctrl.projects" value="{{ project.id }}">{{ project.channelName }}</option>
       </select>
       <img alt="help" class="pull-right" src="/extension/contentScript/app/images/icon_help.png"
            tooltip="Choose the project you're submitting this milestone to." style="margin-left: 25px;"/>
     </div>
-    <button type="submit" class="btn btn-backfeed submit-button"
-            ng-disabled="form.$invalid || milestoneModel.evaluatingTeam === ''|| milestoneModel.contributions <=0">Submit Milestone</button>
+    <button type="submit" 
+            class="btn btn-backfeed submit-button"
+            ng-disabled="form.$invalid || ctrl.milestone.contributions.length === 0">Submit Milestone</button>
   </div>
 
 </form>
