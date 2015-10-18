@@ -44,22 +44,23 @@ function Project(_DEV, Resource, $localStorage) {
 
     var projectToSubmit = getPreparedProjectForCreation(project);
 
-    log("create", projectToSubmit, $localStorage.BF_projects.length);
+    log("create", projectToSubmit, "Projects count", $localStorage.BF_projects.length);
     return Resource.post('organization', projectToSubmit).then(function(newProject) {
       init();
-      log("create CB", $localStorage.BF_projects, $localStorage.BF_projects.length);
+      log("create CB: ", "Projects", $localStorage.BF_projects, "Projects count", $localStorage.BF_projects.length);
       return newProject;
     });
 
   }
 
   function destroy(projectId) {
-    log("destroy", projectId, $localStorage.BF_projects.length, $localStorage.BF_projects.length);
+    log("destroy", projectId, "Projects count", $localStorage.BF_projects.length);
     return Resource.destroy(projectId).then(function() {
-      log("destroy CB", $localStorage.BF_projects.length, $localStorage.BF_projects.length);
+      log("destroy CB", "Projects count", $localStorage.BF_projects.length);
     });
   }
 
+  // We do this to minimalize the data we are sending to the server
   function getPreparedProjectForCreation(project) {
 
     var projectToSubmit = angular.copy(project);
