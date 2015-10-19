@@ -1,7 +1,9 @@
 angular.module('MyApp')
 .service('Slack', Slack);
 
-function Slack($q, $http, SLACK_API_URL, CurrentUser) {
+function Slack($q, $http, SLACK_API_URL, _DEV, CurrentUser) {
+
+  var log = _DEV.log("SLACK SERVICE");
 
   var currentUser = CurrentUser.get();
 
@@ -28,7 +30,7 @@ function Slack($q, $http, SLACK_API_URL, CurrentUser) {
     return get('chat.postMessage', {
       icon_url: 'https://s-media-cache-ak0.pinimg.com/236x/71/71/f9/7171f9ba59d5055dd0a865b41ac4b987.jpg',
       username: 'backfeed-bot',
-      token: currentUser.access_token,
+      token: currentUser.slackAccessToken,
       channel: channelId,
       text: message,
       link_names: 1,
