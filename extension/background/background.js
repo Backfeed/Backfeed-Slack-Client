@@ -250,7 +250,7 @@ function exchangeSlackCode(data) {
     data: data,
     success: function(data) {
       if (data.ok === true) {
-        submitToken(data.access_token);
+        submitToken(data.slackAccessToken);
       }
     }
   });
