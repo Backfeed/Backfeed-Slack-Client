@@ -16,7 +16,7 @@ function User(_DEV, Resource) {
   return service;
 
   function get(userId) {
-    return Resource.get('api/user', { userId: userId });
+    return Resource.get('api/user/' + userId);
   }
 
   function getProjects(userId) {
