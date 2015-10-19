@@ -18,8 +18,10 @@ function Milestone(_DEV, Resource, Project) {
 
   return service;
 
-  function create(title, description, evaluatingProject, channelId) {
-    return Resource.post('milestone', title, description, evaluatingProject, channelId);
+  function create(milestone) {
+    var milestoneToSubmit = getPreparedMilestoneForCreation(milestone);
+
+    return Resource.post('milestone', milestoneToSubmit);
   }
 
   function addEvaluation(milestone) {
@@ -42,6 +44,10 @@ function Milestone(_DEV, Resource, Project) {
 
   function getAll(orgId) {
     return Resource.get('milestone/all/' + orgId);
+  }
+
+  function getPreparedMilestoneForCreation(milestone) {
+    return _.pick(milestone, 'title', 'description', 'evaluatingProject', 'channelId');
   }
 
 }

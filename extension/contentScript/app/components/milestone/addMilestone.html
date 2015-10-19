@@ -34,12 +34,12 @@
         </div>
 
         <contributions-table ng-if="ctrl.milestone.contributions.length > 0"
-                             code="ctrl.tokenCode" 
+                             code="ctrl.code" 
                              contributions="ctrl.milestone.contributions"
                              active-contribution="ctrl.activeContribution"></contributions-table>
 
         <div class="alert alert-danger" 
-             ng-show="ctrl.milestone.contributions == 0" 
+             ng-show="ctrl.milestone.contributions.length === 0" 
              ng-cloak
              role="alert">You need to make contributions before you can submit a milestone.</div>
       </div>
@@ -48,12 +48,12 @@
         <div class="stat">
           <div class="stat-item">
             <img class="stat-icon" alt="Tokens" src="/extension/contentScript/app/images/tokens.png" />
-            <div class="stat-data">{{ ctrl.totalValue | number: 0 }} <small>{{ ctrl.tokenCode }}</small></div>
+            <div class="stat-data">{{ ctrl.milestone.totalValue | number: 0 }} <small>{{ ctrl.code }}</small></div>
           </div>
           <div class="stat-label">Value of all contributions</div>
         </div>
 
-        <div class="contributors box" ng-if="contributorsCount" ng-cloak>
+        <div class="contributors box" ng-if="ctrl.milestone.contributors.length" ng-cloak>
           <contributors-list contributors="ctrl.milestone.contributors"
                              contributors-count="contributorsCount"></contributors-list>
         </div>
