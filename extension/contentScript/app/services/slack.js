@@ -18,7 +18,7 @@ function Slack($q, $http, SLACK_API_URL, CurrentUser) {
   function getChannel(channelId) {
     return get('channels.info', {
       channel: channelId,
-      token: currentUser.access_token
+      token: currentUser.slackAccessToken
     });
   }
 
