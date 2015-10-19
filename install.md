@@ -44,7 +44,3 @@ PostMessageService.showAlert('message to be displayed', type);
 `type` can be one of: alert, success, error, warning, information, confirm.
 
 Full documentation here: [http://ned.im/noty/](http://ned.im/noty/)
-
-<hr />
-<h2>We based this codebase on a scaffolding repo for Angular-based Chrome extensions: https://github.com/marco64bit/angularExtensionTemplate/</h2>
-<hr />
