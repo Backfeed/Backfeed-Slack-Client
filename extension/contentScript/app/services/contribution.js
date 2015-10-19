@@ -1,7 +1,7 @@
 angular.module('MyApp')
   .service('Contribution', Contribution);
 
-function Contribution(_DEV, Resource) {
+function Contribution(_DEV, Resource, Slack) {
 
   var log = _DEV.log('CONTRIBUTION');
 
@@ -20,7 +20,9 @@ function Contribution(_DEV, Resource) {
 
     log('create', contributionToSubmit);
 
-    return Resource.post('contribution', contributionToSubmit);
+    return Resource.post('contribution', contributionToSubmit).then(function() {
+      Slack.postMessage(contributionToSubmit.channelId, "Your contribution has been submitted!");
+    });
 
   }
 
