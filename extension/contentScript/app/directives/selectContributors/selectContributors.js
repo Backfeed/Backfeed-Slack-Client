@@ -24,7 +24,7 @@ function selectContributorsController($timeout, _DEV, Resource, CurrentUser, All
 
   var ctrl = this;
 
-  var access_token = currentUser.access_token;
+  var slackAccessToken = currentUser.slackAccessToken;
 
   angular.extend(ctrl, {
 
@@ -83,7 +83,7 @@ function selectContributorsController($timeout, _DEV, Resource, CurrentUser, All
     var userIds = getContributorsIds();
 
     ctrl.foo = AllSlackUsers.allSlackUsers({
-      access_token: access_token,
+      slackAccessToken: slackAccessToken,
       userIds: userIds,
       searchString:searchQuery 
     });
@@ -93,7 +93,7 @@ function selectContributorsController($timeout, _DEV, Resource, CurrentUser, All
     });
 
     // TODO - refactor to method below. Remove AllSlackUsers.allSlackUsers
-    // Resource.getSlackUsers(access_token, searchQuery, userIds)
+    // Resource.getSlackUsers(searchQuery, userIds)
     // .then(function(users) {
     // });
   }

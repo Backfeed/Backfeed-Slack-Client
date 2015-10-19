@@ -17,9 +17,9 @@ function Resource($http, API_URL, _DEV, $localStorage) {
 
   return service;
 
-  function getSlackUsers(slackAccessToken, searchQuery, userIds) {
+  function getSlackUsers(searchQuery, userIds) {
     var path = 'allSlackUsers/' + userIds + '/' + searchQuery;
-    return post(path, { access_token: slackAccessToken });
+    return post(path);
   }
 
   function get(url, params) {
