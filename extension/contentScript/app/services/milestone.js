@@ -37,7 +37,7 @@ function Milestone(_DEV, Resource, Project) {
   function getCurrentByChannelId(channelId) {
     var orgId = Project.getByChannelId(channelId).orgId;
 
-    return Resource.getCurrent(orgId);
+    return getCurrent(orgId);
   }
 
   function getAll(orgId) {
