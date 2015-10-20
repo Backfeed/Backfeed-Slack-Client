@@ -34,6 +34,10 @@ We achieve this by Integrating an evaluation layer above Slack that will enable 
 keep collaborators updated and in sync with the valuation process by posting activities into Slack.
 
  
+## User Manual
+  
+  <a href="https://github.com/Backfeed/Backfeed-Slack-Client/blob/master/UserManual.md">User Manual</a>
+ 
 ## Develop
   
   <a href="https://github.com/Backfeed/Backfeed-Slack-Client/blob/master/install.md">Installation</a>
