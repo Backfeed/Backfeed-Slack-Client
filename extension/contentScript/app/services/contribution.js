@@ -20,11 +20,27 @@ function Contribution(_DEV, Resource, Slack) {
 
     log('create', contributionToSubmit);
 
-    return Resource.post('contribution', contributionToSubmit).then(function() {
-      Slack.postMessage(contributionToSubmit.channelId, "Your contribution has been submitted!");
+    return Resource.post('contribution', contributionToSubmit).then(function(contributionResponse) {
+      Slack.postMessage(contributionToSubmit.channelId, buildContributionMessage(contributionToSubmit,contributionResponse.id));
     });
 
   }
+  
+  	function buildContributionMessage(contributionToSubmit,contributionId) {
+	    var contributorsString = '';
+	    var contributorsLength = contributionToSubmit.contributors.length;
+	    var index = 0;
+	    contributionToSubmit.contributors.forEach(function(contributor) {
+	      if (index == contributorsLength - 1) {
+	        contributorsString += '@' + contributor.name + ' ' + contributor.percentage + '%';
+	      } else {
+	        contributorsString += '@' + contributor.name + ' ' + contributor.percentage + '%, ';
+	      }
+	      index++;
+	    });
+
+	    return 'New contribution submitted' + '\n' + contributionId + '\n' + '*' + contributionToSubmit.title + '*' + '\n' + contributionToSubmit.description + '\n' + contributorsString;
+	  };
 
   function get(contributionId) {
     return Resource.get('contribution/' + contributionId);
@@ -39,7 +55,8 @@ function Contribution(_DEV, Resource, Slack) {
       return {
 
         id: contributor.id,
-        percentage: contributor.percentage
+        percentage: contributor.percentage,
+        name: contributor.name
 
       }
 
