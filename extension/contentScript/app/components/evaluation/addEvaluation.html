@@ -4,7 +4,7 @@
 	<img alt="Close modal"
 		 class="close-modal"
 		 src="/extension/contentScript/app/images/close_x.png"
-		 ng-click="closeModal()" />
+		 ng-click="ctrl.closeModal()" />
 	<div class="modal-title">Submit an Evaluation</div>
 </div>
 
@@ -18,7 +18,7 @@
 						 tooltip-placement="right"
 						 tooltip="Consult your project's evaluation guidelines before your evaluation. Usually every token is considered as being worth a set amount of currency (i.e. 1 ILS or 1 USD) and specific contribution types have set evaluation ranges." />
 				</h2>
-				<h6>How many {{tokenName}} does "{{title}}" worth to the project?</h6>
+				<h6>How many {{ ctrl.tokenName }} does "{{ ctrl.contributionTitle }}" worth to the project?</h6>
 			</div>
 		</div>
 
@@ -31,9 +31,9 @@
 								 enforce-integers
 							   min="0"
 								 placeholder="talk to me in numbers" 
-								 ng-model="evaluation.tokens" 
+								 ng-model="ctrl.evaluation" 
 								 required />
-					<span class="input-group-addon">{{code}}</span>
+					<span class="input-group-addon">{{ ctrl.code }}</span>
 				</div>
 			</div>
 		</div>
@@ -45,10 +45,8 @@
 	<p class="lead">Once submitting your evaluation you will not be able to change it.</p>
 	<button type="submit"
 			class="btn btn-backfeed submit-button"
-			ng-disabled="!evaluation.tokens && evaluation.tokens !== 0"
-			ng-click="submit()">Evaluate</button>
+			ng-disabled="!ctrl.evaluation"
+			ng-click="ctrl.submit()">Evaluate</button>
 </div>
 
 </script>
-
-

@@ -1,19 +1,22 @@
-angular.module('MyApp').controller('EvaluationsCtrl',
-    function(PostMessageService, $modal, $scope) {
-        var modal = $modal.open({
-            templateUrl: 'EvaluationsModalTmpl',
-            controller: 'EvaluationsModalCtrl',
-            scope: $scope,
-            size: 'add-evaluation'
-        });
+angular.module('MyApp')
+  .controller('EvaluationsCtrl', EvaluationsCtrl);
 
-        modal.opened.then(function() {
-            $('div[modal-render]').remove();
-        });
+function EvaluationsCtrl(PostMessageService, $modal, $scope) {
+  var modal = $modal.open({
+    templateUrl: 'EvaluationsModalTmpl',
+    controllerAs: 'ctrl',
+    controller: 'EvaluationsModalCtrl',
+    scope: $scope,
+    size: 'add-evaluation'
+  });
 
-        modal.result.then(function() {
-            PostMessageService.hideIframe();
-        }, function() {
-            PostMessageService.hideIframe();
-        });
-    });
+  modal.opened.then(function() {
+    $('div[modal-render]').remove();
+  });
+
+  modal.result.then(
+    function() { PostMessageService.hideIframe(); }, 
+    function() { PostMessageService.hideIframe(); }
+  );
+
+}
