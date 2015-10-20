@@ -8,6 +8,7 @@ function Project(_DEV, Resource, $localStorage) {
   var service = {
 
     init: init,
+    get: get,
     getAll: getAll,
     getByChannelId: getByChannelId,
     create: create,
@@ -29,15 +30,16 @@ function Project(_DEV, Resource, $localStorage) {
 
   }
 
+  function get(projectId) {
+    return _.findWhere($localStorage.BF_projects, { id: projectId });
+  }
+
   function getAll() {
     return $localStorage.BF_projects || [];
   }
 
   function getByChannelId(channelId) {
-    return _.find($localStorage.BF_projects, matchChannelId);
-
-    function matchChannelId(project) { return project.channelId === channelId; }
-
+    return _.findWhere($localStorage.BF_projects, { channelId: channelId });
   }
 
   function create(project) {
