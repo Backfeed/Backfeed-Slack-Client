@@ -36,4 +36,4 @@ keep collaborators updated and in sync with the valuation process by posting act
  
 ## Develop
   
-  <a href="/install.md">Installation</a>
+  <a href="https://github.com/Backfeed/Backfeed-Slack-Client/blob/master/install.md">Installation</a>
