@@ -46,8 +46,8 @@ function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, 
       Milestone.getCurrent(project.orgId).then(
         function(currentMilestone) {
           log('updateViewforMilestone: current:', currentMilestone);
-          ctrl.milestoneContributors = currentMilestone.milestoneContributors;
-          ctrl.milestoneContributions = currentMilestone.milestoneContributions;
+          ctrl.milestoneContributors = currentMilestone.contributors;
+          ctrl.milestoneContributions = currentMilestone.contributions;
           ctrl.totalValue = currentMilestone.totalValue;
           ctrl.tokens = currentMilestone.tokens;
           ctrl.code = currentMilestone.code;
@@ -66,7 +66,7 @@ function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, 
         function(selectedMilestone) {
           log('updateViewforMilestone: ', ctrl.selectedMilestonetId, selectedMilestone);
 
-          ctrl.milestoneContributions = selectedMilestone.milestoneContributions;
+          ctrl.milestoneContributions = selectedMilestone.contributions;
           ctrl.milestoneContributors = selectedMilestone.milestoneContributors;
           ctrl.totalValue = selectedMilestone.totalValue;
           ctrl.tokens = selectedMilestone.tokens;
