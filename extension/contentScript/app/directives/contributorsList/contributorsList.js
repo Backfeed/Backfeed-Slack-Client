@@ -7,9 +7,11 @@ function contributorsList(_DEV) {
 
   return {
 
+    bindToController: true,
     templateUrl: chrome.extension.getURL("extension/contentScript/app/directives/contributorsList/contributorsList.html"),
+    controllerAs: 'ctrl',
     controller: contributorsListController,
-    scope: { contributors: '=', contributorsCount: '=' },
+    scope: { contributors: '=' },
     restrict: 'E'
 
   };

@@ -2,10 +2,10 @@
      tooltip="These are the project's members in order of how influential they are, as calculated by what percent of the project's reputation they own"
      tooltip-placement="bottom"
      alt="help" src="/extension/contentScript/app/images/icon_help.png" />
-<h5>Members ({{ contributorsCount }})</h5>
+<h5>Members ({{ ctrl.contributors.length }})</h5>
 
 <ul class="contributors-list list-unstyled">
-  <li ng-repeat="contributor in contributors" class="contributor flex">
+  <li ng-repeat="contributor in ctrl.contributors" class="contributor flex">
 
     <div class="contributor-image">
       <img class="img-circle" ng-src="{{ contributor.imgUrl }}" alt="{{ contributor.real_name }}" />
