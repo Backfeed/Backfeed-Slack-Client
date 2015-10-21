@@ -6,10 +6,7 @@ function EvaluationsModalCtrl($stateParams, $modalInstance, _DEV, PostMessageSer
 	var log = _DEV.log('CONTRIBUTION EVALUATION CTRL');
 
 	var contributionId = $stateParams.contributionId;
-	var contribution = Contribution.get(contributionId);
-
-	var projectId = $stateParams.projectId;
-	var project = Project.get(projectId);
+	
 
 	var ctrl = this;
 
@@ -29,12 +26,18 @@ function EvaluationsModalCtrl($stateParams, $modalInstance, _DEV, PostMessageSer
 
 		PostMessageService.hideIframe();
 
-		ctrl.contributionTitle = contribution.title;
-		ctrl.tokenName = project.token_name;
-		ctrl.code = project.code;
+		getContribution();
+
 
 		PostMessageService.showIframe();
 
+	}
+
+	function getContribution() {
+		Contribution.get(contributionId).then(function(contribution) {
+			log("contribution", contribution);
+			ctrl.contribution = contribution;
+		});
 	}
 	
 	function closeModal() {
@@ -43,9 +46,9 @@ function EvaluationsModalCtrl($stateParams, $modalInstance, _DEV, PostMessageSer
 
 	function submit() {
 
-		$scope.isProcessing = true;
+		ctrl.isProcessing = true;
 
-		Contribution.evaluate(contribution.id, ctrl.evaluation).then(function() {
+		Contribution.evaluate(ctrl.contribution.id, ctrl.evaluation).then(function() {
 
 			$modalInstance.close('submit');
       PostMessageService.hideIframe();

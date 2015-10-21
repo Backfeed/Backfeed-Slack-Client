@@ -18,7 +18,7 @@
 						 tooltip-placement="right"
 						 tooltip="Consult your project's evaluation guidelines before your evaluation. Usually every token is considered as being worth a set amount of currency (i.e. 1 ILS or 1 USD) and specific contribution types have set evaluation ranges." />
 				</h2>
-				<h6>How many {{ ctrl.tokenName }} does "{{ ctrl.contributionTitle }}" worth to the project?</h6>
+				<h6>How many {{ ctrl.contribution.tokenName }} does "{{ ctrl.contribution.title }}" worth to the project?</h6>
 			</div>
 		</div>
 
@@ -33,7 +33,7 @@
 								 placeholder="talk to me in numbers" 
 								 ng-model="ctrl.evaluation" 
 								 required />
-					<span class="input-group-addon">{{ ctrl.code }}</span>
+					<span class="input-group-addon">{{ ctrl.contribution.code }}</span>
 				</div>
 			</div>
 		</div>
