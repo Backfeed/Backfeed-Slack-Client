@@ -32,7 +32,10 @@ function Contribution(_DEV, Resource, Slack) {
   }
 
   function evaluate(contributionId, evaluation) {
-    return Resource.post('bids', contributionId, evaluation);
+    return Resource.post('bids', {
+      contributionId: contributionId,
+      evaluation: evaluation
+    });
   }
 
   function buildContributionMessage(contributionToSubmit,contributionId) {
