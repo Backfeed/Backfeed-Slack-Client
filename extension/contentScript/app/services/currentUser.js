@@ -8,6 +8,7 @@ function CurrentUser(_DEV, Resource, $localStorage) {
   var service = {
 
     init: init,
+    isLogged: isLogged,
     get: get,
     set: set,
     update: update,
@@ -19,6 +20,9 @@ function CurrentUser(_DEV, Resource, $localStorage) {
 
   function init() {
 
+    if ( !isLogged() )
+      return;
+    
     Resource.get('api/me').then(function(user) {
 
       log("init", user);
@@ -27,6 +31,10 @@ function CurrentUser(_DEV, Resource, $localStorage) {
 
     });
 
+  }
+
+  function isLogged() {
+    return !!localStorage['satellizer_token'];
   }
 
   function get() {

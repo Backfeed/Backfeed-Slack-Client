@@ -1,7 +1,7 @@
 angular.module('MyApp')
   .service('Project', Project);
 
-function Project(_DEV, Resource, $localStorage) {
+function Project($localStorage, _DEV, Resource, CurrentUser) {
 
   var log = _DEV.log('PROJECT');
 
@@ -20,6 +20,9 @@ function Project(_DEV, Resource, $localStorage) {
 
   function init() {
 
+    if ( !CurrentUser.isLogged() )
+      return;
+    
     Resource.get('organization/all').then(function(response) {
 
       log("init", response);
