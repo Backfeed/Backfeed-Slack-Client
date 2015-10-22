@@ -1,19 +1,23 @@
-angular.module('MyApp').controller('ContributionStatusCtrl',
-    function(PostMessageService, $modal, $scope) {
-        var modal = $modal.open({
-            templateUrl: "ContributionStatusModalTmpl",
-            controller: 'ContributionStatusModalCtrl',
-            scope: $scope,
-            size: 'contribution-status'
-        });
+angular.module('MyApp')
+  .controller('ContributionStatusCtrl', ContributionStatusCtrl);
 
-        modal.opened.then(function() {
-            $('div[modal-render]').remove();
-        });
+function ContributionStatusCtrl(PostMessageService, $modal, $scope) {
 
-        modal.result.then(function() {
-            PostMessageService.hideIframe();
-        }, function() {
-            PostMessageService.hideIframe();
-        });
-    });
+  var modal = $modal.open({
+    templateUrl: "ContributionStatusModalTmpl",
+    controllerAs: 'ctrl',
+    controller: 'ContributionStatusModalCtrl',
+    scope: $scope,
+    size: 'contribution-status'
+  });
+
+  modal.opened.then(function() {
+    $('div[modal-render]').remove();
+  });
+
+  modal.result.then(
+    function() { PostMessageService.hideIframe(); }, 
+    function() { PostMessageService.hideIframe(); }
+  );
+  
+}
