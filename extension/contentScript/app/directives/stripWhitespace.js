@@ -3,7 +3,7 @@ angular.module('MyApp')
 
 function stripWhitespace(_DEV) {
 
-  var log = _DEV.log("STRIP WHITEPSACE");
+  var log = _DEV.log("STRIP WHITEPSACE DIRECTIVE");
 
   return {
 

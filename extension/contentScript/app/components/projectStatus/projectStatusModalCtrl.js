@@ -2,7 +2,7 @@ angular.module('MyApp').controller('ProjectStatusModalCtrl', ProjectStatusModalC
 
 function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, $modalInstance, _DEV, CurrentUser, PostMessageService, ChannelProject, Milestone, Project) {
 
-  var log = _DEV.log("PROJECT STATUS MODAL");
+  var log = _DEV.log("PROJECT STATUS CTRL");
 
   var currentUser = CurrentUser.get();
 

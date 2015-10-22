@@ -3,7 +3,7 @@ angular.module('MyApp')
 
 function Project($localStorage, _DEV, Resource, CurrentUser) {
 
-  var log = _DEV.log('PROJECT');
+  var log = _DEV.log('PROJECT SERVICE');
 
   var service = {
 

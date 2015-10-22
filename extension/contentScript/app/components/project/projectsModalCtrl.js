@@ -3,7 +3,7 @@ angular.module('MyApp')
 
 function ProjectsModalCtrl($stateParams, _DEV, Slack, $modalInstance, PostMessageService, CurrentUser, Project) {
 
-  log = _DEV.log('NEW PROJECT');
+  log = _DEV.log('NEW PROJECT CTRL');
 
   var currentUser = CurrentUser.get();
 

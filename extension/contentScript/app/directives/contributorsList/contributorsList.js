@@ -3,7 +3,7 @@ angular.module('MyApp')
 
 function contributorsList(_DEV) {
 
-  log = _DEV.log("CONTRIBUTERS DIRECTIVE");
+  log = _DEV.log("CONTRIBUTORS LIST DIRECTIVE");
 
   return {
 

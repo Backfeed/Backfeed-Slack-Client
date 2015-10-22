@@ -3,7 +3,7 @@ angular.module('MyApp')
 
 function Milestone(_DEV, Resource, Project) {
 
-  var log = _DEV.log('Milestone Service');
+  var log = _DEV.log('MILESTONE SERVICE');
 
   var service = {
 

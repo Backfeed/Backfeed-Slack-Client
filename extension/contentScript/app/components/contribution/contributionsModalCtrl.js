@@ -3,7 +3,7 @@ angular.module('MyApp')
 
 function ContributionsModalCtrl($stateParams, _DEV, Contribution, $modalInstance, PostMessageService) {
 
-  var log = _DEV.log('Add Contribution');
+  var log = _DEV.log('ADD CONTRIBUTION CTRL');
 
   var channelId = $stateParams.channelId;
 

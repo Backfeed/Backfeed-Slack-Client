@@ -3,7 +3,7 @@ angular.module('MyApp')
 
 function Contribution(_DEV, Resource, Slack) {
 
-  var log = _DEV.log('CONTRIBUTION');
+  var log = _DEV.log('CONTRIBUTION SERVICE');
 
   var service = {
 

@@ -3,7 +3,7 @@ angular.module('MyApp')
 
 function CurrentUser(_DEV, Resource, $localStorage) {
 
-  var log = _DEV.log('CURRENT USER');
+  var log = _DEV.log('CURRENT USER SERVICE');
 
   var service = {
 

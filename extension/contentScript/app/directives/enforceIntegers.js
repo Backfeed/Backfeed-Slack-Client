@@ -3,7 +3,7 @@ angular.module('MyApp')
 
 function enforceIntegers(_DEV) {
 
-  var log = _DEV.log("ENFORCE INTEGERS");
+  var log = _DEV.log("ENFORCE INTEGERS DIRECTIVE");
 
   return {
 

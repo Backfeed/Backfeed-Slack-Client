@@ -18,7 +18,7 @@ function selectContributors() {
 
 function selectContributorsController($timeout, _DEV, Resource, CurrentUser, AllSlackUsers) {
 
-  var log = _DEV.log("SELECT CONTRIBUTORS");
+  var log = _DEV.log("SELECT CONTRIBUTORS DIRECTIVE");
 
   var currentUser = CurrentUser.get();
 
