@@ -34,9 +34,9 @@ function MilestoneModalCtrl($stateParams, $modalInstance, _DEV, Resource, Projec
   }
 
   function getMilestone() {
-    // TODO :: get orgId
     Milestone.getCurrentByChannelId(channelId).then(function(milestone) {
       angular.extend(ctrl.milestone, milestone);
+      log("Milestone", ctrl.milestone);
     });
   }
 
