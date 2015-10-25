@@ -8,7 +8,7 @@ function Milestone(_DEV, Resource, Project) {
   var service = {
 
     create: create,
-    addEvaluation: addEvaluation,
+    evaluate: evaluate,
     getCurrent: getCurrent,
     getCurrentByChannelId: getCurrentByChannelId,
     get: get,
@@ -24,7 +24,7 @@ function Milestone(_DEV, Resource, Project) {
     return Resource.post('milestone', milestoneToSubmit);
   }
 
-  function addEvaluation(milestone) {
+  function evaluate(milestone) {
     return Resource.post('milestoneBids', milestone);
   }
 

@@ -48,7 +48,7 @@ function MilestoneEvaluationsModalCtrl($stateParams, $modalInstance, _DEV, PostM
 
     ctrl.isProcessing = true;
 
-    Milestone.addEvaluation(ctrl.evaluation).then(
+    Milestone.evaluate(ctrl.evaluation).then(
 
       function() { 
 
