@@ -9,7 +9,9 @@ function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, 
   var channelId = $stateParams.channelId;
   var milestoneId = $stateParams.milestoneId !== '' ? parseInt($stateParams.milestoneId) : null; // availble if got here by pressing "status" button on milestone
   var project = Project.getByChannelId(channelId);
+
   var ctrl = this;
+
   angular.extend(ctrl, {
 
     closeModal: closeModal,
@@ -67,7 +69,7 @@ function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, 
           log('updateViewforMilestone: ', ctrl.selectedMilestonetId, selectedMilestone);
 
           ctrl.milestoneContributions = selectedMilestone.contributions;
-          ctrl.milestoneContributors = selectedMilestone.milestoneContributors;
+          ctrl.milestoneContributors = selectedMilestone.contributors;
           ctrl.totalValue = selectedMilestone.totalValue;
           ctrl.tokens = selectedMilestone.tokens;
           ctrl.code = selectedMilestone.code;
