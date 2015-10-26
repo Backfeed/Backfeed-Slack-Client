@@ -28,7 +28,7 @@ function Contribution(_DEV, Resource, Slack) {
   }
   
   function get(contributionId) {
-    return Resource.get('contribution/' + contributionId);
+    return Resource.get('contribution/status/' + contributionId);
   }
 
   function evaluate(contributionId, evaluation) {

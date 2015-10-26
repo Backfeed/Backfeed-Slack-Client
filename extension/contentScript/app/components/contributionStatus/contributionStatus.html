@@ -79,7 +79,7 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="bid in ctrl.contribution.bids">
-						<td>{{ bid.time_created | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+						<td>{{ bid.date | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
 						<td>{{ bid.tokens | number: 0 }}</td>
 						<td>{{ bid.reputation | number: 0 }}</td>
 						<td>{{ bid.contributionValueAfterBid }}</td>
