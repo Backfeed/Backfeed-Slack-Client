@@ -51,7 +51,7 @@ function EvaluationsModalCtrl($stateParams, $modalInstance, _DEV, PostMessageSer
 		Contribution.evaluate(ctrl.contribution.id, ctrl.evaluation).then(function() {
 
 			$modalInstance.close('submit');
-      PostMessageService.hideIframe();
+			PostMessageService.hideIframe(contributionId);
       
 		});
 
