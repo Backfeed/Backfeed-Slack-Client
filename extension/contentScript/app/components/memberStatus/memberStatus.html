@@ -23,8 +23,8 @@
           <div class="pull-right">
             <select class="select-backfeed" 
             				name="projectSelection" 
-            				ng-model="activeProjectId" 
-            				ng-change="getProject">
+            				ng-model="ctrl.activeProjectId" 
+            				ng-change="ctrl.projectChanged()">
               <option value="">All Projects</option>
               <option ng-repeat="project in ctrl.projects" value="{{ project.id }}">{{ project.channelName }}</option>
             </select>

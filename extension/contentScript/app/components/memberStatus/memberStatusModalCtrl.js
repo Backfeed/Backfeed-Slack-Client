@@ -46,6 +46,7 @@ function MemberStatusModalCtrl ($stateParams, $modalInstance, _DEV, PostMessageS
   }
 
   function projectChanged() {
+    log("Project changed", ctrl.activeProjectId);
     if ( ctrl.activeProjectId ) {
       getProject();
     } else {
