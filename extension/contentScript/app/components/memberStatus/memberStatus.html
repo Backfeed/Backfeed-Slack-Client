@@ -26,7 +26,7 @@
             				ng-model="activeProjectId" 
             				ng-change="getProject">
               <option value="">All Projects</option>
-              <option ng-repeat="project in user.projects" value="{{ project.id }}">{{ project.channelName }}</option>
+              <option ng-repeat="project in ctrl.projects" value="{{ project.id }}">{{ project.channelName }}</option>
             </select>
           </div>
         </div>

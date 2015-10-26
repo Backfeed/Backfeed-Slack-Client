@@ -15,7 +15,7 @@ function MemberStatusModalCtrl ($stateParams, $modalInstance, _DEV, PostMessageS
     projectChanged: projectChanged,
     sortReverse: false,
     sortType: 'date',
-    user: { projects: [] },
+    user: {},
     contributions: [],
     code: '',
     tokens: 0,
@@ -40,6 +40,7 @@ function MemberStatusModalCtrl ($stateParams, $modalInstance, _DEV, PostMessageS
 
   function getUser() {
     User.get(userId).then(function(user) {
+      log("user", user);
     	ctrl.user = user;
     });
   }
@@ -53,20 +54,23 @@ function MemberStatusModalCtrl ($stateParams, $modalInstance, _DEV, PostMessageS
   }
 
   function getProjects() {
-    User.getProjects(userId).then(function(projects) {
+    User.getProjects(userId).then(function(response) {
+      log("all user projects and contributions", response);
       angular.extend(ctrl, {
         code: '',
         tokens: 0,
         tokenName: '',
         reputation: 0,
         reputationPercentage: 0,
-        contributions: projects.contributions
+        projects: response.projects,
+        contributions: response.contributions
       });
     });
   }
 
   function getProject() {
     User.getProject(userId, ctrl.activeProjectId).then(function(project) {
+      log("project", ctrl.activeProjectId, project);
       angular.extend(ctrl, {
         code: project.code,
         tokens: project.tokens,

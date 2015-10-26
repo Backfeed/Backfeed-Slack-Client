@@ -5,6 +5,7 @@ function MemberStatusCtrl(PostMessageService, $modal, $scope) {
 
   var modal = $modal.open({
     templateUrl: "MemberStatusModalTmpl",
+    controllerAs: 'ctrl',
     controller: 'MemberStatusModalCtrl',
     scope: $scope,
     size: 'member-status'
