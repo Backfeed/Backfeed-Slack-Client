@@ -6,9 +6,9 @@ Every channel in Slack can be turned into a collaborative project which allows a
 
 This manual will guide you through the processes of starting a project, joining one, and managing it within the larger collaboration.
 
-Before anything else, you will need to install the Backfeed Extension by following [this ](https://chrome.google.com/webstore/detail/backfeed-slack-extension/feglgahjbjnabofomkpmoacillfnpjpb)[link](https://chrome.google.com/webstore/detail/backfeed-slack-extension/feglgahjbjnabofomkpmoacillfnpjpb) to where it lives on Chrome’s Web Store. Now, in the top right corner, click the button.
+Before anything else, you will need to install the Backfeed Extension by following [this ](https://chrome.google.com/webstore/detail/backfeed-slack-extension/feglgahjbjnabofomkpmoacillfnpjpb)[link](https://chrome.google.com/webstore/detail/backfeed-slack-extension/feglgahjbjnabofomkpmoacillfnpjpb) to where it lives on Chrome’s Web Store. Now, in the top right corner, click the ![](https://raw.githubusercontent.com/Backfeed/Backfeed-Slack-Client/master/assets/manual/extension-install-button.png) button.
 
-When it’s done installing, a new![add to button](https://raw.githubusercontent.com/Backfeed/Backfeed-Slack-Client/master/assets/icon16.png)button will appear on the right-hand side of Chrome’s address bar. Click it, and a small screen will pop up with a big green ‘Authorize with Slack’ button. Press it, and enter your Slack credentials.
+When it’s done installing, a new ![add to button](https://raw.githubusercontent.com/Backfeed/Backfeed-Slack-Client/master/assets/icon16.png) button will appear on the right-hand side of Chrome’s address bar. Click it, and a small screen will pop up with a big green ‘Authorize with Slack’ button. Press it, and enter your Slack credentials.
 
 Now the Extension is fully installed! If you look around Slack now, you might notice some new buttons.
 
@@ -37,13 +37,15 @@ The tokens of the highest-level project must have real-world value, like Pound S
 
 ## Founding a Project
 
-With most collaborative projects, there is a group of people who bring the project to where it is before its creation in the Backfeed Extension. We call these people the project’s **f****ounders.**
+With most collaborative projects, there is a group of people who bring the project to where it is before its creation in the Backfeed Extension. We call these people the project’s **founders.** ![](https://raw.githubusercontent.com/Backfeed/Backfeed-Slack-Client/master/assets/manual/add-collab-project.jpg)
 
 Before starting a project, **make sure all the founders agree on an initial distribution of value and reputation between themselves, and on the combined value of their prior efforts.** 
 
 To make evaluations easier we **strongly suggest treating all project tokens as either being worth 1 known currency unit** (ILS, USD, BTC, etc). This also gives a reference point for evaluating contributions across projects.
 
 Once you all agree on the initial distribution, you select the appropriate Slack channel, open the channel menu (on the top left of the screen, immediately next to the sidebar), and click on ‘Start a Collaborative Project’, opening this page:
+
+![](https://raw.githubusercontent.com/Backfeed/Backfeed-Slack-Client/master/assets/screens/new-project.png)
 
 Under General Settings, you can choose the name of the token your team will use, like QAcoin, FeedBucks, or BrandDesignCoins. Next, you can choose the 3-letter symbol for your currency, which are things like USD, FB$, or BDC.
 
@@ -61,13 +63,15 @@ Now press the button at the bottom, and you’re done! Your new collaborative pr
 
 ## Contributions
 
-Contributions are anything that can potentially provide value to a project. Once a contribution is submitted, any project member can evaluate how many *tokens* the contribution is worth. As soon as a consensus is achieved (see Evaluations below), new *tokens* and *reputation* are generated and divided between the contributors. further evaluations can generate more reputation and tokens to the contributors if they increase the median of all evaluations. 
+Contributions are anything that can potentially provide value to a project. Once a contribution is submitted, any project member can evaluate how many *tokens* the contribution is worth. As soon as a consensus is achieved (see Evaluations below), new *tokens* and *reputation* are generated and divided between the contributors. further evaluations can generate more reputation and tokens to the contributors if they increase the median of all evaluations. ![](https://raw.githubusercontent.com/Backfeed/Backfeed-Slack-Client/master/assets/manual/submit-contrib.jpg)
 
-Here’s how you submit contributions. In the relevant #project, press the + button to the left of the chat box and choose the ‘Submit Contribution’ button.
+Here’s how you submit contributions. In the relevant #project, press the + button to the left of the chat box and choose the ‘Submit Contribution’ button. 
+
+![](https://raw.githubusercontent.com/Backfeed/Backfeed-Slack-Client/master/assets/screens/new-contribution.png)
 
 Give your contribution a title and describe it to the team as clearly as possible. In the description include links to relevant resources. If you weren’t the only contributor, add the other contributors and their relative part in the contribution.
 
-As soon as you press the ‘Add Contribution’ button, your contribution is automatically submitted and declared by a bot in the project’s #channel. Next, you will get the chance to evaluate your contribution. As a contribution creator, your interest is always to be the first to evaluate your contribution in order to maximize your potential reputation gain.
+As soon as you press the ‘Add Contribution’ button, your contribution is automatically submitted and declared by a bot in the project’s #channel. Next, you will get the chance to evaluate your contribution. As a contribution creator, your interest is always to be the first to evaluate your contribution in order to maximize your potential reputation gain. ![](https://raw.githubusercontent.com/Backfeed/Backfeed-Slack-Client/master/assets/manual/contrib-announcement-evaluate.jpg)
 
 ## Evaluations
 
@@ -75,27 +79,29 @@ Every member can evaluate a contribution by pressing the "evaluate" button next 
 
 Members can only evaluate a contribution once. Making an evaluation costs you reputation: the earlier you vote, the less it costs. The first evaluation is free.
 
+![](https://raw.githubusercontent.com/Backfeed/Backfeed-Slack-Client/master/assets/screens/new-evaluation.png)
+
 Reputation flows to members who vote early and in alignment with the members who vote after them. How close evaluations need to be to be considered aligned is one of the advanced parameters defined at the beginning of a project.
 
 **All evaluations are positive**. Evaluating a contribution means you think it’s good. The worst evaluation you can make is not to evaluate at all.
 
 Once a consensus is achieved when members holding 51% or more of a project’s reputation have made an evaluation, the value of the contribution is determined and the contributors receive tokens and reputation according to the value of the contribution.
 
-Once you evaluate a contribution, the button next to the declaration will change into a "status" button.
+Once you evaluate a contribution, the button next to the declaration will change into a "status" button. ![](https://raw.githubusercontent.com/Backfeed/Backfeed-Slack-Client/master/assets/manual/contrib-announcement-status.jpg)
 
 ## Milestones
 
 Finally, when project members decide they’ve reached a significant milestone in the project’s lifecycle, they can take all the contributions made so far and submit them as a single contribution to another, higher-level project. 
 
-To suggest submitting a milestone, you can click the project’s name on the top left of the screen and choose ‘Submit Milestone’. 
+To suggest submitting a milestone, you can click the project’s name on the top left of the screen and choose ‘Submit Milestone’.![](https://raw.githubusercontent.com/Backfeed/Backfeed-Slack-Client/master/assets/manual/submit-milestone.jpg)
 
-You need to give the milestone a title and provide a description for it, just like a normal contribution. A milestone contains all the contributions made since the last milestone. The contributors list is automatically generated from all the project members, and their proportions are calculated based on their share in the project’s tokens.
+You need to give the milestone a title and provide a description for it, just like a normal contribution. A milestone contains all the contributions made since the last milestone. The contributors list is automatically generated from all the project members, and their proportions are calculated based on their share in the project’s tokens. ![](https://raw.githubusercontent.com/Backfeed/Backfeed-Slack-Client/master/assets/screens/new-milestone.png)
 
 ## Status Pages
 
 There are status pages for projects, team members, and contributions, which are useful to know about, and have little question marks inside each of them that explain what everything means.
 
-You can get to a project’s status page by clicking on the project’s name on the top left of the page, directly to the right of the sidebar, and choosing ‘project status’.
+You can get to a project’s status page by clicking on the project’s name on the top left of the page, directly to the right of the sidebar, and choosing ‘project status’. ![](https://raw.githubusercontent.com/Backfeed/Backfeed-Slack-Client/master/assets/manual/project-status.jpg)
 
 You can get to a team member’s status page by clicking on her name anywhere in Slack and choosing ‘Collaborator Overview’.
 
