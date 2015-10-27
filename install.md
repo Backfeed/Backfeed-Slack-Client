@@ -13,8 +13,6 @@ This will create the `node_modules` folder which contains the packaged needed fo
 Then, run `bower install` to install some more packages.<br>
 Every time you update a LESS file, run `gulp` command from within the root folder to build the app's CSS file. Alternatively, use `gulp watch` to automatically build the CSS on-the-fly when one of the LESS files change.<br>
 
-<b>Notice: </b> You need to remove the `node_modules/` folder before packing the extension in Google Chrome, otherwise you will get errors when trying to install the extension.
-
 <h3>Communication between Content Script and Extension</h3>
 
 Communication between Content Script and Extension can be seen in following Wiki Link
