@@ -39,7 +39,7 @@ function addMsgListener(msg, sender, sendResponse) {
 
         $.ajax({
           type: 'POST',
-          url: 'https://developslackext.elasticbeanstalk.com/allChannelIdsForTeam',
+          url: 'https://monitor.backfeed.cc/allChannelIdsForTeam',
           data: params,
           success: function(data) {
             sendResponse({
@@ -77,7 +77,7 @@ function addMsgListener(msg, sender, sendResponse) {
         // get satellizer_token (to be used in API calls)
         $.ajax({
           type: 'POST',
-          url: 'https://developslackext.elasticbeanstalk.com/allContributionsFromUser',
+          url: 'https://monitor.backfeed.cc/allContributionsFromUser',
           data: params,
           success: function(data) {
             console.log('server returned, satellizer token:' + data);
@@ -221,7 +221,7 @@ function submitToken(token) {
     // get satellizer_token (to be used in API calls)
     $.ajax({
       type: 'POST',
-      url: 'https://developslackext.elasticbeanstalk.com/auth/ext_login',
+      url: 'https://monitor.backfeed.cc/auth/ext_login',
       data: { token: token },
       success: function(data) {
         console.log('server returned, satellizer token:' + data.token);

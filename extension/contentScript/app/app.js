@@ -2,9 +2,9 @@
 
 var myApp = angular.module('MyApp', ['ui.slider', 'ngResource', 'ngTouch', 'ngMessages', 'ui.router', 'ui.bootstrap', 'satellizer','BFAPIServices','ngSanitize','ui.select', 'ngStorage']);
 
-myApp.constant('environmentURL', 'https://developslackext.elasticbeanstalk.com/');
+myApp.constant('environmentURL', 'https://monitor.backfeed.cc/');
 myApp.constant('SLACK_API_URL', 'https://slack.com/api/');
-myApp.constant('API_URL', 'https://developslackext.elasticbeanstalk.com/');
+myApp.constant('API_URL', 'https://monitor.backfeed.cc/');
 
 myApp.config(function($tooltipProvider, $modalProvider, $stateProvider, $authProvider, $compileProvider, $locationProvider) {
     $tooltipProvider.options({
