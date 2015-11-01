@@ -52,7 +52,7 @@ function ProjectsModalCtrl($stateParams, _DEV, Slack, $modalInstance, PostMessag
 
   function closeModal() {
     $modalInstance.dismiss('cancel');
-  };
+  }
 
   function submit() {
 
