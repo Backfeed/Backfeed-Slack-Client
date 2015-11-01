@@ -430,6 +430,14 @@ function onAddEvaluationObservation(mutations) {
 	});
 }
 
+function isSlackBot(node) {
+	return node.classList && node.classList.contains('bot_message');
+}
+
+function isStigy(node) {
+	return $(node).find('.message_aria_label strong').text() === 'stigy';
+}
+
 /**
  * END: DOM Mutation Observers Callbacks :END
  */
@@ -444,9 +452,9 @@ function evaluationObservationOnChannelId(channelId,mutations){
 			return mutation.addedNodes.length > 0;
 		})[0];
 
-		// Fetch only messages sent by a bot
+		// Fetch only messages sent by slack bot or stigy
 		var messagesFromBot = Array.from(mutationWithAddedNodes.addedNodes).filter(function(node) {
-			return node.classList && node.classList.contains('bot_message');
+			return isSlackBot(node) || isStigy(node);
 		});
 
 		chrome.runtime.sendMessage({
@@ -457,7 +465,7 @@ function evaluationObservationOnChannelId(channelId,mutations){
 		}, function(response) {
 			if (response.login == 'true') {
 				messagesFromBot.forEach(function(message) {
-					var spanElement = $( '.message_content', $(message));
+					var spanElement = $( '.message_content', $(message));	
 					var imageElement = $('img', $(message));
 					var contributionIcon = chrome.extension.getURL('/extension/contentScript/app/images/icon_contribution.png');
 					imageElement.attr('src', contributionIcon);
