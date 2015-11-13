@@ -465,7 +465,7 @@ function evaluationObservationOnChannelId(channelId,mutations){
 		}, function(response) {
 			if (response.login == 'true') {
 				messagesFromBot.forEach(function(message) {
-					var spanElement = $( '.message_content', $(message));	
+					var spanElement = $( '.message_body', $(message));	
 					var imageElement = $('img', $(message));
 					var contributionIcon = chrome.extension.getURL('/extension/contentScript/app/images/icon_contribution.png');
 					imageElement.attr('src', contributionIcon);
@@ -480,16 +480,16 @@ function evaluationObservationOnChannelId(channelId,mutations){
 							var contributionId = spanText.substring(4,spanText.indexOf("<br>"));
 							var lengthOfText = removalText.length;
 							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length+4), "");
-							$( '.message_content', $(message)).html (originalText);
+							$( '.message_body', $(message)).html (originalText);
 							var openComposeButton = document.createElement("span");
-							openComposeButton.setAttribute("data-contributionId", contributionId);
+							openComposeButton.setAttribute("data-contributionId", contributionId.trim());
 							openComposeButton.setAttribute("id", "COMPOSE_ACTION_EVALUATION_BUTTON");
 							openComposeButton.textContent = "EVALUATE";
 							var contributionIdsVar = response.contributionIds;
 							contributionIdsVar = String(contributionIdsVar);
 							var contributionIdsVarArray = contributionIdsVar.split(",");
 							for (var i = 0; i < contributionIdsVarArray.length; i++) {
-								if(contributionIdsVarArray[i].trim() == contributionId) {
+								if(contributionIdsVarArray[i].trim() == contributionId.trim()) {
 									openComposeButton.textContent = "STATUS";
 								}
 							}
@@ -497,7 +497,7 @@ function evaluationObservationOnChannelId(channelId,mutations){
 							closeContributionIdsVar = String(closeContributionIdsVar);							
 							var closeContributionIdsVarArray = closeContributionIdsVar.split(",");							
 							for (var i = 0; i < closeContributionIdsVarArray.length; i++) {								
-								if(closeContributionIdsVarArray[i].trim() == contributionId) {
+								if(closeContributionIdsVarArray[i].trim() == contributionId.trim()) {
 									openComposeButton.textContent = "CLOSED";
 								}
 							}
@@ -514,7 +514,7 @@ function evaluationObservationOnChannelId(channelId,mutations){
 							var milestoneId = spanText.substring(4,spanText.indexOf("<br>"));
 							var lengthOfText = 'New Milestone submitted<br>'.length;
 							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+milestoneId.length+4), "");
-							$( '.message_content', $(message)).html (originalText);
+							$( '.message_body', $(message)).html (originalText);
 							var openComposeButton = document.createElement("span");
 							var milestoneIdArray = milestoneId.split(":");
 							console.log('milestoneIdArray is'+milestoneIdArray);
@@ -550,7 +550,7 @@ function evaluationObservationOnChannelId(channelId,mutations){
 
 			} else {
 				messagesFromBot.forEach(function(message) {
-					var spanElement = $( '.message_content', $(message));
+					var spanElement = $( '.message_body', $(message));
 					var spanChildren = spanElement.children('#COMPOSE_ACTION_EVALUATION_BUTTON');
 					if (spanChildren.length == 0){
 						var spanText = spanElement.html();
@@ -562,7 +562,7 @@ function evaluationObservationOnChannelId(channelId,mutations){
 							var contributionId = spanText.substring(5,spanText.indexOf("<br>"));
 							var lengthOfText = removalText.length;
 							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length+4), "");
-							$( '.message_content', $(message)).html(originalText);
+							$( '.message_body', $(message)).html(originalText);
 						}
 					}
 					var spanChildren = spanElement.children('#COMPOSE_ACTION_MILESTONE_EVALUATION_BUTTON');
@@ -575,7 +575,7 @@ function evaluationObservationOnChannelId(channelId,mutations){
 							var milestoneId = spanText.substring(5,spanText.indexOf("<br>"));
 							var lengthOfText = 'New Milestone submitted<br>'.length;
 							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+milestoneId.length+4), "");
-							$( '.message_content', $(message)).html(originalText);
+							$( '.message_body', $(message)).html(originalText);
 						}
 					}
 				});
