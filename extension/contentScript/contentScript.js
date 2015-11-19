@@ -477,9 +477,9 @@ function evaluationObservationOnChannelId(channelId,mutations){
 						var indexOfRemovalContent = spanText.indexOf(removalText);
 						if (indexOfRemovalContent > -1){
 							spanText = spanText.replace(removalText, "");
-							var contributionId = spanText.substring(4,spanText.indexOf("<br>"));
+							var contributionId = spanText.substring(0,spanText.indexOf("<br>"));
 							var lengthOfText = removalText.length;
-							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length+4), "");
+							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length), "");
 							$( '.message_body', $(message)).html (originalText);
 							var openComposeButton = document.createElement("span");
 							openComposeButton.setAttribute("data-contributionId", contributionId.trim());
@@ -511,9 +511,9 @@ function evaluationObservationOnChannelId(channelId,mutations){
 						var indexOfRemovalContent = spanText.indexOf('New Milestone submitted<br>');
 						if (indexOfRemovalContent > -1){
 							spanText = spanText.replace('New Milestone submitted<br>', "");
-							var milestoneId = spanText.substring(4,spanText.indexOf("<br>"));
+							var milestoneId = spanText.substring(0,spanText.indexOf("<br>"));
 							var lengthOfText = 'New Milestone submitted<br>'.length;
-							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+milestoneId.length+4), "");
+							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+milestoneId.length), "");
 							$( '.message_body', $(message)).html (originalText);
 							var openComposeButton = document.createElement("span");
 							var milestoneIdArray = milestoneId.split(":");
@@ -559,9 +559,9 @@ function evaluationObservationOnChannelId(channelId,mutations){
 						var indexOfRemovalContent = spanText.indexOf(removalText);
 						if (indexOfRemovalContent > -1){
 							spanText = spanText.replace(removalText, "");
-							var contributionId = spanText.substring(5,spanText.indexOf("<br>"));
+							var contributionId = spanText.substring(0,spanText.indexOf("<br>"));
 							var lengthOfText = removalText.length;
-							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length+4), "");
+							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length), "");
 							$( '.message_body', $(message)).html(originalText);
 						}
 					}
@@ -572,9 +572,9 @@ function evaluationObservationOnChannelId(channelId,mutations){
 						var indexOfRemovalContent = spanText.indexOf('New Milestone submitted<br>');
 						if (indexOfRemovalContent > -1){
 							spanText = spanText.replace('New Milestone submitted<br>', "");
-							var milestoneId = spanText.substring(5,spanText.indexOf("<br>"));
+							var milestoneId = spanText.substring(0,spanText.indexOf("<br>"));
 							var lengthOfText = 'New Milestone submitted<br>'.length;
-							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+milestoneId.length+4), "");
+							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+milestoneId.length), "");
 							$( '.message_body', $(message)).html(originalText);
 						}
 					}
