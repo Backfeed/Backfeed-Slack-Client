@@ -84,6 +84,7 @@ function openAddProjectPage(channelId,teamName) {
 		},teamName : teamName,channelId:channelId
 	}, function(response) {
 		console.log('Here in the callback from add project page');
+		closeChannelMenu();
 	});
 }
 
@@ -95,6 +96,7 @@ function openProjectStatusPage(channelId,teamName) {
 		},teamName : teamName,channelId:channelId
 	}, function(response) {
 		console.log('Here in the callback from project status page');
+		closeChannelMenu();
 	});
 
 }
@@ -120,6 +122,7 @@ function openAddMilestonePage(channelId,teamName) {
 		},teamName : teamName,channelId:channelId
 	}, function(response) {
 		console.log('Here in the callback from add milestone page');
+		closeChannelMenu();
 	});
 }
 
@@ -587,4 +590,8 @@ function evaluationObservationOnChannelId(channelId,mutations){
 
 function getActiveChannelId() {
   return $('.channel.active .channel_name').data('channelId');
+}
+
+function closeChannelMenu() {
+	$('#menu').remove();
 }
