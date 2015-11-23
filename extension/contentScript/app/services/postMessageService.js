@@ -1,6 +1,6 @@
 angular.module('MyApp').service('PostMessageService', PostMessageService);
 
-function PostMessageService($window, $state, Account) {
+function PostMessageService($window, $state) {
 
   var service = {
 

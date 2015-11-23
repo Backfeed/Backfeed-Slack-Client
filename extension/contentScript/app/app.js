@@ -1,6 +1,6 @@
 'use strict';
 
-var myApp = angular.module('MyApp', ['ui.slider', 'ngResource', 'ngTouch', 'ngMessages', 'ui.router', 'ui.bootstrap', 'satellizer','BFAPIServices','ngSanitize','ui.select', 'ngStorage']);
+var myApp = angular.module('MyApp', ['ui.slider', 'ngResource', 'ngTouch', 'ngMessages', 'ui.router', 'ui.bootstrap', 'satellizer' ,'ngSanitize', 'ui.select', 'ngStorage']);
 
 myApp.constant('environmentURL', 'https://monitor.backfeed.cc/');
 myApp.constant('SLACK_API_URL', 'https://slack.com/api/');

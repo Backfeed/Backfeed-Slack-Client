@@ -16,7 +16,7 @@ function selectContributors() {
 
 }
 
-function selectContributorsController($timeout, _DEV, Resource, CurrentUser, AllSlackUsers) {
+function selectContributorsController($timeout, _DEV, Resource, CurrentUser, User) {
 
   var log = _DEV.log("SELECT CONTRIBUTORS DIRECTIVE");
 
@@ -77,25 +77,19 @@ function selectContributorsController($timeout, _DEV, Resource, CurrentUser, All
     ctrl.contributors.splice(i, 1);
   }
 
-  function refreshUsersToSelectFrom(searchQuery) {
-    log("refreshUsersToSelectFrom", searchQuery);
-
-    var userIds = getContributorsIds();
-
-    ctrl.foo = AllSlackUsers.allSlackUsers({
-      slackAccessToken: slackAccessToken,
-      userIds: userIds,
-      searchString:searchQuery 
-    });
+  function refreshUsersToSelectFrom(query) {
+    if (! query)
+      return;
     
-    ctrl.foo.$promise.then(function(result) {
-      ctrl.usersToSelectFrom = result;
+    var userIdsToExclude = getContributorsIds();
+
+    log("refreshUsersToSelectFrom by query", query, "exclude users with ids", userIdsToExclude);
+
+    User.getByQuery(query, userIdsToExclude).then(function(users) {
+      log("CB refreshUsersToSelectFrom", users);
+      ctrl.usersToSelectFrom = users;
     });
 
-    // TODO - refactor to method below. Remove AllSlackUsers.allSlackUsers
-    // Resource.getSlackUsers(searchQuery, userIds)
-    // .then(function(users) {
-    // });
   }
 
   function getTotalSum() {

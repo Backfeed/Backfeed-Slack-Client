@@ -8,6 +8,7 @@ function User(_DEV, Resource) {
   var service = {
 
     get: get,
+    getByQuery: getByQuery,
     getProjects: getProjects,
     getProject: getProject
 
@@ -17,6 +18,13 @@ function User(_DEV, Resource) {
 
   function get(userId) {
     return Resource.get('api/user/' + userId);
+  }
+
+  function getByQuery(query, userIdsToExclude) {
+    return Resource.post('allSlackUsers', {
+      searchString: query,
+      userIds: userIdsToExclude
+    });
   }
 
   function getProjects(userId) {
