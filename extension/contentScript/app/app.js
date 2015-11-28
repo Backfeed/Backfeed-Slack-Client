@@ -9,9 +9,9 @@ angular.module('MyApp', [
   'ngSanitize',
   'ui.select',
   'ngStorage'
-]);
+])
 
-myApp.config(function($tooltipProvider, $modalProvider, $stateProvider, $authProvider, $compileProvider, $locationProvider) {
+.config(function($tooltipProvider, $modalProvider, $stateProvider, $authProvider, $compileProvider, $locationProvider) {
   $tooltipProvider.options({
     appendToBody: 'true'
   });
