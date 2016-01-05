@@ -3,32 +3,67 @@
     <div class="col-sm-5">
       Contribution
     </div>
-    <div class="col-sm-3">
+    <div class="col-sm-2" ng-if="ctrl.showAction == true">
       Date
     </div>
-    <div class="col-sm-3">
+    <div class="col-sm-3" ng-if="ctrl.showAction == false">
+      Date
+    </div>
+    <div class="col-sm-2" ng-if="ctrl.showAction == true">
       {{ ::ctrl.code }}
     </div>
-  
+     <div class="col-sm-3" ng-if="ctrl.showAction == false">
+      {{ ::ctrl.code }}
+    </div>
+  <div ng-if="ctrl.showAction == true"  class="col-sm-2">
+      Action
+    </div>
   </div>
   
   <div ng-repeat="contribution in ctrl.contributions" 
-       ng-mouseenter="ctrl.activeContribution = contribution"
-       ng-mouseleave="ctrl.activeContribution = null">
+       >
     <div class="row list-row" ng-class="{ 'active': contribution === ctrl.activeContribution }">
       <div class="col-sm-5">
         {{ ::contribution.title }}
       </div>
-      <div class="col-sm-3">
+      <div class="col-sm-2" ng-if="ctrl.showAction == true">
         {{ ::contribution.date | date: 'd/MM/yyyy' }}
       </div>
-      <div class="col-sm-3">
+      <div class="col-sm-3" ng-if="ctrl.showAction == false">
+        {{ ::contribution.date | date: 'd/MM/yyyy' }}
+      </div>
+      <div class="col-sm-2" ng-if="ctrl.showAction == true">
         {{ ::contribution.valuation }}
       </div>
+      <div class="col-sm-3" ng-if="ctrl.showAction == false">
+        {{ ::contribution.valuation }}
+      </div>
+      <div ng-if="ctrl.showAction == true"  class="col-sm-2">
+      
+      <button ng-if="contribution.evaluated == 'true' && ctrl.milestoneExists == true" ui-sref="contributionStatus({ contributionId: contribution.contribution_id,frompage: 'milestonestatus',milestoneIdFrom:contribution.milestoneId,milestoneId:'' })"
+         >
+        Status
+        
+      </button>
+      <button ng-if="contribution.evaluated == 'true' && ctrl.milestoneExists == false" ui-sref="contributionStatus({ contributionId: contribution.contribution_id,frompage: 'projectstatus',milestoneIdFrom:'',milestoneId:'' })"
+         >
+        Status
+        
+      </button>
+      <button ng-if="contribution.evaluated == 'false' && ctrl.milestoneExists == true" ui-sref="evaluations({ contributionId: contribution.contribution_id,frompage: 'milestonestatus',milestoneIdFrom:contribution.milestoneId,milestoneId:'' })"
+         >
+        Evaluation
+      </button>
+      <button ng-if="contribution.evaluated == 'false' && ctrl.milestoneExists == false" ui-sref="evaluations({ contributionId: contribution.contribution_id,frompage: 'projectstatus',milestoneIdFrom:'',milestoneId:'' })"
+         >
+        Evaluation
+      </button>
+      </div>
       <div class="col-sm-1">
-        <i class="pull-right glyphicon" 
-           ng-class="{ 'glyphicon-plus': contribution !== ctrl.activeContribution, 
-                       'glyphicon-minus': contribution === ctrl.activeContribution }"></i>
+        <i class="pull-right glyphicon glyphicon-plus" 
+           ng-if="contribution != ctrl.activeContribution" ng-click="ctrl.activeContribution = contribution"></i>
+        <i class="pull-right glyphicon glyphicon-minus" ng-if="contribution == ctrl.activeContribution"
+           ng-click="ctrl.activeContribution = null"></i>
       </div>
     </div>
   

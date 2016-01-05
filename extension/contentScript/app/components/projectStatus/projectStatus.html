@@ -38,7 +38,7 @@
             </div>
             <div class="stat member-stat">
               <div class="stat-item">
-                <img class="stat-icon" alt="Tokens" src="/extension/contentScript/app/images/rep.png" />
+                <img class="stat-icon" alt="Tokens" src="/extension/contentScript/app/images/tokens.png" />
                 <div class="stat-data">
                   {{ ctrl.tokens | number: 0 }}
                   <small>{{ ctrl.code }}</small>
@@ -51,12 +51,12 @@
       </div>
 
       <div class="row">
-        <div class="col-sm-7" ng-if="ctrl.milestoneContributions.length > 0">
+        <div class="col-sm-9" ng-if="ctrl.milestoneContributions.length > 0">
           <contributions-table code="ctrl.code" contributions="ctrl.milestoneContributions" 
-                               active-contribution="ctrl.activeContribution"></contributions-table>
+                               active-contribution="ctrl.activeContribution" show-action="true" milestone-exists="false"></contributions-table>
         </div>
 
-        <div class="col-sm-5" ng-if="ctrl.milestoneContributors.length > 0">
+        <div class="col-sm-3" ng-if="ctrl.milestoneContributors.length > 0">
           <div class="contributors box">
             <contributors-list contributors="ctrl.milestoneContributors"></contributors-list>
           </div>

@@ -45,7 +45,7 @@ function ProjectStatusModalCtrl($scope, $auth, $location, $state, $stateParams, 
   function updateViewforMilestone() {
     if (ctrl.selectedMilestonetId == null || ctrl.selectedMilestonetId == '') {
 
-      Milestone.getCurrent(project.orgId).then(
+      Milestone.getCurrent(project.orgId,'false').then(
         function(currentMilestone) {
           log('updateViewforMilestone: current:', currentMilestone);
           ctrl.milestoneContributors = currentMilestone.contributors;

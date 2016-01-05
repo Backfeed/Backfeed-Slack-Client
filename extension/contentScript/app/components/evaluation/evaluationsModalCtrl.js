@@ -1,12 +1,14 @@
 angular.module('MyApp')
 	.controller('EvaluationsModalCtrl', EvaluationsModalCtrl);
 
-function EvaluationsModalCtrl($stateParams, $modalInstance, _DEV, PostMessageService, Project, Contribution) {
+function EvaluationsModalCtrl($stateParams, $modalInstance,$state, _DEV, PostMessageService, Project, Contribution) {
 
 	var log = _DEV.log('CONTRIBUTION EVALUATION CTRL');
 
 	var contributionId = $stateParams.contributionId;
 	
+	var frompage = $stateParams.frompage;
+	var milestoneIdFrom    = $stateParams.milestoneIdFrom;
 
 	var ctrl = this;
 
@@ -42,6 +44,11 @@ function EvaluationsModalCtrl($stateParams, $modalInstance, _DEV, PostMessageSer
 	
 	function closeModal() {
 		$modalInstance.dismiss('cancel');
+		console.log('frompage is'+frompage);
+		if(frompage != '' && frompage != undefined && frompage == 'projectstatus'){
+			$state.go('projectStatus', {'channelId': ctrl.contribution.channelId,'milestoneId': ''}, {reload: true});
+		}
+		
 	}
 
 	function submit() {
@@ -52,6 +59,12 @@ function EvaluationsModalCtrl($stateParams, $modalInstance, _DEV, PostMessageSer
 
 			$modalInstance.close('submit');
 			PostMessageService.hideIframe(contributionId);
+			if(frompage != '' && frompage != undefined && frompage == 'projectstatus'){
+				$state.go('projectStatus', {'channelId': ctrl.contribution.channelId,'milestoneId': ''}, {reload: true});
+			}
+		    if(frompage != '' && frompage != undefined && frompage == 'milestonestatus'){
+				$state.go('contributionStatus', {'contributionId': '','milestoneId': milestoneIdFrom}, {reload: true});
+			}									
       
 		});
 

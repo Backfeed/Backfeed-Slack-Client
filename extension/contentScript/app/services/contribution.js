@@ -8,6 +8,7 @@ function Contribution(_DEV, Resource, Slack) {
   var service = {
 
     create: create,
+    edit: edit,
     get: get,
     evaluate: evaluate
 
@@ -22,10 +23,21 @@ function Contribution(_DEV, Resource, Slack) {
     log('create', contributionToSubmit);
 
     return Resource.post('contribution', contributionToSubmit).then(function(contributionResponse) {
-      Slack.postMessage(contributionToSubmit.channelId, buildContributionMessage(contributionToSubmit,contributionResponse.id));
+      Slack.postMessage(contributionToSubmit.channelId, buildContributionMessage(contributionToSubmit,contributionResponse.id),contributionResponse.username,contributionResponse.url);
     });
 
   }
+  
+  function edit(contribution) {
+
+	    var contributionToSubmit = getPreparedContributionForCreation(contribution);
+
+	    log('edit', contributionToSubmit);
+
+	    return Resource.put('contribution', contributionToSubmit).then(function(contributionResponse) {
+	    });
+
+	  }
   
   function get(contributionId) {
     return Resource.get('contribution/status/' + contributionId);

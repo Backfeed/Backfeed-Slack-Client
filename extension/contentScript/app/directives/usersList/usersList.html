@@ -5,6 +5,7 @@
       <a ui-sref="memberStatus({ memberId: user.memberId })"
          tooltip="{{ user.displayName }}">
         <img class="img-circle"  ng-src="{{ user.imgUrl }}" alt="User photo" >
+        <span class="contributor-percentage">{{ user.percentage | number:0 }}%</span>
       </a>
   </li>
   <li class="contributor-image remaining-users" ng-if="ctrl.remainingContributors > 0">

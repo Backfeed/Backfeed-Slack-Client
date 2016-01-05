@@ -8,6 +8,7 @@ function PostMessageService($window, $state) {
     hideIframe: hideIframe,
     showIframe: showIframe,
     hideIframeMilstone: hideIframeMilstone,
+    hideIframeEditContribution: hideIframeEditContribution,
     showAlert: showAlert,
     setChannelId: setChannelId,
     windowRefresh: windowRefresh
@@ -38,6 +39,10 @@ function PostMessageService($window, $state) {
   function hideIframeMilstone(option) {
     sendGesture("hideIframeMilstone", option);
   }
+  
+  function hideIframeEditContribution(option) {
+	    sendGesture("hideIframeEditContribution", option);
+	  }
 
   function windowRefresh(option) {
     sendGesture("windowRefresh", option);

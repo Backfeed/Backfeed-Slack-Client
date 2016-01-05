@@ -2,49 +2,50 @@
 
 <div class="modal-header">
 	<img alt="Close modal" class="close-modal" src="/extension/contentScript/app/images/close_x.png" ng-click="ctrl.closeModal()" />
-	<div class="modal-title">Contribution Status</div>
+	<div class="modal-title" ng-if="ctrl.milestonePresent == 'true'">Milestone Status</div>
+	<div class="modal-title" ng-if="ctrl.milestonePresent == 'false'">Contribution Status</div>
 </div>
 
 <div class="modal-body">
 	<div class="row">
-		<div class="col-sm-4">
+		<div class="col-sm-3">
 			<h2 class="contribution-title">{{ ctrl.contribution.title }}</h2>
 			<div class="contribution-description">{{ ctrl.contribution.description }}</div>
+
+			<br>
+			<br>
+			<div class="milestone-source" ng-if="ctrl.milestonePresent == 'true'">This milestone has been evaluated at <b>{{ ctrl.totalSourceValue }} {{ ctrl.code }} </b> by the team {{ ctrl.channelName }}. </div>
 		</div>
 
-		<div class="col-sm-5">
+		<div class="col-sm-6">
 
 			<div class="big-data-items box box-with-shadow">
-				<div class="big-data-item">
-					<div class="big-data-value">{{ ctrl.contribution.currentValuation }}
-						<svg-icon icon="up-arrows" ng-if="ctrl.contribution.valueIndic == 1"></svg-icon>
-						<svg-icon icon="down-arrows" ng-if="ctrl.contribution.valueIndic == 0"></svg-icon>
+				<div class="col-sm-4" style="font-size: 20px;">Team Evaluation</div>
+				<div class="col-sm-4" style="font-size: 20px;">
+				<div>
+						<img class="stat-icon" alt="Tokens" src="/extension/contentScript/app/images/tokens.png" />&nbsp;&nbsp;{{ ctrl.contribution.teamValuation }}<small>{{ ctrl.contribution.code }}</small>
+					</div></div><div class="col-sm-4" style="font-size: 20px;">
+					<div >
+						<img class="stat-icon" alt="Tokens" src="/extension/contentScript/app/images/rep.png" />&nbsp;&nbsp;{{ ctrl.contribution.groupWeight }}%
 					</div>
-					<div class="big-data-label">Current Value</div>
 				</div>
-				<div class="big-data-item">
-					<div class="big-data-value">{{ ctrl.contribution.myEvaluation }}</div>
-					<div class="big-data-label">My Evaluation</div>
-				</div>
-				<div class="big-data-item">
-					<div class="big-data-value">{{ ctrl.contribution.myReputationDelta }}
-						<svg-icon icon="up-arrows" ng-if="ctrl.contribution.myReputationDelta > 0"></svg-icon>
-						<svg-icon icon="down-arrows" ng-if="ctrl.contribution.myReputationDelta < 0"></svg-icon>
+			</div>
+			<div class="big-data-items box box-with-shadow">
+				<div class="col-sm-4" style="font-size: 20px;">My Score</div>
+				<div class="col-sm-4" style="font-size: 20px;">
+				<div >
+						<img class="stat-icon" alt="Tokens" src="/extension/contentScript/app/images/tokens.png" />&nbsp;&nbsp;{{ ctrl.contribution.myScore }}<small>{{ ctrl.contribution.codeForScore }}</small>
+					</div></div><div class="col-sm-4" style="font-size: 20px;">
+					<div >
+						<img class="stat-icon" alt="Tokens" src="/extension/contentScript/app/images/rep.png" />&nbsp;&nbsp;{{ ctrl.contribution.reputationPercentage }}%
 					</div>
-					<div class="big-data-label">My Reputation</div>
 				</div>
 			</div>
 
-			<div class="donut-charts box box-with-shadow">
-				<div class="donut-chart">
-					<single-value-donut-chart donut-value="{{ ctrl.contribution.myWeight }}" donut-color="#f9ac51"></single-value-donut-chart>
-					<label>My reputation in the project</label>
-				</div>
-				<div class="donut-chart">
-					<single-value-donut-chart donut-value="{{ ctrl.contribution.groupWeight }}" donut-color="#6991bf"></single-value-donut-chart>
-					<label>Total reputation invested in evaluating this contribution</label>
-				</div>
-			</div>
+			
+			
+				
+			
 
 			<!--<div class="box box-with-shadow">
 				<img class="pull-right" tooltip="A contribution's value changes with every evaluation. This chart shows this contribution's value over time, every point representing a single evaluation. The yellow line indicates your own evaluation." alt="help" src="/extension/contentScript/app/images/icon_help.png"/>
@@ -59,14 +60,57 @@
 			</div>-->
 		</div>
 
-		<div class="col-sm-3">
+		<div class="col-sm-3" ng-if="ctrl.milestonePresent == 'false'">
 			<div class="contributors box box-with-shadow">
 				<contributors-list contributors="ctrl.contribution.contributors"></contributors-list>
 			</div>
 		</div>
+		<div class="col-sm-3" ng-if="ctrl.milestonePresent == 'true'">
+			<div class="contributors box box-with-shadow">
+				<contributors-list contributors="ctrl.milestoneContributors"></contributors-list>
+			</div>
+		</div>
 	</div>
+<div ng-show="ctrl.milestonePresent == 'true'">
+<ul class="nav nav-tabs">  
+  <li ng-class="{active: tab=='b',active: tab==null}"><a href="#"  ng-click="tab = tab=='b'? null: 'b'">Contributions</a></li>
+  <li ng-class="{active: tab=='a'}"><a href="#"  ng-click="tab = tab=='a'? null: 'a'">Evaluations</a></li>
+  
+</ul>
+	
+<div class="active" ng-show="tab == 'a'">
+<div class="row">
+		<div class="col-sm-12">
+			<table class="table table-bordered table-hover text-center evaluations-table">
+				<thead>
+					<tr>
+						<th><img src="/extension/contentScript/app/images/star.png"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Time of Evaluation</th>
+						<th><img src="/extension/contentScript/app/images/tokens.png"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Evaluation</th>
+						<th><img src="/extension/contentScript/app/images/rep.png"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Weight</th>
+						<th><img src="/extension/contentScript/app/images/heart.png"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Value After Evaluation</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="bid in ctrl.contribution.bids">
+						<td>{{ bid.date | date: 'yyyy-MM-dd hh:mm:ss' }}</td>
+						<td>{{ bid.tokens | number: 0 }}</td>
+						<td>{{ bid.reputation | number: 0 }}</td>
+						<td>{{ bid.contributionValueAfterBid }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<div class="active" ng-show="tab == 'b' || tab == null">
+<div class="row" ng-if="ctrl.milestoneContributions.length > 0 && ctrl.milestonePresent == 'true'">
+          <contributions-table code="ctrl.code" contributions="ctrl.milestoneContributions" 
+                               active-contribution="ctrl.activeContribution" show-action="true" milestone-exists="true"></contributions-table>
+    </div>
 
-	<div class="row">
+</div>
+</div>
+	<div class="row" ng-if="ctrl.milestonePresent == 'false'">
 		<div class="col-sm-12">
 			<table class="table table-bordered table-hover text-center evaluations-table">
 				<thead>
@@ -88,6 +132,7 @@
 			</table>
 		</div>
 	</div>
+	
 </div>
 
 </script>

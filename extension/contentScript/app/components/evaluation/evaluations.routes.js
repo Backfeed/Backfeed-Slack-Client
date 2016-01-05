@@ -7,7 +7,7 @@ function routes($stateProvider) {
 
   .state('evaluations', {
 
-    url: '/evaluations/:contributionId/',
+    url: '/evaluations/:contributionId/:frompage/:milestoneIdFrom',
     templateUrl: chrome.extension.getURL("extension/contentScript/app/components/evaluation/addEvaluation.html"),
     controller: 'EvaluationsCtrl'
     

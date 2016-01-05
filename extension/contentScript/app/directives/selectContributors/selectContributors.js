@@ -47,6 +47,7 @@ function selectContributorsController($timeout, _DEV, Resource, CurrentUser, Use
   }
 
   function setCurrentUserAsFirstContributor() {
+	log('comes here'+currentUser.slackUserId);
     ctrl.contributors[0] = {
       id: currentUser.slackUserId,
       imgUrl: currentUser.imgUrl,
@@ -54,7 +55,7 @@ function selectContributorsController($timeout, _DEV, Resource, CurrentUser, Use
       percentage: 100,
       real_name: currentUser.user_realname
     };
-
+    log(ctrl.contributors[0].id);
     focusContributorPercentage(currentUser.slackUserId);
   }
 

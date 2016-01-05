@@ -15,6 +15,7 @@ function MainCtrl($state, _DEV, PostMessageService, CurrentUser, Project) {
     openProjectStatus: goToProjectStatus,
 
     openAddContributionPage: goToAddContribution,
+    openEditContributionPage: goToEditContribution,
     openContributionStatusPage: goToContributionStatus,
 
     openAddEvaluationPage: goToAddEvaluation,
@@ -76,12 +77,12 @@ function MainCtrl($state, _DEV, PostMessageService, CurrentUser, Project) {
 	var channelId = optionsAsArray[1];
     log('Project Status from Milestone'+channelId);
     log('Project Status from Milestone'+milestoneId);
-    $state.go('projectStatus', {
-      'channelId': channelId,
-      'milestoneId': milestoneId
-    }, {
-      reload: true
-    });
+    $state.go('contributionStatus', {
+        'contributionId': '',
+        'milestoneId': milestoneId
+      }, {
+        reload: true
+      });
   }
 
   function goToAddMilestone(channelId) {
@@ -102,6 +103,18 @@ function MainCtrl($state, _DEV, PostMessageService, CurrentUser, Project) {
       reload: true
     });
   }
+  
+  function goToEditContribution(options) {
+	   var optionsAsArray = options.split(",");
+		var contributionId = optionsAsArray[0];
+		var channelId = optionsAsArray[1];	   
+	    $state.go('editContribution', {
+	      'contributionId': contributionId,
+	      'channelId': channelId
+	    }, {
+	      reload: true
+	    });
+	  }
 
   function goToAddEvaluation(contributionId) {
     log('Starting evaluations for contributionID: ' + contributionId);

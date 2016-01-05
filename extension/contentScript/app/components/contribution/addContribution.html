@@ -2,7 +2,8 @@
 
   <div class="modal-header">
     <img alt="Close modal" class="close-modal" src="/extension/contentScript/app/images/close_x.png" ng-click="ctrl.closeModal()" />
-    <div class="modal-title">Submit a Contribution</div>
+    <div class="modal-title" ng-if="!ctrl.contribution.id">Submit a Contribution</div>
+	<div class="modal-title" ng-if="ctrl.contribution.id">Save Contribution</div>
   </div>
 
   <div id="contribution-modal" class="modal-body">
@@ -47,7 +48,10 @@
 
     <div class="modal-footer flex">
       <p class="lead">Contributions are the only way to generate new tokens and reputation.</p>
-      <button class="btn btn-backfeed submit-button" ng-click="ctrl.submit()" ng-disabled="!ctrl.contribution.title ||
+      <button ng-if="ctrl.contribution.id" class="btn btn-backfeed submit-button" ng-click="ctrl.submit()" ng-disabled="!ctrl.contribution.title ||
+                           !ctrl.contribution.description ||
+                           !ctrl.contributorsValid">Save Contribution</button>
+<button ng-if="!ctrl.contribution.id" class="btn btn-backfeed submit-button" ng-click="ctrl.submit()" ng-disabled="!ctrl.contribution.title ||
                            !ctrl.contribution.description ||
                            !ctrl.contributorsValid">Submit Contribution</button>
     </div>

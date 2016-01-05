@@ -21,8 +21,8 @@ function Milestone(_DEV, Resource, Project,Slack) {
   function create(milestone) {
     var milestoneToSubmit = getPreparedMilestoneForCreation(milestone);
     return Resource.post('milestone', milestoneToSubmit).then(function(milestoneResponse) {
-        Slack.postMessage(milestoneResponse.destChannelId, buildMilestoneMessage(milestoneToSubmit,milestoneResponse.id,milestoneResponse.destChannelId));
-        Slack.postMessage(milestoneToSubmit.channelId, buildMilestoneMessageForOrigin(milestoneToSubmit,milestoneResponse.destChannelName));
+        Slack.postMessage(milestoneResponse.destChannelId, buildMilestoneMessage(milestoneToSubmit,milestoneResponse.id,milestoneResponse.destChannelId),milestoneResponse.username,milestoneResponse.url);
+        Slack.postMessage(milestoneToSubmit.channelId, buildMilestoneMessageForOrigin(milestoneToSubmit,milestoneResponse.destChannelName),milestoneResponse.username,milestoneResponse.url);
       });
     return Resource.post('milestone', milestoneToSubmit);
   }
@@ -35,14 +35,14 @@ function Milestone(_DEV, Resource, Project,Slack) {
     return Resource.get('milestone/' + id);
   }
 
-  function getCurrent(orgId) {
-    return Resource.get('organization/currentStatus/' + orgId);
+  function getCurrent(orgId,milestoneCreate) {
+    return Resource.get('organization/currentStatus/' + orgId+'/'+milestoneCreate);
   }
 
-  function getCurrentByChannelId(channelId) {
+  function getCurrentByChannelId(channelId,milestoneCreate) {
     var orgId = Project.getByChannelId(channelId).orgId;
 
-    return getCurrent(orgId);
+    return getCurrent(orgId,milestoneCreate);
   }
 
   function getAll(orgId) {

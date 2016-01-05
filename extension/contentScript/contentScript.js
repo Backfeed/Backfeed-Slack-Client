@@ -14,6 +14,7 @@ $(document).on('click', ".member_status_button", onMemberStatusButtonClick);
 var GESTURES = {
   "showIframe": showIframe,
   "hideIframeMilstone": hideIframeMilstone,
+  "hideIframeEditContribution": hideIframeEditContribution,
   "hideIframe": hideIframe,
   "showAlert": showAlert,
   "windowRefresh": windowRefresh,
@@ -50,6 +51,8 @@ function onEvaluationButtonClick() {
   var textContent = $(this).text();
   if (textContent == 'EVALUATE') {
     openAddEvaluationPage(contributionIdForThisEvaluation,teamName,channelId);
+  } else if (textContent == 'EDIT') {
+	  openEditContributionPage(contributionIdForThisEvaluation,teamName,channelId);
   } else {
     openContributionStatusPage(contributionIdForThisEvaluation,teamName,channelId);
   }
@@ -137,6 +140,16 @@ function openAddContributionPage(channelId,teamName) {
 	});
 }
 
+function openEditContributionPage(contributionId,teamName,channelId) {
+	chrome.runtime.sendMessage({
+        message : {
+            "gesture": 'openEditContributionPage',
+            "options": ''+contributionId+','+channelId
+        },teamName : teamName,channelId:channelId
+    }, function(response) {
+    	console.log('Here in the callback from edit contribution page');
+	});
+}
 
 function openAddEvaluationPage(contributionId,teamName,channelId) {
 	
@@ -187,6 +200,7 @@ function openMemberStatusPage(memberId,teamName,channelId) {
 		},teamName : teamName,channelId:channelId
 	}, function(response) {
 		console.log('Here in the callback from member status page');
+		closeChannelMenu();
 	});
 }
 
@@ -221,6 +235,30 @@ function hideIframeMilstone(options) {
 	}
 }
 
+function setContributionString(contribution){
+	var spanElement = $("span[edit-contributionId*="+contribution.id+"]");
+	spanElement.text("EVALUATE");
+	var contributionString = 'New contribution submitted<br><br><b>​<span class="copyonly">*</span>'+contribution.title+'<span class="copyonly">*</span>​</b><br>'+contribution.description+'<br>'
+	var contributionContributors = contribution.contributors;
+	for(var i = 0 ; i<contributionContributors.length;i++){
+		var anchorString = '<a href="/team/'+contributionContributors[i].name+'" target="/team/'+contributionContributors[i].name+'" data-member-name="'+contributionContributors[i].name+'"class="internal_member_link"><span class="mention">@'+contributionContributors[i].name+'</span></a>';
+		if(i == contributionContributors.length-1 ){
+			contributionString = contributionString + anchorString + " "+ contributionContributors[i].percentage +"%";
+		}else{
+			contributionString = contributionString + anchorString + " "+ contributionContributors[i].percentage +"%,";
+		}
+	}
+	spanElement.html(contributionString);
+}
+function hideIframeEditContribution(options) {
+	if (options != undefined && options != '') {
+		contribution = options;
+		$("span[data-contributionId*="+contribution.id+"]").text("EVALUATE");
+		setContributionString(contribution);
+		
+	}
+}
+
 function setChannelId(channelId) {
 	console.log("set channelId: "+channelId);
 	chrome.storage.sync.set({'channelId':channelId}, function() {
@@ -232,7 +270,8 @@ function showAlert(options) {
 	noty({
 		layout: 'bottomRight',
 		text: options.message,
-		type: options.type
+		type: options.type,
+		timeout: 5000
 	});
 }
 
@@ -469,9 +508,33 @@ function evaluationObservationOnChannelId(channelId,mutations){
 			if (response.login == 'true') {
 				messagesFromBot.forEach(function(message) {
 					var spanElement = $( '.message_body', $(message));	
+					var spanElementMessageSender = $('.message_sender', $(message));
+					var sender = spanElementMessageSender.html().trim().split(" ")[0];
 					var imageElement = $('img', $(message));
-					var contributionIcon = chrome.extension.getURL('/extension/contentScript/app/images/icon_contribution.png');
-					imageElement.attr('src', contributionIcon);
+					var anchor = document.createElement("a");
+					anchor.setAttribute("href", '/team/'+sender);
+					anchor.setAttribute("target", '/team/'+sender);
+					anchor.setAttribute("data-member-id", response.users[sender]);
+					anchor.setAttribute("class", 'member_preview_link member_image thumb_36');
+					anchor.setAttribute("data-thumb-size", '36');
+					
+					var anchorForSender = document.createElement("a");
+					anchorForSender.setAttribute("href", '/team/'+sender);
+					anchorForSender.setAttribute("target", '/team/'+sender);
+					anchorForSender.setAttribute("data-member-id", response.users[sender]);
+					anchorForSender.setAttribute("class", 'color_5870dd message_sender member member_preview_link color_'+response.users[sender]);
+					$(anchorForSender).html(sender);
+					
+					var imgSrc = "background-image: url("+imageElement.attr('src')+")";
+					anchor.setAttribute("style", imgSrc);
+					var messageIcon = $('.message_icon', $(message));
+					messageIcon.html('');
+					spanElementMessageSender.html('');
+					messageIcon.append($(anchor));
+					spanElementMessageSender.append($(anchorForSender));
+					//var contributionIcon = chrome.extension.getURL('/extension/contentScript/app/images/icon_contribution.png');
+					
+					
 					var spanChildren = spanElement.children('#COMPOSE_ACTION_EVALUATION_BUTTON');
 					if (spanChildren.length == 0){
 						var spanText = spanElement.html();
@@ -479,30 +542,48 @@ function evaluationObservationOnChannelId(channelId,mutations){
 						var removalText = "New contribution submitted<br>";
 						var indexOfRemovalContent = spanText.indexOf(removalText);
 						if (indexOfRemovalContent > -1){
+							var found = false;
 							spanText = spanText.replace(removalText, "");
 							var contributionId = spanText.substring(0,spanText.indexOf("<br>"));
 							var lengthOfText = removalText.length;
 							originalText = originalText.replace(originalText.substring(indexOfRemovalContent+lengthOfText, indexOfRemovalContent+lengthOfText+contributionId.length), "");
 							$( '.message_body', $(message)).html (originalText);
 							var openComposeButton = document.createElement("span");
+							spanElement.attr('edit-contributionId', contributionId.trim());
 							openComposeButton.setAttribute("data-contributionId", contributionId.trim());
 							openComposeButton.setAttribute("id", "COMPOSE_ACTION_EVALUATION_BUTTON");
 							openComposeButton.textContent = "EVALUATE";
 							var contributionIdsVar = response.contributionIds;
-							contributionIdsVar = String(contributionIdsVar);
-							var contributionIdsVarArray = contributionIdsVar.split(",");
-							for (var i = 0; i < contributionIdsVarArray.length; i++) {
-								if(contributionIdsVarArray[i].trim() == contributionId.trim()) {
+							for (var i = 0; i < contributionIdsVar.length; i++) {
+								if(contributionIdsVar[i].id == contributionId.trim()) {
 									openComposeButton.textContent = "STATUS";
+									setContributionString(contributionIdsVar[i]);
+									found = true;
+									break;
 								}
 							}
-							var closeContributionIdsVar = response.closeContributionIds;
-							closeContributionIdsVar = String(closeContributionIdsVar);							
-							var closeContributionIdsVarArray = closeContributionIdsVar.split(",");							
-							for (var i = 0; i < closeContributionIdsVarArray.length; i++) {								
-								if(closeContributionIdsVarArray[i].trim() == contributionId.trim()) {
-									openComposeButton.textContent = "CLOSED";
+							if(found == false){
+								var closeContributionIdsVar = response.closeContributionIds;
+								for (var i = 0; i < closeContributionIdsVar.length; i++) {								
+									if(closeContributionIdsVar[i].id == contributionId.trim()) {
+										openComposeButton.textContent = "CLOSED";
+										setContributionString(closeContributionIdsVar[i]);
+										found = true;
+										break;
+									}
 								}
+								if(found == false){
+									var pendingContributionIdsVar = response.pendingContributionIds;
+									for (var i = 0; i < pendingContributionIdsVar.length; i++) {	
+										if(pendingContributionIdsVar[i].id == contributionId.trim()) {
+											openComposeButton.textContent = "EDIT";
+											setContributionString(pendingContributionIdsVar[i]);
+											found = true;
+											break;
+										}
+									}
+								}
+								
 							}
 							$(openComposeButton).insertBefore(spanElement);
 						}
@@ -594,4 +675,5 @@ function getActiveChannelId() {
 
 function closeChannelMenu() {
 	$('#menu').remove();
+	$('#menu_header').remove();
 }

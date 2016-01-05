@@ -77,7 +77,7 @@ function addMsgListener(msg, sender, sendResponse) {
         // get satellizer_token (to be used in API calls)
         $.ajax({
           type: 'POST',
-          url: 'https://monitor.backfeed.cc/allContributionsFromUser',
+          url: 'https://monitor.backfeed.cc/allContributionsFromUserV1',
           data: params,
           success: function(data) {
             console.log('server returned, satellizer token:' + data);
@@ -87,7 +87,9 @@ function addMsgListener(msg, sender, sendResponse) {
               contributionIds: JSON.parse(data).contribitions,
               milestonesIds: JSON.parse(data).milestones,
               closeContributionIds: JSON.parse(data).closedContribitions,
-              closeMilestonesIds: JSON.parse(data).closedMilestones
+              pendingContributionIds: JSON.parse(data).pendingContribitions,
+              closeMilestonesIds: JSON.parse(data).closedMilestones,
+              users: JSON.parse(data).users
             });
             sendGesture(msg.message, sendResponse);
           }
