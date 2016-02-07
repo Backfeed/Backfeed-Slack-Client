@@ -6,7 +6,7 @@ The Backfeed Chrome Extension enables value and reputation distribution accordin
 ### [Download from the Chrome Store to play around with it](https://chrome.google.com/webstore/detail/backfeed-slack-extension/gkefmbjinnbjnpagkphaebancjajfhbf)
 
 ## Disclaimer
-The Chrome extension for Slack is no longer developed. Its goal was to enable people to submit and evaluate contributions directly from Slack. This UI hack doesn't use the standard integration methods recommended by Slack. While it can still be used "AS IS" in order to conduct experimentations with the Backfeed protocol, be aware that it is not maintained and that we do not provide warranty of any kind with respect to its compatibility with Slack and its performance.
+The Chrome extension for Slack is **no longer** developed. Its goal was to enable people to submit and evaluate contributions directly from Slack. This UI hack doesn't use the standard integration methods recommended by Slack. While it can still be used "AS IS" in order to conduct experimentations with the Backfeed protocol, be aware that it is not maintained and that we do not provide warranty of any kind with respect to its compatibility with Slack and its performance.
 
 ## Main Functionality
 A tool for a team to self govern by peer evaluation of contributions.
